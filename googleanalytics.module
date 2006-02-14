@@ -1,0 +1,47 @@
+<?php
+/* Drupal Module: GoogleAnalytics
+ * Adds the required Javascript to the top of all your Drupal pages
+ * to allow tracking by the Google Analytics statistics package.
+ *
+ * @author: Mike Carter <mike@ixis.co.uk>
+ */
+
+/**
+ * Implementation of hook_help().
+ */
+function googleanalytics_help($section) {
+  switch ($section) {
+    case 'admin/modules#description':
+      return t('Adds tracking code to all pages of your site');
+   case 'admin/settings/googleanalytics':
+      return t('Google Analytics is a free statistics package based on the excellent Urchin system.');
+  }
+}
+
+function googleanalytics_menu($may_cache) {
+  if(!$may_cache) {
+    $id = variable_get('googleanalytics_account', '');
+
+    if($id != '') {
+      $output = '<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+      <script type="text/javascript">
+      _uacct = "'.$id.'";
+      urchinTracker();
+      </script>';
+
+      drupal_set_html_head($output);
+    }
+  }
+}
+
+
+/**
+ * Implementation of hook_settings().
+ */
+function googleanalytics_settings() {
+  $output = form_group(t('Analytics Account Settings'),
+              form_textfield(t('User ID'), 'googleanalytics_account',variable_get('googleanalytics_account',''),15,20,t('The user account is unique to the websites domain. You can obtain a user account from the %url website.', array('%url' => '<a href="http://www.google.com/analytics/">Google Analytics</a>') ))
+  );
+  return $output;
+}
+?>
