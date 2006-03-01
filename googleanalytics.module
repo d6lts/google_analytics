@@ -1,5 +1,5 @@
 <?php
-/* Drupal Module: GoogleAnalytics (4.6)
+/* Drupal Module: GoogleAnalytics
  * Adds the required Javascript to the top of all your Drupal pages
  * to allow tracking by the Google Analytics statistics package.
  *
@@ -23,12 +23,9 @@ function googleanalytics_menu($may_cache) {
     $id = variable_get('googleanalytics_account', '');
 
     if($id != '') {
-      $output = '<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
-      <script type="text/javascript">
-      _uacct = "'.$id.'";
-      urchinTracker();
-      </script>';
+      $output = '<script type="text/javascript">_uacct = "'.$id.'";urchinTracker();</script>';
 
+      drupal_add_js('http://www.google-analytics.com/urchin.js');
       drupal_set_html_head($output);
     }
   }
@@ -39,9 +36,22 @@ function googleanalytics_menu($may_cache) {
  * Implementation of hook_settings().
  */
 function googleanalytics_settings() {
-  $output = form_group(t('Analytics Account Settings'),
-              form_textfield(t('User ID'), 'googleanalytics_account',variable_get('googleanalytics_account',''),15,20,t('The user account is unique to the websites domain. You can obtain a user account from the %url website.', array('%url' => '<a href="http://www.google.com/analytics/">Google Analytics</a>') ))
-  );
-  return $output;
+  $form['account'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Analytics Account Settings'),
+        '#collapsible' => FALSE,
+      );
+
+  $form['account']['googleanalytics_account'] = array(
+      '#type' => 'textfield',
+      '#title' => t('User ID'),
+      '#default_value' => variable_get('googleanalytics_account',''),
+      '#size' => 15,
+      '#maxlength' => 20,
+      '#required' => TRUE,
+      '#description' => t('The user account is unique to the websites domain. You can obtain a user account from the %url website.', array('%url' => '<a href="http://www.google.com/analytics/">Google Analytics</a>'))
+    );
+
+  return $form;
 }
 ?>
