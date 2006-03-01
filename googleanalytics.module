@@ -1,5 +1,5 @@
 <?php
-/* Drupal Module: GoogleAnalytics
+/* Drupal Module: GoogleAnalytics (4.6)
  * Adds the required Javascript to the top of all your Drupal pages
  * to allow tracking by the Google Analytics statistics package.
  *
