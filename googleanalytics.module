@@ -1,39 +1,38 @@
 <?php
-/* Drupal Module: GoogleAnalytics
+// $Id$
+/*
+ * Drupal Module: GoogleAnalytics
  * Adds the required Javascript to the top of all your Drupal pages
  * to allow tracking by the Google Analytics statistics package.
  *
  * @author: Mike Carter <mike@ixis.co.uk>
  */
 
-/**
- * Implementation of hook_help().
- */
+
 function googleanalytics_help($section) {
   switch ($section) {
     case 'admin/modules#description':
       return t('Adds tracking code to all pages of your site');
-   case 'admin/settings/googleanalytics':
+    case 'admin/settings/googleanalytics':
       return t('Google Analytics is a free statistics package based on the excellent Urchin system.');
   }
 }
 
-function googleanalytics_menu($may_cache) {
-  if(!$may_cache) {
-    $id = variable_get('googleanalytics_account', '');
+/**
+ * Implementation of hook_help().
+ */
+function googleanalytics_footer($main = 0) {
+  $id = variable_get('googleanalytics_account', '');
 
-    if($id != '') {
-      $output = '<script type="text/javascript">_uacct = "'.$id.'";urchinTracker();</script>';
-
-      drupal_add_js('http://www.google-analytics.com/urchin.js');
-      drupal_set_html_head($output);
-    }
+  if($id != '') {
+    drupal_add_js('http://www.google-analytics.com/urchin.js');
+    return '<script type="text/javascript">_uacct = "'.$id.'";urchinTracker();</script>';
   }
 }
 
 
 /**
- * Implementation of hook_settings().
+ * Implementation of hook_footer() to insert Javascript at the end of the page
  */
 function googleanalytics_settings() {
   $form['account'] = array(
