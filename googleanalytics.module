@@ -19,7 +19,7 @@ function googleanalytics_help($section) {
 }
 
 /**
- * Implementation of hook_help().
+ * Implementation of hook_footer().
  */
 function googleanalytics_footer($main = 0) {
   $id = variable_get('googleanalytics_account', '');
