@@ -19,13 +19,22 @@ function googleanalytics_help($section) {
 }
 
 /**
- * Implementation of hook_footer().
+ * Implementation of hook_footer()  to insert Javascript at the end of the page
  */
 function googleanalytics_footer($main = 0) {
+  global $user;
+
   $id = variable_get('googleanalytics_account', '');
 
+  // Check if we should track the currently active user's role
+  $track = 0;
+  foreach($user->roles as $role) {
+    $track += variable_get("googleanalytics_track_{$role}", FALSE);
+
+  }
+
   // Don't track page views in the admin sections
-  if($id && (arg(0) != 'admin')) {
+  if($id && (arg(0) != 'admin') && $track > 0) {
     drupal_set_html_head('<script type="text/javascript" src="http://www.google-analytics.com/urchin.js"></script>');
     return '<script type="text/javascript">_uacct = "'.$id.'";urchinTracker();</script>';
   }
@@ -33,7 +42,7 @@ function googleanalytics_footer($main = 0) {
 
 
 /**
- * Implementation of hook_footer() to insert Javascript at the end of the page
+ * Implementation of hook_settings() for configuring the module
  */
 function googleanalytics_settings() {
   $form['account'] = array(
@@ -45,12 +54,30 @@ function googleanalytics_settings() {
   $form['account']['googleanalytics_account'] = array(
       '#type' => 'textfield',
       '#title' => t('User ID'),
-      '#default_value' => variable_get('googleanalytics_account',''),
+      '#default_value' => variable_get('googleanalytics_account','UA-'),
       '#size' => 15,
       '#maxlength' => 20,
       '#required' => TRUE,
       '#description' => t('The user account is unique to the websites domain. You can obtain a user account from the %url website.', array('%url' => '<a href="http://www.google.com/analytics/">Google Analytics</a>'))
     );
+
+   // Render the role overview.
+  $result = db_query('SELECT * FROM {role} ORDER BY name');
+
+  $form['roles'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('User Role Tracking'),
+        '#collapsible' => TRUE,
+        '#description' => t('Define what user roles should be tracked by Google Analytics.')
+  );
+
+  while ($role = db_fetch_object($result)) {
+    $form['roles']["googleanalytics_track_{$role->name}"] = array(
+      '#type' => 'checkbox',
+      '#title' => t($role->name),
+      '#default_value' => variable_get("googleanalytics_track_{$role->name}", FALSE),
+    );
+  }
 
   return $form;
 }
