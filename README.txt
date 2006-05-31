@@ -22,7 +22,11 @@ Usage
 =====
 In the settings page enter your Google Analytics User ID.
 
+You will also need to define what user roles should be tracked.
+Simply tick the roles you would like to monitor.
+
 All pages will now have the required JavaScript added to the
-HTML header. You can confirm this by viewing the page source from
+HTML footer can confirm this by viewing the page source from
 your browser.
 
+'admin/' pages are automatically ignored by Google Analytics.
