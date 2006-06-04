@@ -30,12 +30,19 @@ function googleanalytics_footer($main = 0) {
   $track = 0;
   foreach($user->roles as $role) {
     $track += variable_get("googleanalytics_track_{$role}", FALSE);
-
   }
 
   // Don't track page views in the admin sections
   if($id && (arg(0) != 'admin') && $track > 0) {
-    drupal_set_html_head('<script type="text/javascript" src="http://www.google-analytics.com/urchin.js"></script>');
+
+    $prefix = '://www';
+
+    // Are we on a secure page?
+    if($_SERVER['HTTPS']) {
+      $prefix = 's://ssl';
+    }
+
+    drupal_set_html_head('<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script>');
     return '<script type="text/javascript">_uacct = "'.$id.'";urchinTracker();</script>';
   }
 }
