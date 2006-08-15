@@ -42,8 +42,7 @@ function googleanalytics_footer($main = 0) {
       $prefix = 's://ssl';
     }
 
-    drupal_set_html_head('<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script>');
-    return '<script type="text/javascript">_uacct = "'.$id.'";urchinTracker();</script>';
+    return '<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script><script type="text/javascript">_uacct = "'.$id.'";urchinTracker();</script>';
   }
 }
 
