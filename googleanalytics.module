@@ -5,18 +5,34 @@
  * Adds the required Javascript to the bottom of all your Drupal pages
  * to allow tracking by the Google Analytics statistics package.
  *
- * @author: Mike Carter <mike@ixis.co.uk>
+ * @author: Mike Carter <www.ixis.co.uk/contact>
  */
 
 
 function googleanalytics_help($section) {
   switch ($section) {
-    case 'admin/modules#description':
-      return t('Adds tracking code to all pages of your site');
     case 'admin/settings/googleanalytics':
       return t('Google Analytics is a free statistics package based on the excellent Urchin system.');
   }
 }
+
+
+function googleanalytics_menu($maycache) {
+  $items = array();
+  if ($maycache) {
+    $items[] = array(
+      'path' => 'admin/settings/googleanalytics',
+      'title' => t('google analytics'),
+      'description' => t('Configure the settings used to generate your Google Analytics site map.'),
+      'callback' => 'drupal_get_form',
+      'callback arguments' => array('googleanalytics_admin_settings'),
+      'access' => user_access('administer site configuration'),
+      'type' => MENU_NORMAL_ITEM,
+    );
+  }
+  return $items;
+}
+
 
 /**
  * Implementation of hook_footer()  to insert Javascript at the end of the page
@@ -48,9 +64,9 @@ function googleanalytics_footer($main = 0) {
 
 
 /**
- * Implementation of hook_settings() for configuring the module
+ * Implementation of hook_admin_settings() for configuring the module
  */
-function googleanalytics_settings() {
+function googleanalytics_admin_settings() {
   $form['account'] = array(
         '#type' => 'fieldset',
         '#title' => t('Analytics Account Settings'),
@@ -85,6 +101,6 @@ function googleanalytics_settings() {
     );
   }
 
-  return $form;
+  return system_settings_form($form);
 }
 ?>
