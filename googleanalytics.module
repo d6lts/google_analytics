@@ -57,8 +57,29 @@ function googleanalytics_footer($main = 0) {
     if($_SERVER['HTTPS']) {
       $prefix = 's://ssl';
     }
+    
+    // Add User profile segmentation values
+    if(is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {;
 
-    return '<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script><script type="text/javascript">_uacct = "'.$id.'";urchinTracker();</script>';
+      $p = profile_load_profile($user);
+
+      $fields = array();
+      foreach($profile_fields as $field => $title) {
+        $value = $user->$field;
+
+        if(is_array($value)) {
+          $value = implode('.', $value);
+        }
+
+        $fields[$field] = $value;
+      }
+      $segmentation = "__utmSetVar('".implode(':', $fields)."');";
+		}
+		
+		// Add any custom code snippets if specified
+		$codesnippet = variable_get('googleanalytics_codesnippet', '');
+		
+    return '<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script><script type="text/javascript">_uacct = "'.$id."\";{$segmentation}{$codesnippet}urchinTracker();</script>";
   }
 }
 
@@ -100,6 +121,51 @@ function googleanalytics_admin_settings() {
       '#default_value' => variable_get("googleanalytics_track_{$role->name}", FALSE),
     );
   }
+
+  $form['segmentation'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('User Segmentation'),
+        '#collapsible' => TRUE,
+        '#description' => t('If your users have profile fields completed, you can track your logged in users based on a defined profile field.')
+  );
+
+  if(!module_exist('profile')) {
+    $form['segmentation']['profile'] = array(
+          '#value' => t('You need to activate the %profile to use this feature.', array('%profile' => l('profile.module', 'admin/modules')) )
+    );
+  } else {
+    // Compile a list of fields to show.
+    $fields = array('uid' => 'User ID', 'name' => 'Username');
+    $result = db_query('SELECT name, title, type, weight FROM {profile_fields} ORDER BY weight');
+    while ($record = db_fetch_object($result)) {
+      $fields[$record->name] = $record->title;
+    }
+
+    $form['segmentation']["googleanalytics_segmentation"] = array(
+      '#type' => 'select',
+      '#title' => t('Track'),
+      '#description' => t('Selecting one or more values allows you to track users by profile values rather than simply an IP address.'),
+      '#default_value' => variable_get("googleanalytics_segmentation", ''),
+      '#options' => $fields,
+      '#size' => 10,
+      '#multiple' => TRUE
+    );
+  }
+  
+  $form['advanced'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Advanced'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#description' => t('You can add custom Google Analytic code here.')
+  );
+  $form['advanced']['googleanalytics_codesnippet'] = array(
+      '#type' => 'textarea',
+      '#title' => t('JavaScript Code'),
+      '#default_value' => variable_get('googleanalytics_codesnippet',''),
+      '#rows' => 15,
+      '#description' => t('Paste %snippets here. These will be added to every page that Google Analytics appears on. For help with this feature see the %blog. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('%snippets' => l(t('custom code snippets'), 'http://drupal.org/node/39282'), '%blog' => l(t('cutroni.com blog'), 'http://cutroni.com/blog/') ) )
+  );
 
   return system_settings_form($form);
 }
