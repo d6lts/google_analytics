@@ -22,10 +22,10 @@ function googleanalytics_menu($maycache) {
   if ($maycache) {
     $items[] = array(
       'path' => 'admin/settings/googleanalytics',
-      'title' => t('google analytics'),
+      'title' => t('Google Analytics'),
       'description' => t('Configure the settings used to generate your Google Analytics site map.'),
       'callback' => 'drupal_get_form',
-      'callback arguments' => array('googleanalytics_admin_settings'),
+      'callback arguments' => 'googleanalytics_admin_settings',
       'access' => user_access('administer site configuration'),
       'type' => MENU_NORMAL_ITEM,
     );
@@ -57,7 +57,7 @@ function googleanalytics_footer($main = 0) {
     if($_SERVER['HTTPS']) {
       $prefix = 's://ssl';
     }
-    
+
     // Add User profile segmentation values
     if(is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {;
 
@@ -75,10 +75,10 @@ function googleanalytics_footer($main = 0) {
       }
       $segmentation = "__utmSetVar('".implode(':', $fields)."');";
 		}
-		
+
 		// Add any custom code snippets if specified
 		$codesnippet = variable_get('googleanalytics_codesnippet', '');
-		
+
     return '<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script><script type="text/javascript">_uacct = "'.$id."\";{$segmentation}{$codesnippet}urchinTracker();</script>";
   }
 }
@@ -101,8 +101,7 @@ function googleanalytics_admin_settings() {
       '#size' => 15,
       '#maxlength' => 20,
       '#required' => TRUE,
-      '#description' => t('The user account is unique to the websites domain. You can obtain a user account from the %url website.', array('%url' => '<a href="http://www.google.com/analytics/">Google Analytics</a>'))
-    );
+      '#description' => t('The user account is unique to the websites domain. You can obtain a user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/'))    );
 
    // Render the role overview.
   $result = db_query('SELECT * FROM {role} ORDER BY name');
@@ -115,10 +114,12 @@ function googleanalytics_admin_settings() {
   );
 
   while ($role = db_fetch_object($result)) {
-    $form['roles']["googleanalytics_track_{$role->name}"] = array(
+     // can't use empty spaces in varname
+    $role_varname = $string = str_replace(" ", "_", $role->name);
+    $form['roles']["googleanalytics_track_{$role_varname}"] = array(
       '#type' => 'checkbox',
       '#title' => t($role->name),
-      '#default_value' => variable_get("googleanalytics_track_{$role->name}", FALSE),
+      '#default_value' => variable_get("googleanalytics_track_{$role_varname}", FALSE),
     );
   }
 
@@ -129,10 +130,9 @@ function googleanalytics_admin_settings() {
         '#description' => t('If your users have profile fields completed, you can track your logged in users based on a defined profile field.')
   );
 
-  if(!module_exist('profile')) {
+  if(!module_exists('profile')) {
     $form['segmentation']['profile'] = array(
-          '#value' => t('You need to activate the %profile to use this feature.', array('%profile' => l('profile.module', 'admin/modules')) )
-    );
+      '#value' => t('You need to activate the <a href="@profile">Profile module</a> to use this feature.', array('@profile' => url('admin/build/modules')))    );
   } else {
     // Compile a list of fields to show.
     $fields = array('uid' => 'User ID', 'name' => 'Username');
@@ -151,7 +151,7 @@ function googleanalytics_admin_settings() {
       '#multiple' => TRUE
     );
   }
-  
+
   $form['advanced'] = array(
         '#type' => 'fieldset',
         '#title' => t('Advanced'),
@@ -164,9 +164,7 @@ function googleanalytics_admin_settings() {
       '#title' => t('JavaScript Code'),
       '#default_value' => variable_get('googleanalytics_codesnippet',''),
       '#rows' => 15,
-      '#description' => t('Paste %snippets here. These will be added to every page that Google Analytics appears on. For help with this feature see the %blog. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('%snippets' => l(t('custom code snippets'), 'http://drupal.org/node/39282'), '%blog' => l(t('cutroni.com blog'), 'http://cutroni.com/blog/') ) )
-  );
+      '#description' => t('Paste <a href="@snippets">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href="@blog">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/39282', '@blog' => 'http://cutroni.com/blog/') )   );
 
   return system_settings_form($form);
 }
-?>
