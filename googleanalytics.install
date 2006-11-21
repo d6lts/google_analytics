@@ -5,7 +5,8 @@ function googleanalytics_install() {
   $result = db_query('SELECT * FROM {role} ORDER BY name');
 
   while ($role = db_fetch_object($result)) {
-    $ga_role = "googleanalytics_track_{$role->name}";
+    $role_varname = $string = str_replace(" ", "_", $role->name);
+    $ga_role = "googleanalytics_track_{$role_varname}";
 
     //check if variable is not already set from a previous install
     if(strpos(variable_get($ga_role, 'new'), 'new') !== FALSE) {
