@@ -45,6 +45,7 @@ function googleanalytics_footer($main = 0) {
   // Check if we should track the currently active user's role
   $track = 0;
   foreach($user->roles as $role) {
+    $role = str_replace(' ', '_', $role);
     $track += variable_get("googleanalytics_track_{$role}", FALSE);
   }
 
@@ -59,7 +60,7 @@ function googleanalytics_footer($main = 0) {
     }
 
     // Add User profile segmentation values
-    if(is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {;
+    if(is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {
 
       $p = profile_load_profile($user);
 
@@ -115,7 +116,7 @@ function googleanalytics_admin_settings() {
 
   while ($role = db_fetch_object($result)) {
      // can't use empty spaces in varname
-    $role_varname = $string = str_replace(" ", "_", $role->name);
+    $role_varname = $string = str_replace(' ', '_', $role->name);
     $form['roles']["googleanalytics_track_{$role_varname}"] = array(
       '#type' => 'checkbox',
       '#title' => t($role->name),
@@ -132,7 +133,11 @@ function googleanalytics_admin_settings() {
 
   if(!module_exists('profile')) {
     $form['segmentation']['profile'] = array(
-      '#value' => t('You need to activate the <a href="@profile">Profile module</a> to use this feature.', array('@profile' => url('admin/build/modules')))    );
+      '#type' => 'markup',
+      '#value' => t('You need to activate the !profile to use this feature.', array('!profile' => l(t('Profile module'), 'admin/build/modules')) ),
+      '#prefix' => '<p>',
+      '#suffix' => '</p>'
+      );
   } else {
     // Compile a list of fields to show.
     $fields = array('uid' => 'User ID', 'name' => 'Username');
