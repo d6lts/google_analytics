@@ -1,4 +1,4 @@
 ; $Id$
 name = Google Analytics
 description = Adds Google Analytics javascript tracking code to all your site's pages.
-version = "$Name$"
+version = "5.0"
