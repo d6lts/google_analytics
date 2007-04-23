@@ -80,7 +80,7 @@ function googleanalytics_footer($main = 0) {
 		// Add any custom code snippets if specified
 		$codesnippet = variable_get('googleanalytics_codesnippet', '');
 
-    return '<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script><script type="text/javascript">_uacct = "'.$id."\";{$segmentation}{$codesnippet}urchinTracker();</script>";
+    return '<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script><noscript></noscript><script type="text/javascript"><!-- _uacct = "'.$id."\";{$segmentation}{$codesnippet}urchinTracker(); --></script><noscript></noscript>";
   }
 }
 
@@ -172,4 +172,25 @@ function googleanalytics_admin_settings() {
       '#description' => t('Paste <a href="@snippets">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href="@blog">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/39282', '@blog' => 'http://cutroni.com/blog/') )   );
 
   return system_settings_form($form);
+}
+
+/**
+ * Implementation of hook_requirements().
+ */
+function googleanalytics_requirements($phase) {
+  $requirements = array();
+
+  if ($phase == 'runtime') {
+    // Raise warning if Google user account has not been set yet.
+    if (variable_get('googleanalytics_account', 'UA-') == 'UA-') {
+      $requirements['googleanalytics'] = array(
+        'title' => t('Google Analytics module'),
+        'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/settings/googleanalytics'))),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => t('Not configured'),
+      );
+    }
+  }
+
+  return $requirements;
 }
