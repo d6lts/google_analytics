@@ -1,5 +1,5 @@
 Module: Google Analytics
-Author: Mike Carter <mike@ixis.co.uk>
+Author: Mike Carter <www.ixis.co.uk/contact>
 
 
 Description
