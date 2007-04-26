@@ -80,7 +80,9 @@ function googleanalytics_footer($main = 0) {
 		// Add any custom code snippets if specified
 		$codesnippet = variable_get('googleanalytics_codesnippet', '');
 
-    return '<script type="text/javascript" src="http' . $prefix . '.google-analytics.com/urchin.js"></script><noscript></noscript><script type="text/javascript"><!-- _uacct = "'.$id."\";{$segmentation}{$codesnippet}urchinTracker(); --></script><noscript></noscript>";
+    $script = '<script type="text/javascript" src="http' . $prefix . ".google-analytics.com/urchin.js\"></script><noscript></noscript>\n";
+    $script .= '<script type="text/javascript">' . "<!--\n_uacct = \"".$id."\";{$segmentation}{$codesnippet}urchinTracker();\n// --></script><noscript></noscript>\n";
+    return $script;
   }
 }
 
