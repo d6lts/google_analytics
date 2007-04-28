@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-04-28 17:36+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: googleanalytics.info:0
+msgid "Adds Google Analytics javascript tracking code to all your site's pages."
+msgstr ""
+
+#: googleanalytics.info:0 googleanalytics.module:25
+msgid "Google Analytics"
+msgstr ""
+
+#: googleanalytics.info:0
+msgid "google_analytics"
+msgstr ""
+
+#: googleanalytics.install:14
+msgid "Role %rolename is now being tracked by Google Analytics"
+msgstr ""
+
+#: googleanalytics.module:0
+msgid "googleanalytics"
+msgstr ""
+
+#: googleanalytics.module:15
+msgid "Google Analytics is a free statistics package based on the excellent Urchin system."
+msgstr ""
+
+#: googleanalytics.module:26
+msgid "Configure the settings used to generate your Google Analytics site map."
+msgstr ""
+
+#: googleanalytics.module:94
+msgid "Analytics Account Settings"
+msgstr ""
+
+#: googleanalytics.module:100
+msgid "User ID"
+msgstr ""
+
+#: googleanalytics.module:105
+msgid "The user account is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
+msgstr ""
+
+#: googleanalytics.module:112
+msgid "User Role Tracking"
+msgstr ""
+
+#: googleanalytics.module:114
+msgid "Define what user roles should be tracked by Google Analytics."
+msgstr ""
+
+#: googleanalytics.module:129
+msgid "User Segmentation"
+msgstr ""
+
+#: googleanalytics.module:131
+msgid "If your users have profile fields completed, you can track your logged in users based on a defined profile field."
+msgstr ""
+
+#: googleanalytics.module:137
+msgid "Profile module"
+msgstr ""
+
+#: googleanalytics.module:137
+msgid "You need to activate the !profile to use this feature."
+msgstr ""
+
+#: googleanalytics.module:151
+msgid "Track"
+msgstr ""
+
+#: googleanalytics.module:152
+msgid "Selecting one or more values allows you to track users by profile values rather than simply an IP address."
+msgstr ""
+
+#: googleanalytics.module:162
+msgid "Advanced"
+msgstr ""
+
+#: googleanalytics.module:165
+msgid "You can add custom Google Analytic code here."
+msgstr ""
+
+#: googleanalytics.module:169
+msgid "JavaScript Code"
+msgstr ""
+
+#: googleanalytics.module:172
+msgid "Paste <a href=\"@snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"@blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+msgstr ""
+
+#: googleanalytics.module:187
+msgid "Google Analytics module"
+msgstr ""
+
+#: googleanalytics.module:188
+msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
+msgstr ""
+
+#: googleanalytics.module:190
+msgid "Not configured"
+msgstr ""
