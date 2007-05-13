@@ -55,7 +55,7 @@ function googleanalytics_footer($main = 0) {
     $prefix = '://www';
 
     // Are we on a secure page?
-    if($_SERVER['HTTPS']) {
+    if(isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
       $prefix = 's://ssl';
     }
 
