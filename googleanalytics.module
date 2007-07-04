@@ -74,14 +74,18 @@ function googleanalytics_footer($main = 0) {
 
         $fields[$field] = $value;
       }
-      $segmentation = "__utmSetVar('".implode(':', $fields)."');";
+
+      // Only show segmentation variable if there are specified fields
+      if(count($fields) > 0) {
+        $segmentation = "__utmSetVar('".implode(':', $fields)."');";
+      }
 		}
 
 		// Add any custom code snippets if specified
 		$codesnippet = variable_get('googleanalytics_codesnippet', '');
 
     $script = '<script type="text/javascript" src="http' . $prefix . ".google-analytics.com/urchin.js\"></script>\n";
-    $script .= '<script type="text/javascript">' . "<!--\n_uacct = \"".$id."\";{$segmentation}{$codesnippet}urchinTracker();\n// --></script><noscript></noscript>\n";
+    $script .= '<script type="text/javascript">' . "\n_uacct = \"".$id."\";{$segmentation}{$codesnippet}urchinTracker();\n</script>\n";
     return $script;
   }
 }
