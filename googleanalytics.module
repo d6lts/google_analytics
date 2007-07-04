@@ -62,7 +62,7 @@ function googleanalytics_footer($main = 0) {
     // Add User profile segmentation values
     if(is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {
 
-      $p = profile_load_profile($user);
+      $p = module_invoke('profile', 'load_profile', $user);
 
       $fields = array();
       foreach($profile_fields as $field => $title) {
@@ -155,7 +155,7 @@ function googleanalytics_admin_settings() {
     $form['segmentation']["googleanalytics_segmentation"] = array(
       '#type' => 'select',
       '#title' => t('Track'),
-      '#description' => t('Selecting one or more values allows you to track users by profile values rather than simply an IP address.'),
+      '#description' => t('Selecting one or more values allows you to track users by profile values rather than simply an IP address. To select multiple items, hold down CTRL whilst selecting fields.'),
       '#default_value' => variable_get("googleanalytics_segmentation", ''),
       '#options' => $fields,
       '#size' => 10,
