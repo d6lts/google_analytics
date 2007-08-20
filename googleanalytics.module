@@ -90,7 +90,7 @@ function googleanalytics_footer($main = 0) {
 		$codesnippet = variable_get('googleanalytics_codesnippet', '');
 
     $script = '<script type="text/javascript" src="http' . $prefix . ".google-analytics.com/urchin.js\"></script>\n";
-    $script .= '<script type="text/javascript">' . "\n_uacct = \"".$id."\";{$segmentation}{$codesnippet}urchinTracker();\n</script>\n";
+    $script .= '<script type="text/javascript">' . "\n_uacct = \"".$id."\";urchinTracker();{$segmentation}{$codesnippet}\n</script>\n";
     return $script;
   }
 }
