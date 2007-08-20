@@ -74,7 +74,7 @@ function googleanalytics_footer($main = 0) {
         $value = $user->$field;
 
         if(is_array($value)) {
-          $value = implode('.', $value);
+          $value = implode(',', $value);
         }
 
         $fields[$field] = utf8_encode($value);
@@ -157,7 +157,7 @@ function googleanalytics_admin_settings() {
       );
   } else {
     // Compile a list of fields to show.
-    $fields = array('uid' => 'User ID', 'name' => 'Username');
+    $fields = array('uid' => t('User ID'), 'name' => t('Username'), 'roles' => t('User Roles'));
     $result = db_query('SELECT name, title, type, weight FROM {profile_fields} ORDER BY weight');
     while ($record = db_fetch_object($result)) {
       $fields[$record->name] = $record->title;
