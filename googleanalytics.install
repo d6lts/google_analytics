@@ -15,6 +15,15 @@ function googleanalytics_install() {
   }
 }
 
+function googleanalytics_uninstall() {
+  $result = db_query("DELETE FROM {variable} WHERE name LIKE 'googleanalytics_track_%'");
+
+  variable_del('googleanalytics_account');
+  variable_del('googleanalytics_codesnippet');
+  variable_del('googleanalytics_segmentation');
+}
+
+
 function googleanalytics_update_1() {
   $ret = array();
 
