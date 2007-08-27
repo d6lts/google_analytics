@@ -77,7 +77,7 @@ function googleanalytics_footer($main = 0) {
           $value = implode(',', $value);
         }
 
-        $fields[$field] = utf8_encode($value);
+        $fields[$field] = utf8_encode(addslashes($value));
       }
 
       // Only show segmentation variable if there are specified fields
