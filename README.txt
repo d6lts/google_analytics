@@ -35,3 +35,15 @@ HTML footer can confirm this by viewing the page source from
 your browser.
 
 'admin/' pages are automatically ignored by Google Analytics.
+
+
+Advanced Settings
+=================
+You can include additional JavaScript snippets in the advanced
+textarea. These can be found on various blog posts, or on the
+official Google Analytics pages. Support is not provided for
+any customisations you include.
+
+To speed up page loading you may also cache the Analytics urchin.js
+file locally. You need to make sure the site file system is in public
+download mode.
