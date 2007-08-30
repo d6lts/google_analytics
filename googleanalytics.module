@@ -97,7 +97,18 @@ function googleanalytics_footer($main = 0) {
 		// Add any custom code snippets if specified
 		$codesnippet = variable_get('googleanalytics_codesnippet', '');
 
-    $script = '<script type="text/javascript" src="http' . $prefix . ".google-analytics.com/urchin.js\"></script>\n";
+    // Should a local cached copy of Urchin.js be used?
+    if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC)) {
+      $source = googleanalytics_cache();
+      if ($source) {
+        $source = base_path() . $source;
+      }
+    }
+    if (!isset($source)) {
+      $source = 'http' . $prefix . '.google-analytics.com/urchin.js';
+    }
+
+    $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
     $script .= '<script type="text/javascript">' . $downloadtracker . "\n_uacct = \"".$id."\";urchinTracker();{$segmentation}{$codesnippet}\n</script>\n";
 
     return $script;
@@ -198,6 +209,18 @@ function googleanalytics_admin_settings() {
         '#collapsed' => TRUE,
         '#description' => t('You can add custom Google Analytic code here.')
   );
+
+  $form['advanced']['googleanalytics_cache'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Cache urchin.js locally'),
+    '#description' => t('If checked, the urchin.js file is retreived from Google Analytic and cached locally. It is updated daily from Google\'s servers to ensure updates to urchin.js are reflected in the local copy.'),
+    '#default_value' => variable_get('googleanalytics_cache', 0),
+  );
+  if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
+    $form['advanced']['googleanalytics_cache']['#disabled'] = TRUE;
+    $form['advanced']['googleanalytics_cache']['#description'] .= ' '. t('<a href="!url">Public file transfers</a> must be enabled to allow local caching.', array('!url' => url('admin/settings/file-system', drupal_get_destination())));
+  }
+
   $form['advanced']['googleanalytics_codesnippet'] = array(
       '#type' => 'textarea',
       '#title' => t('JavaScript Code'),
@@ -207,6 +230,7 @@ function googleanalytics_admin_settings() {
 
   return system_settings_form($form);
 }
+
 
 /**
  * Implementation of hook_requirements().
@@ -227,4 +251,41 @@ function googleanalytics_requirements($phase) {
   }
 
   return $requirements;
+}
+
+
+/**
+ * Implementation of hook_cron().
+ */
+function googleanalytics_cron() {
+  // Regenerate the google analytics urchin.js every day.
+  if (time() - variable_get('cron_last', 0) >= 86400) {
+    file_delete(file_directory_path() .'/googleanalytics/urchin.js');
+  }
+}
+
+
+/**
+ * Download and cache the urchin.js file locally.
+ * @param $location
+ *   The full URL to the external javascript file.
+ * @return mixed
+ *   The path to the local javascript file on success, boolean FALSE on failure.
+ */
+function googleanalytics_cache() {
+  $location = 'http://www.google-analytics.com/urchin.js';
+  $directory = file_directory_path() . '/googleanalytics';
+  $file_destination = $directory .'/'. basename($location);
+  if (!file_exists($file_destination)) {
+    $result = drupal_http_request($location);
+    if ($result->code == 200) {
+      // Check that the files directory is writable
+      if (file_check_directory($directory, FILE_CREATE_DIRECTORY)) {
+        return file_save_data($result->data, $directory .'/'. basename($location), FILE_EXISTS_REPLACE);
+      }
+    }
+  }
+  else {
+    return $file_destination;
+  }
 }
