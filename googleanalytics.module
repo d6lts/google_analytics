@@ -89,7 +89,7 @@ function googleanalytics_footer($main = 0) {
     $path = drupal_get_path('module', 'googleanalytics');
     if ($trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES)) {
       drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles)), 'setting', 'header');
-      drupal_add_js($path . '/downloadtracker.js', 'module', 'footer');
+      drupal_add_js($path .'/downloadtracker.js', 'module', 'footer');
     }
 
 		// Add any custom code snippets if specified
