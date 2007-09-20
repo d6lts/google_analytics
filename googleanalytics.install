@@ -22,6 +22,8 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_codesnippet');
   variable_del('googleanalytics_segmentation');
   variable_del('googleanalytics_track__user1');
+  variable_del('googleanalytics_trackfiles');
+  variable_del('googleanalytics_cache');
 }
 
 
