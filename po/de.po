@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics Module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-28 17:36+0200\n"
-"PO-Revision-Date: 2007-04-28 18:58+0100\n"
+"PO-Revision-Date: 2007-09-22 00:59+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -19,104 +19,132 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: googleanalytics.info:0
-msgid "Adds Google Analytics javascript tracking code to all your site's pages."
-msgstr "Fügt Google Analytics JavaScript-Protokollcode in alle Webseiten ein."
-
-#: googleanalytics.info:0
-#: googleanalytics.module:25
-msgid "Google Analytics"
-msgstr "Google Analytics"
-
-#: googleanalytics.info:0
-msgid "google_analytics"
-msgstr "google_analytics"
-
-#: googleanalytics.install:14
-msgid "Role %rolename is now being tracked by Google Analytics"
-msgstr "Die Rolle %rolename wird jetzt von Google Analytics protokolliert."
-
-#: googleanalytics.module:0
-msgid "googleanalytics"
-msgstr "googleanalytics"
-
-#: googleanalytics.module:15
+#: googleanalytics.module:16
 msgid "Google Analytics is a free statistics package based on the excellent Urchin system."
 msgstr "Google Analytics ist ein kostenfreies Statistikpacket, basierend auf dem hervorragenden Urchin System."
+
+#: googleanalytics.module:25
+#: googleanalytics.info:0
+msgid "Google Analytics"
+msgstr "Google Analytics"
 
 #: googleanalytics.module:26
 msgid "Configure the settings used to generate your Google Analytics site map."
 msgstr "Die Einstellungen konfigurieren, welche zur Generierung der Google Analytics Sitemap dienen."
 
-#: googleanalytics.module:94
+#: googleanalytics.module:122
 msgid "Analytics Account Settings"
 msgstr "Analytics Kontoeinstellungen"
 
-#: googleanalytics.module:100
+#: googleanalytics.module:128;180
 msgid "User ID"
 msgstr "Benutzer ID"
 
-#: googleanalytics.module:105
+#: googleanalytics.module:133
 msgid "The user account is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
 msgstr "Das Benutzerkonto ist eindeutig für die Webseitendomain. Ein Konto kann auf der <a href=\"@url\">Google Analytics</a> Webseite beantragt werden."
 
-#: googleanalytics.module:112
+#: googleanalytics.module:141
 msgid "User Role Tracking"
 msgstr "Protokollierung von Benutzerrollen"
 
-#: googleanalytics.module:114
-msgid "Define what user roles should be tracked by Google Analytics."
-msgstr "Legt die Benutzerrollen fest, welche mit Google Analytics protokolliert werden sollen."
+#: googleanalytics.module:143
+msgid "Define what user roles should not be tracked by Google Analytics."
+msgstr "Legt die Benutzerrollen fest, welche mit Google Analytics nicht protokolliert werden sollen."
 
-#: googleanalytics.module:129
+#: googleanalytics.module:148
+msgid "Admin (user 1)"
+msgstr "Admin (Benutzer 1)"
+
+#: googleanalytics.module:164
 msgid "User Segmentation"
 msgstr "Benutzerverteilung"
 
-#: googleanalytics.module:131
+#: googleanalytics.module:166
 msgid "If your users have profile fields completed, you can track your logged in users based on a defined profile field."
 msgstr "Wenn die Benutzer ihre Profilfelder vervollständigt haben, können die angemeldeten Benutzer auf Basis eines festgelegten Profilfeldes protokolliert werden."
 
-#: googleanalytics.module:137
-msgid "Profile module"
-msgstr "Profil Module"
-
-#: googleanalytics.module:137
+#: googleanalytics.module:172
 msgid "You need to activate the !profile to use this feature."
 msgstr "Das !profile muss für dieses Feature aktiviert werden."
 
-#: googleanalytics.module:151
+#: googleanalytics.module:172
+msgid "Profile module"
+msgstr "Profil Module"
+
+#: googleanalytics.module:181
+msgid "Username"
+msgstr "Benutzername"
+
+#: googleanalytics.module:182
+msgid "User Roles"
+msgstr "Benutzerrollen"
+
+#: googleanalytics.module:191
 msgid "Track"
 msgstr "Beiträge"
 
-#: googleanalytics.module:152
-msgid "Selecting one or more values allows you to track users by profile values rather than simply an IP address."
-msgstr "Die Auswahl eines oder mehrerer Werte erlaubt die Protokollierung von Benutzern durch Profilwerte anstatt einer einfachen IP Adresse."
+#: googleanalytics.module:192
+msgid "Selecting one or more values allows you to track users by profile values rather than simply an IP address. To select multiple items, hold down CTRL whilst selecting fields."
+msgstr "Die Auswahl eines oder mehrerer Werte erlaubt die Protokollierung von Benutzern durch Profilwerte anstatt einer einfachen IP Adresse. Die STRG Taste zur Auswahl mehrerer Felder gedrückt halten."
 
-#: googleanalytics.module:162
+#: googleanalytics.module:202
+msgid "File Extensions To Track"
+msgstr "Protokollieren der Dateierweiterungen"
+
+#: googleanalytics.module:204
+msgid "A pipe seperated list of file extensions that should be tracked when clicked. Example !extensions"
+msgstr "Eine durch Pipes getrennte Liste von Dateiendungen, welche beim Anklicken protokolliert werden sollen. Beispiel: !extensions"
+
+#: googleanalytics.module:209
 msgid "Advanced"
 msgstr "Erweitert"
 
-#: googleanalytics.module:165
+#: googleanalytics.module:212
 msgid "You can add custom Google Analytic code here."
 msgstr "Hier kann angepasster Google Analytics Code hinzugefügt werden."
 
-#: googleanalytics.module:169
+#: googleanalytics.module:217
+msgid "Cache urchin.js locally"
+msgstr "Lokale Zwischenspeicherung der urchin.js"
+
+#: googleanalytics.module:218
+msgid "If checked, the urchin.js file is received from Google Analytic and cached locally. It is updated daily from Google's servers to ensure updates to urchin.js are reflected in the local copy."
+msgstr "Sobald aktiviert, wird die urchin.js Datei von Google Analytic heruntergeladen und lokal gecached. Diese wird täglich von den Google Servern aktualisiert, damit sich Aktualisierungen der urchin.js in der lokalen Kopie niederschlagen."
+
+#: googleanalytics.module:223
+msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
+msgstr "Zum lokalen Cachen muss die <a href=\"!url\">öffentliche Download-Methode</a> aktiviert sein."
+
+#: googleanalytics.module:228
 msgid "JavaScript Code"
 msgstr "JavaScript Code"
 
-#: googleanalytics.module:172
+#: googleanalytics.module:231
 msgid "Paste <a href=\"@snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"@blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr "<a href=\"@snippets\">Angepasste Codeausschnitte</a> hier einfügen. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. Weitere Hilfe bezüglich dieser Funktion kann im <a href=\"@blog\">Cutroni.com Blog</a> gefunden werden. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code immer mit einem Semikolon (;) abschließen."
 
-#: googleanalytics.module:187
+#: googleanalytics.module:247
 msgid "Google Analytics module"
 msgstr "Google Analytics Modul"
 
-#: googleanalytics.module:188
+#: googleanalytics.module:248
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr "Das Google Analytics Modul wurde noch nicht konfiguriert. Die Einstellungen können auf der <a href=\"@url\">Google Analytics Einstellungen Seite</a> vorgenommen werden."
 
-#: googleanalytics.module:190
+#: googleanalytics.module:250
 msgid "Not configured"
 msgstr "Nicht konfiguriert"
+
+#: googleanalytics.module:0
+msgid "googleanalytics"
+msgstr "googleanalytics"
+
+#: googleanalytics.install:13
+msgid "Role %rolename is now being tracked by Google Analytics"
+msgstr "Die Rolle %rolename wird jetzt von Google Analytics protokolliert."
+
+#: googleanalytics.info:0
+msgid "Adds Google Analytics javascript tracking code to all your site's pages."
+msgstr "Fügt Google Analytics JavaScript-Protokollcode in alle Webseiten ein."
 
