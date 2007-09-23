@@ -23,7 +23,7 @@ function googleanalytics_menu($maycache) {
     $items[] = array(
       'path' => 'admin/settings/googleanalytics',
       'title' => t('Google Analytics'),
-      'description' => t('Configure the settings used to generate your Google Analytics site map.'),
+      'description' => t('Configure the settings used to generate your Google Analytics tracking code.'),
       'callback' => 'drupal_get_form',
       'callback arguments' => 'googleanalytics_admin_settings',
       'access' => user_access('administer site configuration'),
