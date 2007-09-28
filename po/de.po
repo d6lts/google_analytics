@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics Module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-28 17:36+0200\n"
-"PO-Revision-Date: 2007-09-22 00:59+0100\n"
+"PO-Revision-Date: 2007-09-28 22:02+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "Benutzer ID"
 
 #: googleanalytics.module:133
 msgid "The user account is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
-msgstr "Das Benutzerkonto ist eindeutig für die Webseitendomain. Ein Konto kann auf der <a href=\"@url\">Google Analytics</a> Webseite beantragt werden."
+msgstr "Das Benutzerkonto ist eindeutig für die Domain der Website. Ein Konto kann auf der <a href=\"@url\">Google Analytics</a> Website beantragt werden."
 
 #: googleanalytics.module:141
 msgid "User Role Tracking"
@@ -122,7 +122,7 @@ msgstr "JavaScript Code"
 
 #: googleanalytics.module:231
 msgid "Paste <a href=\"@snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"@blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
-msgstr "<a href=\"@snippets\">Angepasste Codeausschnitte</a> hier einfügen. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. Weitere Hilfe bezüglich dieser Funktion kann im <a href=\"@blog\">Cutroni.com Blog</a> gefunden werden. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code immer mit einem Semikolon (;) abschließen."
+msgstr "<a href=\"@snippets\">Angepasste Codeausschnitte</a> hier einfügen. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. Weitere Hilfe zu dieser Funktion finder sich im <a href=\"@blog\">Cutroni.com Blog</a>. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
 
 #: googleanalytics.module:247
 msgid "Google Analytics module"
