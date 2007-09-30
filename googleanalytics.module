@@ -8,7 +8,7 @@
  * @author: Mike Carter <www.ixis.co.uk/contact>
  */
 
-define(GA_TRACKFILES, 'pdf|zip|mp3');
+define('GA_TRACKFILES', 'pdf|zip|mp3');
 
 function googleanalytics_help($section) {
   switch ($section) {
