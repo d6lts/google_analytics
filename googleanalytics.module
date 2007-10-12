@@ -33,6 +33,31 @@ function googleanalytics_menu($maycache) {
   return $items;
 }
 
+
+/**
+ *
+ * @param $account
+ *   A user object containing an array of roles to check
+ * @return boolean
+ *   A decision on if the current user is being tracked by GAnalytics
+ */
+function googleanalytics_track($account) {
+  $track = TRUE;
+
+  foreach (array_keys($account->roles) as $role) {
+    if (!variable_get('googleanalytics_track_'. $role, FALSE)) {
+      $track = FALSE;
+    }
+  }
+
+  if ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
+    $track = FALSE;
+  }
+
+  return $track;
+}
+
+
 /**
  * Implementation of hook_footer()  to insert Javascript at the end of the page
  */
@@ -42,16 +67,7 @@ function googleanalytics_footer($main = 0) {
   $id = variable_get('googleanalytics_account', '');
 
   // Check if we should track the currently active user's role
-  $track = TRUE;
-  foreach (array_keys($user->roles) as $role) {
-    if (variable_get('googleanalytics_track_'. $role, FALSE)) {
-      $track = FALSE;
-    }
-  }
-
-  if ($user->uid == 1 && variable_get('googleanalytics_track__user1', FALSE)) {
-    $track = FALSE;
-  }
+  $track = googleanalytics_track($user);
 
   // Don't track page views in the admin sections
   if ($id && (arg(0) != 'admin') && $track == TRUE) {
@@ -272,8 +288,7 @@ function googleanalytics_cron() {
  * @return mixed
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
-function googleanalytics_cache() {
-  $location = 'http://www.google-analytics.com/urchin.js';
+function googleanalytics_cache($location = 'http://www.google-analytics.com/urchin.js') {
   $directory = file_directory_path() .'/googleanalytics';
   $file_destination = $directory .'/'. basename($location);
   if (!file_exists($file_destination)) {
