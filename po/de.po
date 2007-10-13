@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics Module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-28 17:36+0200\n"
-"PO-Revision-Date: 2007-09-28 22:02+0100\n"
+"PO-Revision-Date: 2007-10-13 23:02+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -29,8 +29,8 @@ msgid "Google Analytics"
 msgstr "Google Analytics"
 
 #: googleanalytics.module:26
-msgid "Configure the settings used to generate your Google Analytics site map."
-msgstr "Die Einstellungen konfigurieren, welche zur Generierung der Google Analytics Sitemap dienen."
+msgid "Configure the settings used to generate your Google Analytics tracking code."
+msgstr "Die Einstellungen konfigurieren, welche zur Generierung des Google-Analytics-Trackingcodes dienen."
 
 #: googleanalytics.module:122
 msgid "Analytics Account Settings"
