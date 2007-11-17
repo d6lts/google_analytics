@@ -1,0 +1,146 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  googleanalytics.module,v 1.14.2.13 2007/08/27 21:21:25 budda
+#  googleanalytics.install,v 1.2.2.4 2007/09/20 21:08:17 hass
+#  googleanalytics.info,v 1.2.2.3 2007/06/18 23:06:44 dww
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2007-09-22 00:27+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: googleanalytics.admin.inc:14
+msgid "Analytics Account Settings"
+msgstr ""
+
+#: googleanalytics.admin.inc:20;72
+msgid "User ID"
+msgstr ""
+
+#: googleanalytics.admin.inc:25
+msgid "The user account is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
+msgstr ""
+
+#: googleanalytics.admin.inc:33
+msgid "User Role Tracking"
+msgstr ""
+
+#: googleanalytics.admin.inc:35
+msgid "Define what user roles should not be tracked by Google Analytics."
+msgstr ""
+
+#: googleanalytics.admin.inc:40
+msgid "Admin (user 1)"
+msgstr ""
+
+#: googleanalytics.admin.inc:56
+msgid "User Segmentation"
+msgstr ""
+
+#: googleanalytics.admin.inc:58
+msgid "If your users have profile fields completed, you can track your logged in users based on a defined profile field."
+msgstr ""
+
+#: googleanalytics.admin.inc:64
+msgid "You need to activate the !profile to use this feature."
+msgstr ""
+
+#: googleanalytics.admin.inc:64
+msgid "Profile module"
+msgstr ""
+
+#: googleanalytics.admin.inc:73
+msgid "Username"
+msgstr ""
+
+#: googleanalytics.admin.inc:74
+msgid "User Roles"
+msgstr ""
+
+#: googleanalytics.admin.inc:83
+msgid "Track"
+msgstr ""
+
+#: googleanalytics.admin.inc:84
+msgid "Selecting one or more values allows you to track users by profile values rather than simply an IP address. To select multiple items, hold down CTRL whilst selecting fields."
+msgstr ""
+
+#: googleanalytics.admin.inc:94
+msgid "File Extensions To Track"
+msgstr ""
+
+#: googleanalytics.admin.inc:96
+msgid "A pipe seperated list of file extensions that should be tracked when clicked. Example !extensions"
+msgstr ""
+
+#: googleanalytics.admin.inc:101
+msgid "Advanced"
+msgstr ""
+
+#: googleanalytics.admin.inc:104
+msgid "You can add custom Google Analytic code here."
+msgstr ""
+
+#: googleanalytics.admin.inc:109
+msgid "Cache urchin.js locally"
+msgstr ""
+
+#: googleanalytics.admin.inc:110
+msgid "If checked, the urchin.js file is received from Google Analytic and cached locally. It is updated daily from Google's servers to ensure updates to urchin.js are reflected in the local copy."
+msgstr ""
+
+#: googleanalytics.admin.inc:115
+msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
+msgstr ""
+
+#: googleanalytics.admin.inc:120
+msgid "JavaScript Code"
+msgstr ""
+
+#: googleanalytics.admin.inc:123
+msgid "Paste <a href=\"@snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"@blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+msgstr ""
+
+#: googleanalytics.module:16
+msgid "Google Analytics is a free statistics package based on the excellent Urchin system."
+msgstr ""
+
+#: googleanalytics.module:126
+msgid "Google Analytics module"
+msgstr ""
+
+#: googleanalytics.module:127
+msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
+msgstr ""
+
+#: googleanalytics.module:129
+msgid "Not configured"
+msgstr ""
+
+#: googleanalytics.module:0
+msgid "googleanalytics"
+msgstr ""
+
+#: googleanalytics.install:13
+msgid "Role %rolename is now being tracked by Google Analytics"
+msgstr ""
+
+#: googleanalytics.info:0
+msgid "Google Analytics"
+msgstr ""
+
+#: googleanalytics.info:0
+msgid "Adds Google Analytics javascript tracking code to all your site's pages."
+msgstr ""
+

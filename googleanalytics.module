@@ -1,0 +1,185 @@
+<?php
+// $Id$
+/*
+ * Drupal Module: GoogleAnalytics
+ * Adds the required Javascript to the bottom of all your Drupal pages
+ * to allow tracking by the Google Analytics statistics package.
+ *
+ * @author: Mike Carter <www.ixis.co.uk/contact>
+ */
+
+define('GA_TRACKFILES', 'pdf|zip|mp3');
+
+function googleanalytics_help($path, $arg) {
+  switch ($path) {
+    case 'admin/settings/googleanalytics':
+      return t('Google Analytics is a free statistics package based on the excellent Urchin system.');
+  }
+}
+
+function googleanalytics_menu() {
+
+  $items['admin/settings/googleanalytics'] = array(
+    'title' => 'Google Analytics',
+    'description' => 'Configure the settings used to generate your Google Analytics site map.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('googleanalytics_admin_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'googleanalytics.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+
+/**
+ *
+ * @param $account
+ *   A user object containing an array of roles to check
+ * @return boolean
+ *   A decision on if the current user is being tracked by GAnalytics
+ */
+function googleanalytics_track($account) {
+  $track = TRUE;
+
+  foreach (array_keys($account->roles) as $role) {
+    if (!variable_get('googleanalytics_track_'. $role, FALSE)) {
+      $track = FALSE;
+    }
+  }
+
+  if ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
+    $track = FALSE;
+  }
+
+  return $track;
+}
+
+
+/**
+ * Implementation of hook_footer()  to insert Javascript at the end of the page
+ */
+function googleanalytics_footer($main = 0) {
+  global $user;
+
+  $id = variable_get('googleanalytics_account', '');
+
+  // Check if we should track the currently active user's role
+  $track = googleanalytics_track($user);
+
+  // Don't track page views in the admin sections
+  if ($id && (arg(0) != 'admin') && $track == TRUE) {
+
+    $prefix = '://www';
+
+    // Are we on a secure page?
+    if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
+      $prefix = 's://ssl';
+    }
+
+    // Add User profile segmentation values
+    if (is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {
+
+      $p = module_invoke('profile', 'load_profile', $user);
+
+      $fields = array();
+      foreach ($profile_fields as $field => $title) {
+        $value = $user->$field;
+
+        if (is_array($value)) {
+          $value = implode(',', $value);
+        }
+
+        $fields[$field] = utf8_encode(addslashes($value));
+      }
+
+      // Only show segmentation variable if there are specified fields
+      $segmentation = '';
+      if (count($fields) > 0) {
+        $segmentation = "__utmSetVar('". implode(':', $fields) ."');";
+      }
+    }
+
+    // Download tracking
+    $path = drupal_get_path('module', 'googleanalytics');
+    if ($trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES)) {
+      drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles)), 'setting', 'header');
+      drupal_add_js($path .'/downloadtracker.js', 'module', 'footer');
+    }
+    
+    // Add any custom code snippets if specified
+    $codesnippet = variable_get('googleanalytics_codesnippet', '');
+    
+    // Should a local cached copy of Urchin.js be used?
+    if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC)) {
+      $source = googleanalytics_cache();
+      if ($source) {
+        $source = base_path() . $source;
+      }
+    }
+    if (!isset($source)) {
+      $source = 'http'. $prefix .'.google-analytics.com/urchin.js';
+    }
+
+    $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
+    $script .= '<script type="text/javascript">'. $downloadtracker ."\n_uacct = \"". $id ."\";urchinTracker();{$segmentation}{$codesnippet}\n</script>\n";
+
+    return $script;
+  }
+}
+
+/**
+ * Implementation of hook_requirements().
+ */
+function googleanalytics_requirements($phase) {
+  $requirements = array();
+
+  if ($phase == 'runtime') {
+    // Raise warning if Google user account has not been set yet.
+    if (variable_get('googleanalytics_account', 'UA-') == 'UA-') {
+      $requirements['googleanalytics'] = array(
+        'title' => t('Google Analytics module'),
+        'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/settings/googleanalytics'))),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => t('Not configured'),
+      );
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implementation of hook_cron().
+ */
+function googleanalytics_cron() {
+  // Regenerate the google analytics urchin.js every day.
+  if (time() - variable_get('cron_last', 0) >= 86400) {
+    file_delete(file_directory_path() .'/googleanalytics/urchin.js');
+  }
+}
+
+/**
+ * Download and cache the urchin.js file locally.
+ * @param $location
+ *   The full URL to the external javascript file.
+ * @return mixed
+ *   The path to the local javascript file on success, boolean FALSE on failure.
+ */
+function googleanalytics_cache($location = 'http://www.google-analytics.com/urchin.js') {
+  $directory = file_directory_path() .'/googleanalytics';
+  $file_destination = $directory .'/'. basename($location);
+  if (!file_exists($file_destination)) {
+    $result = drupal_http_request($location);
+    if ($result->code == 200) {
+      // Check that the files directory is writable
+      if (file_check_directory($directory, FILE_CREATE_DIRECTORY)) {
+        return file_save_data($result->data, $directory .'/'. basename($location), FILE_EXISTS_REPLACE);
+      }
+    }
+  }
+  else {
+    return $file_destination;
+  }
+}
