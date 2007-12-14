@@ -1,6 +1,6 @@
 gaTrackerAttach = function () {
 
-  $('a').click( function() {
+  jQuery('a').click( function() {
     var trackDownload = Drupal.settings.googleanalytics.trackDownload;
 
     // Extract the domain from the location (the domain are in domain[2])
@@ -26,5 +26,5 @@ gaTrackerAttach = function () {
 };
 
 if (Drupal.jsEnabled) {
- $(document).ready(gaTrackerAttach);
+ jQuery(document).ready(gaTrackerAttach);
 }
