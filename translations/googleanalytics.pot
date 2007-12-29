@@ -3,7 +3,7 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.admin.inc,v 1.2.2.4 2007/12/29 10:33:38 hass
+#  googleanalytics.admin.inc,v 1.2.2.6 2007/12/29 13:00:00 hass
 #  googleanalytics.module,v 1.14.2.13 2007/08/27 21:21:25 budda
 #  googleanalytics.info,v 1.5.2.2 2007/11/17 20:46:14 hass
 #  googleanalytics.install,v 1.4.2.2 2007/11/17 20:46:14 hass
@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2007-12-29 13:38+0100\n"
+"POT-Creation-Date: 2007-12-29 14:01+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -46,7 +46,7 @@ msgid "User Role Tracking"
 msgstr ""
 
 #: googleanalytics.admin.inc:42
-msgid "Define what user roles should be tracked by Google Analytics."
+msgid "Define what user roles should be tracked by Google Analytics. <strong>Note:</strong> Drupal Admin pages are never tracked."
 msgstr ""
 
 #: googleanalytics.admin.inc:47
