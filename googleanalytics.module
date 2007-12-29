@@ -1,5 +1,6 @@
 <?php
 // $Id$
+
 /*
  * Drupal Module: GoogleAnalytics
  * Adds the required Javascript to the bottom of all your Drupal pages
@@ -32,31 +33,6 @@ function googleanalytics_menu() {
   return $items;
 }
 
-
-/**
- *
- * @param $account
- *   A user object containing an array of roles to check
- * @return boolean
- *   A decision on if the current user is being tracked by GAnalytics
- */
-function googleanalytics_track($account) {
-  $track = TRUE;
-
-  foreach (array_keys($account->roles) as $role) {
-    if (!variable_get('googleanalytics_track_'. $role, FALSE)) {
-      $track = FALSE;
-    }
-  }
-
-  if ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
-    $track = FALSE;
-  }
-
-  return $track;
-}
-
-
 /**
  * Implementation of hook_footer()  to insert Javascript at the end of the page
  */
@@ -66,7 +42,7 @@ function googleanalytics_footer($main = 0) {
   $id = variable_get('googleanalytics_account', '');
 
   // Check if we should track the currently active user's role
-  $track = googleanalytics_track($user);
+  $track = _googleanalytics_track($user);
 
   // Don't track page views in the admin sections
   if ($id && (arg(0) != 'admin') && $track == TRUE) {
@@ -77,6 +53,9 @@ function googleanalytics_footer($main = 0) {
     if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
       $prefix = 's://ssl';
     }
+
+    // Use the old version of Google Analytics?
+    $legacy_version = variable_get('googleanalytics_legacy_version', TRUE);
 
     // Add User profile segmentation values
     if (is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {
@@ -97,7 +76,12 @@ function googleanalytics_footer($main = 0) {
       // Only show segmentation variable if there are specified fields
       $segmentation = '';
       if (count($fields) > 0) {
-        $segmentation = "__utmSetVar('". implode(':', $fields) ."');";
+        if ($legacy_version) {
+          $segmentation = "__utmSetVar('". implode(':', $fields) ."');";
+        }
+        else {
+          $segmentation = "pageTracker._setVar('". implode(':', $fields) ."');";
+        }
       }
     }
 
@@ -107,23 +91,54 @@ function googleanalytics_footer($main = 0) {
       drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles)), 'setting', 'header');
       drupal_add_js($path .'/downloadtracker.js', 'module', 'footer');
     }
-    
+
     // Add any custom code snippets if specified
     $codesnippet = variable_get('googleanalytics_codesnippet', '');
-    
-    // Should a local cached copy of Urchin.js be used?
+
+    // Should a local cached copy of urchin.js or ga.js be used?
     if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC)) {
-      $source = googleanalytics_cache();
-      if ($source) {
+      if ($legacy_version) {
+        $source = _googleanalytics_cache('http://www.google-analytics.com/urchin.js');
+      }
+      else {
+        $source = _googleanalytics_cache('http://www.google-analytics.com/ga.js');
+      }
+      if (!empty($source)) {
         $source = base_path() . $source;
       }
     }
     if (!isset($source)) {
-      $source = 'http'. $prefix .'.google-analytics.com/urchin.js';
+      if ($legacy_version) {
+        $source = 'http'. $prefix .'.google-analytics.com/urchin.js';
+      }
+      else {
+        $source = 'http'. $prefix .'.google-analytics.com/ga.js';
+      }
     }
 
-    $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
-    $script .= '<script type="text/javascript">'. $downloadtracker ."\n_uacct = \"". $id ."\";urchinTracker();{$segmentation}{$codesnippet}\n</script>\n";
+    // Should the legacy code be used?
+    if ($legacy_version) {
+      $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
+      $script .= '<script type="text/javascript">';
+      $script .= '  '. $downloadtracker;
+      $script .= '  _uacct = "'. $id .'";';
+      $script .= '  {'. $segmentation .'}';
+      $script .= '  {'. $codesnippet .'}';
+      $script .= '  urchinTracker();';
+      $script .= '</script>\n';
+    }
+    else {
+      $script = '<script type="text/javascript">';
+      $script .= '  document.write(unescape("%3Cscript src=\''. $source .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
+      $script .= '</script>';
+      $script .= '<script type="text/javascript">';
+      $script .= '  var pageTracker = _gat._getTracker("'. $id .'");';
+      $script .= '  pageTracker._initData();';
+      $script .= '  '. $segmentation;
+      $script .= '  '. $codesnippet;
+      $script .= '  pageTracker._trackPageview();';
+      $script .= '</script>';
+    }
 
     return $script;
   }
@@ -156,7 +171,11 @@ function googleanalytics_requirements($phase) {
 function googleanalytics_cron() {
   // Regenerate the google analytics urchin.js every day.
   if (time() - variable_get('cron_last', 0) >= 86400) {
+    // Legacy google analytics version.
     file_delete(file_directory_path() .'/googleanalytics/urchin.js');
+
+    // New google analytics version.
+    file_delete(file_directory_path() .'/googleanalytics/ga.js');
   }
 }
 
@@ -182,4 +201,27 @@ function googleanalytics_cache($location = 'http://www.google-analytics.com/urch
   else {
     return $file_destination;
   }
+}
+
+/**
+ *
+ * @param $account
+ *   A user object containing an array of roles to check
+ * @return boolean
+ *   A decision on if the current user is being tracked by GAnalytics
+ */
+function _googleanalytics_track($account) {
+  $track = TRUE;
+
+  foreach (array_keys($account->roles) as $role) {
+    if (!variable_get('googleanalytics_track_'. $role, FALSE)) {
+      $track = FALSE;
+    }
+  }
+
+  if ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
+    $track = FALSE;
+  }
+
+  return $track;
 }

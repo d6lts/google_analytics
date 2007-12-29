@@ -25,6 +25,13 @@ function googleanalytics_admin_settings() {
     '#description' => t('The user account is unique to the websites domain. You can obtain a user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/'))
   );
 
+  $form['account']['googleanalytics_version'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Legacy Google Analytics'),
+    '#default_value' => variable_get('googleanalytics_version', FALSE),
+    '#description' => t('This will enable Legacy Google Analytics instead of most recent.<br /> Please note that Legacy Google Analytics will not receive feature updates and is not compatible with new features.'),
+  );
+
   // Render the role overview.
   $result = db_query('SELECT * FROM {role} ORDER BY name');
 
@@ -106,8 +113,8 @@ function googleanalytics_admin_settings() {
 
   $form['advanced']['googleanalytics_cache'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Cache urchin.js locally'),
-    '#description' => t("If checked, the urchin.js file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to urchin.js are reflected in the local copy."),
+    '#title' => t('Cache tracking code file locally'),
+    '#description' => t("If checked, the tracking code file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy."),
     '#default_value' => variable_get('googleanalytics_cache', 0),
   );
   if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
