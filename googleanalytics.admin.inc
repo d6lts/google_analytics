@@ -39,13 +39,13 @@ function googleanalytics_admin_settings() {
     '#type' => 'fieldset',
     '#title' => t('User Role Tracking'),
     '#collapsible' => TRUE,
-    '#description' => t('Define what user roles should be tracked by Google Analytics.'),
+    '#description' => t('Define what user roles should be tracked by Google Analytics. <strong>Note:</strong> Drupal Admin pages are never tracked.'),
   );
 
   $form['roles']['googleanalytics_track__user1'] = array(
     '#type' => 'checkbox',
     '#title' => t('Admin (user 1)'),
-    '#default_value' => variable_get('googleanalytics_track__user1', TRUE),
+    '#default_value' => variable_get('googleanalytics_track__user1', FALSE)
   );
 
   while ($role = db_fetch_object($result)) {
