@@ -101,13 +101,13 @@ function googleanalytics_admin_settings() {
     '#title' => t('Advanced'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
-    '#description' => t('You can add custom Google Analytic code here.')
+    '#description' => t('You can add custom Google Analytics code here.')
   );
 
   $form['advanced']['googleanalytics_cache'] = array(
     '#type' => 'checkbox',
     '#title' => t('Cache urchin.js locally'),
-    '#description' => t("If checked, the urchin.js file is received from Google Analytic and cached locally. It is updated daily from Google's servers to ensure updates to urchin.js are reflected in the local copy."),
+    '#description' => t("If checked, the urchin.js file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to urchin.js are reflected in the local copy."),
     '#default_value' => variable_get('googleanalytics_cache', 0),
   );
   if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
