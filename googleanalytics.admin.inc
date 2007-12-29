@@ -32,7 +32,7 @@ function googleanalytics_admin_settings() {
     '#type' => 'fieldset',
     '#title' => t('User Role Tracking'),
     '#collapsible' => TRUE,
-    '#description' => t('Define what user roles should not be tracked by Google Analytics.'),
+    '#description' => t('Define what user roles should be tracked by Google Analytics.'),
   );
 
   $form['roles']['googleanalytics_track__user1'] = array(
