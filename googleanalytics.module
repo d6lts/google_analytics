@@ -122,10 +122,10 @@ function googleanalytics_footer($main = 0) {
       $script .= '<script type="text/javascript">';
       $script .= '_uacct = "'. $id .'";';
       if (!empty($segmentation)) {
-        $script .= '{'. $segmentation .'}';
+        $script .= $segmentation;
       }
       if (!empty($codesnippet)) {
-        $script .= '{'. $codesnippet .'}';
+        $script .= $codesnippet;
       }
       $script .= 'urchinTracker();';
       $script .= "</script>\n";
