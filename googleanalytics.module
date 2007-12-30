@@ -120,24 +120,27 @@ function googleanalytics_footer($main = 0) {
     if ($legacy_version) {
       $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
       $script .= '<script type="text/javascript">';
-      $script .= '  '. $downloadtracker;
-      $script .= '  _uacct = "'. $id .'";';
-      $script .= '  {'. $segmentation .'}';
-      $script .= '  {'. $codesnippet .'}';
-      $script .= '  urchinTracker();';
-      $script .= '</script>\n';
+      $script .= '_uacct = "'. $id .'";';
+      if (!empty($segmentation)) {
+        $script .= '{'. $segmentation .'}';
+      }
+      if (!empty($codesnippet)) {
+        $script .= '{'. $codesnippet .'}';
+      }
+      $script .= 'urchinTracker();';
+      $script .= "</script>\n";
     }
     else {
       $script = '<script type="text/javascript">';
-      $script .= '  document.write(unescape("%3Cscript src=\''. $source .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
-      $script .= '</script>';
+      $script .= 'document.write(unescape("%3Cscript src=\''. $source .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
+      $script .= "</script>\n";
       $script .= '<script type="text/javascript">';
-      $script .= '  var pageTracker = _gat._getTracker("'. $id .'");';
-      $script .= '  pageTracker._initData();';
-      $script .= '  '. $segmentation;
-      $script .= '  '. $codesnippet;
-      $script .= '  pageTracker._trackPageview();';
-      $script .= '</script>';
+      $script .= 'var pageTracker = _gat._getTracker("'. $id .'");';
+      $script .= 'pageTracker._initData();';
+      $script .= $segmentation;
+      $script .= $codesnippet;
+      $script .= 'pageTracker._trackPageview();';
+      $script .= "</script>\n";
     }
 
     return $script;

@@ -25,10 +25,10 @@ function googleanalytics_admin_settings() {
     '#description' => t('The user account is unique to the websites domain. You can obtain a user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/'))
   );
 
-  $form['account']['googleanalytics_version'] = array(
+  $form['account']['googleanalytics_legacy_version'] = array(
     '#type' => 'checkbox',
     '#title' => t('Legacy Google Analytics'),
-    '#default_value' => variable_get('googleanalytics_version', FALSE),
+    '#default_value' => variable_get('googleanalytics_legacy_version', FALSE),
     '#description' => t('This will enable Legacy Google Analytics instead of most recent.<br /> Please note that Legacy Google Analytics will not receive feature updates and is not compatible with new features.'),
   );
 
