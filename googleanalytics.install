@@ -10,7 +10,6 @@ function googleanalytics_install() {
     // check if variable is not already set from a previous install
     if (strpos(variable_get($ga_role, 'new'), 'new') !== FALSE) {
       variable_set($ga_role, FALSE);
-      drupal_set_message(t('Role %rolename is now being tracked by Google Analytics', array('%rolename' => $role->name)));
     }
   }
 }
