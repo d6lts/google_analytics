@@ -174,13 +174,14 @@ function googleanalytics_requirements($phase) {
  * Implementation of hook_cron().
  */
 function googleanalytics_cron() {
-  // Regenerate the google analytics urchin.js every day.
-  if (time() - variable_get('cron_last', 0) >= 86400) {
+  // Regenerate the google analytics urchin.js or ga.js every day.
+  if (time() - variable_get('googleanalytics_last_cache', 0) >= 86400) {
     // Legacy google analytics version.
     file_delete(file_directory_path() .'/googleanalytics/urchin.js');
 
     // New google analytics version.
     file_delete(file_directory_path() .'/googleanalytics/ga.js');
+    variable_set('googleanalytics_last_cache', time());
   }
 }
 
