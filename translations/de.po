@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics Module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-28 17:36+0200\n"
-"PO-Revision-Date: 2007-12-29 14:58+0100\n"
+"PO-Revision-Date: 2007-12-30 12:52+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "Protokollierung von Benutzerrollen"
 
 #: googleanalytics.admin.inc:42
 msgid "Define what user roles should be tracked by Google Analytics. <strong>Note:</strong> Drupal Admin pages are never tracked."
-msgstr "Legt die Benutzerrollen fest, welche mit Google Analytics nicht protokolliert werden sollen. <strong>Hinweis:</strong> Die Verwaltungsseiten von Drupal werden nie getrackt."
+msgstr "Legt die Benutzerrollen fest, welche mit Google Analytics protokolliert werden sollen. <strong>Hinweis:</strong> Die Verwaltungsseiten von Drupal werden nie getrackt."
 
 #: googleanalytics.admin.inc:47
 msgid "Admin (user 1)"
