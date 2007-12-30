@@ -24,6 +24,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_track__user1');
   variable_del('googleanalytics_trackfiles');
   variable_del('googleanalytics_cache');
+  variable_del('googleanalytics_last_cache');
 }
 
 
