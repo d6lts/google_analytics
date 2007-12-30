@@ -137,7 +137,9 @@ function googleanalytics_footer($main = 0) {
       $script .= '<script type="text/javascript">';
       $script .= 'var pageTracker = _gat._getTracker("'. $id .'");';
       $script .= 'pageTracker._initData();';
-      $script .= $segmentation;
+      if (!empty($segmentation)) {
+        $script .= $segmentation;
+      }
       $script .= $codesnippet;
       $script .= 'pageTracker._trackPageview();';
       $script .= "</script>\n";
