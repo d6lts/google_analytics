@@ -217,15 +217,24 @@ function _googleanalytics_cache($location = 'http://www.google-analytics.com/urc
  *   A decision on if the current user is being tracked by GAnalytics
  */
 function _googleanalytics_track($account) {
-  $track = TRUE;
+  // By default we don't track users.
+  $track = FALSE;
 
   foreach (array_keys($account->roles) as $role) {
-    if (!variable_get('googleanalytics_track_'. $role, FALSE)) {
-      $track = FALSE;
+    // Add the tracking code if user is member of one role that should be tracked.
+    if (variable_get('googleanalytics_track_'. $role, FALSE)) {
+      $track = TRUE;
     }
   }
 
-  if ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
+  // Handle behavior for administrative user 1.
+  if ($account->uid == 1 && variable_get('googleanalytics_track__user1', FALSE)) {
+    // Enable tracking of user 1 if tracking for "authenticated user" is disabled.
+    $track = TRUE;
+  }
+  elseif ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
+    // User 1 is a member of "authenticated user". Disable user tracking
+    // if user 1 shouldn't, but "authenticated user" should be tracked.
     $track = FALSE;
   }
 
