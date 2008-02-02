@@ -22,7 +22,7 @@ function googleanalytics_admin_settings() {
     '#size' => 15,
     '#maxlength' => 20,
     '#required' => TRUE,
-    '#description' => t('The user account is unique to the websites domain. You can obtain a user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/'))
+    '#description' => t('The user account is unique to the websites domain. You can obtain an user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/'))
   );
 
   $form['account']['googleanalytics_legacy_version'] = array(
