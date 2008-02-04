@@ -3,16 +3,15 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.admin.inc,v 1.2.2.6 2007/12/29 13:00:00 hass
+#  googleanalytics.admin.inc,v 1.2.2.8 2008/02/02 23:52:39 hass
 #  googleanalytics.module,v 1.14.2.13 2007/08/27 21:21:25 budda
-#  googleanalytics.info,v 1.5.2.2 2007/11/17 20:46:14 hass
-#  googleanalytics.install,v 1.4.2.2 2007/11/17 20:46:14 hass
+#  googleanalytics.info,v 1.5.2.3 2007/12/30 20:42:58 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2007-12-29 14:01+0100\n"
+"POT-Creation-Date: 2008-02-04 20:36+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -30,7 +29,7 @@ msgid "User ID"
 msgstr ""
 
 #: googleanalytics.admin.inc:25
-msgid "The user account is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
+msgid "The user account is unique to the websites domain. You can obtain an user account from the <a href=\"@url\">Google Analytics</a> website."
 msgstr ""
 
 #: googleanalytics.admin.inc:30
@@ -113,27 +112,47 @@ msgstr ""
 msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr ""
 
-#: googleanalytics.admin.inc:127
+#: googleanalytics.admin.inc:126
+msgid "Depends on: !dependencies"
+msgstr ""
+
+#: googleanalytics.admin.inc:126
+msgid " (<span class=\"admin-enabled\">enabled</span>)"
+msgstr ""
+
+#: googleanalytics.admin.inc:126
+msgid " (<span class=\"admin-disabled\">disabled</span>)"
+msgstr ""
+
+#: googleanalytics.admin.inc:133
+msgid "Do Track Internal Search"
+msgstr ""
+
+#: googleanalytics.admin.inc:134
+msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
+msgstr ""
+
+#: googleanalytics.admin.inc:141
 msgid "JavaScript Code"
 msgstr ""
 
-#: googleanalytics.admin.inc:130
-msgid "Paste <a href=\"@snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"@blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+#: googleanalytics.admin.inc:144
+msgid "Paste <a href=\"!snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"!blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr ""
 
 #: googleanalytics.module:17
 msgid "Google Analytics is a free statistics package based on the excellent Urchin system."
 msgstr ""
 
-#: googleanalytics.module:157
+#: googleanalytics.module:174
 msgid "Google Analytics module"
 msgstr ""
 
-#: googleanalytics.module:158
+#: googleanalytics.module:175
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr ""
 
-#: googleanalytics.module:160
+#: googleanalytics.module:177
 msgid "Not configured"
 msgstr ""
 
@@ -147,10 +166,6 @@ msgstr ""
 
 #: googleanalytics.module:0
 msgid "googleanalytics"
-msgstr ""
-
-#: googleanalytics.install:13
-msgid "Role %rolename is now being tracked by Google Analytics"
 msgstr ""
 
 #: googleanalytics.info:0
