@@ -122,12 +122,26 @@ function googleanalytics_admin_settings() {
     $form['advanced']['googleanalytics_cache']['#description'] .= ' '. t('<a href="!url">Public file transfers</a> must be enabled to allow local caching.', array('!url' => url('admin/settings/file-system', array('query' => drupal_get_destination()))));
   }
 
+  $site_search_dependencies = '<div class="admin-dependencies">';
+  $site_search_dependencies .= t('Depends on: !dependencies', array('!dependencies' => (module_exists('search') ? 'Search'. t(' (<span class="admin-enabled">enabled</span>)') : 'Search'. t(' (<span class="admin-disabled">disabled</span>)'))));
+  $site_search_dependencies .= '</div>';
+
+  // Google already have many translations, if not - they display a note to change the language.
+  global $language;
+  $form['advanced']['googleanalytics_site_search'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Do Track Internal Search'),
+    '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href="!url">How do I set up Site Search for my profile</a>.', array('!url' => 'http://www.google.com/support/analytics/bin/answer.py?hl='. $language->language .'&answer=75817')) . $site_search_dependencies,
+    '#default_value' => variable_get('googleanalytics_site_search', FALSE),
+    '#disabled' => (module_exists('search') ? FALSE : TRUE),
+  );
+
   $form['advanced']['googleanalytics_codesnippet'] = array(
     '#type' => 'textarea',
     '#title' => t('JavaScript Code'),
     '#default_value' => variable_get('googleanalytics_codesnippet', ''),
     '#rows' => 15,
-    '#description' => t('Paste <a href="@snippets">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href="@blog">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/39282', '@blog' => 'http://cutroni.com/blog/'))
+    '#description' => t('Paste <a href="!snippets">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href="!blog">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://drupal.org/node/39282', '!blog' => 'http://cutroni.com/blog/'))
   );
 
   return system_settings_form($form);

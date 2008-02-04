@@ -116,6 +116,18 @@ function googleanalytics_footer($main = 0) {
       }
     }
 
+    // Site search tracking support.
+    $url_custom = '';
+    if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search' && arg(1) == 'node') {
+      $keys = search_get_keys();
+      $url_custom = url('search/node', array('query' => 'search='. $keys));
+    }
+
+    // Surround custom urls with single quotes.
+    if (!empty($url_custom)) {
+      $url_custom = '\''. $url_custom .'\'';
+    }
+
     // Should the legacy code be used?
     if ($legacy_version) {
       $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
@@ -127,7 +139,7 @@ function googleanalytics_footer($main = 0) {
       if (!empty($codesnippet)) {
         $script .= $codesnippet;
       }
-      $script .= 'urchinTracker();';
+      $script .= 'urchinTracker('. $url_custom .');';
       $script .= "</script>\n";
     }
     else {
@@ -141,7 +153,7 @@ function googleanalytics_footer($main = 0) {
         $script .= $segmentation;
       }
       $script .= $codesnippet;
-      $script .= 'pageTracker._trackPageview();';
+      $script .= 'pageTracker._trackPageview('. $url_custom .');';
       $script .= "</script>\n";
     }
 
