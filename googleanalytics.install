@@ -18,6 +18,7 @@ function googleanalytics_uninstall() {
   $result = db_query("DELETE FROM {variable} WHERE name LIKE 'googleanalytics_track_%'");
 
   variable_del('googleanalytics_account');
+  variable_del('googleanalytics_legacy_version');
   variable_del('googleanalytics_codesnippet');
   variable_del('googleanalytics_segmentation');
   variable_del('googleanalytics_track__user1');
