@@ -33,40 +33,6 @@ function googleanalytics_menu($maycache) {
   return $items;
 }
 
-
-/**
- *
- * @param $account
- *   A user object containing an array of roles to check
- * @return boolean
- *   A decision on if the current user is being tracked by GAnalytics
- */
-function googleanalytics_track($account) {
-  // By default we don't track users.
-  $track = FALSE;
-
-  foreach (array_keys($account->roles) as $role) {
-    // Add the tracking code if user is member of one role that should be tracked.
-    if (variable_get('googleanalytics_track_'. $role, FALSE)) {
-      $track = TRUE;
-    }
-  }
-
-  // Handle behavior for administrative user 1.
-  if ($account->uid == 1 && variable_get('googleanalytics_track__user1', FALSE)) {
-    // Enable tracking of user 1 if tracking for "authenticated user" is disabled.
-    $track = TRUE;
-  }
-  elseif ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
-    // User 1 is a member of "authenticated user". Disable user tracking
-    // if user 1 shouldn't, but "authenticated user" should be tracked.
-    $track = FALSE;
-  }
-
-  return $track;
-}
-
-
 /**
  * Implementation of hook_footer()  to insert Javascript at the end of the page
  */
@@ -76,7 +42,7 @@ function googleanalytics_footer($main = 0) {
   $id = variable_get('googleanalytics_account', '');
 
   // Check if we should track the currently active user's role
-  $track = googleanalytics_track($user);
+  $track = _googleanalytics_track($user);
 
   // Don't track page views in the admin sections
   if ($id && (arg(0) != 'admin') && $track == TRUE) {
@@ -107,7 +73,8 @@ function googleanalytics_footer($main = 0) {
         $fields[$field] = addslashes($value);
       }
 
-      // Only show segmentation variable if there are specified fields
+      // Only show segmentation variable if there are specified fields.
+      $segmentation = '';
       if (count($fields) > 0) {
         if ($legacy_version) {
           $segmentation = "__utmSetVar('". implode(':', $fields) ."');";
@@ -127,33 +94,70 @@ function googleanalytics_footer($main = 0) {
     // Add any custom code snippets if specified
     $codesnippet = variable_get('googleanalytics_codesnippet', '');
 
-    // Should a local cached copy of Urchin.js be used?
+    // Should a local cached copy of urchin.js or ga.js be used?
     if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC)) {
-      $source = googleanalytics_cache();
-      if ($source) {
+      if ($legacy_version) {
+        $source = _googleanalytics_cache('http://www.google-analytics.com/urchin.js');
+      }
+      else {
+        $source = _googleanalytics_cache('http://www.google-analytics.com/ga.js');
+      }
+      if (!empty($source)) {
         $source = base_path() . $source;
       }
     }
     if (!isset($source)) {
-      $source = 'http'. $prefix .'.google-analytics.com/urchin.js';
+      if ($legacy_version) {
+        $source = 'http'. $prefix .'.google-analytics.com/urchin.js';
+      }
+      else {
+        $source = 'http'. $prefix .'.google-analytics.com/ga.js';
+      }
+    }
+
+    // Site search tracking support.
+    $url_custom = '';
+    if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search' && arg(1) == 'node') {
+      $keys = search_get_keys();
+      $url_custom = url('search/node', array('query' => 'search='. $keys));
+    }
+
+    // Surround custom urls with single quotes.
+    if (!empty($url_custom)) {
+      $url_custom = '\''. $url_custom .'\'';
     }
 
     // Should the legacy code be used?
     if ($legacy_version) {
-      $script = '<script type="text/javascript" src="' . $source . "\"></script>\n";
-      $script .= '<script type="text/javascript">' . "<!--\n_uacct = \"".$id."\";{$segmentation}{$codesnippet}urchinTracker();\n// --></script><noscript></noscript>\n";
-    } else {
-      $script ='<script type="text/javascript">
-                  document.write("\<script src=\'http" + "' . $prefix . '" + ".google-analytics.com/ga.js\' type=\'text/javascript\'>\<\/script>" );
-                </script>
-                <script type="text/javascript">
-                  var pageTracker = _gat._getTracker("'.$id.'");
-                  pageTracker._initData();
-                  '.$segmentation.$codesnippet.'
-                  pageTracker._trackPageview();
-                </script>';
+      $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
+      $script .= '<script type="text/javascript">';
+      $script .= '_uacct = "'. $id .'";';
+      if (!empty($segmentation)) {
+        $script .= $segmentation;
+      }
+      if (!empty($codesnippet)) {
+        $script .= $codesnippet;
+      }
+      $script .= 'urchinTracker('. $url_custom .');';
+      $script .= "</script>\n";
     }
-
+    else {
+      $script = '<script type="text/javascript">';
+      $script .= 'document.write(unescape("%3Cscript src=\''. $source .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
+      $script .= "</script>\n";
+      $script .= '<script type="text/javascript">';
+      $script .= 'var pageTracker = _gat._getTracker("'. $id .'");';
+      $script .= 'pageTracker._initData();';
+      if (!empty($segmentation)) {
+        $script .= $segmentation;
+      }
+      if (!empty($codesnippet)) {
+        $script .= $codesnippet;
+      }
+      $script .= 'pageTracker._trackPageview('. $url_custom .');';
+      $script .= "</script>\n";
+    }
+    
     return $script;
   }
 }
@@ -266,14 +270,28 @@ function googleanalytics_admin_settings() {
 
   $form['advanced']['googleanalytics_cache'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Cache urchin.js locally'),
-    '#description' => t("If checked, the urchin.js file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to urchin.js are reflected in the local copy."),
+    '#title' => t('Cache tracking code file locally'),
+    '#description' => t("If checked, the tracking code file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy."),
     '#default_value' => variable_get('googleanalytics_cache', 0),
   );
   if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
     $form['advanced']['googleanalytics_cache']['#disabled'] = TRUE;
     $form['advanced']['googleanalytics_cache']['#description'] .= ' '. t('<a href="!url">Public file transfers</a> must be enabled to allow local caching.', array('!url' => url('admin/settings/file-system', drupal_get_destination())));
   }
+
+  $site_search_dependencies = '<div class="admin-dependencies">';
+  $site_search_dependencies .= t('Depends on: !dependencies', array('!dependencies' => (module_exists('search') ? 'Search'. t(' (<span class="admin-enabled">enabled</span>)') : 'Search'. t(' (<span class="admin-disabled">disabled</span>)'))));
+  $site_search_dependencies .= '</div>';
+
+  // Google already have many translations, if not - they display a note to change the language.
+  global $language;
+  $form['advanced']['googleanalytics_site_search'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Do Track Internal Search'),
+    '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href="!url">How do I set up Site Search for my profile</a>.', array('!url' => 'http://www.google.com/support/analytics/bin/answer.py?hl='. $language->language .'&answer=75817')) . $site_search_dependencies,
+    '#default_value' => variable_get('googleanalytics_site_search', FALSE),
+    '#disabled' => (module_exists('search') ? FALSE : TRUE),
+  );
 
   $form['advanced']['googleanalytics_codesnippet'] = array(
     '#type' => 'textarea',
@@ -313,7 +331,11 @@ function googleanalytics_requirements($phase) {
 function googleanalytics_cron() {
   // Regenerate the google analytics urchin.js or ga.js every day.
   if (time() - variable_get('googleanalytics_last_cache', 0) >= 86400) {
+    // Legacy google analytics version.
     file_delete(file_directory_path() .'/googleanalytics/urchin.js');
+
+    // New google analytics version.
+    file_delete(file_directory_path() .'/googleanalytics/ga.js');
     variable_set('googleanalytics_last_cache', time());
   }
 }
@@ -325,7 +347,7 @@ function googleanalytics_cron() {
  * @return mixed
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
-function googleanalytics_cache($location = 'http://www.google-analytics.com/urchin.js') {
+function _googleanalytics_cache($location = 'http://www.google-analytics.com/urchin.js') {
   $directory = file_directory_path() .'/googleanalytics';
   $file_destination = $directory .'/'. basename($location);
   if (!file_exists($file_destination)) {
@@ -340,4 +362,36 @@ function googleanalytics_cache($location = 'http://www.google-analytics.com/urch
   else {
     return $file_destination;
   }
+}
+
+/**
+ *
+ * @param $account
+ *   A user object containing an array of roles to check
+ * @return boolean
+ *   A decision on if the current user is being tracked by GAnalytics
+ */
+function _googleanalytics_track($account) {
+  // By default we don't track users.
+  $track = FALSE;
+
+  foreach (array_keys($account->roles) as $role) {
+    // Add the tracking code if user is member of one role that should be tracked.
+    if (variable_get('googleanalytics_track_'. $role, FALSE)) {
+      $track = TRUE;
+    }
+  }
+
+  // Handle behavior for administrative user 1.
+  if ($account->uid == 1 && variable_get('googleanalytics_track__user1', FALSE)) {
+    // Enable tracking of user 1 if tracking for "authenticated user" is disabled.
+    $track = TRUE;
+  }
+  elseif ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
+    // User 1 is a member of "authenticated user". Disable user tracking
+    // if user 1 shouldn't, but "authenticated user" should be tracked.
+    $track = FALSE;
+  }
+
+  return $track;
 }
