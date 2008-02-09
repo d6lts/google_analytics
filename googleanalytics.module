@@ -73,7 +73,7 @@ function googleanalytics_footer($main = 0) {
         $fields[$field] = addslashes($value);
       }
 
-      // Only show segmentation variable if there are specified fields
+      // Only show segmentation variable if there are specified fields.
       $segmentation = '';
       if (count($fields) > 0) {
         if ($legacy_version) {
@@ -152,7 +152,9 @@ function googleanalytics_footer($main = 0) {
       if (!empty($segmentation)) {
         $script .= $segmentation;
       }
-      $script .= $codesnippet;
+      if (!empty($codesnippet)) {
+        $script .= $codesnippet;
+      }
       $script .= 'pageTracker._trackPageview('. $url_custom .');';
       $script .= "</script>\n";
     }
