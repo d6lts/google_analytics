@@ -49,11 +49,9 @@ function googleanalytics_admin_settings() {
   );
 
   while ($role = db_fetch_object($result)) {
-    // can't use empty spaces in varname
-    $role_varname = $string = str_replace(' ', '_', $role->name);
     $form['roles']['googleanalytics_track_'. $role->rid] = array(
       '#type' => 'checkbox',
-      '#title' => t($role->name),
+      '#title' => check_plain($role->name),
       '#default_value' => variable_get('googleanalytics_track_'. $role->rid, FALSE),
     );
   }
