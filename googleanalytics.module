@@ -117,9 +117,9 @@ function googleanalytics_footer($main = 0) {
 
     // Site search tracking support.
     $url_custom = '';
-    if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search' && arg(1) == 'node') {
+    if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search') {
       $keys = search_get_keys();
-      $url_custom = url('search/node', array('query' => 'search='. $keys));
+      $url_custom = url('search/node', 'search='. trim($keys));
     }
 
     // Surround custom urls with single quotes.
