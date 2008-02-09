@@ -13,7 +13,7 @@ gaTrackerAttach = function () {
     if(internalLink.test(this.href)){
 
       // ... and if the extension are in this.trackDownload ...
-      if(this.trackDownload && isDownload.test(this.href)) {
+      if(trackDownload && isDownload.test(this.href)) {
         // Clean and track the URL
         urchinTracker('/download/'+this.href.replace(/^(http|https):\/\/([a-z-.0-9]+)\//i, '').split('/').join('--'));
       }
