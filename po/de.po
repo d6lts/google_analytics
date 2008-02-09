@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Google Analytics Module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-28 17:36+0200\n"
-"PO-Revision-Date: 2007-10-13 23:02+0100\n"
+"POT-Creation-Date: 2008-02-09 21:30+0100\n"
+"PO-Revision-Date: 2008-02-09 21:33+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Poedit-Language: German\n"
@@ -32,107 +32,135 @@ msgstr "Google Analytics"
 msgid "Configure the settings used to generate your Google Analytics tracking code."
 msgstr "Die Einstellungen konfigurieren, welche zur Generierung des Google-Analytics-Trackingcodes dienen."
 
-#: googleanalytics.module:122
+#: googleanalytics.module:171
 msgid "Analytics Account Settings"
 msgstr "Analytics Kontoeinstellungen"
 
-#: googleanalytics.module:128;180
+#: googleanalytics.module:177;236
 msgid "User ID"
 msgstr "Benutzer ID"
 
-#: googleanalytics.module:133
+#: googleanalytics.module:182
 msgid "The user account is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
 msgstr "Das Benutzerkonto ist eindeutig für die Domain der Website. Ein Konto kann auf der <a href=\"@url\">Google Analytics</a> Website beantragt werden."
 
-#: googleanalytics.module:141
+#: googleanalytics.module:187
+msgid "Legacy Google Analytics"
+msgstr "Legacy Google Analytics"
+
+#: googleanalytics.module:189
+msgid "This will enable Legacy Google Analytics instead of most recent.<br /> Please note that Legacy Google Analytics will not receive feature updates and is not compatible with new features."
+msgstr "Aktiviert das alte Google Analytics anstatt dem Neuen.<br /> Bitte beachten Sie, dass in das alte Google Analytics keine neuen Features eingebaut werden und mit neuen Features nicht kompatibel ist."
+
+#: googleanalytics.module:197
 msgid "User Role Tracking"
 msgstr "Protokollierung von Benutzerrollen"
 
-#: googleanalytics.module:143
-msgid "Define what user roles should not be tracked by Google Analytics."
-msgstr "Legt die Benutzerrollen fest, welche mit Google Analytics nicht protokolliert werden sollen."
+#: googleanalytics.module:199
+msgid "Define what user roles should be tracked by Google Analytics. <strong>Note:</strong> Drupal Admin pages are never tracked."
+msgstr "Legt die Benutzerrollen fest, welche mit Google Analytics protokolliert werden sollen. <strong>Hinweis:</strong> Die Verwaltungsseiten von Drupal werden nie getrackt."
 
-#: googleanalytics.module:148
+#: googleanalytics.module:204
 msgid "Admin (user 1)"
 msgstr "Admin (Benutzer 1)"
 
-#: googleanalytics.module:164
+#: googleanalytics.module:220
 msgid "User Segmentation"
 msgstr "Benutzerverteilung"
 
-#: googleanalytics.module:166
+#: googleanalytics.module:222
 msgid "If your users have profile fields completed, you can track your logged in users based on a defined profile field."
 msgstr "Wenn die Benutzer ihre Profilfelder vervollständigt haben, können die angemeldeten Benutzer auf Basis eines festgelegten Profilfeldes protokolliert werden."
 
-#: googleanalytics.module:172
+#: googleanalytics.module:228
 msgid "You need to activate the !profile to use this feature."
 msgstr "Das !profile muss für dieses Feature aktiviert werden."
 
-#: googleanalytics.module:172
+#: googleanalytics.module:228
 msgid "Profile module"
 msgstr "Profil Module"
 
-#: googleanalytics.module:181
+#: googleanalytics.module:237
 msgid "Username"
 msgstr "Benutzername"
 
-#: googleanalytics.module:182
+#: googleanalytics.module:238
 msgid "User Roles"
 msgstr "Benutzerrollen"
 
-#: googleanalytics.module:191
+#: googleanalytics.module:247
 msgid "Track"
 msgstr "Beiträge"
 
-#: googleanalytics.module:192
+#: googleanalytics.module:248
 msgid "Selecting one or more values allows you to track users by profile values rather than simply an IP address. To select multiple items, hold down CTRL whilst selecting fields."
 msgstr "Die Auswahl eines oder mehrerer Werte erlaubt die Protokollierung von Benutzern durch Profilwerte anstatt einer einfachen IP Adresse. Die STRG Taste zur Auswahl mehrerer Felder gedrückt halten."
 
-#: googleanalytics.module:202
+#: googleanalytics.module:258
 msgid "File Extensions To Track"
 msgstr "Protokollieren der Dateierweiterungen"
 
-#: googleanalytics.module:204
+#: googleanalytics.module:260
 msgid "A pipe seperated list of file extensions that should be tracked when clicked. Example !extensions"
 msgstr "Eine durch Pipes getrennte Liste von Dateiendungen, welche beim Anklicken protokolliert werden sollen. Beispiel: !extensions"
 
-#: googleanalytics.module:209
+#: googleanalytics.module:265
 msgid "Advanced"
 msgstr "Erweitert"
 
-#: googleanalytics.module:212
-msgid "You can add custom Google Analytic code here."
+#: googleanalytics.module:268
+msgid "You can add custom Google Analytics code here."
 msgstr "Hier kann angepasster Google Analytics Code hinzugefügt werden."
 
-#: googleanalytics.module:217
-msgid "Cache urchin.js locally"
-msgstr "Lokale Zwischenspeicherung der urchin.js"
+#: googleanalytics.module:273
+msgid "Cache tracking code file locally"
+msgstr "Datei mit Tracking-Code lokal cachen"
 
-#: googleanalytics.module:218
-msgid "If checked, the urchin.js file is received from Google Analytic and cached locally. It is updated daily from Google's servers to ensure updates to urchin.js are reflected in the local copy."
-msgstr "Sobald aktiviert, wird die urchin.js Datei von Google Analytic heruntergeladen und lokal gecached. Diese wird täglich von den Google Servern aktualisiert, damit sich Aktualisierungen der urchin.js in der lokalen Kopie niederschlagen."
+#: googleanalytics.module:274
+msgid "If checked, the tracking code file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy."
+msgstr "Sobald aktiviert, wird die Datei mit Tracking-Code von Google Analytic heruntergeladen und lokal gecached. Diese wird täglich von den Google Servern aktualisiert, damit sich Aktualisierungen des Tracking-Codes in der lokalen Kopie niederschlagen."
 
-#: googleanalytics.module:223
+#: googleanalytics.module:279
 msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr "Zum lokalen Cachen muss die <a href=\"!url\">öffentliche Download-Methode</a> aktiviert sein."
 
-#: googleanalytics.module:228
+#: googleanalytics.module:283
+msgid "Depends on: !dependencies"
+msgstr "Abhängig von: !dependencies"
+
+#: googleanalytics.module:283
+msgid " (<span class=\"admin-enabled\">enabled</span>)"
+msgstr " (<span class=\"admin-enabled\">aktiviert</span>)"
+
+#: googleanalytics.module:283
+msgid " (<span class=\"admin-disabled\">disabled</span>)"
+msgstr " (<span class=\"admin-disabled\">deaktiviert</span>)"
+
+#: googleanalytics.module:290
+msgid "Do Track Internal Search"
+msgstr "Interne Suche protokollieren"
+
+#: googleanalytics.module:291
+msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
+msgstr "Sobald aktiviert, werden die Schlüsselwörter der internen Suche protokolliert. Dazu muss im Google Account der interne Suchparameter <em>search</em> konfiguriert werden. Weitere Informationen zu <a href=\"!url\">Wie richte ich die Website-Suche für mein Profil ein</a>."
+
+#: googleanalytics.module:298
 msgid "JavaScript Code"
 msgstr "JavaScript Code"
 
-#: googleanalytics.module:231
+#: googleanalytics.module:301
 msgid "Paste <a href=\"@snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"@blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr "<a href=\"@snippets\">Angepasste Codeausschnitte</a> hier einfügen. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. Weitere Hilfe zu dieser Funktion finder sich im <a href=\"@blog\">Cutroni.com Blog</a>. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
 
-#: googleanalytics.module:247
+#: googleanalytics.module:317
 msgid "Google Analytics module"
 msgstr "Google Analytics Modul"
 
-#: googleanalytics.module:248
+#: googleanalytics.module:318
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr "Das Google Analytics Modul wurde noch nicht konfiguriert. Die Einstellungen können auf der <a href=\"@url\">Google Analytics Einstellungen Seite</a> vorgenommen werden."
 
-#: googleanalytics.module:250
+#: googleanalytics.module:320
 msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
@@ -140,11 +168,10 @@ msgstr "Nicht konfiguriert"
 msgid "googleanalytics"
 msgstr "googleanalytics"
 
-#: googleanalytics.install:13
-msgid "Role %rolename is now being tracked by Google Analytics"
-msgstr "Die Rolle %rolename wird jetzt von Google Analytics protokolliert."
-
 #: googleanalytics.info:0
 msgid "Adds Google Analytics javascript tracking code to all your site's pages."
 msgstr "Fügt Google Analytics JavaScript-Protokollcode in alle Webseiten ein."
+
+#~ msgid "Role %rolename is now being tracked by Google Analytics"
+#~ msgstr "Die Rolle %rolename wird jetzt von Google Analytics protokolliert."
 
