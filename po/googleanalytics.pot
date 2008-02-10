@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-02-09 21:30+0100\n"
+"POT-Creation-Date: 2008-02-10 14:23+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -35,7 +35,7 @@ msgstr ""
 msgid "Analytics Account Settings"
 msgstr ""
 
-#: googleanalytics.module:177;236
+#: googleanalytics.module:177;234
 msgid "User ID"
 msgstr ""
 
@@ -63,103 +63,103 @@ msgstr ""
 msgid "Admin (user 1)"
 msgstr ""
 
-#: googleanalytics.module:220
+#: googleanalytics.module:218
 msgid "User Segmentation"
 msgstr ""
 
-#: googleanalytics.module:222
+#: googleanalytics.module:220
 msgid "If your users have profile fields completed, you can track your logged in users based on a defined profile field."
 msgstr ""
 
-#: googleanalytics.module:228
+#: googleanalytics.module:226
 msgid "You need to activate the !profile to use this feature."
 msgstr ""
 
-#: googleanalytics.module:228
+#: googleanalytics.module:226
 msgid "Profile module"
 msgstr ""
 
-#: googleanalytics.module:237
+#: googleanalytics.module:235
 msgid "Username"
 msgstr ""
 
-#: googleanalytics.module:238
+#: googleanalytics.module:236
 msgid "User Roles"
 msgstr ""
 
-#: googleanalytics.module:247
+#: googleanalytics.module:245
 msgid "Track"
 msgstr ""
 
-#: googleanalytics.module:248
+#: googleanalytics.module:246
 msgid "Selecting one or more values allows you to track users by profile values rather than simply an IP address. To select multiple items, hold down CTRL whilst selecting fields."
 msgstr ""
 
-#: googleanalytics.module:258
+#: googleanalytics.module:256
 msgid "File Extensions To Track"
 msgstr ""
 
-#: googleanalytics.module:260
+#: googleanalytics.module:258
 msgid "A pipe seperated list of file extensions that should be tracked when clicked. Example !extensions"
 msgstr ""
 
-#: googleanalytics.module:265
+#: googleanalytics.module:263
 msgid "Advanced"
 msgstr ""
 
-#: googleanalytics.module:268
+#: googleanalytics.module:266
 msgid "You can add custom Google Analytics code here."
 msgstr ""
 
-#: googleanalytics.module:273
+#: googleanalytics.module:271
 msgid "Cache tracking code file locally"
 msgstr ""
 
-#: googleanalytics.module:274
-msgid "If checked, the tracking code file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy."
+#: googleanalytics.module:272
+msgid "If checked, the tracking code file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker."
 msgstr ""
 
-#: googleanalytics.module:279
+#: googleanalytics.module:277
 msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr ""
 
-#: googleanalytics.module:283
+#: googleanalytics.module:281
 msgid "Depends on: !dependencies"
 msgstr ""
 
-#: googleanalytics.module:283
+#: googleanalytics.module:281
 msgid " (<span class=\"admin-enabled\">enabled</span>)"
 msgstr ""
 
-#: googleanalytics.module:283
+#: googleanalytics.module:281
 msgid " (<span class=\"admin-disabled\">disabled</span>)"
 msgstr ""
 
-#: googleanalytics.module:290
+#: googleanalytics.module:288
 msgid "Do Track Internal Search"
 msgstr ""
 
-#: googleanalytics.module:291
+#: googleanalytics.module:289
 msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
 msgstr ""
 
-#: googleanalytics.module:298
+#: googleanalytics.module:296
 msgid "JavaScript Code"
 msgstr ""
 
-#: googleanalytics.module:301
+#: googleanalytics.module:299
 msgid "Paste <a href=\"@snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"@blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr ""
 
-#: googleanalytics.module:317
+#: googleanalytics.module:315
 msgid "Google Analytics module"
 msgstr ""
 
-#: googleanalytics.module:318
+#: googleanalytics.module:316
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr ""
 
-#: googleanalytics.module:320
+#: googleanalytics.module:318
 msgid "Not configured"
 msgstr ""
 
