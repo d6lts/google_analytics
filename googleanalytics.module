@@ -33,15 +33,29 @@ function googleanalytics_menu() {
   return $items;
 }
 
+function googleanalytics_init() {
+
+  // Use the old version of Google Analytics?
+  $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
+
+  // Add download tracking.
+  $path = drupal_get_path('module', 'googleanalytics');
+  if ($trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES)) {
+    drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
+    drupal_add_js($path .'/downloadtracker.js', 'module', 'footer');
+  }
+
+}
+
 /**
- * Implementation of hook_footer()  to insert Javascript at the end of the page
+ * Implementation of hook_footer() to insert Javascript at the end of the page.
  */
 function googleanalytics_footer($main = 0) {
   global $user;
 
   $id = variable_get('googleanalytics_account', '');
 
-  // Check if we should track the currently active user's role
+  // Check if we should track the currently active user's role.
   $track = _googleanalytics_track($user);
 
   // Don't track page views in the admin sections
@@ -55,9 +69,9 @@ function googleanalytics_footer($main = 0) {
     }
 
     // Use the old version of Google Analytics?
-    $legacy_version = variable_get('googleanalytics_legacy_version', TRUE);
+    $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
 
-    // Add User profile segmentation values
+    // Add User profile segmentation values.
     if (is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {
 
       $p = module_invoke('profile', 'load_profile', $user);
@@ -85,14 +99,7 @@ function googleanalytics_footer($main = 0) {
       }
     }
 
-    // Download tracking
-    $path = drupal_get_path('module', 'googleanalytics');
-    if ($trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES)) {
-      drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
-      drupal_add_js($path .'/downloadtracker.js', 'module', 'footer');
-    }
-
-    // Add any custom code snippets if specified
+    // Add any custom code snippets if specified.
     $codesnippet = variable_get('googleanalytics_codesnippet', '');
 
     // Should a local cached copy of urchin.js or ga.js be used?
@@ -226,9 +233,9 @@ function _googleanalytics_cache($location = 'http://www.google-analytics.com/urc
 /**
  *
  * @param $account
- *   A user object containing an array of roles to check
+ *   A user object containing an array of roles to check.
  * @return boolean
- *   A decision on if the current user is being tracked by GAnalytics
+ *   A decision on if the current user is being tracked by GAnalytics.
  */
 function _googleanalytics_track($account) {
   // By default we don't track users.
@@ -248,7 +255,7 @@ function _googleanalytics_track($account) {
   }
   elseif ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
     // User 1 is a member of "authenticated user". Disable user tracking
-    // if user 1 shouldn't, but "authenticated user" should be tracked.
+    // if user 1 shouldn't be tracked, but "authenticated user" should.
     $track = FALSE;
   }
 
