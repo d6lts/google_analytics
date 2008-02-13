@@ -1,6 +1,6 @@
 gaTrackerAttach = function () {
 
-  jQuery('a').click( function() {
+  $('a').click( function() {
     var LegacyVersion = Drupal.settings.googleanalytics.LegacyVersion;
     var trackDownload = Drupal.settings.googleanalytics.trackDownload;
 
@@ -37,5 +37,5 @@ gaTrackerAttach = function () {
 };
 
 if (Drupal.jsEnabled) {
- jQuery(document).ready(gaTrackerAttach);
+ $(document).ready(gaTrackerAttach);
 }
