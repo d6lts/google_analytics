@@ -16,10 +16,10 @@ gaTrackerAttach = function () {
       if (trackDownload && isDownload.test(this.href)) {
         // Clean and track the URL.
         if (LegacyVersion) {
-          urchinTracker('/download/'+this.href.replace(/^(http|https):\/\/([a-z-.0-9]+)\//i, '').split('/').join('--'));
+          urchinTracker('/download/'+this.href.replace(/^(http|https|ftp):\/\/([a-z-.0-9]+)\//i, '').split('/').join('--'));
         }
         else {
-          pageTracker._trackPageview('/download/'+this.href.replace(/^(http|https):\/\/([a-z-.0-9]+)\//i, '').split('/').join('--'));
+          pageTracker._trackPageview('/download/'+this.href.replace(/^(http|https|ftp):\/\/([a-z-.0-9]+)\//i, '').split('/').join('--'));
         }
       }
     }
@@ -27,10 +27,10 @@ gaTrackerAttach = function () {
       // are external
       // Clean and track the URL
       if (LegacyVersion) {
-        urchinTracker('/outgoing/'+this.href.replace(/^http:\/\/|https:\/\//i, '').split('/').join('--'));
+        urchinTracker('/outgoing/'+this.href.replace(/^http:\/\/|https:\/\/|ftp:\/\//i, '').split('/').join('--'));
       }
       else {
-        pageTracker._trackPageview('/outgoing/'+this.href.replace(/^http:\/\/|https:\/\//i, '').split('/').join('--'));
+        pageTracker._trackPageview('/outgoing/'+this.href.replace(/^http:\/\/|https:\/\/|ftp:\/\//i, '').split('/').join('--'));
       }
     }
   });
