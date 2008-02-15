@@ -70,16 +70,16 @@ function googleanalytics_footer($main = 0) {
           $value = implode(',', $value);
         }
 
-        $fields[$field] = addslashes($value);
+        $fields[$field] = $value;
       }
 
       // Only show segmentation variable if there are specified fields.
       $segmentation = '';
       if (count($fields) > 0) {
         if ($legacy_version) {
-          $segmentation = "__utmSetVar('". implode(':', $fields) ."');";
+          $segmentation = '__utmSetVar('. drupal_to_js(implode(':', $fields)) .');';
         } else {
-          $segmentation = "pageTracker._setVar('". implode(':', $fields) ."');";
+          $segmentation = 'pageTracker._setVar('. drupal_to_js(implode(':', $fields)) .');';
         }
       }
     }
@@ -124,14 +124,14 @@ function googleanalytics_footer($main = 0) {
 
     // Surround custom urls with single quotes.
     if (!empty($url_custom)) {
-      $url_custom = '\''. $url_custom .'\'';
+      $url_custom = drupal_to_js($url_custom);
     }
 
     // Should the legacy code be used?
     if ($legacy_version) {
       $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
       $script .= '<script type="text/javascript">';
-      $script .= '_uacct = "'. $id .'";';
+      $script .= '_uacct = '. drupal_to_js($id) .';';
       if (!empty($segmentation)) {
         $script .= $segmentation;
       }
@@ -146,7 +146,7 @@ function googleanalytics_footer($main = 0) {
       $script .= 'document.write(unescape("%3Cscript src=\''. $source .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
       $script .= "</script>\n";
       $script .= '<script type="text/javascript">';
-      $script .= 'var pageTracker = _gat._getTracker("'. $id .'");';
+      $script .= 'var pageTracker = _gat._getTracker('. drupal_to_js($id) .');';
       $script .= 'pageTracker._initData();';
       if (!empty($segmentation)) {
         $script .= $segmentation;
