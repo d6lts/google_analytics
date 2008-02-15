@@ -119,7 +119,7 @@ function googleanalytics_footer($main = 0) {
     $url_custom = '';
     if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search') {
       $keys = search_get_keys();
-      $url_custom = url('search/node', 'search='. trim($keys));
+      $url_custom = url('search/'. arg(1), 'search='. trim($keys));
     }
 
     // Surround custom urls with single quotes.
