@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics Module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-10 14:23+0100\n"
-"PO-Revision-Date: 2008-02-15 20:53+0100\n"
+"PO-Revision-Date: 2008-02-15 20:56+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -150,7 +150,7 @@ msgstr "JavaScript Code"
 
 #: googleanalytics.module:299
 msgid "Paste <a href=\"@snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"@blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
-msgstr "<a href=\"@snippets\">Angepasste Codeausschnitte</a> hier einfügen. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. Weitere Hilfe zu dieser Funktion finden sich im <a href=\"@blog\">Cutroni.com Blog</a>. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
+msgstr "<a href=\"!snippets\">Angepasste Codeausschnitte</a> hier einfügen. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. Weitere Hilfe bezüglich dieser Funktion kann im <a href=\"!blog\">Cutroni.com Blog</a> gefunden werden. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code immer mit einem Semikolon (;) abschließen."
 
 #: googleanalytics.module:315
 msgid "Google Analytics module"
