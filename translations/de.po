@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Google Analytics Module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-10 14:26+0100\n"
-"PO-Revision-Date: 2008-02-10 14:33+0100\n"
+"POT-Creation-Date: 2008-02-27 20:22+0100\n"
+"PO-Revision-Date: 2008-02-27 20:39+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -21,15 +21,15 @@ msgstr ""
 
 #: googleanalytics.admin.inc:14
 msgid "Analytics Account Settings"
-msgstr "Analytics Kontoeinstellungen"
+msgstr "Analytics-Kontoeinstellungen"
 
-#: googleanalytics.admin.inc:20;77
-msgid "User ID"
-msgstr "Benutzer ID"
+#: googleanalytics.admin.inc:20
+msgid "Google Analytics account number"
+msgstr "Google Analytics-Kontonummer"
 
 #: googleanalytics.admin.inc:25
-msgid "The user account is unique to the websites domain. You can obtain an user account from the <a href=\"@url\">Google Analytics</a> website."
-msgstr "Das Benutzerkonto ist eindeutig für die Webseitendomain. Ein Konto kann auf der <a href=\"@url\">Google Analytics</a> Webseite beantragt werden."
+msgid "The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain an user account from the <a href=\"@url\">Google Analytics</a> website."
+msgstr "Die Benutzerkontonummer (UA-xxxxxx-x) ist eindeutig für die Domain der Website. Ein Konto kann auf der <a href=\"@url\">Google Analytics</a> Website beantragt werden."
 
 #: googleanalytics.admin.inc:30
 msgid "Legacy Google Analytics"
@@ -66,6 +66,10 @@ msgstr "Das !profile muss für dieses Feature aktiviert werden."
 #: googleanalytics.admin.inc:69
 msgid "Profile module"
 msgstr "Profil Module"
+
+#: googleanalytics.admin.inc:77
+msgid "User ID"
+msgstr "Benutzer ID"
 
 #: googleanalytics.admin.inc:78
 msgid "Username"
@@ -139,19 +143,39 @@ msgstr "JavaScript Code"
 msgid "Paste <a href=\"!snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"!blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr "<a href=\"!snippets\">Angepasste Codeausschnitte</a> hier einfügen. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. Weitere Hilfe bezüglich dieser Funktion kann im <a href=\"!blog\">Cutroni.com Blog</a> gefunden werden. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code immer mit einem Semikolon (;) abschließen."
 
+#: googleanalytics.admin.inc:147
+msgid "JavaScript scope"
+msgstr "JavaScript-Scope"
+
+#: googleanalytics.admin.inc:148
+msgid "<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."
+msgstr "<strong>Warnung:</strong> Aus Performancegründen empfielt Google die externen JavaScript-Dateien im Fußbereich einzufügen."
+
+#: googleanalytics.admin.inc:150
+msgid "Footer"
+msgstr "Fußbereich"
+
+#: googleanalytics.admin.inc:151
+msgid "Header"
+msgstr "Kopfbereich"
+
+#: googleanalytics.admin.inc:161
+msgid "A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x."
+msgstr "Bei der Google Analytics-Kontonummer muss die Groß- und Kleinschreibung beachtet werden und in der Form UA-xxxxxx-x formatiert sein."
+
 #: googleanalytics.module:17
 msgid "Google Analytics is a free statistics package based on the excellent Urchin system."
 msgstr "Google Analytics ist ein kostenfreies Statistikpacket, basierend auf dem hervorragenden Urchin System."
 
-#: googleanalytics.module:176
+#: googleanalytics.module:167
 msgid "Google Analytics module"
 msgstr "Google Analytics Modul"
 
-#: googleanalytics.module:177
+#: googleanalytics.module:168
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr "Das Google Analytics Modul wurde noch nicht konfiguriert. Die Einstellungen können auf der <a href=\"@url\">Google Analytics Einstellungen Seite</a> vorgenommen werden."
 
-#: googleanalytics.module:179
+#: googleanalytics.module:170
 msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
