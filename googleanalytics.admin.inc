@@ -142,6 +142,17 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#description' => t('Paste <a href="!snippets">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href="!blog">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://drupal.org/node/39282', '!blog' => 'http://cutroni.com/blog/'))
   );
 
+  $form['advanced']['googleanalytics_js_scope'] = array(
+    '#type' => 'select',
+    '#title' => t('JavaScript scope'),
+    '#description' => t("<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."),
+    '#options' => array(
+      'footer' => t('Footer'),
+      'header' => t('Header'),
+    ),
+    '#default_value' => variable_get('googleanalytics_js_scope', 'footer'),
+  );
+
   return system_settings_form($form);
 }
 

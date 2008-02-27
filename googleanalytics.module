@@ -37,14 +37,33 @@ function googleanalytics_init() {
 
   // Use the old version of Google Analytics?
   $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
+  $scope = variable_get('googleanalytics_js_scope', 'footer');
+
+  // Are we on a secure page?
+  $prefix = '://www';
+  if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
+    $prefix = 's://ssl';
+  }
+
+  // Should a local cached copy of urchin.js or ga.js be used?
+  $js_file = ($legacy_version) ? 'urchin.js' : 'ga.js';
+  $url = 'http'. $prefix .'.google-analytics.com/'. $js_file;
+
+  if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _googleanalytics_cache($url)) {
+    drupal_add_js($source, 'module', $scope);
+  }
+  else {
+    $script .= 'document.write(unescape("%3Cscript src=\''. $source .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
+    drupal_add_js($script, 'inline', $scope);
+  }
 
   // Add download tracking.
   $path = drupal_get_path('module', 'googleanalytics');
   if ($trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES)) {
     drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
-    drupal_add_js($path .'/downloadtracker.js', 'module', 'footer');
+    drupal_add_js($path .'/downloadtracker.js', 'module', $scope);
   }
-
+  
 }
 
 /**
@@ -60,13 +79,6 @@ function googleanalytics_footer($main = 0) {
 
   // Don't track page views in the admin sections
   if ($id && (arg(0) != 'admin') && $track == TRUE) {
-
-    $prefix = '://www';
-
-    // Are we on a secure page?
-    if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
-      $prefix = 's://ssl';
-    }
 
     // Use the old version of Google Analytics?
     $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
@@ -102,27 +114,6 @@ function googleanalytics_footer($main = 0) {
     // Add any custom code snippets if specified.
     $codesnippet = variable_get('googleanalytics_codesnippet', '');
 
-    // Should a local cached copy of urchin.js or ga.js be used?
-    if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC)) {
-      if ($legacy_version) {
-        $source = _googleanalytics_cache('http://www.google-analytics.com/urchin.js');
-      }
-      else {
-        $source = _googleanalytics_cache('http://www.google-analytics.com/ga.js');
-      }
-      if (!empty($source)) {
-        $source = base_path() . $source;
-      }
-    }
-    if (!isset($source)) {
-      if ($legacy_version) {
-        $source = 'http'. $prefix .'.google-analytics.com/urchin.js';
-      }
-      else {
-        $source = 'http'. $prefix .'.google-analytics.com/ga.js';
-      }
-    }
-
     // Site search tracking support.
     $url_custom = '';
     if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search') {
@@ -136,9 +127,8 @@ function googleanalytics_footer($main = 0) {
     }
 
     // Should the legacy code be used?
+    $script = '';
     if ($legacy_version) {
-      $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
-      $script .= '<script type="text/javascript">';
       $script .= '_uacct = '. drupal_to_js($id) .';';
       if (!empty($segmentation)) {
         $script .= $segmentation;
@@ -147,13 +137,8 @@ function googleanalytics_footer($main = 0) {
         $script .= $codesnippet;
       }
       $script .= 'urchinTracker('. $url_custom .');';
-      $script .= "</script>\n";
     }
     else {
-      $script = '<script type="text/javascript">';
-      $script .= 'document.write(unescape("%3Cscript src=\''. $source .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
-      $script .= "</script>\n";
-      $script .= '<script type="text/javascript">';
       $script .= 'var pageTracker = _gat._getTracker('. drupal_to_js($id) .');';
       $script .= 'pageTracker._initData();';
       if (!empty($segmentation)) {
@@ -163,10 +148,9 @@ function googleanalytics_footer($main = 0) {
         $script .= $codesnippet;
       }
       $script .= 'pageTracker._trackPageview('. $url_custom .');';
-      $script .= "</script>\n";
     }
 
-    return $script;
+    drupal_add_js($script, 'inline', 'footer');
   }
 }
 
@@ -202,6 +186,12 @@ function googleanalytics_cron() {
 
     // New google analytics version.
     file_delete(file_directory_path() .'/googleanalytics/ga.js');
+
+    // Clear aggregated JS files.
+    if (variable_get('preprocess_js', 0)) {
+      drupal_clear_js_cache();
+    }
+
     variable_set('googleanalytics_last_cache', time());
   }
 }
