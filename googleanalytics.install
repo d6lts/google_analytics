@@ -39,7 +39,7 @@ function googleanalytics_update_1() {
     variable_set('googleanalytics_track_'. $role->rid, !variable_get("googleanalytics_track_{$role_varname}", FALSE));
     variable_del("googleanalytics_track_{$role_varname}");
   }
-  variable_set('googleanalytics_track__user1', TRUE);
+  variable_set('googleanalytics_track__user1', FALSE);
 
   return $ret;
 }
