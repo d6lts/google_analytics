@@ -8,7 +8,7 @@
 /**
  * Implementation of hook_admin_settings() for configuring the module
  */
-function googleanalytics_admin_settings() {
+function googleanalytics_admin_settings_form(&$form_state) {
   $form['account'] = array(
     '#type' => 'fieldset',
     '#title' => t('Analytics Account Settings'),
@@ -17,12 +17,12 @@ function googleanalytics_admin_settings() {
 
   $form['account']['googleanalytics_account'] = array(
     '#type' => 'textfield',
-    '#title' => t('User ID'),
+    '#title' => t('Google Analytics account number'),
     '#default_value' => variable_get('googleanalytics_account', 'UA-'),
     '#size' => 15,
     '#maxlength' => 20,
     '#required' => TRUE,
-    '#description' => t('The user account is unique to the websites domain. You can obtain an user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/'))
+    '#description' => t('The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain an user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/'))
   );
 
   $form['account']['googleanalytics_legacy_version'] = array(
@@ -143,4 +143,10 @@ function googleanalytics_admin_settings() {
   );
 
   return system_settings_form($form);
+}
+
+function googleanalytics_admin_settings_form_validate($form, &$form_state) {
+  if (!preg_match('/^UA-\d{4,}-\d+$/', $form_state['values']['googleanalytics_account'])) {
+    form_set_error('googleanalytics_account', t('A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x.'));
+  }
 }

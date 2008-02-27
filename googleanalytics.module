@@ -24,7 +24,7 @@ function googleanalytics_menu() {
     'title' => 'Google Analytics',
     'description' => 'Configure the settings used to generate your Google Analytics site map.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('googleanalytics_admin_settings'),
+    'page arguments' => array('googleanalytics_admin_settings_form'),
     'access arguments' => array('administer site configuration'),
     'file' => 'googleanalytics.admin.inc',
     'type' => MENU_NORMAL_ITEM,
@@ -178,7 +178,7 @@ function googleanalytics_requirements($phase) {
 
   if ($phase == 'runtime') {
     // Raise warning if Google user account has not been set yet.
-    if (variable_get('googleanalytics_account', 'UA-') == 'UA-') {
+    if (!preg_match('/^UA-\d{4,}-\d+$/', variable_get('googleanalytics_account', 'UA-'))) {
       $requirements['googleanalytics'] = array(
         'title' => t('Google Analytics module'),
         'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/settings/googleanalytics'))),
