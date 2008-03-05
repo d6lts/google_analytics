@@ -34,36 +34,44 @@ function googleanalytics_menu() {
 }
 
 function googleanalytics_init() {
+  global $user;
 
-  // Use the old version of Google Analytics?
-  $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
-  $scope = variable_get('googleanalytics_js_scope', 'footer');
+  $id = variable_get('googleanalytics_account', '');
 
-  // Are we on a secure page?
-  $prefix = '://www';
-  if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
-    $prefix = 's://ssl';
+  // Check if we should track the currently active user's role.
+  $track = _googleanalytics_track($user);
+
+  // Don't track page views in the admin sections
+  if ($id && (arg(0) != 'admin') && $track == TRUE) {
+    // Use the old version of Google Analytics?
+    $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
+    $scope = variable_get('googleanalytics_js_scope', 'footer');
+
+    // Are we on a secure page?
+    $prefix = '://www';
+    if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
+      $prefix = 's://ssl';
+    }
+
+    // Should a local cached copy of urchin.js or ga.js be used?
+    $js_file = ($legacy_version) ? 'urchin.js' : 'ga.js';
+    $url = 'http'. $prefix .'.google-analytics.com/'. $js_file;
+
+    if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _googleanalytics_cache($url)) {
+      drupal_add_js($source, 'module', $scope);
+    }
+    else {
+      $script .= 'document.write(unescape("%3Cscript src=\''. $url .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
+      drupal_add_js($script, 'inline', $scope);
+    }
+
+    // Add download tracking.
+    $path = drupal_get_path('module', 'googleanalytics');
+    if ($trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES)) {
+      drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
+      drupal_add_js($path .'/downloadtracker.js', 'module', $scope);
+    }
   }
-
-  // Should a local cached copy of urchin.js or ga.js be used?
-  $js_file = ($legacy_version) ? 'urchin.js' : 'ga.js';
-  $url = 'http'. $prefix .'.google-analytics.com/'. $js_file;
-
-  if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _googleanalytics_cache($url)) {
-    drupal_add_js($source, 'module', $scope);
-  }
-  else {
-    $script .= 'document.write(unescape("%3Cscript src=\''. $url .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
-    drupal_add_js($script, 'inline', $scope);
-  }
-
-  // Add download tracking.
-  $path = drupal_get_path('module', 'googleanalytics');
-  if ($trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES)) {
-    drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
-    drupal_add_js($path .'/downloadtracker.js', 'module', $scope);
-  }
-  
 }
 
 /**
