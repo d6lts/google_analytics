@@ -118,12 +118,23 @@ function googleanalytics_footer($main = 0) {
     $url_custom = '';
     if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search') {
       $keys = search_get_keys();
-      $url_custom = url('search/'. arg(1), array('query' => 'search='. trim($keys)));
+      $url_custom = drupal_to_js(url('search/'. arg(1), array('query' => 'search='. trim($keys))));
     }
 
-    // Surround custom urls with single quotes.
-    if (!empty($url_custom)) {
-      $url_custom = drupal_to_js($url_custom);
+    // Track file not found (404) pages.
+    // TODO: Access denied (403) cannot be tracked, because hook_footer is skipped.
+    if (function_exists('drupal_get_headers')) {
+      $headers = drupal_get_headers();
+      if (strstr($headers, 'HTTP/1.1 404 Not Found')) {
+        if ($legacy_version) {
+          // See http://www.google.com/support/analytics/bin/answer.py?answer=86928
+          $url_custom = '"/404.html?page=" + _udl.pathname + _udl.search';
+        }
+        else {
+          // See http://www.google.com/support/analytics/bin/answer.py?answer=86927
+          $url_custom = '"/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer';
+        }
+      }
     }
 
     // Should the legacy code be used?
