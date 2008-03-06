@@ -133,13 +133,21 @@ function googleanalytics_footer($main = 0) {
     // TODO: Access denied (403) cannot be tracked, because hook_footer is skipped.
     if (function_exists('drupal_get_headers')) {
       $headers = drupal_get_headers();
-      if (strstr($headers, 'HTTP/1.1 404 Not Found')) {
+      if (strstr($headers, 'HTTP/1.1 403 Forbidden')) {
         if ($legacy_version) {
           // See http://www.google.com/support/analytics/bin/answer.py?answer=86928
-          $url_custom = '"/404.html?page=" + _udl.pathname + _udl.search';
+          $url_custom = '"/403.html?page=" + _udl.pathname + _udl.search';
         }
         else {
           // See http://www.google.com/support/analytics/bin/answer.py?answer=86927
+          $url_custom = '"/403.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer';
+        }
+      }
+      elseif (strstr($headers, 'HTTP/1.1 404 Not Found')) {
+        if ($legacy_version) {
+          $url_custom = '"/404.html?page=" + _udl.pathname + _udl.search';
+        }
+        else {
           $url_custom = '"/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer';
         }
       }
