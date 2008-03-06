@@ -5,9 +5,9 @@ gaTrackerAttach = function () {
     var trackDownload = Drupal.settings.googleanalytics.trackDownload;
 
     // Extract the domain from the location (the domain are in domain[2]).
-    var domain = /^(http|https):\/\/([a-z-.0-9]+)[\/]{0,1}/i.exec(window.location);
+    var domain = /^(http|https|ftp):\/\/([a-z-.0-9]+)[\/]{0,1}/i.exec(window.location);
     // Expression for check internal links.
-    var internalLink = new RegExp("^(http|https):\/\/"+domain[2], "i");
+    var internalLink = new RegExp("^(http|https|ftp):\/\/"+domain[2], "i");
     // Expression for check downloads
     var isDownload = new RegExp("("+trackDownload+")$", "i");
 
