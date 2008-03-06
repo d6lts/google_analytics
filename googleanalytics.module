@@ -129,8 +129,7 @@ function googleanalytics_footer($main = 0) {
       $url_custom = drupal_to_js(url('search/'. arg(1), array('query' => 'search='. trim($keys))));
     }
 
-    // Track file not found (404) pages.
-    // TODO: Access denied (403) cannot be tracked, because hook_footer is skipped.
+    // Track access denied (403) and file not found (404) pages.
     if (function_exists('drupal_get_headers')) {
       $headers = drupal_get_headers();
       if (strstr($headers, 'HTTP/1.1 403 Forbidden')) {
