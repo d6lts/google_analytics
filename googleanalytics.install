@@ -23,6 +23,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_segmentation');
   variable_del('googleanalytics_track__user1');
   variable_del('googleanalytics_trackfiles');
+  variable_del('googleanalytics_trackfiles_extensions');
   variable_del('googleanalytics_cache');
   variable_del('googleanalytics_last_cache');
   variable_del('googleanalytics_site_search');
@@ -41,6 +42,16 @@ function googleanalytics_update_1() {
     variable_del("googleanalytics_track_{$role_varname}");
   }
   variable_set('googleanalytics_track__user1', FALSE);
+
+  return $ret;
+}
+
+function googleanalytics_update_6000() {
+  $ret = array();
+
+  variable_set('googleanalytics_trackfiles_extensions', variable_get('googleanalytics_trackfiles', GA_TRACKFILES));
+  $trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES) ? TRUE : FALSE;
+  variable_set('googleanalytics_trackfiles', $trackfiles);
 
   return $ret;
 }

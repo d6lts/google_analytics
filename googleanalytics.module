@@ -67,8 +67,8 @@ function googleanalytics_init() {
 
     // Add download tracking.
     $path = drupal_get_path('module', 'googleanalytics');
-    if ($trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES)) {
-      drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
+    if (variable_get('googleanalytics_trackfiles', TRUE) && $trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES)) {
+      drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles_extensions, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
       drupal_add_js($path .'/downloadtracker.js', 'module', $scope);
     }
   }

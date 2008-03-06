@@ -94,10 +94,22 @@ function googleanalytics_admin_settings_form(&$form_state) {
     );
   }
 
-  $form['googleanalytics_trackfiles'] = array(
+  $form['linktracking'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Link tracking'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+  $form['linktracking']['googleanalytics_trackfiles'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track files'),
+    '#default_value' => variable_get('googleanalytics_trackfiles', TRUE),
+    '#description' => t('Enables tracking of files based on below file extensions list.')
+  );
+  $form['linktracking']['googleanalytics_trackfiles_extensions'] = array(
     '#type' => 'textfield',
     '#title' => t('File Extensions To Track'),
-    '#default_value' => variable_get('googleanalytics_trackfiles', GA_TRACKFILES),
+    '#default_value' => variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES),
     '#description' => t('A pipe seperated list of file extensions that should be tracked when clicked. Example !extensions', array('!extensions' => GA_TRACKFILES))
   );
 
