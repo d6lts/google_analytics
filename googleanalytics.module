@@ -47,15 +47,34 @@ function googleanalytics_footer($main = 0) {
   // Don't track page views in the admin sections
   if ($id && (arg(0) != 'admin') && $track == TRUE) {
 
-    $prefix = '://www';
-
     // Are we on a secure page?
+    $prefix = '://www';
     if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
       $prefix = 's://ssl';
     }
 
     // Use the old version of Google Analytics?
     $legacy_version = variable_get('googleanalytics_legacy_version', TRUE);
+    $scope = variable_get('googleanalytics_js_scope', 'footer');
+
+    // Should a local cached copy of urchin.js or ga.js be used?
+    $js_file = ($legacy_version) ? 'urchin.js' : 'ga.js';
+    $url = 'http'. $prefix .'.google-analytics.com/'. $js_file;
+
+    if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _googleanalytics_cache($url)) {
+      drupal_add_js($source, 'module', $scope);
+    }
+    else {
+      $script .= 'document.write(unescape("%3Cscript src=\''. $url .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
+      drupal_add_js($script, 'inline', $scope);
+    }
+
+    // Download tracking
+    $path = drupal_get_path('module', 'googleanalytics');
+    if (variable_get('googleanalytics_trackfiles', TRUE) && $trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES)) {
+      drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles_extensions, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
+      drupal_add_js($path .'/downloadtracker.js', 'module', $scope);
+    }
 
     // Add User profile segmentation values
     if (is_array($profile_fields = variable_get('googleanalytics_segmentation', '')) && ($user->uid > 0)) {
@@ -81,37 +100,6 @@ function googleanalytics_footer($main = 0) {
         } else {
           $segmentation = 'pageTracker._setVar('. drupal_to_js(implode(':', $fields)) .');';
         }
-      }
-    }
-
-    // Download tracking
-    $path = drupal_get_path('module', 'googleanalytics');
-    if (variable_get('googleanalytics_trackfiles', TRUE) && $trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES)) {
-      drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles_extensions, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
-      drupal_add_js($path .'/downloadtracker.js', 'module', 'footer');
-    }
-
-    // Add any custom code snippets if specified
-    $codesnippet = variable_get('googleanalytics_codesnippet', '');
-
-    // Should a local cached copy of urchin.js or ga.js be used?
-    if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC)) {
-      if ($legacy_version) {
-        $source = _googleanalytics_cache('http://www.google-analytics.com/urchin.js');
-      }
-      else {
-        $source = _googleanalytics_cache('http://www.google-analytics.com/ga.js');
-      }
-      if (!empty($source)) {
-        $source = base_path() . $source;
-      }
-    }
-    if (!isset($source)) {
-      if ($legacy_version) {
-        $source = 'http'. $prefix .'.google-analytics.com/urchin.js';
-      }
-      else {
-        $source = 'http'. $prefix .'.google-analytics.com/ga.js';
       }
     }
 
@@ -145,10 +133,12 @@ function googleanalytics_footer($main = 0) {
       }
     }
 
+    // Add any custom code snippets if specified
+    $codesnippet = variable_get('googleanalytics_codesnippet', '');
+
     // Should the legacy code be used?
+    $script = '';
     if ($legacy_version) {
-      $script = '<script type="text/javascript" src="'. $source ."\"></script>\n";
-      $script .= '<script type="text/javascript">';
       $script .= '_uacct = '. drupal_to_js($id) .';';
       if (!empty($segmentation)) {
         $script .= $segmentation;
@@ -157,13 +147,8 @@ function googleanalytics_footer($main = 0) {
         $script .= $codesnippet;
       }
       $script .= 'urchinTracker('. $url_custom .');';
-      $script .= "</script>\n";
     }
     else {
-      $script = '<script type="text/javascript">';
-      $script .= 'document.write(unescape("%3Cscript src=\''. $source .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
-      $script .= "</script>\n";
-      $script .= '<script type="text/javascript">';
       $script .= 'var pageTracker = _gat._getTracker('. drupal_to_js($id) .');';
       $script .= 'pageTracker._initData();';
       if (!empty($segmentation)) {
@@ -173,10 +158,9 @@ function googleanalytics_footer($main = 0) {
         $script .= $codesnippet;
       }
       $script .= 'pageTracker._trackPageview('. $url_custom .');';
-      $script .= "</script>\n";
     }
-    
-    return $script;
+
+    drupal_add_js($script, 'inline', 'footer');
   }
 }
 
@@ -327,6 +311,17 @@ function googleanalytics_admin_settings_form() {
     '#default_value' => variable_get('googleanalytics_codesnippet', ''),
     '#rows' => 15,
     '#description' => t('Paste <a href="@snippets">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href="@blog">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/39282', '@blog' => 'http://cutroni.com/blog/'))
+  );
+
+  $form['advanced']['googleanalytics_js_scope'] = array(
+    '#type' => 'select',
+    '#title' => t('JavaScript scope'),
+    '#description' => t("<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."),
+    '#options' => array(
+      'footer' => t('Footer'),
+      'header' => t('Header'),
+    ),
+    '#default_value' => variable_get('googleanalytics_js_scope', 'footer'),
   );
 
   return system_settings_form($form);
