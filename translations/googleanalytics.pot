@@ -3,7 +3,7 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.admin.inc,v 1.2.2.14 2008/02/27 19:17:06 hass
+#  googleanalytics.admin.inc,v 1.2.2.15 2008/03/06 19:38:58 hass
 #  googleanalytics.module,v 1.14.2.13 2007/08/27 21:21:25 budda
 #  googleanalytics.info,v 1.5.2.3 2007/12/30 20:42:58 hass
 #
@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-02-27 20:22+0100\n"
+"POT-Creation-Date: 2008-03-08 14:00+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -89,78 +89,90 @@ msgid "Selecting one or more values allows you to track users by profile values 
 msgstr ""
 
 #: googleanalytics.admin.inc:99
+msgid "Link tracking"
+msgstr ""
+
+#: googleanalytics.admin.inc:105
+msgid "Track files"
+msgstr ""
+
+#: googleanalytics.admin.inc:107
+msgid "Enables tracking of files based on below file extensions list."
+msgstr ""
+
+#: googleanalytics.admin.inc:111
 msgid "File Extensions To Track"
 msgstr ""
 
-#: googleanalytics.admin.inc:101
+#: googleanalytics.admin.inc:113
 msgid "A pipe seperated list of file extensions that should be tracked when clicked. Example !extensions"
 msgstr ""
 
-#: googleanalytics.admin.inc:106
+#: googleanalytics.admin.inc:118
 msgid "Advanced"
 msgstr ""
 
-#: googleanalytics.admin.inc:109
+#: googleanalytics.admin.inc:121
 msgid "You can add custom Google Analytics code here."
 msgstr ""
 
-#: googleanalytics.admin.inc:114
+#: googleanalytics.admin.inc:126
 msgid "Cache tracking code file locally"
 msgstr ""
 
-#: googleanalytics.admin.inc:115
+#: googleanalytics.admin.inc:127
 msgid "If checked, the tracking code file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker."
 msgstr ""
 
-#: googleanalytics.admin.inc:120
+#: googleanalytics.admin.inc:132
 msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr ""
 
-#: googleanalytics.admin.inc:124
+#: googleanalytics.admin.inc:136
 msgid "Depends on: !dependencies"
 msgstr ""
 
-#: googleanalytics.admin.inc:124
+#: googleanalytics.admin.inc:136
 msgid " (<span class=\"admin-enabled\">enabled</span>)"
 msgstr ""
 
-#: googleanalytics.admin.inc:124
+#: googleanalytics.admin.inc:136
 msgid " (<span class=\"admin-disabled\">disabled</span>)"
 msgstr ""
 
-#: googleanalytics.admin.inc:131
+#: googleanalytics.admin.inc:143
 msgid "Do Track Internal Search"
 msgstr ""
 
-#: googleanalytics.admin.inc:132
+#: googleanalytics.admin.inc:144
 msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
 msgstr ""
 
-#: googleanalytics.admin.inc:139
+#: googleanalytics.admin.inc:151
 msgid "JavaScript Code"
 msgstr ""
 
-#: googleanalytics.admin.inc:142
+#: googleanalytics.admin.inc:154
 msgid "Paste <a href=\"!snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"!blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr ""
 
-#: googleanalytics.admin.inc:147
+#: googleanalytics.admin.inc:159
 msgid "JavaScript scope"
 msgstr ""
 
-#: googleanalytics.admin.inc:148
+#: googleanalytics.admin.inc:160
 msgid "<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."
 msgstr ""
 
-#: googleanalytics.admin.inc:150
+#: googleanalytics.admin.inc:162
 msgid "Footer"
 msgstr ""
 
-#: googleanalytics.admin.inc:151
+#: googleanalytics.admin.inc:163
 msgid "Header"
 msgstr ""
 
-#: googleanalytics.admin.inc:161
+#: googleanalytics.admin.inc:173
 msgid "A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x."
 msgstr ""
 
@@ -168,15 +180,15 @@ msgstr ""
 msgid "Google Analytics is a free statistics package based on the excellent Urchin system."
 msgstr ""
 
-#: googleanalytics.module:167
+#: googleanalytics.module:193
 msgid "Google Analytics module"
 msgstr ""
 
-#: googleanalytics.module:168
+#: googleanalytics.module:194
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr ""
 
-#: googleanalytics.module:170
+#: googleanalytics.module:196
 msgid "Not configured"
 msgstr ""
 
