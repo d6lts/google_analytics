@@ -18,6 +18,10 @@ function googleanalytics_help($path, $arg) {
   }
 }
 
+function googleanalytics_perm() {
+  return array('administer google analytics');
+}
+
 function googleanalytics_menu() {
 
   $items['admin/settings/googleanalytics'] = array(
@@ -25,7 +29,7 @@ function googleanalytics_menu() {
     'description' => 'Configure the settings used to generate your Google Analytics site map.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('googleanalytics_admin_settings_form'),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer google analytics'),
     'file' => 'googleanalytics.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
