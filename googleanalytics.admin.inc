@@ -150,8 +150,8 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#type' => 'textarea',
     '#title' => t('Custom JavaScript Code'),
     '#default_value' => variable_get('googleanalytics_codesnippet', ''),
-    '#rows' => 15,
-    '#description' => t('Paste <a href="!snippets">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href="!blog">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://drupal.org/node/39282', '!blog' => 'http://cutroni.com/blog/'))
+    '#rows' => 5,
+    '#description' => t('You can add custom Google Analytics <a href="!snippets">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://drupal.org/node/248699'))
   );
 
   $form['advanced']['googleanalytics_js_scope'] = array(
