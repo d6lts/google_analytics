@@ -196,8 +196,6 @@ function googleanalytics_admin_settings_form() {
    );
 
   // Render the role overview.
-  $result = db_query('SELECT * FROM {role} ORDER BY name');
-
   $form['roles'] = array(
     '#type' => 'fieldset',
     '#title' => t('User Role Tracking'),
@@ -211,11 +209,12 @@ function googleanalytics_admin_settings_form() {
     '#default_value' => variable_get('googleanalytics_track__user1', FALSE),
   );
 
-  while ($role = db_fetch_object($result)) {
-    $form['roles']['googleanalytics_track_'. $role->rid] = array(
+  $roles = _googleanalytics_user_roles();
+  foreach ($roles as $rid => $rname) {
+    $form['roles']['googleanalytics_track_'. $rid] = array(
       '#type' => 'checkbox',
-      '#title' => check_plain($role->name),
-      '#default_value' => variable_get('googleanalytics_track_'. $role->rid, FALSE),
+      '#title' => check_plain($rname),
+      '#default_value' => variable_get('googleanalytics_track_'. $rid, FALSE),
     );
   }
 
@@ -427,4 +426,34 @@ function _googleanalytics_track($account) {
   }
 
   return $track;
+}
+
+/**
+ * D6 backport orders core standard roles on top and translate core roles.
+ */
+function _googleanalytics_user_roles() {
+  // System roles take the first two positions.
+  $roles = array(
+    DRUPAL_ANONYMOUS_RID => NULL,
+    DRUPAL_AUTHENTICATED_RID => NULL,
+  );
+
+  $result = db_query('SELECT * FROM {role} ORDER BY name');
+
+  while ($role = db_fetch_object($result)) {
+    switch ($role->rid) {
+      // We only translate the built in role names
+      case DRUPAL_ANONYMOUS_RID:
+        $roles[$role->rid] = t($role->name);
+        break;
+      case DRUPAL_AUTHENTICATED_RID:
+        $roles[$role->rid] = t($role->name);
+        break;
+      default:
+        $roles[$role->rid] = $role->name;
+    }
+  }
+
+  // Filter to remove unmatched system roles.
+  return array_filter($roles);
 }
