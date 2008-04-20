@@ -108,8 +108,8 @@ function googleanalytics_admin_settings_form(&$form_state) {
   $form['linktracking']['googleanalytics_trackfiles_extensions'] = array(
     '#type' => 'textfield',
     '#title' => t('File Extensions To Track'),
-    '#default_value' => variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES),
-    '#description' => t('A pipe separated list of file extensions that should be tracked when clicked. Example: !extensions', array('!extensions' => GA_TRACKFILES))
+    '#default_value' => variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS),
+    '#description' => t('A pipe separated list of file extensions that should be tracked when clicked. Example: !extensions', array('!extensions' => GA_TRACKFILES_EXTENSIONS))
   );
 
   $form['advanced'] = array(

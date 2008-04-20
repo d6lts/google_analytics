@@ -9,7 +9,7 @@
  * @author: Mike Carter <www.ixis.co.uk/contact>
  */
 
-define('GA_TRACKFILES', 'pdf|zip|mp3');
+define('GA_TRACKFILES_EXTENSIONS', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xml|zip');
 
 function googleanalytics_help($path, $arg) {
   switch ($path) {
@@ -71,7 +71,7 @@ function googleanalytics_init() {
 
     // Add download tracking.
     $path = drupal_get_path('module', 'googleanalytics');
-    if (variable_get('googleanalytics_trackfiles', TRUE) && $trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES)) {
+    if (variable_get('googleanalytics_trackfiles', TRUE) && $trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS)) {
       drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles_extensions, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
       drupal_add_js($path .'/downloadtracker.js', 'module', $scope);
     }
