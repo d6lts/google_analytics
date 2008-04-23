@@ -223,7 +223,7 @@ function googleanalytics_cron() {
  * @return mixed
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
-function _googleanalytics_cache($location = 'http://www.google-analytics.com/urchin.js') {
+function _googleanalytics_cache($location) {
   $directory = file_directory_path() .'/googleanalytics';
   $file_destination = $directory .'/'. basename($location);
   if (!file_exists($file_destination)) {
