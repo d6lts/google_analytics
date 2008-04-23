@@ -1,3 +1,5 @@
+// $Id$
+
 gaTrackerAttach = function () {
 
   $('a').click( function() {

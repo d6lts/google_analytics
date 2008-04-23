@@ -1,5 +1,6 @@
 <?php
 // $Id$
+
 /*
  * Drupal Module: GoogleAnalytics
  * Adds the required Javascript to the bottom of all your Drupal pages
