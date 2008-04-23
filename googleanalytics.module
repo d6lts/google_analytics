@@ -50,21 +50,16 @@ function googleanalytics_init() {
     $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
     $scope = variable_get('googleanalytics_js_scope', 'footer');
 
-    // Are we on a secure page?
-    $prefix = '://www';
-    if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
-      $prefix = 's://ssl';
-    }
-
     // Should a local cached copy of urchin.js or ga.js be used?
     $js_file = ($legacy_version) ? 'urchin.js' : 'ga.js';
-    $url = 'http'. $prefix .'.google-analytics.com/'. $js_file;
+    $url = 'http://www.google-analytics.com/'. $js_file;
 
     if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _googleanalytics_cache($url)) {
       drupal_add_js($source, 'module', $scope);
     }
     else {
-      $script = 'document.write(unescape("%3Cscript src=\''. $url .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
+      $script = 'var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");';
+      $script .= 'document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/'. $js_file .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
       drupal_add_js($script, 'inline', $scope);
     }
 
