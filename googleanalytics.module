@@ -26,7 +26,7 @@ function googleanalytics_menu() {
 
   $items['admin/settings/googleanalytics'] = array(
     'title' => 'Google Analytics',
-    'description' => 'Configure the settings used to generate your Google Analytics site map.',
+    'description' => 'Configure the settings used to generate your Google Analytics tracking code.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('googleanalytics_admin_settings_form'),
     'access arguments' => array('administer google analytics'),
