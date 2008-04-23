@@ -173,7 +173,7 @@ function googleanalytics_footer($main = 0) {
 function googleanalytics_admin_settings_form() {
   $form['account'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Analytics Account Settings'),
+    '#title' => t('Analytics account settings'),
     '#collapsible' => FALSE,
   );
 
@@ -197,7 +197,7 @@ function googleanalytics_admin_settings_form() {
   // Render the role overview.
   $form['roles'] = array(
     '#type' => 'fieldset',
-    '#title' => t('User Role Tracking'),
+    '#title' => t('User role tracking'),
     '#collapsible' => TRUE,
     '#description' => t('Define what user roles should be tracked by Google Analytics.'),
   );
@@ -219,7 +219,7 @@ function googleanalytics_admin_settings_form() {
 
   $form['segmentation'] = array(
     '#type' => 'fieldset',
-    '#title' => t('User Segmentation'),
+    '#title' => t('User segmentation'),
     '#collapsible' => TRUE,
     '#description' => t('If your users have profile fields completed, you can track your logged in users based on a defined profile field.')
   );
@@ -237,7 +237,7 @@ function googleanalytics_admin_settings_form() {
     $fields = array(
       'uid' => t('User ID'),
       'name' => t('Username'),
-      'roles' => t('User Roles')
+      'roles' => t('User roles')
     );
     $result = db_query('SELECT name, title, type, weight FROM {profile_fields} ORDER BY weight');
     while ($record = db_fetch_object($result)) {
@@ -270,7 +270,7 @@ function googleanalytics_admin_settings_form() {
   );
   $form['linktracking']['googleanalytics_trackfiles_extensions'] = array(
     '#type' => 'textfield',
-    '#title' => t('File Extensions To Track'),
+    '#title' => t('File extensions to track'),
     '#default_value' => variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS),
     '#description' => t('A pipe separated list of file extensions that should be tracked when clicked. Example: !extensions', array('!extensions' => GA_TRACKFILES_EXTENSIONS))
   );
@@ -342,7 +342,7 @@ function googleanalytics_admin_settings_form() {
   global $locale;
   $form['advanced']['googleanalytics_site_search'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Do Track Internal Search'),
+    '#title' => t('Track internal search'),
     '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href="!url">How do I set up Site Search for my profile</a>.', array('!url' => 'http://www.google.com/support/analytics/bin/answer.py?hl='. $locale .'&amp;answer=75817')) . $site_search_dependencies,
     '#default_value' => variable_get('googleanalytics_site_search', FALSE),
     '#disabled' => (module_exists('search') ? FALSE : TRUE),
@@ -350,7 +350,7 @@ function googleanalytics_admin_settings_form() {
 
   $form['advanced']['googleanalytics_codesnippet'] = array(
     '#type' => 'textarea',
-    '#title' => t('Custom JavaScript Code'),
+    '#title' => t('Custom JavaScript code'),
     '#default_value' => variable_get('googleanalytics_codesnippet', ''),
     '#rows' => 5,
     '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699'))
