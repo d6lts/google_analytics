@@ -28,6 +28,8 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_last_cache');
   variable_del('googleanalytics_site_search');
   variable_del('googleanalytics_js_scope');
+  variable_del('googleanalytics_visibility');
+  variable_del('googleanalytics_pages');
 }
 
 
@@ -52,6 +54,23 @@ function googleanalytics_update_6000() {
   variable_set('googleanalytics_trackfiles_extensions', variable_get('googleanalytics_trackfiles', GA_TRACKFILES));
   $trackfiles = variable_get('googleanalytics_trackfiles', GA_TRACKFILES) ? TRUE : FALSE;
   variable_set('googleanalytics_trackfiles', $trackfiles);
+
+  return $ret;
+}
+
+function googleanalytics_update_6001() {
+  $ret = array();
+
+  variable_set('googleanalytics_visibility', 0);
+
+  // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
+  $pages = array(
+    'admin*',
+    'user*',
+    'node/add*',
+    'node/*/*',
+  );
+  variable_set('googleanalytics_pages', implode("\n", $pages));
 
   return $ret;
 }

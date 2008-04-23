@@ -37,7 +37,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#type' => 'fieldset',
     '#title' => t('User Role Tracking'),
     '#collapsible' => TRUE,
-    '#description' => t('Define what user roles should be tracked by Google Analytics. <strong>Note:</strong> Drupal Admin pages are never tracked.'),
+    '#description' => t('Define what user roles should be tracked by Google Analytics.'),
   );
 
   $form['roles']['googleanalytics_track__user1'] = array(
@@ -93,6 +93,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     );
   }
 
+  // Link specific configurations.
   $form['linktracking'] = array(
     '#type' => 'fieldset',
     '#title' => t('Link tracking'),
@@ -112,6 +113,46 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#description' => t('A pipe separated list of file extensions that should be tracked when clicked. Example: !extensions', array('!extensions' => GA_TRACKFILES_EXTENSIONS))
   );
 
+  // Page specific visibility configurations.
+  $form['page_vis_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Page specific tracking settings'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $access = user_access('use PHP for block visibility');
+  $visibility = variable_get('googleanalytics_visibility', 0);
+  $pages = variable_get('googleanalytics_pages', '');
+
+  if ($visibility == 2 && !$access) {
+    $form['page_vis_settings'] = array();
+    $form['page_vis_settings']['visibility'] = array('#type' => 'value', '#value' => 2);
+    $form['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $pages);
+  }
+  else {
+    $options = array(t('Add to every page except the listed pages.'), t('Add to only the listed pages.'));
+    $description = t("Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
+
+    if ($access) {
+      $options[] = t('Add if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only).');
+      $description .= ' '. t('If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site.', array('%php' => '<?php ?>'));
+    }
+    $form['page_vis_settings']['googleanalytics_visibility'] = array(
+      '#type' => 'radios',
+      '#title' => t('Add tracking to specific pages'),
+      '#options' => $options,
+      '#default_value' => $visibility,
+    );
+    $form['page_vis_settings']['googleanalytics_pages'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Pages'),
+      '#default_value' => $pages,
+      '#description' => $description,
+    );
+  }
+
+  // Advanced feature configurations.
   $form['advanced'] = array(
     '#type' => 'fieldset',
     '#title' => t('Advanced'),
@@ -171,4 +212,7 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   if (!preg_match('/^UA-\d{4,}-\d+$/', $form_state['values']['googleanalytics_account'])) {
     form_set_error('googleanalytics_account', t('A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x.'));
   }
+
+  // Trim pages variable.
+  $form_state['values']['googleanalytics_pages'] = trim($form_state['values']['googleanalytics_pages']);
 }
