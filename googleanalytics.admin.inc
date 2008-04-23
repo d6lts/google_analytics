@@ -11,7 +11,7 @@
 function googleanalytics_admin_settings_form(&$form_state) {
   $form['account'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Analytics Account Settings'),
+    '#title' => t('Analytics account settings'),
     '#collapsible' => FALSE,
   );
 
