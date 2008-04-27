@@ -122,7 +122,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#collapsed' => TRUE,
   );
 
-  $access = user_access('use PHP for block visibility');
+  $access = user_access('use PHP for tracking visibility');
   $visibility = variable_get('googleanalytics_visibility', 0);
   $pages = variable_get('googleanalytics_pages', '');
 

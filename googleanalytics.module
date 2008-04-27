@@ -19,7 +19,7 @@ function googleanalytics_help($path, $arg) {
 }
 
 function googleanalytics_perm() {
-  return array('administer google analytics');
+  return array('administer google analytics', 'use PHP for tracking visibility');
 }
 
 function googleanalytics_menu() {
