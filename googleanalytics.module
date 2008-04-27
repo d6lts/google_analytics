@@ -19,7 +19,7 @@ function googleanalytics_help($section) {
 }
 
 function googleanalytics_perm() {
-  return array('administer google analytics');
+  return array('administer google analytics', 'use PHP for tracking visibility');
 }
 
 function googleanalytics_menu($maycache) {
@@ -279,7 +279,7 @@ function googleanalytics_admin_settings_form() {
     '#collapsed' => TRUE,
   );
 
-  $access = user_access('use PHP for block visibility');
+  $access = user_access('use PHP for tracking visibility');
   $visibility = variable_get('googleanalytics_visibility', 0);
   $pages = variable_get('googleanalytics_pages', '');
 
