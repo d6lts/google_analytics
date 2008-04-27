@@ -30,7 +30,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#type' => 'checkbox',
     '#title' => t('Legacy Google Analytics'),
     '#default_value' => variable_get('googleanalytics_legacy_version', FALSE),
-    '#description' => t('This will enable Legacy Google Analytics instead of most recent.<br /> Please note that Legacy Google Analytics will not receive feature updates and is not compatible with new features.'),
+    '#description' => t('This will enable Legacy Google Analytics (urchin.js) instead of most recent (ga.js).<br />Please note that Legacy Google Analytics will not receive feature updates and is not compatible with new features.'),
   );
 
   // Render the role overview.
