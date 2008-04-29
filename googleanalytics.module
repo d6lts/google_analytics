@@ -45,7 +45,7 @@ function googleanalytics_init() {
   // 1. Check if the GA account number has a value.
   // 2. Track page views based on visibility value.
   // 3. Check if we should track the currently active user's role.
-  if (!empty($id) && _googleanalytics_visibility() && _googleanalytics_track($user)) {
+  if (!empty($id) && _googleanalytics_visibility_pages() && _googleanalytics_track($user)) {
     // Use the old version of Google Analytics?
     $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
     $scope = variable_get('googleanalytics_js_scope', 'footer');
@@ -80,7 +80,7 @@ function googleanalytics_footer($main = 0) {
 
   $id = variable_get('googleanalytics_account', '');
 
-  if (!empty($id) && _googleanalytics_visibility() && _googleanalytics_track($user)) {
+  if (!empty($id) && _googleanalytics_visibility_pages() && _googleanalytics_track($user)) {
 
     // Use the old version of Google Analytics?
     $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
@@ -276,7 +276,7 @@ function _googleanalytics_track($account) {
  * Based on visibility setting this function returns TRUE if GA code should
  * be added to the current page and otherwise FALSE.
  */
-function _googleanalytics_visibility() {
+function _googleanalytics_visibility_pages() {
   static $page_match;
 
   // Cache visibility setting in hook_init for hook_footer.
