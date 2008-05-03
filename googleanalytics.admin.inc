@@ -86,7 +86,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     $description = t("Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
 
     if ($access) {
-      $options[] = t('Add to pages if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only).');
+      $options[] = t('Add if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only).');
       $description .= ' '. t('If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site.', array('%php' => '<?php ?>'));
     }
     $form['page_vis_settings']['googleanalytics_visibility'] = array(
