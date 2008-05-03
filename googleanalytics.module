@@ -14,7 +14,7 @@ define('GA_TRACKFILES_EXTENSIONS', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|m
 function googleanalytics_help($path, $arg) {
   switch ($path) {
     case 'admin/settings/googleanalytics':
-      return t('Google Analytics is a free statistics package based on the excellent Urchin system.');
+      return t('<a href="@ga_url">Google Analytics</a> is a free statistics package based on the excellent Urchin system. This module provides services to better integrate Drupal with Google Analytics.', array('@ga_url' => 'http://www.google.com/analytics/'));
   }
 }
 
@@ -23,7 +23,6 @@ function googleanalytics_perm() {
 }
 
 function googleanalytics_menu() {
-
   $items['admin/settings/googleanalytics'] = array(
     'title' => 'Google Analytics',
     'description' => 'Configure the settings used to generate your Google Analytics tracking code.',

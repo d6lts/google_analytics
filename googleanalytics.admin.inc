@@ -12,7 +12,7 @@
 function googleanalytics_admin_settings_form(&$form_state) {
   $form['account'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Analytics account settings'),
+    '#title' => t('General settings'),
     '#collapsible' => FALSE,
   );
 
@@ -23,14 +23,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#size' => 15,
     '#maxlength' => 20,
     '#required' => TRUE,
-    '#description' => t('The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain an user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/'))
-  );
-
-  $form['account']['googleanalytics_legacy_version'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Legacy Google Analytics'),
-    '#default_value' => variable_get('googleanalytics_legacy_version', FALSE),
-    '#description' => t('This will enable Legacy Google Analytics (urchin.js) instead of most recent (ga.js).<br />Please note that Legacy Google Analytics will not receive feature updates and is not compatible with new features.'),
+    '#description' => t('The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain a user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/')),
   );
 
   // Standard tracking configurations.
@@ -89,11 +82,11 @@ function googleanalytics_admin_settings_form(&$form_state) {
     $form['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $pages);
   }
   else {
-    $options = array(t('Add to every page except the listed pages.'), t('Add to only the listed pages.'));
+    $options = array(t('Add to every page except the listed pages.'), t('Add to the listed pages only.'));
     $description = t("Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
 
     if ($access) {
-      $options[] = t('Add if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only).');
+      $options[] = t('Add to pages if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only).');
       $description .= ' '. t('If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site.', array('%php' => '<?php ?>'));
     }
     $form['page_vis_settings']['googleanalytics_visibility'] = array(
@@ -110,77 +103,79 @@ function googleanalytics_admin_settings_form(&$form_state) {
     );
   }
 
+  $profile_enabled = module_exists('profile');
   $form['segmentation'] = array(
     '#type' => 'fieldset',
-    '#title' => t('User segmentation'),
+    '#title' => t('User segmentation settings'),
     '#collapsible' => TRUE,
-    '#description' => t('If your users have profile fields completed, you can track your logged in users based on a defined profile field.')
   );
 
-  if (!module_exists('profile')) {
-    $form['segmentation']['profile'] = array(
-      '#type' => 'markup',
-      '#value' => t('You need to activate the !profile to use this feature.', array('!profile' => l(t('Profile module'), 'admin/build/modules'))),
-      '#prefix' => '<p>',
-      '#suffix' => '</p>'
-      );
-  }
-  else {
-    // Compile a list of fields to show.
-    $fields = array(
-      'uid' => t('User ID'),
-      'name' => t('Username'),
-      'roles' => t('User roles')
-    );
+  // Compile a list of fields to show.
+  $fields = array(
+    'uid' => t('User identifier'),
+    'name' => t('User name'),
+    'roles' => t('User roles')
+  );
+  if ($profile_enabled) {
     $result = db_query('SELECT name, title, type, weight FROM {profile_fields} ORDER BY weight');
     while ($record = db_fetch_object($result)) {
       $fields[$record->name] = $record->title;
     }
-
-    $form['segmentation']['googleanalytics_segmentation'] = array(
-      '#type' => 'select',
-      '#title' => t('Track'),
-      '#description' => t('Selecting one or more values allows you to track users by profile values rather than simply an IP address. To select multiple items, hold down CTRL whilst selecting fields.'),
-      '#default_value' => variable_get('googleanalytics_segmentation', ''),
-      '#options' => $fields,
-      '#size' => 10,
-      '#multiple' => TRUE
-    );
   }
+
+  $form['segmentation']['googleanalytics_segmentation'] = array(
+    '#type' => 'select',
+    '#title' => t('Track users based on'),
+    '#description' => t('Segment users based on different properties, additionaly to the basic IP address based tracking provided by Google Analytics.') . (!$profile_enabled ? ' '. t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Selecting one or more values is supported. To select multiple items, hold down CTRL while selecting fields.'),
+    '#default_value' => variable_get('googleanalytics_segmentation', ''),
+    '#options' => $fields,
+    '#size' => $profile_enabled ? 10 : 3,
+    '#multiple' => TRUE
+  );
 
   // Link specific configurations.
   $form['linktracking'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Link tracking'),
+    '#title' => t('Link tracking settings'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
   $form['linktracking']['googleanalytics_trackfiles'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Track files'),
+    '#title' => t('Track links to files'),
     '#default_value' => variable_get('googleanalytics_trackfiles', TRUE),
-    '#description' => t('Enables tracking of files based on below file extensions list.')
+    '#description' => t('Enables tracking of clicks on links to files based on the file extensions list below.')
   );
   $form['linktracking']['googleanalytics_trackfiles_extensions'] = array(
     '#type' => 'textfield',
     '#title' => t('File extensions to track'),
     '#default_value' => variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS),
-    '#description' => t('A pipe separated list of file extensions that should be tracked when clicked. Example: !extensions', array('!extensions' => GA_TRACKFILES_EXTENSIONS))
+    '#description' => t('A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions', array('!extensions' => GA_TRACKFILES_EXTENSIONS))
   );
 
   // Advanced feature configurations.
   $form['advanced'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Advanced'),
+    '#title' => t('Advanced settings'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
-    '#description' => t('You can add custom Google Analytics code here.')
+  );
+
+  $form['advanced']['googleanalytics_legacy_version'] = array(
+    '#type' => 'radios',
+    '#title' => t('Google Analytics version used'),
+    '#default_value' => variable_get('googleanalytics_legacy_version', 0),
+    '#options' => array(
+      0 => t('Latest (ga.js) tracking code'),
+      1 => t('Legacy (urchin.js) tracking code')
+    ),
+    '#description' => t('<a href="@ga_js_url">On December 13, 2007, Google rolled out a new API</a> for its tracking code, and suggests all new sites to use this code. You should only use the older legacy code, if you have custom tracking code tied to that API. Otherwise it is suggested you use the latest API, as the legacy code will not receive feature updates and is not compatible with new features.', array('@ga_js_url' => 'http://analytics.blogspot.com/2007/12/announcing-new-graphing-tools-gajs.html')),
   );
 
   $form['advanced']['googleanalytics_cache'] = array(
     '#type' => 'checkbox',
     '#title' => t('Cache tracking code file locally'),
-    '#description' => t("If checked, the tracking code file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker."),
+    '#description' => t("If checked, the tracking code file is retrieved from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker!"),
     '#default_value' => variable_get('googleanalytics_cache', 0),
   );
   if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
