@@ -3,7 +3,7 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.admin.inc,v 1.2.2.30 2008/05/03 09:37:48 hass
+#  googleanalytics.admin.inc,v 1.2.2.31 2008/05/03 12:10:28 hass
 #  googleanalytics.module,v 1.16.2.41 2008/05/03 09:37:48 hass
 #  googleanalytics.info,v 1.5.2.3 2007/12/30 20:42:58 hass
 #
@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-05-03 11:47+0200\n"
+"POT-Creation-Date: 2008-05-03 14:11+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -85,7 +85,7 @@ msgid "Enter one page per line as Drupal paths. The '*' character is a wildcard.
 msgstr ""
 
 #: googleanalytics.admin.inc:89
-msgid "Add to pages if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only)."
+msgid "Add if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only)."
 msgstr ""
 
 #: googleanalytics.admin.inc:90
