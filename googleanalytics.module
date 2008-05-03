@@ -249,6 +249,13 @@ function googleanalytics_admin_settings_form() {
     '#collapsible' => TRUE,
   );
 
+  $default_role_options = array();
+  $default_roles = variable_get('googleanalytics_roles', array());
+  foreach ($default_roles as $default_rid => $checked) {
+    if ($checked) {
+      $default_role_options[] = $default_rid;
+    }
+  }
   $roles = _googleanalytics_user_roles();
   $role_options = array();
   foreach ($roles as $rid => $name) {
@@ -257,7 +264,7 @@ function googleanalytics_admin_settings_form() {
   $form['role_vis_settings']['googleanalytics_roles'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Add tracking for specific roles'),
-    '#default_value' => variable_get('googleanalytics_roles', array()),
+    '#default_value' => $default_role_options,
     '#options' => $role_options,
     '#description' => t('Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users.'),
   );
