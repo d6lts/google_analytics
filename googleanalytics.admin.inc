@@ -140,10 +140,22 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
+  $form['linktracking']['googleanalytics_trackoutgoing'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track outgoing links'),
+    '#default_value' => variable_get('googleanalytics_trackoutgoing', 1),
+    '#description' => t('Enables tracking of clicks on external links.')
+  );
+  $form['linktracking']['googleanalytics_trackmailto'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track mailto links'),
+    '#default_value' => variable_get('googleanalytics_trackmailto', 0),
+    '#description' => t('Enables tracking of clicks on mailto links.')
+  );
   $form['linktracking']['googleanalytics_trackfiles'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Track links to files'),
-    '#default_value' => variable_get('googleanalytics_trackfiles', TRUE),
+    '#title' => t('Track download links'),
+    '#default_value' => variable_get('googleanalytics_trackfiles', 1),
     '#description' => t('Enables tracking of clicks on links to files based on the file extensions list below.')
   );
   $form['linktracking']['googleanalytics_trackfiles_extensions'] = array(

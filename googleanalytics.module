@@ -62,11 +62,23 @@ function googleanalytics_init() {
       drupal_add_js($script, 'inline', $scope);
     }
 
-    // Add download tracking.
-    $path = drupal_get_path('module', 'googleanalytics');
-    if (variable_get('googleanalytics_trackfiles', TRUE) && $trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS)) {
-      drupal_add_js(array('googleanalytics' => array('trackDownload' => $trackfiles_extensions, 'LegacyVersion' => $legacy_version)), 'setting', 'header');
-      drupal_add_js($path .'/downloadtracker.js', 'module', $scope);
+    // Add link tracking.
+    $link_settings = array();
+    if ($trackOutgoing = variable_get('googleanalytics_trackoutgoing', 1)) {
+      $link_settings['trackOutgoing'] = $trackOutgoing;
+    }
+    if ($trackMailto = variable_get('googleanalytics_trackmailto', 0)) {
+      $link_settings['trackMailto'] = $trackMailto;
+    }
+    if (($trackDownload = variable_get('googleanalytics_trackfiles', 1)) && ($trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS))) {
+      $link_settings['trackDownload'] = $trackDownload;
+      $link_settings['trackDownloadExtensions'] = $trackfiles_extensions;
+    }
+    if (!empty($link_settings)) {
+      // TODO: Why is this legacy_version added as data type string and not integer to settings?
+      $link_settings['LegacyVersion'] = $legacy_version ? 1 : 0;
+      drupal_add_js(array('googleanalytics' => $link_settings), 'setting', 'header');
+      drupal_add_js(drupal_get_path('module', 'googleanalytics') .'/googleanalytics.js', 'module', $scope);
     }
   }
 }
