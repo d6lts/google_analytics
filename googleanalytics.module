@@ -388,7 +388,7 @@ function googleanalytics_admin_settings_form() {
     '#title' => t('Custom JavaScript code'),
     '#default_value' => variable_get('googleanalytics_codesnippet', ''),
     '#rows' => 5,
-    '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699'))
+    '#description' => t('You can add custom Google Analytics <a href="!snippets">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://drupal.org/node/248699'))
   );
 
   $form['advanced']['googleanalytics_js_scope'] = array(

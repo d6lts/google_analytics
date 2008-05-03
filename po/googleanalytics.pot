@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-05-03 11:48+0200\n"
+"POT-Creation-Date: 2008-05-03 14:20+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -228,7 +228,7 @@ msgid "Custom JavaScript code"
 msgstr ""
 
 #: googleanalytics.module:391
-msgid "You can add custom Google Analytics <a href=\"@snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr ""
 
 #: googleanalytics.module:396
