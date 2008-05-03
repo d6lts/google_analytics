@@ -224,6 +224,12 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
     form_set_error('googleanalytics_account', t('A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x.'));
   }
 
-  // Trim pages variable.
+  // This is for the Newbie's who cannot read a text area description.
+  if (preg_match('/^(.*)<\/?script(.*)>(.*)/', $form_state['values']['googleanalytics_codesnippet'])) {
+    form_set_error('googleanalytics_codesnippet', t('Do not include the &lt;script&gt; tags in this field.'));
+  }
+
+  // Trim some text area values.
   $form_state['values']['googleanalytics_pages'] = trim($form_state['values']['googleanalytics_pages']);
+  $form_state['values']['googleanalytics_codesnippet'] = trim($form_state['values']['googleanalytics_codesnippet']);
 }
