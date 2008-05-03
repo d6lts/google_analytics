@@ -33,28 +33,43 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#description' => t('This will enable Legacy Google Analytics (urchin.js) instead of most recent (ga.js).<br />Please note that Legacy Google Analytics will not receive feature updates and is not compatible with new features.'),
   );
 
-  // Render the role overview.
-  $form['roles'] = array(
+  // Standard tracking configurations.
+  $form['user_vis_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('User role tracking'),
+    '#title' => t('User specific tracking settings'),
     '#collapsible' => TRUE,
-    '#description' => t('Define what user roles should be tracked by Google Analytics.'),
+  );
+  $form['user_vis_settings']['googleanalytics_custom'] = array(
+    '#type' => 'radios',
+    '#title' => t('Custom tracking settings'),
+    '#options' => array(
+      t('Users cannot control whether or not they add tracking.'),
+      t('Add tracking by default, but let individual users hide it.'),
+      t('Hide tracking by default, but let individual users add it.')
+    ),
+    '#description' => t('Allow individual users to customize the visibility of tracking in their account settings.'),
+    '#default_value' => variable_get('googleanalytics_custom', 0),
   );
 
-  $form['roles']['googleanalytics_track__user1'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Admin (user 1)'),
-    '#default_value' => variable_get('googleanalytics_track__user1', FALSE)
+  // Render the role overview.
+  $form['role_vis_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Role specific tracking settings'),
+    '#collapsible' => TRUE,
   );
 
   $roles = user_roles();
-  foreach ($roles as $rid => $rname) {
-    $form['roles']['googleanalytics_track_'. $rid] = array(
-      '#type' => 'checkbox',
-      '#title' => check_plain($rname),
-      '#default_value' => variable_get('googleanalytics_track_'. $rid, FALSE),
-    );
+  $role_options = array();
+  foreach ($roles as $rid => $name) {
+    $role_options[$rid] = $name;
   }
+  $form['role_vis_settings']['googleanalytics_roles'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Add tracking for specific roles'),
+    '#default_value' => variable_get('googleanalytics_roles', array()),
+    '#options' => $role_options,
+    '#description' => t('Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users.'),
+  );
 
   // Page specific visibility configurations.
   $form['page_vis_settings'] = array(

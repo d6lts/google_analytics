@@ -19,7 +19,7 @@ function googleanalytics_help($path, $arg) {
 }
 
 function googleanalytics_perm() {
-  return array('administer google analytics', 'use PHP for tracking visibility');
+  return array('administer google analytics', 'administer own tracking configuration', 'use PHP for tracking visibility');
 }
 
 function googleanalytics_menu() {
@@ -45,7 +45,7 @@ function googleanalytics_init() {
   // 1. Check if the GA account number has a value.
   // 2. Track page views based on visibility value.
   // 3. Check if we should track the currently active user's role.
-  if (!empty($id) && _googleanalytics_visibility_pages() && _googleanalytics_track($user)) {
+  if (!empty($id) && _googleanalytics_visibility_pages() && _googleanalytics_visibility_user($user)) {
     // Use the old version of Google Analytics?
     $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
     $scope = variable_get('googleanalytics_js_scope', 'footer');
@@ -80,7 +80,7 @@ function googleanalytics_footer($main = 0) {
 
   $id = variable_get('googleanalytics_account', '');
 
-  if (!empty($id) && _googleanalytics_visibility_pages() && _googleanalytics_track($user)) {
+  if (!empty($id) && _googleanalytics_visibility_pages() && _googleanalytics_visibility_user($user)) {
 
     // Use the old version of Google Analytics?
     $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
@@ -175,6 +175,35 @@ function googleanalytics_footer($main = 0) {
 }
 
 /**
+ * Implementation of hook_user().
+ *
+ * Allow users to decide if tracking code will be added to pages or not.
+ */
+function googleanalytics_user($type, $edit, &$account, $category = NULL) {
+  switch ($type) {
+    case 'form':
+      if ($category == 'account' && user_access('administer own tracking configuration') && ($custom = variable_get('googleanalytics_custom', 0)) != 0 && _googleanalytics_visibility_roles($account)) {
+        $form['googleanalytics'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Google Analytics configuration'),
+          '#weight' => 3,
+          '#collapsible' => TRUE,
+          '#tree' => TRUE
+        );
+        $form['googleanalytics']['custom'] = array(
+          '#type' => 'checkbox',
+          '#title' => t('User tracking'),
+          '#default_value' => isset($account->googleanalytics['custom']) ? $account->googleanalytics['custom'] : ($custom == 1)
+        );
+
+        return $form;
+      }
+      break;
+
+  }
+}
+
+/**
  * Implementation of hook_requirements().
  */
 function googleanalytics_requirements($phase) {
@@ -241,35 +270,64 @@ function _googleanalytics_cache($location) {
 }
 
 /**
+ * Tracking visibility check for an user object.
  *
  * @param $account
  *   A user object containing an array of roles to check.
  * @return boolean
- *   A decision on if the current user is being tracked by GAnalytics.
+ *   A decision on if the current user is being tracked by Google Analytics.
  */
-function _googleanalytics_track($account) {
-  // By default we don't track users.
-  $track = FALSE;
+function _googleanalytics_visibility_user($account) {
 
-  foreach (array_keys($account->roles) as $role) {
-    // Add the tracking code if user is member of one role that should be tracked.
-    if (variable_get('googleanalytics_track_'. $role, FALSE)) {
-      $track = TRUE;
+  $enabled = FALSE;
+
+  // Is current user a member of a role that should be tracked?
+  if (_googleanalytics_visibility_roles($account)) {
+
+    // Use the user's block visibility setting, if necessary.
+    if (($custom = variable_get('googleanalytics_custom', 0)) != 0) {
+      if ($account->uid && isset($account->googleanalytics['custom'])) {
+        $enabled = $account->googleanalytics['custom'];
+      }
+      else {
+        $enabled = ($custom == 1);
+      }
+    }
+    else {
+      $enabled = TRUE;
+    }
+
+  }
+
+  return $enabled;
+}
+
+/**
+ * Based on visibility setting this function returns TRUE if GA code should
+ * be added for the current role and otherwise FALSE.
+ */
+function _googleanalytics_visibility_roles($account) {
+
+  $enabled = FALSE;
+  $roles = variable_get('googleanalytics_roles', array());
+
+  if (array_sum($roles) > 0) {
+    // One or more roles are selected for tracking.
+    foreach (array_keys($account->roles) as $rid) {
+      // Is the current user a member of one role enabled for tracking?
+      if (isset($roles[$rid]) && $rid == $roles[$rid]) {
+        // Current user is a member of a role that should be tracked.
+        $enabled = TRUE;
+        break;
+      }
     }
   }
-
-  // Handle behavior for administrative user 1.
-  if ($account->uid == 1 && variable_get('googleanalytics_track__user1', FALSE)) {
-    // Enable tracking of user 1 if tracking for "authenticated user" is disabled.
-    $track = TRUE;
-  }
-  elseif ($account->uid == 1 && !variable_get('googleanalytics_track__user1', FALSE)) {
-    // User 1 is a member of "authenticated user". Disable user tracking
-    // if user 1 shouldn't be tracked, but "authenticated user" should.
-    $track = FALSE;
+  else {
+    // No role is selected for tracking, therefor all roles should be tracked. 
+    $enabled = TRUE;
   }
 
-  return $track;
+  return $enabled;
 }
 
 /**
