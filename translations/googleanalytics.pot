@@ -3,15 +3,15 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.admin.inc,v 1.2.2.15 2008/03/06 19:38:58 hass
-#  googleanalytics.module,v 1.14.2.13 2007/08/27 21:21:25 budda
+#  googleanalytics.admin.inc,v 1.2.2.30 2008/05/03 09:37:48 hass
+#  googleanalytics.module,v 1.16.2.41 2008/05/03 09:37:48 hass
 #  googleanalytics.info,v 1.5.2.3 2007/12/30 20:42:58 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-03-08 14:00+0100\n"
+"POT-Creation-Date: 2008-05-03 11:47+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -20,184 +20,260 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: googleanalytics.admin.inc:14
-msgid "Analytics Account Settings"
+#: googleanalytics.admin.inc:15
+msgid "General settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:20
+#: googleanalytics.admin.inc:21
 msgid "Google Analytics account number"
 msgstr ""
 
-#: googleanalytics.admin.inc:25
-msgid "The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain an user account from the <a href=\"@url\">Google Analytics</a> website."
-msgstr ""
-
-#: googleanalytics.admin.inc:30
-msgid "Legacy Google Analytics"
+#: googleanalytics.admin.inc:26
+msgid "The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
 msgstr ""
 
 #: googleanalytics.admin.inc:32
-msgid "This will enable Legacy Google Analytics instead of most recent.<br /> Please note that Legacy Google Analytics will not receive feature updates and is not compatible with new features."
+msgid "User specific tracking settings"
+msgstr ""
+
+#: googleanalytics.admin.inc:37
+msgid "Custom tracking settings"
+msgstr ""
+
+#: googleanalytics.admin.inc:39
+msgid "Users cannot control whether or not they add tracking."
 msgstr ""
 
 #: googleanalytics.admin.inc:40
-msgid "User Role Tracking"
+msgid "Add tracking by default, but let individual users hide it."
 msgstr ""
 
-#: googleanalytics.admin.inc:42
-msgid "Define what user roles should be tracked by Google Analytics. <strong>Note:</strong> Drupal Admin pages are never tracked."
+#: googleanalytics.admin.inc:41
+msgid "Hide tracking by default, but let individual users add it."
 msgstr ""
 
-#: googleanalytics.admin.inc:47
-msgid "Admin (user 1)"
+#: googleanalytics.admin.inc:43
+msgid "Allow individual users to customize the visibility of tracking in their account settings."
+msgstr ""
+
+#: googleanalytics.admin.inc:50
+msgid "Role specific tracking settings"
 msgstr ""
 
 #: googleanalytics.admin.inc:61
-msgid "User Segmentation"
+msgid "Add tracking for specific roles"
 msgstr ""
 
-#: googleanalytics.admin.inc:63
-msgid "If your users have profile fields completed, you can track your logged in users based on a defined profile field."
+#: googleanalytics.admin.inc:64
+msgid "Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users."
 msgstr ""
 
-#: googleanalytics.admin.inc:69
-msgid "You need to activate the !profile to use this feature."
+#: googleanalytics.admin.inc:70
+msgid "Page specific tracking settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:69
-msgid "Profile module"
+#: googleanalytics.admin.inc:85
+msgid "Add to every page except the listed pages."
 msgstr ""
 
-#: googleanalytics.admin.inc:77
-msgid "User ID"
+#: googleanalytics.admin.inc:85
+msgid "Add to the listed pages only."
 msgstr ""
 
-#: googleanalytics.admin.inc:78
-msgid "Username"
-msgstr ""
-
-#: googleanalytics.admin.inc:79
-msgid "User Roles"
-msgstr ""
-
-#: googleanalytics.admin.inc:88
-msgid "Track"
+#: googleanalytics.admin.inc:86
+msgid "Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page."
 msgstr ""
 
 #: googleanalytics.admin.inc:89
-msgid "Selecting one or more values allows you to track users by profile values rather than simply an IP address. To select multiple items, hold down CTRL whilst selecting fields."
+msgid "Add to pages if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only)."
 msgstr ""
 
-#: googleanalytics.admin.inc:99
-msgid "Link tracking"
+#: googleanalytics.admin.inc:90
+msgid "If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site."
 msgstr ""
 
-#: googleanalytics.admin.inc:105
-msgid "Track files"
+#: googleanalytics.admin.inc:94
+msgid "Add tracking to specific pages"
 msgstr ""
 
-#: googleanalytics.admin.inc:107
-msgid "Enables tracking of files based on below file extensions list."
+#: googleanalytics.admin.inc:100
+msgid "Pages"
 msgstr ""
 
-#: googleanalytics.admin.inc:111
-msgid "File Extensions To Track"
+#: googleanalytics.admin.inc:109
+msgid "User segmentation settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:113
-msgid "A pipe seperated list of file extensions that should be tracked when clicked. Example !extensions"
+#: googleanalytics.admin.inc:115
+msgid "User identifier"
 msgstr ""
 
-#: googleanalytics.admin.inc:118
-msgid "Advanced"
+#: googleanalytics.admin.inc:116
+msgid "User name"
 msgstr ""
 
-#: googleanalytics.admin.inc:121
-msgid "You can add custom Google Analytics code here."
+#: googleanalytics.admin.inc:117
+msgid "User roles"
 msgstr ""
 
-#: googleanalytics.admin.inc:126
-msgid "Cache tracking code file locally"
+#: googleanalytics.admin.inc:128
+msgid "Track users based on"
 msgstr ""
 
-#: googleanalytics.admin.inc:127
-msgid "If checked, the tracking code file is received from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker."
+#: googleanalytics.admin.inc:129
+msgid "Segment users based on different properties, additionaly to the basic IP address based tracking provided by Google Analytics."
 msgstr ""
 
-#: googleanalytics.admin.inc:132
-msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
+#: googleanalytics.admin.inc:129
+msgid "<a href=\"@module_list\">Enable the profile module</a> to be able to use profile fields for more granular tracking."
 msgstr ""
 
-#: googleanalytics.admin.inc:136
-msgid "Depends on: !dependencies"
+#: googleanalytics.admin.inc:129
+msgid "Selecting one or more values is supported. To select multiple items, hold down CTRL while selecting fields."
 msgstr ""
 
-#: googleanalytics.admin.inc:136
-msgid " (<span class=\"admin-enabled\">enabled</span>)"
+#: googleanalytics.admin.inc:139
+msgid "Link tracking settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:136
-msgid " (<span class=\"admin-disabled\">disabled</span>)"
+#: googleanalytics.admin.inc:145
+msgid "Track links to files"
 msgstr ""
 
-#: googleanalytics.admin.inc:143
-msgid "Do Track Internal Search"
-msgstr ""
-
-#: googleanalytics.admin.inc:144
-msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
+#: googleanalytics.admin.inc:147
+msgid "Enables tracking of clicks on links to files based on the file extensions list below."
 msgstr ""
 
 #: googleanalytics.admin.inc:151
-msgid "JavaScript Code"
+msgid "File extensions to track"
 msgstr ""
 
-#: googleanalytics.admin.inc:154
-msgid "Paste <a href=\"!snippets\">custom code snippets here</a>. These will be added to every page that Google Analytics appears on. For help with this feature see the <a href=\"!blog\">cutroni.com blog</a>. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+#: googleanalytics.admin.inc:153
+msgid "A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions"
 msgstr ""
 
 #: googleanalytics.admin.inc:159
+msgid "Advanced settings"
+msgstr ""
+
+#: googleanalytics.admin.inc:166
+msgid "Google Analytics version used"
+msgstr ""
+
+#: googleanalytics.admin.inc:169
+msgid "Latest (ga.js) tracking code"
+msgstr ""
+
+#: googleanalytics.admin.inc:170
+msgid "Legacy (urchin.js) tracking code"
+msgstr ""
+
+#: googleanalytics.admin.inc:172
+msgid "<a href=\"@ga_js_url\">On December 13, 2007, Google rolled out a new API</a> for its tracking code, and suggests all new sites to use this code. You should only use the older legacy code, if you have custom tracking code tied to that API. Otherwise it is suggested you use the latest API, as the legacy code will not receive feature updates and is not compatible with new features."
+msgstr ""
+
+#: googleanalytics.admin.inc:177
+msgid "Cache tracking code file locally"
+msgstr ""
+
+#: googleanalytics.admin.inc:178
+msgid "If checked, the tracking code file is retrieved from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker!"
+msgstr ""
+
+#: googleanalytics.admin.inc:183
+msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
+msgstr ""
+
+#: googleanalytics.admin.inc:187
+msgid "Depends on: !dependencies"
+msgstr ""
+
+#: googleanalytics.admin.inc:187
+msgid " (<span class=\"admin-enabled\">enabled</span>)"
+msgstr ""
+
+#: googleanalytics.admin.inc:187
+msgid " (<span class=\"admin-disabled\">disabled</span>)"
+msgstr ""
+
+#: googleanalytics.admin.inc:194
+msgid "Track internal search"
+msgstr ""
+
+#: googleanalytics.admin.inc:195
+msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
+msgstr ""
+
+#: googleanalytics.admin.inc:202
+msgid "Custom JavaScript code"
+msgstr ""
+
+#: googleanalytics.admin.inc:205
+msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+msgstr ""
+
+#: googleanalytics.admin.inc:210
 msgid "JavaScript scope"
 msgstr ""
 
-#: googleanalytics.admin.inc:160
+#: googleanalytics.admin.inc:211
 msgid "<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."
 msgstr ""
 
-#: googleanalytics.admin.inc:162
+#: googleanalytics.admin.inc:213
 msgid "Footer"
 msgstr ""
 
-#: googleanalytics.admin.inc:163
+#: googleanalytics.admin.inc:214
 msgid "Header"
 msgstr ""
 
-#: googleanalytics.admin.inc:173
+#: googleanalytics.admin.inc:224
 msgid "A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x."
 msgstr ""
 
 #: googleanalytics.module:17
-msgid "Google Analytics is a free statistics package based on the excellent Urchin system."
+msgid "<a href=\"@ga_url\">Google Analytics</a> is a free statistics package based on the excellent Urchin system. This module provides services to better integrate Drupal with Google Analytics."
 msgstr ""
 
-#: googleanalytics.module:193
-msgid "Google Analytics module"
+#: googleanalytics.module:187
+msgid "Google Analytics configuration"
 msgstr ""
 
 #: googleanalytics.module:194
+msgid "User tracking"
+msgstr ""
+
+#: googleanalytics.module:215
+msgid "Google Analytics module"
+msgstr ""
+
+#: googleanalytics.module:216
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr ""
 
-#: googleanalytics.module:196
+#: googleanalytics.module:218
 msgid "Not configured"
 msgstr ""
 
-#: googleanalytics.module:24 googleanalytics.info:0
+#: googleanalytics.module:22
+msgid "administer google analytics"
+msgstr ""
+
+#: googleanalytics.module:22
+msgid "administer own tracking configuration"
+msgstr ""
+
+#: googleanalytics.module:22
+msgid "use PHP for tracking visibility"
+msgstr ""
+
+#: googleanalytics.module:27 googleanalytics.info:0
 msgid "Google Analytics"
 msgstr ""
 
-#: googleanalytics.module:25
-msgid "Configure the settings used to generate your Google Analytics site map."
+#: googleanalytics.module:28
+msgid "Configure the settings used to generate your Google Analytics tracking code."
 msgstr ""
 
 #: googleanalytics.module:0
