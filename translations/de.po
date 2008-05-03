@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Google Analytics Module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-03 14:11+0200\n"
-"PO-Revision-Date: 2008-05-03 14:23+0100\n"
+"POT-Creation-Date: 2008-05-03 22:28+0200\n"
+"PO-Revision-Date: 2008-05-03 22:30+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -136,122 +136,142 @@ msgid "Link tracking settings"
 msgstr "Einstellungen für das Tracking von Verweisen"
 
 #: googleanalytics.admin.inc:145
-msgid "Track links to files"
-msgstr "Verweise auf Dateien tracken"
+msgid "Track outgoing links"
+msgstr "Ausgehende Verweise tracken"
 
 #: googleanalytics.admin.inc:147
+msgid "Enables tracking of clicks on outgoing links."
+msgstr "Aktiviert das Tracking von Klicks auf ausgehende Verweise."
+
+#: googleanalytics.admin.inc:151
+msgid "Track mailto links"
+msgstr "E-Mail-Verweise tracken"
+
+#: googleanalytics.admin.inc:153
+msgid "Enables tracking of clicks on mailto links."
+msgstr "Aktiviert das Tracking von Klicks auf E-Mail-Verweise."
+
+#: googleanalytics.admin.inc:157
+msgid "Track download links"
+msgstr "Download-Verweise tracken"
+
+#: googleanalytics.admin.inc:159
 msgid "Enables tracking of clicks on links to files based on the file extensions list below."
 msgstr "Aktiviert das Tracking von Klicks auf Dateiverweise basierend auf der nachfolgenden Erweiterungsliste."
 
-#: googleanalytics.admin.inc:151
+#: googleanalytics.admin.inc:163
 msgid "File extensions to track"
 msgstr "Tracken der Dateierweiterungen"
 
-#: googleanalytics.admin.inc:153
+#: googleanalytics.admin.inc:165
 msgid "A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions"
 msgstr "Eine durch Pipes getrennte Liste von Dateiendungen mit Unterstützung von regulären Ausdrücken, die beim Anklicken getrackt werden sollen. Beispiel: !extensions"
 
-#: googleanalytics.admin.inc:159
+#: googleanalytics.admin.inc:171
 msgid "Advanced settings"
 msgstr "Erweiterte Einstellungen"
 
-#: googleanalytics.admin.inc:166
+#: googleanalytics.admin.inc:178
 msgid "Google Analytics version used"
 msgstr "Die von Google-Analytics verwendete Version"
 
-#: googleanalytics.admin.inc:169
+#: googleanalytics.admin.inc:181
 msgid "Latest (ga.js) tracking code"
 msgstr "Neuster (ga.js) Tracking-Code"
 
-#: googleanalytics.admin.inc:170
+#: googleanalytics.admin.inc:182
 msgid "Legacy (urchin.js) tracking code"
 msgstr "Alter (urchin.js) Tracking-Code"
 
-#: googleanalytics.admin.inc:172
+#: googleanalytics.admin.inc:184
 msgid "<a href=\"@ga_js_url\">On December 13, 2007, Google rolled out a new API</a> for its tracking code, and suggests all new sites to use this code. You should only use the older legacy code, if you have custom tracking code tied to that API. Otherwise it is suggested you use the latest API, as the legacy code will not receive feature updates and is not compatible with new features."
 msgstr "<a href=\"@ga_js_url\">Am 13. Dezember 2007, hat Google ein neues API</a> für ihren Tracking-Code veröffentlicht und empfielt allen neuen Websites diesen Code zu verwenden. Der ältere Code sollte nur noch verwendet werden, wenn spezieller Code auf das API angewiesen ist. Ansonsten wird empfohlen das neuste API zu verwenden, da der alte Code nicht mehr aktualisiert wird und mit neuen Funktionen inkompatibel ist."
 
-#: googleanalytics.admin.inc:177
+#: googleanalytics.admin.inc:189
 msgid "Cache tracking code file locally"
 msgstr "Datei mit Tracking-Code lokal cachen"
 
-#: googleanalytics.admin.inc:178
+#: googleanalytics.admin.inc:190
 msgid "If checked, the tracking code file is retrieved from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker!"
 msgstr "Sobald aktiviert, wird die Datei mit Tracking-Code von Google Analytics heruntergeladen und lokal gecached. Diese wird täglich von den Google-Servern aktualisiert, damit sich Aktualisierungen des Tracking-Codes in der lokalen Kopie niederschlagen. Aktivieren Sie dies erst nachdem Google Analytics den Tracking-Code bestätigt hat!"
 
-#: googleanalytics.admin.inc:183
+#: googleanalytics.admin.inc:195
 msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr "Zum lokalen Cachen muss die <a href=\"!url\">öffentliche Download-Methode</a> aktiviert sein."
 
-#: googleanalytics.admin.inc:187
+#: googleanalytics.admin.inc:199
 msgid "Depends on: !dependencies"
 msgstr "Abhängig von: !dependencies"
 
-#: googleanalytics.admin.inc:187
+#: googleanalytics.admin.inc:199
 msgid " (<span class=\"admin-enabled\">enabled</span>)"
 msgstr " (<span class=\"admin-enabled\">aktiviert</span>)"
 
-#: googleanalytics.admin.inc:187
+#: googleanalytics.admin.inc:199
 msgid " (<span class=\"admin-disabled\">disabled</span>)"
 msgstr " (<span class=\"admin-disabled\">deaktiviert</span>)"
 
-#: googleanalytics.admin.inc:194
+#: googleanalytics.admin.inc:206
 msgid "Track internal search"
 msgstr "Interne Suche tracken"
 
-#: googleanalytics.admin.inc:195
+#: googleanalytics.admin.inc:207
 msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
 msgstr "Sobald aktiviert, werden die Schlüsselwörter der internen Suche getrackt. Dazu muss im Google Account der interne Suchparameter <em>search</em> konfiguriert werden. Weitere Informationen zu <a href=\"!url\">Wie richte ich die Website-Suche für mein Profil ein</a>."
 
-#: googleanalytics.admin.inc:202
+#: googleanalytics.admin.inc:214
 msgid "Custom JavaScript code"
 msgstr "Spezieller JavaScript-Code"
 
-#: googleanalytics.admin.inc:205
+#: googleanalytics.admin.inc:217
 msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
 
-#: googleanalytics.admin.inc:210
+#: googleanalytics.admin.inc:222
 msgid "JavaScript scope"
 msgstr "JavaScript-Bereich"
 
-#: googleanalytics.admin.inc:211
+#: googleanalytics.admin.inc:223
 msgid "<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."
 msgstr "<strong>Warnung:</strong> Aus Performancegründen empfielt Google die externen JavaScript-Dateien im Fußbereich einzufügen."
 
-#: googleanalytics.admin.inc:213
+#: googleanalytics.admin.inc:225
 msgid "Footer"
 msgstr "Fußbereich"
 
-#: googleanalytics.admin.inc:214
+#: googleanalytics.admin.inc:226
 msgid "Header"
 msgstr "Kopfbereich"
 
-#: googleanalytics.admin.inc:224
+#: googleanalytics.admin.inc:236
 msgid "A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x."
 msgstr "Bei der Google Analytics-Kontonummer muss die Groß- und Kleinschreibung beachtet werden und diese in der Form UA-xxxxxx-x formatiert sein."
+
+#: googleanalytics.admin.inc:241
+msgid "Do not include the &lt;script&gt; tags in this field."
+msgstr "Die &lt;script&gt; Tags dürfen in dieses Feld nicht eingefügt werden."
 
 #: googleanalytics.module:17
 msgid "<a href=\"@ga_url\">Google Analytics</a> is a free statistics package based on the excellent Urchin system. This module provides services to better integrate Drupal with Google Analytics."
 msgstr "<a href=\"@ga_url\">Google Analytics</a> ist ein kostenfreies Statistikpacket, basierend auf dem hervorragenden Urchin-System. Dieses Modul ermöglicht die bessere Integration von Drupal in Google Analytics."
 
-#: googleanalytics.module:187
+#: googleanalytics.module:199
 msgid "Google Analytics configuration"
 msgstr "Google Analytics-Konfiguration"
 
-#: googleanalytics.module:194
+#: googleanalytics.module:206
 msgid "User tracking"
 msgstr "Benutzertracking"
 
-#: googleanalytics.module:215
+#: googleanalytics.module:227
 msgid "Google Analytics module"
 msgstr "Google Analytics-Modul"
 
-#: googleanalytics.module:216
+#: googleanalytics.module:228
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr "Das Google Analytics-Modul wurde noch nicht konfiguriert. Die Einstellungen können in den <a href=\"@url\">Google Analytics-Einstellungen</a> vorgenommen werden."
 
-#: googleanalytics.module:218
+#: googleanalytics.module:230
 msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
