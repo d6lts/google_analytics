@@ -149,7 +149,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
   $form['linktracking']['googleanalytics_trackmailto'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track mailto links'),
-    '#default_value' => variable_get('googleanalytics_trackmailto', 0),
+    '#default_value' => variable_get('googleanalytics_trackmailto', 1),
     '#description' => t('Enables tracking of clicks on mailto links.')
   );
   $form['linktracking']['googleanalytics_trackfiles'] = array(

@@ -67,7 +67,7 @@ function googleanalytics_init() {
     if ($trackOutgoing = variable_get('googleanalytics_trackoutgoing', 1)) {
       $link_settings['trackOutgoing'] = $trackOutgoing;
     }
-    if ($trackMailto = variable_get('googleanalytics_trackmailto', 0)) {
+    if ($trackMailto = variable_get('googleanalytics_trackmailto', 1)) {
       $link_settings['trackMailto'] = $trackMailto;
     }
     if (($trackDownload = variable_get('googleanalytics_trackfiles', 1)) && ($trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS))) {
