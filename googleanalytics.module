@@ -73,7 +73,7 @@ function googleanalytics_footer($main = 0) {
     if ($trackOutgoing = variable_get('googleanalytics_trackoutgoing', 1)) {
       $link_settings['trackOutgoing'] = $trackOutgoing;
     }
-    if ($trackMailto = variable_get('googleanalytics_trackmailto', 0)) {
+    if ($trackMailto = variable_get('googleanalytics_trackmailto', 1)) {
       $link_settings['trackMailto'] = $trackMailto;
     }
     if (($trackDownload = variable_get('googleanalytics_trackfiles', 1)) && ($trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS))) {
@@ -354,7 +354,7 @@ function googleanalytics_admin_settings_form() {
   $form['linktracking']['googleanalytics_trackmailto'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track mailto links'),
-    '#default_value' => variable_get('googleanalytics_trackmailto', 0),
+    '#default_value' => variable_get('googleanalytics_trackmailto', 1),
     '#description' => t('Enables tracking of clicks on mailto links.')
   );
   $form['linktracking']['googleanalytics_trackfiles'] = array(
