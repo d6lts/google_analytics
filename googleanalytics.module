@@ -19,7 +19,7 @@ function googleanalytics_help($path, $arg) {
 }
 
 function googleanalytics_perm() {
-  return array('administer google analytics', 'administer own tracking configuration', 'use PHP for tracking visibility');
+  return array('administer google analytics', 'opt-in or out of tracking', 'use PHP for tracking visibility');
 }
 
 function googleanalytics_menu() {
@@ -193,7 +193,7 @@ function googleanalytics_footer($main = 0) {
 function googleanalytics_user($type, $edit, &$account, $category = NULL) {
   switch ($type) {
     case 'form':
-      if ($category == 'account' && user_access('administer own tracking configuration') && ($custom = variable_get('googleanalytics_custom', 0)) != 0 && _googleanalytics_visibility_roles($account)) {
+      if ($category == 'account' && user_access('opt-in or out of tracking') && ($custom = variable_get('googleanalytics_custom', 0)) != 0 && _googleanalytics_visibility_roles($account)) {
         $form['googleanalytics'] = array(
           '#type' => 'fieldset',
           '#title' => t('Google Analytics configuration'),
