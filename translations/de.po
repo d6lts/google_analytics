@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: German translation for Google Analytics Module\n"
+"Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-03 22:28+0200\n"
-"PO-Revision-Date: 2008-05-03 22:30+0100\n"
+"POT-Creation-Date: 2008-05-17 20:42+0200\n"
+"PO-Revision-Date: 2008-05-17 22:59+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,8 @@ msgid "Google Analytics account number"
 msgstr "Google Analytics-Kontonummer"
 
 #: googleanalytics.admin.inc:26
-msgid "The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
-msgstr "Die Benutzerkontonummer (UA-xxxxxx-x) ist eindeutig für die Domain der Website. Ein Konto kann auf der <a href=\"@url\">Google Analytics</a>-Website beantragt werden."
+msgid "The account number is unique to the websites domain. Click the <strong>Edit</strong> link in your Google Analytics account next to the appropriate profile on the <strong>Analytics Settings</strong> page, then select <strong>Check Status</strong> at the top-right of the table to find the account number (UA-xxxx-x) of your site. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
+msgstr "Die Kontonummer ist eindeutig für die Domain der Website. Klicken Sie im Google Analytics-Konto auf der Seite <strong>Analytics-Einstellungen</strong> neben dem entsprechenden Profil auf <strong>Bearbeiten</strong> und dann oben rechts in der Tabelle <strong>Status prüfen</strong>, um die Kontonummer (UA-xxxx-x) der Website herauszufinden. Ein Konto kann auf der <a href=\"@url\">Google Analytics</a>-Website beantragt werden."
 
 #: googleanalytics.admin.inc:32
 msgid "User specific tracking settings"
@@ -40,20 +40,20 @@ msgid "Custom tracking settings"
 msgstr "Individuelle Tracking-Einstellungen"
 
 #: googleanalytics.admin.inc:39
-msgid "Users cannot control whether or not they add tracking."
-msgstr "Die Benutzer können nicht kontrollieren, ob sie das Tracking hinzufügen oder ausblenden möchten."
+msgid "Users cannot control whether they are tracked or not."
+msgstr "Die Benutzer können nicht kontrollieren, ob sie getrackt werden oder nicht."
 
 #: googleanalytics.admin.inc:40
-msgid "Add tracking by default, but let individual users hide it."
-msgstr "Das Tracking standardmäßig hinzufügen, der Benutzer darf dieses aber ausblenden."
+msgid "Track users by default, but let individual users to opt out."
+msgstr "Die Benutzer standardmäßig tracken, der Benutzer darf es aber abwählen."
 
 #: googleanalytics.admin.inc:41
-msgid "Hide tracking by default, but let individual users add it."
-msgstr "Das Tracking standardmäßig abschalten, der Benutzer darf dieses aber hinzufügen."
+msgid "Do not track users by default, but let individual users to opt in."
+msgstr "Die Benutzer standardmäßig nicht tracken, der Benutzer darf es aber anwählen."
 
 #: googleanalytics.admin.inc:43
-msgid "Allow individual users to customize the visibility of tracking in their account settings."
-msgstr "Individuellen Benutzern erlauben, die Sichtbarkeit des Tracking in dessen Kontoeinstellungen zu ändern."
+msgid "Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference."
+msgstr "Individuellen Benutzern erlauben, die Sichtbarkeit des Tracking in dessen Kontoeinstellungen zu ändern. Nur Benutzer mit der Berechtigung %permission können dies nach ihren eigenen Wünschen einstellen."
 
 #: googleanalytics.admin.inc:50
 msgid "Role specific tracking settings"
@@ -64,8 +64,8 @@ msgid "Add tracking for specific roles"
 msgstr "Das Tracking nur für bestimmte Rollen hinzufügen"
 
 #: googleanalytics.admin.inc:64
-msgid "Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users."
-msgstr "Das Tracking nur für die ausgewählten Rollen hinzufügen. Wenn keine Rollen gewählt werden, wird das Tracking bei allen Benutzern hinzugefügt."
+msgid "Add tracking only for the selected role(s). If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked."
+msgstr "Das Tracking nur für die ausgewählten Rollen hinzufügen. Wenn keine Rollen gewählt werden, wird das Tracking bei allen Benutzern hinzugefügt. Ein Benutzer wird getrackt, wenn er Mitglied in einer der aktivierten Rollen ist."
 
 #: googleanalytics.admin.inc:70
 msgid "Page specific tracking settings"
@@ -116,8 +116,8 @@ msgid "User roles"
 msgstr "Benutzerrollen"
 
 #: googleanalytics.admin.inc:128
-msgid "Track users based on"
-msgstr "Benutzer tracken auf Basis von"
+msgid "Add segmentation information to tracking code"
+msgstr "Informationen zur Benutzerverteilung zum Tracking-Code hinzufügen"
 
 #: googleanalytics.admin.inc:129
 msgid "Segment users based on different properties, additionaly to the basic IP address based tracking provided by Google Analytics."
@@ -216,8 +216,8 @@ msgid "Track internal search"
 msgstr "Interne Suche tracken"
 
 #: googleanalytics.admin.inc:207
-msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
-msgstr "Sobald aktiviert, werden die Schlüsselwörter der internen Suche getrackt. Dazu muss im Google Account der interne Suchparameter <em>search</em> konfiguriert werden. Weitere Informationen zu <a href=\"!url\">Wie richte ich die Website-Suche für mein Profil ein</a>."
+msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
+msgstr "Sobald aktiviert, werden die Schlüsselwörter der internen Suche getrackt. Dazu muss im Google Account der interne Suchparameter <strong>search</strong> konfiguriert werden. Weitere Informationen zu <a href=\"!url\">Wie richte ich die Website-Suche für mein Profil ein</a>."
 
 #: googleanalytics.admin.inc:214
 msgid "Custom JavaScript code"
@@ -280,8 +280,8 @@ msgid "administer google analytics"
 msgstr "Google Analytics verwalten"
 
 #: googleanalytics.module:22
-msgid "administer own tracking configuration"
-msgstr "Eigene Trackingkonfiguration verwalten"
+msgid "opt-in or out of tracking"
+msgstr "Tracking wahlweise An- oder Abwählen"
 
 #: googleanalytics.module:22
 msgid "use PHP for tracking visibility"
