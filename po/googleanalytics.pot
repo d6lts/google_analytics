@@ -3,14 +3,14 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.module,v 1.14.2.61 2008/05/03 20:14:46 hass
+#  googleanalytics.module,v 1.14.2.65 2008/05/17 16:24:46 hass
 #  googleanalytics.info,v 1.2.2.3 2007/06/18 23:06:44 dww
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-05-03 22:18+0200\n"
+"POT-Creation-Date: 2008-05-17 20:43+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -48,7 +48,7 @@ msgid "Google Analytics account number"
 msgstr ""
 
 #: googleanalytics.module:224
-msgid "The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
+msgid "The account number is unique to the websites domain. Click the <strong>Edit</strong> link in your Google Analytics account next to the appropriate profile on the <strong>Analytics Settings</strong> page, then select <strong>Check Status</strong> at the top-right of the table to find the account number (UA-xxxx-x) of your site. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
 msgstr ""
 
 #: googleanalytics.module:230
@@ -60,19 +60,19 @@ msgid "Custom tracking settings"
 msgstr ""
 
 #: googleanalytics.module:237
-msgid "Users cannot control whether or not they add tracking."
+msgid "Users cannot control whether they are tracked or not."
 msgstr ""
 
 #: googleanalytics.module:238
-msgid "Add tracking by default, but let individual users hide it."
+msgid "Track users by default, but let individual users to opt out."
 msgstr ""
 
 #: googleanalytics.module:239
-msgid "Hide tracking by default, but let individual users add it."
+msgid "Do not track users by default, but let individual users to opt in."
 msgstr ""
 
 #: googleanalytics.module:241
-msgid "Allow individual users to customize the visibility of tracking in their account settings."
+msgid "Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference."
 msgstr ""
 
 #: googleanalytics.module:248
@@ -84,7 +84,7 @@ msgid "Add tracking for specific roles"
 msgstr ""
 
 #: googleanalytics.module:269
-msgid "Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users."
+msgid "Add tracking only for the selected role(s). If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked."
 msgstr ""
 
 #: googleanalytics.module:275
@@ -136,7 +136,7 @@ msgid "User roles"
 msgstr ""
 
 #: googleanalytics.module:333
-msgid "Track users based on"
+msgid "Add segmentation information to tracking code"
 msgstr ""
 
 #: googleanalytics.module:334
@@ -236,7 +236,7 @@ msgid "Track internal search"
 msgstr ""
 
 #: googleanalytics.module:412
-msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
+msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
 msgstr ""
 
 #: googleanalytics.module:419
@@ -288,7 +288,7 @@ msgid "administer google analytics"
 msgstr ""
 
 #: googleanalytics.module:22
-msgid "administer own tracking configuration"
+msgid "opt-in or out of tracking"
 msgstr ""
 
 #: googleanalytics.module:22
