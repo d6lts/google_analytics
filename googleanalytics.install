@@ -35,6 +35,15 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_pages');
 }
 
+/**
+ * Remove cache directory if module is disabled (or uninstalled).
+ */
+function googleanalytics_disable() {
+  file_delete(file_directory_path() .'/googleanalytics/urchin.js');
+  file_delete(file_directory_path() .'/googleanalytics/ga.js');
+  rmdir(file_directory_path() .'/googleanalytics');
+}
+
 
 function googleanalytics_update_1() {
   $ret = array();

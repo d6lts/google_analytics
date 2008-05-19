@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-17 20:43+0200\n"
-"PO-Revision-Date: 2008-05-17 22:58+0100\n"
+"PO-Revision-Date: 2008-05-18 12:45+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -246,7 +246,7 @@ msgstr "Spezieller JavaScript-Code"
 
 #: googleanalytics.module:422
 msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
-msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
+msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden zu jeder Seite auf der Google Analytics erscheint hinzugefügt. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
 
 #: googleanalytics.module:427
 msgid "JavaScript scope"
