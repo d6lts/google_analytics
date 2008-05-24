@@ -3,14 +3,14 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.module,v 1.14.2.65 2008/05/17 16:24:46 hass
+#  googleanalytics.module,v 1.14.2.67 2008/05/24 20:06:14 hass
 #  googleanalytics.info,v 1.2.2.3 2007/06/18 23:06:44 dww
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-05-17 20:43+0200\n"
+"POT-Creation-Date: 2008-05-24 22:08+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -73,6 +73,10 @@ msgstr ""
 
 #: googleanalytics.module:241
 msgid "Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference."
+msgstr ""
+
+#: googleanalytics.module:241;22
+msgid "opt-in or out of tracking"
 msgstr ""
 
 #: googleanalytics.module:248
@@ -140,7 +144,7 @@ msgid "Add segmentation information to tracking code"
 msgstr ""
 
 #: googleanalytics.module:334
-msgid "Segment users based on different properties, additionaly to the basic IP address based tracking provided by Google Analytics."
+msgid "Segment users based on different properties, additionally to the basic IP address based tracking provided by Google Analytics."
 msgstr ""
 
 #: googleanalytics.module:334
@@ -264,7 +268,7 @@ msgid "Header"
 msgstr ""
 
 #: googleanalytics.module:441
-msgid "A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x."
+msgid "A valid Google Analytics account number is case sensitive and formatted like UA-xxxxxx-x."
 msgstr ""
 
 #: googleanalytics.module:446
@@ -285,10 +289,6 @@ msgstr ""
 
 #: googleanalytics.module:22
 msgid "administer google analytics"
-msgstr ""
-
-#: googleanalytics.module:22
-msgid "opt-in or out of tracking"
 msgstr ""
 
 #: googleanalytics.module:22
