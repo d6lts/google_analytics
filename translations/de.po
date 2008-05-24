@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-17 20:42+0200\n"
-"PO-Revision-Date: 2008-05-17 22:59+0100\n"
+"POT-Creation-Date: 2008-05-24 22:09+0200\n"
+"PO-Revision-Date: 2008-05-25 00:20+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -45,15 +45,20 @@ msgstr "Die Benutzer können nicht kontrollieren, ob sie getrackt werden oder ni
 
 #: googleanalytics.admin.inc:40
 msgid "Track users by default, but let individual users to opt out."
-msgstr "Die Benutzer standardmäßig tracken, der Benutzer darf es aber abwählen."
+msgstr "Die Benutzer standardmäßig tracken, der individuelle Benutzer kann dies aber abschalten."
 
 #: googleanalytics.admin.inc:41
 msgid "Do not track users by default, but let individual users to opt in."
-msgstr "Die Benutzer standardmäßig nicht tracken, der Benutzer darf es aber anwählen."
+msgstr "Die Benutzer standardmäßig nicht tracken, der individuelle Benutzer kann dies aber einschalten."
 
 #: googleanalytics.admin.inc:43
 msgid "Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference."
-msgstr "Individuellen Benutzern erlauben, die Sichtbarkeit des Tracking in dessen Kontoeinstellungen zu ändern. Nur Benutzer mit der Berechtigung %permission können dies nach ihren eigenen Wünschen einstellen."
+msgstr "Individuellen Benutzern erlauben, die Sichtbarkeit des Tracking in ihren Kontoeinstellungen zu ändern. Nur Benutzer mit der Berechtigung %permission können dies nach ihren eigenen Wünschen einstellen."
+
+#: googleanalytics.admin.inc:43
+#: googleanalytics.module:22
+msgid "opt-in or out of tracking"
+msgstr "Tracking wahlweise An- oder Abschalten"
 
 #: googleanalytics.admin.inc:50
 msgid "Role specific tracking settings"
@@ -65,7 +70,7 @@ msgstr "Das Tracking nur für bestimmte Rollen hinzufügen"
 
 #: googleanalytics.admin.inc:64
 msgid "Add tracking only for the selected role(s). If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked."
-msgstr "Das Tracking nur für die ausgewählten Rollen hinzufügen. Wenn keine Rollen gewählt werden, wird das Tracking bei allen Benutzern hinzugefügt. Ein Benutzer wird getrackt, wenn er Mitglied in einer der aktivierten Rollen ist."
+msgstr "Das Tracking nur für die ausgewählten Rollen hinzufügen. Wenn keine Rollen ausgewählt werden, wird das Tracking bei allen Benutzern hinzugefügt. Ein Benutzer wird getrackt, wenn er Mitglied in einer der aktivierten Rollen ist."
 
 #: googleanalytics.admin.inc:70
 msgid "Page specific tracking settings"
@@ -120,8 +125,8 @@ msgid "Add segmentation information to tracking code"
 msgstr "Informationen zur Benutzerverteilung zum Tracking-Code hinzufügen"
 
 #: googleanalytics.admin.inc:129
-msgid "Segment users based on different properties, additionaly to the basic IP address based tracking provided by Google Analytics."
-msgstr "Zusätzlich zu dem von Google Analytics zu Verfügung gestellten einfachen Tracking der IP-Adresse können Benutzer basierend auf verschiedenen Eigenschaften aufgeteilt werden."
+msgid "Segment users based on different properties, additionally to the basic IP address based tracking provided by Google Analytics."
+msgstr "Zusätzlich zu dem von Google Analytics zu Verfügung gestellten einfachen Tracking der IP-Adresse, können Benutzer basierend auf verschiedenen Eigenschaften unterteilt werden."
 
 #: googleanalytics.admin.inc:129
 msgid "<a href=\"@module_list\">Enable the profile module</a> to be able to use profile fields for more granular tracking."
@@ -161,11 +166,11 @@ msgstr "Aktiviert das Tracking von Klicks auf Dateiverweise basierend auf der na
 
 #: googleanalytics.admin.inc:163
 msgid "File extensions to track"
-msgstr "Tracken der Dateierweiterungen"
+msgstr "Zu trackende Dateierweiterungen"
 
 #: googleanalytics.admin.inc:165
 msgid "A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions"
-msgstr "Eine durch Pipes getrennte Liste von Dateiendungen mit Unterstützung von regulären Ausdrücken, die beim Anklicken getrackt werden sollen. Beispiel: !extensions"
+msgstr "Eine durch Pipes getrennte Liste von Dateierweiterungen mit Unterstützung von regulären Ausdrücken, die beim Anklicken getrackt werden sollen. Beispiel: !extensions"
 
 #: googleanalytics.admin.inc:171
 msgid "Advanced settings"
@@ -173,7 +178,7 @@ msgstr "Erweiterte Einstellungen"
 
 #: googleanalytics.admin.inc:178
 msgid "Google Analytics version used"
-msgstr "Die von Google-Analytics verwendete Version"
+msgstr "Die von Google Analytics verwendete Version"
 
 #: googleanalytics.admin.inc:181
 msgid "Latest (ga.js) tracking code"
@@ -185,7 +190,7 @@ msgstr "Alter (urchin.js) Tracking-Code"
 
 #: googleanalytics.admin.inc:184
 msgid "<a href=\"@ga_js_url\">On December 13, 2007, Google rolled out a new API</a> for its tracking code, and suggests all new sites to use this code. You should only use the older legacy code, if you have custom tracking code tied to that API. Otherwise it is suggested you use the latest API, as the legacy code will not receive feature updates and is not compatible with new features."
-msgstr "<a href=\"@ga_js_url\">Am 13. Dezember 2007, hat Google ein neues API</a> für ihren Tracking-Code veröffentlicht und empfielt allen neuen Websites diesen Code zu verwenden. Der ältere Code sollte nur noch verwendet werden, wenn spezieller Code auf das API angewiesen ist. Ansonsten wird empfohlen das neuste API zu verwenden, da der alte Code nicht mehr aktualisiert wird und mit neuen Funktionen inkompatibel ist."
+msgstr "<a href=\"@ga_js_url\">Am 13. Dezember 2007, hat Google ein neues API</a> für ihren Tracking-Code veröffentlicht und empfielt allen neuen Websites diesen Code zu verwenden. Der ältere Code sollte nur noch verwendet werden, wenn spezieller Code auf dieses API angewiesen ist. Ansonsten wird empfohlen das neuste API zu verwenden, da der alte Code nicht mehr aktualisiert wird und mit neuen Funktionen inkompatibel ist."
 
 #: googleanalytics.admin.inc:189
 msgid "Cache tracking code file locally"
@@ -221,11 +226,11 @@ msgstr "Sobald aktiviert, werden die Schlüsselwörter der internen Suche getrac
 
 #: googleanalytics.admin.inc:214
 msgid "Custom JavaScript code"
-msgstr "Spezieller JavaScript-Code"
+msgstr "Benutzerdefinierter JavaScript-Code"
 
 #: googleanalytics.admin.inc:217
 msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
-msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden in jeder Seite eingefügt, auf denen Google Analytics erscheinen soll. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
+msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden zu jeder Seite auf der Google Analytics erscheint hinzugefügt. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
 
 #: googleanalytics.admin.inc:222
 msgid "JavaScript scope"
@@ -244,7 +249,7 @@ msgid "Header"
 msgstr "Kopfbereich"
 
 #: googleanalytics.admin.inc:236
-msgid "A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x."
+msgid "A valid Google Analytics account number is case sensitive and formatted like UA-xxxxxx-x."
 msgstr "Bei der Google Analytics-Kontonummer muss die Groß- und Kleinschreibung beachtet werden und diese in der Form UA-xxxxxx-x formatiert sein."
 
 #: googleanalytics.admin.inc:241
@@ -280,10 +285,6 @@ msgid "administer google analytics"
 msgstr "Google Analytics verwalten"
 
 #: googleanalytics.module:22
-msgid "opt-in or out of tracking"
-msgstr "Tracking wahlweise An- oder Abwählen"
-
-#: googleanalytics.module:22
 msgid "use PHP for tracking visibility"
 msgstr "PHP für die Sichtbarkeit des Trackings verwenden"
 
@@ -302,5 +303,5 @@ msgstr "googleanalytics"
 
 #: googleanalytics.info:0
 msgid "Adds Google Analytics javascript tracking code to all your site's pages."
-msgstr "Fügt Google Analytics-JavaScript-Trackingcode in alle Seiten der Website ein."
+msgstr "Fügt den Google Analytics-JavaScript-Trackingcode in alle Seiten der Website ein."
 
