@@ -3,7 +3,7 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.admin.inc,v 1.2.2.40 2008/05/24 20:04:14 hass
+#  googleanalytics.admin.inc,v 1.2.2.43 2008/05/31 08:14:08 hass
 #  googleanalytics.module,v 1.16.2.44 2008/05/17 15:47:52 hass
 #  googleanalytics.info,v 1.5.2.3 2007/12/30 20:42:58 hass
 #
@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-05-24 22:09+0200\n"
+"POT-Creation-Date: 2008-05-31 10:34+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -253,6 +253,10 @@ msgid "A valid Google Analytics account number is case sensitive and formatted l
 msgstr ""
 
 #: googleanalytics.admin.inc:241
+msgid "Do not add the tracker code provided by Google into this field! This module already builds the tracker code based on your Google Analytics account number and settings."
+msgstr ""
+
+#: googleanalytics.admin.inc:244
 msgid "Do not include the &lt;script&gt; tags in this field."
 msgstr ""
 
