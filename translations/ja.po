@@ -6,14 +6,14 @@
 #                          Takafumi      ( jp.drupal@imagine **reverse order**)
 #
 # Generated from file:
-#  googleanalytics.admin.inc,v 1.2.2.39 2008/05/17 21:06:57 hass
+#  googleanalytics.admin.inc,v 1.2.2.43 2008/05/31 08:14:08 hass
 #  googleanalytics.module,v 1.16.2.44 2008/05/17 15:47:52 hass
 #  googleanalytics.info,v 1.5.2.3 2007/12/30 20:42:58 hass
 #
 # -----------------------------------------------------------------------------
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2008-05-23 18:19+0900\n"
+"POT-Creation-Date: 2008-05-31 18:40+0900\n"
 "Last-Translator: Takafumi <jp.drupal@imagine **reverse order**>\n"
 "Language-Team: Drupal Japan\n"
 "MIME-Version: 1.0\n"
@@ -126,7 +126,7 @@ msgid "Add segmentation information to tracking code"
 msgstr "トラッキングコードに加える区分化情報"
 
 #: googleanalytics.admin.inc:129
-msgid "Segment users based on different properties, additionaly to the basic IP address based tracking provided by Google Analytics."
+msgid "Segment users based on different properties, additionally to the basic IP address based tracking provided by Google Analytics."
 msgstr "Google Analyticsによって提供されるIPアドレスをベースとした基本的なトラッキングに加え、異なるプロパティに基づいてユーザを区分します。"
 
 #: googleanalytics.admin.inc:129
@@ -250,10 +250,14 @@ msgid "Header"
 msgstr "ヘッダ"
 
 #: googleanalytics.admin.inc:236
-msgid "A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x."
+msgid "A valid Google Analytics account number is case sensitive and formatted like UA-xxxxxx-x."
 msgstr "有効なGoogle Analyticsのアカウント番号は大文字・小文字が区別され、UA-xxxxxx-x のような形式です。"
 
 #: googleanalytics.admin.inc:241
+msgid "Do not add the tracker code provided by Google into this field! This module already builds the tracker code based on your Google Analytics account number and settings."
+msgstr "このフィールド内に、Googleから提供されたトラッカーコードを加えないでください！ このモジュールは、Google Analyticsのアカウント番号と設定に基づいたトラッカーコードをすでに構築しています。"
+
+#: googleanalytics.admin.inc:244
 msgid "Do not include the &lt;script&gt; tags in this field."
 msgstr "このフィールドに &lt;script&gt; タグを含めないでください。"
 
@@ -304,14 +308,4 @@ msgstr "googleanalytics"
 #: googleanalytics.info:0
 msgid "Adds Google Analytics javascript tracking code to all your site's pages."
 msgstr "Google Analytics javascript トラッキングコードをサイトページに追加します。"
-
-# typo修正対策
-#: googleanalytics.admin.inc:236
-msgid "A valid Google Analytics account number is case sensitive and formatted like UA-xxxxxx-x."
-msgstr "有効なGoogle Analyticsのアカウント番号は大文字・小文字が区別され、UA-xxxxxx-x のような形式です。"
-
-# typo修正対策
-#: googleanalytics.admin.inc:129
-msgid "Segment users based on different properties, additionally to the basic IP address based tracking provided by Google Analytics."
-msgstr "Google Analyticsによって提供されるIPアドレスをベースとした基本的なトラッキングに加え、異なるプロパティに基づいてユーザを区分します。"
 
