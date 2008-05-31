@@ -3,14 +3,14 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.module,v 1.14.2.67 2008/05/24 20:06:14 hass
+#  googleanalytics.module,v 1.14.2.69 2008/05/31 08:14:22 hass
 #  googleanalytics.info,v 1.2.2.3 2007/06/18 23:06:44 dww
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-05-24 22:08+0200\n"
+"POT-Creation-Date: 2008-05-31 10:41+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -272,18 +272,22 @@ msgid "A valid Google Analytics account number is case sensitive and formatted l
 msgstr ""
 
 #: googleanalytics.module:446
+msgid "Do not add the tracker code provided by Google into this field! This module already builds the tracker code based on your Google Analytics account number and settings."
+msgstr ""
+
+#: googleanalytics.module:449
 msgid "Do not include the &lt;script&gt; tags in this field."
 msgstr ""
 
-#: googleanalytics.module:467
+#: googleanalytics.module:470
 msgid "Google Analytics module"
 msgstr ""
 
-#: googleanalytics.module:468
+#: googleanalytics.module:471
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr ""
 
-#: googleanalytics.module:470
+#: googleanalytics.module:473
 msgid "Not configured"
 msgstr ""
 

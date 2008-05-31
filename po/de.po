@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-24 22:08+0200\n"
-"PO-Revision-Date: 2008-05-25 00:23+0100\n"
+"POT-Creation-Date: 2008-05-31 10:41+0200\n"
+"PO-Revision-Date: 2008-05-31 10:42+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -273,18 +273,22 @@ msgid "A valid Google Analytics account number is case sensitive and formatted l
 msgstr "Bei der Google Analytics-Kontonummer muss die Groß- und Kleinschreibung beachtet werden und diese in der Form UA-xxxxxx-x formatiert sein."
 
 #: googleanalytics.module:446
+msgid "Do not add the tracker code provided by Google into this field! This module already builds the tracker code based on your Google Analytics account number and settings."
+msgstr "Der von Google zu Verfügung gestellte Tracker-Code darf nicht in dieses Feld eingefügt werden! Dieses Modul erstellt schon den Tracker-Code basierend auf der Google Analytics-Kontonummer und den Einstellungen."
+
+#: googleanalytics.module:449
 msgid "Do not include the &lt;script&gt; tags in this field."
 msgstr "Die &lt;script&gt; Tags dürfen in dieses Feld nicht eingefügt werden."
 
-#: googleanalytics.module:467
+#: googleanalytics.module:470
 msgid "Google Analytics module"
 msgstr "Google Analytics-Modul"
 
-#: googleanalytics.module:468
+#: googleanalytics.module:471
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr "Das Google Analytics-Modul wurde noch nicht konfiguriert. Die Einstellungen können in den <a href=\"@url\">Google Analytics-Einstellungen</a> vorgenommen werden."
 
-#: googleanalytics.module:470
+#: googleanalytics.module:473
 msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
