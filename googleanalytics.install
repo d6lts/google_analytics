@@ -125,3 +125,13 @@ function googleanalytics_update_6002() {
 
   return $ret;
 }
+
+/**
+ * #262468: Clear menu cache to solve stale menu data in 5.x-1.5 and 6.x-1.1
+ */
+function googleanalytics_update_6003() {
+  $ret = array();
+  cache_clear_all();
+  menu_rebuild();
+  return $ret;
+}
