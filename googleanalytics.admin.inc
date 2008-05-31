@@ -237,7 +237,10 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   }
 
   // This is for the Newbie's who cannot read a text area description.
-  if (preg_match('/^(.*)<\/?script(.*)>(.*)/', $form_state['values']['googleanalytics_codesnippet'])) {
+  if (stristr($form_state['values']['googleanalytics_codesnippet'], 'http://www.google-analytics.com/urchin.js') || stristr($form_state['values']['googleanalytics_codesnippet'], 'google-analytics.com/ga.js')) {
+    form_set_error('googleanalytics_codesnippet', t('Do not add your websites original Google tracker code into this field! This module already builds the tracker code based on your Google Analytics account number and settings.'));
+  }
+  if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['googleanalytics_codesnippet'])) {
     form_set_error('googleanalytics_codesnippet', t('Do not include the &lt;script&gt; tags in this field.'));
   }
 
