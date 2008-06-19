@@ -39,7 +39,7 @@ function googleanalytics_menu($maycache) {
   }
   else {
     $id = variable_get('googleanalytics_account', '');
-  
+
     // 1. Check if the GA account number has a value.
     // 2. Track page views based on visibility value.
     // 3. Check if we should track the currently active user's role.
@@ -47,11 +47,11 @@ function googleanalytics_menu($maycache) {
       // Use the old version of Google Analytics?
       $legacy_version = variable_get('googleanalytics_legacy_version', FALSE);
       $scope = variable_get('googleanalytics_js_scope', 'footer');
-  
+
       // Should a local cached copy of urchin.js or ga.js be used?
       $js_file = ($legacy_version) ? 'urchin.js' : 'ga.js';
       $url = 'http://www.google-analytics.com/'. $js_file;
-  
+
       if (variable_get('googleanalytics_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _googleanalytics_cache($url)) {
         drupal_add_js($source, 'module', $scope);
       }
@@ -60,7 +60,7 @@ function googleanalytics_menu($maycache) {
         $script .= 'document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/'. $js_file .'\' type=\'text/javascript\'%3E%3C/script%3E"));';
         drupal_add_js($script, 'inline', $scope);
       }
-  
+
       // Add link tracking.
       $link_settings = array();
       if ($trackOutgoing = variable_get('googleanalytics_trackoutgoing', 1)) {
