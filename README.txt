@@ -41,7 +41,7 @@ The default is set to "Add to every page except the listed pages". By
 default the following pages are listed for exclusion:
 
 admin* 
-user* 
+user/*/* 
 node/add* 
 node/*/*
 

@@ -7,7 +7,7 @@ function googleanalytics_install() {
   // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
   $pages = array(
     'admin*',
-    'user*',
+    'user/*/*',
     'node/add*',
     'node/*/*',
   );
@@ -136,5 +136,38 @@ function googleanalytics_update_6003() {
   $ret = array();
   cache_clear_all();
   menu_rebuild();
+  return $ret;
+}
+
+/**
+ * Change visibility setting for path "user/*".
+ */
+function googleanalytics_update_6004() {
+  $ret = array();
+
+  // Orginal pages setting.
+  $pages = array(
+    'admin*',
+    'user*',
+    'node/add*',
+    'node/*/*',
+  );
+
+  $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('googleanalytics_pages', implode("\n", $pages))));
+  if (empty($diff)) {
+    // No diff to original settings found. Update with new settings.
+    $pages = array(
+      'admin*',
+      'user/*/*',
+      'node/add*',
+      'node/*/*',
+    );
+    variable_set('googleanalytics_pages', implode("\n", $pages));
+    $ret[] = array('success' => TRUE, 'query' => 'Path visibility setting changed from "user*" to "user/*/*".');
+  }
+  else {
+    $ret[] = array('success' => TRUE, 'query' => 'Custom path visibility setting found. Update skipped!');
+  }
+
   return $ret;
 }
