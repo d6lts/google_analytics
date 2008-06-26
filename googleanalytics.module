@@ -170,13 +170,13 @@ function googleanalytics_footer($main = 0) {
     }
     else {
       $script .= 'var pageTracker = _gat._getTracker('. drupal_to_js($id) .');';
-      $script .= 'pageTracker._initData();';
       if (!empty($segmentation)) {
         $script .= $segmentation;
       }
       if (!empty($codesnippet)) {
         $script .= $codesnippet;
       }
+      $script .= 'pageTracker._initData();';
       $script .= 'pageTracker._trackPageview('. $url_custom .');';
     }
 
