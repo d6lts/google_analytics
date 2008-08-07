@@ -180,7 +180,6 @@ function googleanalytics_footer($main = 0) {
       if (!empty($codesnippet)) {
         $script .= $codesnippet;
       }
-      $script .= 'pageTracker._initData();';
       $script .= 'pageTracker._trackPageview('. $url_custom .');';
     }
 
