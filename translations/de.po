@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-31 10:34+0200\n"
-"PO-Revision-Date: 2008-05-31 10:39+0100\n"
+"PO-Revision-Date: 2008-09-04 19:35+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -138,31 +138,31 @@ msgstr "Die Auswahl eines oder mehrerer Werte wird unterstützt. Zur Auswahl meh
 
 #: googleanalytics.admin.inc:139
 msgid "Link tracking settings"
-msgstr "Einstellungen für das Tracking von Verweisen"
+msgstr "Einstellungen für das Tracking von Links"
 
 #: googleanalytics.admin.inc:145
 msgid "Track outgoing links"
-msgstr "Ausgehende Verweise tracken"
+msgstr "Ausgehende Links tracken"
 
 #: googleanalytics.admin.inc:147
 msgid "Enables tracking of clicks on outgoing links."
-msgstr "Aktiviert das Tracking von Klicks auf ausgehende Verweise."
+msgstr "Aktiviert das Tracking von Klicks auf ausgehende Links."
 
 #: googleanalytics.admin.inc:151
 msgid "Track mailto links"
-msgstr "E-Mail-Verweise tracken"
+msgstr "E-Mail-Links tracken"
 
 #: googleanalytics.admin.inc:153
 msgid "Enables tracking of clicks on mailto links."
-msgstr "Aktiviert das Tracking von Klicks auf E-Mail-Verweise."
+msgstr "Aktiviert das Tracking von Klicks auf E-Mail-Links."
 
 #: googleanalytics.admin.inc:157
 msgid "Track download links"
-msgstr "Download-Verweise tracken"
+msgstr "Download-Links tracken"
 
 #: googleanalytics.admin.inc:159
 msgid "Enables tracking of clicks on links to files based on the file extensions list below."
-msgstr "Aktiviert das Tracking von Klicks auf Dateiverweise basierend auf der nachfolgenden Erweiterungsliste."
+msgstr "Aktiviert das Tracking von Klicks auf Dateilinks basierend auf der nachfolgenden Erweiterungsliste."
 
 #: googleanalytics.admin.inc:163
 msgid "File extensions to track"
