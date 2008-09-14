@@ -1,3 +1,5 @@
+// $Id$
+
 Module: Google Analytics
 Author: Mike Carter <www.ixis.co.uk/contact>
 
