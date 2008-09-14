@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-31 10:34+0200\n"
-"PO-Revision-Date: 2008-09-04 19:35+0100\n"
+"POT-Creation-Date: 2008-09-14 13:13+0200\n"
+"PO-Revision-Date: 2008-09-14 13:16+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -229,58 +229,74 @@ msgid "Custom JavaScript code"
 msgstr "Benutzerdefinierter JavaScript-Code"
 
 #: googleanalytics.admin.inc:217
-msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
-msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden zu jeder Seite auf der Google Analytics erscheint hinzugefügt. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
+msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. Before you add custom code to the below textarea's you should read <a href=\"!GaConceptsOverview\">Google Analytics Tracking Code - Functional Overview</a> and the <a href=\"!gaJSApi\">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden zu jeder Seite auf der Google Analytics erscheint hinzugefügt. Bevor benutzerdefinierter Code in die unten aufgeführten Textfelder eingefügt wird, sollte die Dokumentation zu <a href=\"!GaConceptsOverview\">Google Analytics Tracking Code - funktionale Übersicht</a> und die <a href=\"!gaJSApi\">Google Analytics Tracking API</a> gelesen werden. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
 
-#: googleanalytics.admin.inc:222
+#: googleanalytics.admin.inc:221
+msgid "Code snippet (before)"
+msgstr "Codeausschnitt (vorher)"
+
+#: googleanalytics.admin.inc:224
+msgid "Code in this textarea will be added <strong>before</strong> urchinTracker() or pageTracker._trackPageview()."
+msgstr "Code in diesem Textfeld wird <strong>vor</strong> urchinTracker() oder pageTracker._trackPageview() eingefügt."
+
+#: googleanalytics.admin.inc:228
+msgid "Code snippet (after)"
+msgstr "Codeausschnitt (nachher)"
+
+#: googleanalytics.admin.inc:231
+msgid "Code in this textarea will be added <strong>after</strong> urchinTracker() or pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts."
+msgstr "Code in diesem Textfeld wird <strong>nach</strong> urchinTracker() oder pageTracker._trackPageview() eingefügt. Dies ist nützlich, um eine Website in zwei Accounts zu tracken."
+
+#: googleanalytics.admin.inc:236
 msgid "JavaScript scope"
 msgstr "JavaScript-Bereich"
 
-#: googleanalytics.admin.inc:223
+#: googleanalytics.admin.inc:237
 msgid "<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."
 msgstr "<strong>Warnung:</strong> Aus Performancegründen empfielt Google die externen JavaScript-Dateien im Fußbereich einzufügen."
 
-#: googleanalytics.admin.inc:225
+#: googleanalytics.admin.inc:239
 msgid "Footer"
 msgstr "Fußbereich"
 
-#: googleanalytics.admin.inc:226
+#: googleanalytics.admin.inc:240
 msgid "Header"
 msgstr "Kopfbereich"
 
-#: googleanalytics.admin.inc:236
+#: googleanalytics.admin.inc:250
 msgid "A valid Google Analytics account number is case sensitive and formatted like UA-xxxxxx-x."
 msgstr "Bei der Google Analytics-Kontonummer muss die Groß- und Kleinschreibung beachtet werden und diese in der Form UA-xxxxxx-x formatiert sein."
 
-#: googleanalytics.admin.inc:241
-msgid "Do not add the tracker code provided by Google into this field! This module already builds the tracker code based on your Google Analytics account number and settings."
-msgstr "Der von Google zu Verfügung gestellte Tracker-Code darf nicht in dieses Feld eingefügt werden! Dieses Modul erstellt schon den Tracker-Code basierend auf der Google Analytics-Kontonummer und den Einstellungen."
+#: googleanalytics.admin.inc:255;258
+msgid "Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings."
+msgstr "Der von Google zu Verfügung gestellte Tracker-Code darf nicht in die JavaScript-Codeausschnitte eingefügt werden! Dieses Modul erstellt schon den Tracker-Code basierend auf der Google Analytics-Kontonummer und den Einstellungen."
 
-#: googleanalytics.admin.inc:244
-msgid "Do not include the &lt;script&gt; tags in this field."
-msgstr "Die &lt;script&gt; Tags dürfen in dieses Feld nicht eingefügt werden."
+#: googleanalytics.admin.inc:261;264
+msgid "Do not include the &lt;script&gt; tags in the javascript code snippets."
+msgstr "Die &lt;script&gt; Tags dürfen in die JavaScript-Codeausschnitte nicht eingefügt werden."
 
 #: googleanalytics.module:17
 msgid "<a href=\"@ga_url\">Google Analytics</a> is a free statistics package based on the excellent Urchin system. This module provides services to better integrate Drupal with Google Analytics."
 msgstr "<a href=\"@ga_url\">Google Analytics</a> ist ein kostenfreies Statistikpacket, basierend auf dem hervorragenden Urchin-System. Dieses Modul ermöglicht die bessere Integration von Drupal in Google Analytics."
 
-#: googleanalytics.module:199
+#: googleanalytics.module:204
 msgid "Google Analytics configuration"
 msgstr "Google Analytics-Konfiguration"
 
-#: googleanalytics.module:206
+#: googleanalytics.module:211
 msgid "User tracking"
 msgstr "Benutzertracking"
 
-#: googleanalytics.module:227
+#: googleanalytics.module:232
 msgid "Google Analytics module"
 msgstr "Google Analytics-Modul"
 
-#: googleanalytics.module:228
+#: googleanalytics.module:233
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr "Das Google Analytics-Modul wurde noch nicht konfiguriert. Die Einstellungen können in den <a href=\"@url\">Google Analytics-Einstellungen</a> vorgenommen werden."
 
-#: googleanalytics.module:230
+#: googleanalytics.module:235
 msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
