@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-14 13:13+0200\n"
-"PO-Revision-Date: 2008-09-14 13:16+0100\n"
+"PO-Revision-Date: 2008-09-14 13:21+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -230,7 +230,7 @@ msgstr "Benutzerdefinierter JavaScript-Code"
 
 #: googleanalytics.admin.inc:217
 msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. Before you add custom code to the below textarea's you should read <a href=\"!GaConceptsOverview\">Google Analytics Tracking Code - Functional Overview</a> and the <a href=\"!gaJSApi\">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
-msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden zu jeder Seite auf der Google Analytics erscheint hinzugefügt. Bevor benutzerdefinierter Code in die unten aufgeführten Textfelder eingefügt wird, sollte die Dokumentation zu <a href=\"!GaConceptsOverview\">Google Analytics Tracking Code - funktionale Übersicht</a> und die <a href=\"!gaJSApi\">Google Analytics Tracking API</a> gelesen werden. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
+msgstr "Hier können spezielle Google Analytics-<a href=\"!snippets\">Codeausschnitte</a> eingefügt werden. Diese werden zu jeder Seite hinzugefügt auf der Google Analytics erscheint. Bevor benutzerdefinierter Code in die unten aufgeführten Textfelder eingefügt wird, sollte die Dokumentation zu <a href=\"!GaConceptsOverview\">Google Analytics Tracking Code - Funktionale Übersicht</a> und die <a href=\"!gaJSApi\">Google Analytics Tracking API</a> gelesen werden. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
 
 #: googleanalytics.admin.inc:221
 msgid "Code snippet (before)"
