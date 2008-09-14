@@ -40,7 +40,8 @@ comes with an interface that copies Drupal's block visibility settings.
 The default is set to "Add to every page except the listed pages". By
 default the following pages are listed for exclusion:
 
-admin* 
+admin
+admin/* 
 user/*/* 
 node/add* 
 node/*/*
