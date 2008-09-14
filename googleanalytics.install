@@ -171,3 +171,37 @@ function googleanalytics_update_6004() {
 
   return $ret;
 }
+
+/**
+ * Change visibility setting for path "admin*".
+ */
+function googleanalytics_update_6005() {
+  $ret = array();
+
+  // Orginal pages setting.
+  $pages = array(
+    'admin*',
+    'user/*/*',
+    'node/add*',
+    'node/*/*',
+  );
+
+  $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('googleanalytics_pages', implode("\n", $pages))));
+  if (empty($diff)) {
+    // No diff to original settings found. Update with new settings.
+    $pages = array(
+      'admin',
+      'admin/*',
+      'user/*/*',
+      'node/add*',
+      'node/*/*',
+    );
+    variable_set('googleanalytics_pages', implode("\n", $pages));
+    $ret[] = array('success' => TRUE, 'query' => 'Path visibility filter setting changed from "admin*" to "admin" and "admin/*".');
+  }
+  else {
+    $ret[] = array('success' => TRUE, 'query' => 'Custom path visibility filter setting found. Update skipped!');
+  }
+
+  return $ret;
+}
