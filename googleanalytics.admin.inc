@@ -221,14 +221,14 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#title' => t('Code snippet (before)'),
     '#default_value' => variable_get('googleanalytics_codesnippet_before', ''),
     '#rows' => 5,
-    '#description' => t('Code in this textarea will be added <strong>before</strong> urchinTracker() or _trackPageview().')
+    '#description' => t('Code in this textarea will be added <strong>before</strong> urchinTracker() or pageTracker._trackPageview().')
   );
   $form['advanced']['codesnippet']['googleanalytics_codesnippet_after'] = array(
     '#type' => 'textarea',
     '#title' => t('Code snippet (after)'),
     '#default_value' => variable_get('googleanalytics_codesnippet_after', ''),
     '#rows' => 5,
-    '#description' => t("Code in this textarea will be added <strong>after</strong> urchinTracker() or _trackPageview(). This is usefull if you'd like to track a site in two accounts.")
+    '#description' => t("Code in this textarea will be added <strong>after</strong> urchinTracker() or pageTracker._trackPageview(). This is usefull if you'd like to track a site in two accounts.")
   );
 
   $form['advanced']['googleanalytics_js_scope'] = array(
