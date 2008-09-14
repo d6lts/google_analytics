@@ -209,12 +209,26 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#disabled' => (module_exists('search') ? FALSE : TRUE),
   );
 
-  $form['advanced']['googleanalytics_codesnippet'] = array(
-    '#type' => 'textarea',
+  $form['advanced']['codesnippet'] = array(
+    '#type' => 'fieldset',
     '#title' => t('Custom JavaScript code'),
-    '#default_value' => variable_get('googleanalytics_codesnippet', ''),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' => t('You can add custom Google Analytics <a href="!snippets">code snippets</a> here. These will be added to every page that Google Analytics appears on. Before you add custom code to the below textarea\'s you should read <a href="!GaConceptsOverview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="!gaJSApi">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://drupal.org/node/248699', '!GaConceptsOverview' => 'http://code.google.com/apis/analytics/docs/gaConceptsOverview.html', '!gaJSApi' => 'http://code.google.com/apis/analytics/docs/gaJSApi.html'))
+  );
+  $form['advanced']['codesnippet']['googleanalytics_codesnippet_before'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Code snippet (before)'),
+    '#default_value' => variable_get('googleanalytics_codesnippet_before', ''),
     '#rows' => 5,
-    '#description' => t('You can add custom Google Analytics <a href="!snippets">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://drupal.org/node/248699'))
+    '#description' => t('Code in this textarea will be added <strong>before</strong> urchinTracker() or _trackPageview().')
+  );
+  $form['advanced']['codesnippet']['googleanalytics_codesnippet_after'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Code snippet (after)'),
+    '#default_value' => variable_get('googleanalytics_codesnippet_after', ''),
+    '#rows' => 5,
+    '#description' => t("Code in this textarea will be added <strong>after</strong> urchinTracker() or _trackPageview(). This is usefull if you'd like to track a site in two accounts.")
   );
 
   $form['advanced']['googleanalytics_js_scope'] = array(
@@ -237,14 +251,21 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   }
 
   // This is for the Newbie's who cannot read a text area description.
-  if (stristr($form_state['values']['googleanalytics_codesnippet'], 'http://www.google-analytics.com/urchin.js') || stristr($form_state['values']['googleanalytics_codesnippet'], 'google-analytics.com/ga.js')) {
-    form_set_error('googleanalytics_codesnippet', t('Do not add the tracker code provided by Google into this field! This module already builds the tracker code based on your Google Analytics account number and settings.'));
+  if (stristr($form_state['values']['googleanalytics_codesnippet_before'], 'http://www.google-analytics.com/urchin.js') || stristr($form_state['values']['googleanalytics_codesnippet_before'], 'google-analytics.com/ga.js')) {
+    form_set_error('googleanalytics_codesnippet_before', t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
   }
-  if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['googleanalytics_codesnippet'])) {
-    form_set_error('googleanalytics_codesnippet', t('Do not include the &lt;script&gt; tags in this field.'));
+  if (stristr($form_state['values']['googleanalytics_codesnippet_after'], 'http://www.google-analytics.com/urchin.js') || stristr($form_state['values']['googleanalytics_codesnippet_after'], 'google-analytics.com/ga.js')) {
+    form_set_error('googleanalytics_codesnippet_after', t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
+  }
+  if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['googleanalytics_codesnippet_before'])) {
+    form_set_error('googleanalytics_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+  }
+  if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['googleanalytics_codesnippet_after'])) {
+    form_set_error('googleanalytics_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
   }
 
   // Trim some text area values.
   $form_state['values']['googleanalytics_pages'] = trim($form_state['values']['googleanalytics_pages']);
-  $form_state['values']['googleanalytics_codesnippet'] = trim($form_state['values']['googleanalytics_codesnippet']);
+  $form_state['values']['googleanalytics_codesnippet_before'] = trim($form_state['values']['googleanalytics_codesnippet_before']);
+  $form_state['values']['googleanalytics_codesnippet_after'] = trim($form_state['values']['googleanalytics_codesnippet_after']);
 }
