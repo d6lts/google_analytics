@@ -3,14 +3,14 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.module,v 1.14.2.75 2008/09/14 10:50:38 hass
+#  googleanalytics.module,v 1.14.2.76 2008/09/14 11:07:20 hass
 #  googleanalytics.info,v 1.2.2.3 2007/06/18 23:06:44 dww
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-09-14 12:57+0200\n"
+"POT-Creation-Date: 2008-09-14 13:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -264,7 +264,7 @@ msgid "Code snippet (after)"
 msgstr ""
 
 #: googleanalytics.module:455
-msgid "Code in this textarea will be added <strong>after</strong> urchinTracker() or pageTracker._trackPageview(). This is usefull if you'd like to track a site in two accounts."
+msgid "Code in this textarea will be added <strong>after</strong> urchinTracker() or pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts."
 msgstr ""
 
 #: googleanalytics.module:460
