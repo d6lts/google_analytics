@@ -6,7 +6,8 @@ function googleanalytics_install() {
 
   // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
   $pages = array(
-    'admin*',
+    'admin',
+    'admin/*',
     'user/*/*',
     'node/add*',
     'node/*/*',
@@ -15,11 +16,10 @@ function googleanalytics_install() {
 }
 
 function googleanalytics_uninstall() {
-  $result = db_query("DELETE FROM {variable} WHERE name LIKE 'googleanalytics_track_%'");
-
   variable_del('googleanalytics_account');
   variable_del('googleanalytics_legacy_version');
-  variable_del('googleanalytics_codesnippet');
+  variable_del('googleanalytics_codesnippet_before');
+  variable_del('googleanalytics_codesnippet_after');
   variable_del('googleanalytics_segmentation');
   variable_del('googleanalytics_trackoutgoing');
   variable_del('googleanalytics_trackmailto');
@@ -163,10 +163,10 @@ function googleanalytics_update_6004() {
       'node/*/*',
     );
     variable_set('googleanalytics_pages', implode("\n", $pages));
-    $ret[] = array('success' => TRUE, 'query' => 'Path visibility setting changed from "user*" to "user/*/*".');
+    $ret[] = array('success' => TRUE, 'query' => 'Path visibility filter setting changed from "user*" to "user/*/*".');
   }
   else {
-    $ret[] = array('success' => TRUE, 'query' => 'Custom path visibility setting found. Update skipped!');
+    $ret[] = array('success' => TRUE, 'query' => 'Custom path visibility filter setting found. Update skipped!');
   }
 
   return $ret;
@@ -202,6 +202,19 @@ function googleanalytics_update_6005() {
   else {
     $ret[] = array('success' => TRUE, 'query' => 'Custom path visibility filter setting found. Update skipped!');
   }
+
+  return $ret;
+}
+
+/**
+ * Upgrade custom javascript settings.
+ */
+function googleanalytics_update_6006() {
+  $ret = array();
+
+  variable_set('googleanalytics_codesnippet_before', variable_get('googleanalytics_codesnippet', ''));
+  variable_del('googleanalytics_codesnippet');
+  $ret[] = array('success' => TRUE, 'query' => 'Upgraded custom javascript codesnippet setting.');
 
   return $ret;
 }
