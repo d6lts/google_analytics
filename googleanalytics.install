@@ -93,7 +93,7 @@ function googleanalytics_update_6001() {
 }
 
 /**
- * Upgrade role settings and per user tracking settings 
+ * Upgrade role settings and per user tracking settings
  * of "User 1" and remove outdated tracking variables.
  */
 function googleanalytics_update_6002() {
