@@ -3,15 +3,15 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.admin.inc,v 1.2.2.46 2008/09/14 11:07:43 hass
-#  googleanalytics.module,v 1.16.2.48 2008/09/14 10:37:53 hass
-#  googleanalytics.info,v 1.5.2.3 2007/12/30 20:42:58 hass
+#  googleanalytics.admin.inc,v 1.2.2.47 2008/09/28 21:28:43 hass
+#  googleanalytics.module,v 1.16.2.49 2008/09/28 21:28:43 hass
+#  googleanalytics.info,v 1.5.2.5 2008/09/18 18:24:40 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-09-14 13:13+0200\n"
+"POT-Creation-Date: 2008-09-28 23:37+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -201,7 +201,7 @@ msgid "If checked, the tracking code file is retrieved from Google Analytics and
 msgstr ""
 
 #: googleanalytics.admin.inc:195
-msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
+msgid "<a href=\"@url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr ""
 
 #: googleanalytics.admin.inc:199
