@@ -17,7 +17,7 @@ class GoogleAnalyticsBasicTest extends DrupalTestCase {
 
     parent::setUp();
   }
-  
+
   function testGoogleAnalytics() {
     // Check for setting page's presence.
     $this->drupalGet('admin/settings/googleanalytics');
@@ -28,7 +28,7 @@ class GoogleAnalyticsBasicTest extends DrupalTestCase {
     $this->drupalPost('admin/settings/googleanalytics', $edit, 'Save configuration');
     $this->assertWantedRaw(t('A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x.'), "[testGoogleAnalytics]: Account number validated");
   }
-  
+
   function testGoogleAnalyticsTracking() {
     // Set visibility to hide tracking code on admin page only,
     // track authenticated users.
@@ -68,7 +68,7 @@ class GoogleAnalyticsBasicTest extends DrupalTestCase {
     $this->assertWantedRaw('google-analytics.com/ga.js', '[testGoogleAnalyticsTracking]: Tracking code is displayed on admin subpage');
     $this->drupalGet('');
     $this->assertNoUnWantedRaw($ua_code, '[testGoogleAnalyticsTracking]: Tracking code is not displayed on front page');
-  
+
     // Test whether tracking code is not display for anonymous.
     $this->drupalGet('logout');
     $this->drupalGet('');

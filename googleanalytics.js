@@ -2,7 +2,7 @@
 
 Drupal.behaviors.gaTrackerAttach = function () {
 
-  // Attach onclick event to all links. 
+  // Attach onclick event to all links.
   $('a').click( function() {
     var ga = Drupal.settings.googleanalytics;
     // Extract the domain from the location (the domain is in domain[2]).
