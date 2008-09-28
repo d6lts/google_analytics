@@ -221,8 +221,8 @@ msgid "If checked, the tracking code file is retrieved from Google Analytics and
 msgstr "チェックを入れると、トラッキングコードがGoogle Analyticsから検索され、ローカルにキャッシュされます。 トラッキングコードの更新がローカルコピーに反映されていることを確実にするために、キャッシュはGoogleのサーバから毎日更新されます。 Google Analyticsがトラッカーを確認するまで、これを有効にしないでください！"
 
 #: googleanalytics.module:419
-msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
-msgstr "ローカルにキャッシュするには、<a href=\"!url\">ダウンロードの方法を「パブリック」</a>にする必要があります。"
+msgid "<a href=\"@url\">Public file transfers</a> must be enabled to allow local caching."
+msgstr "ローカルにキャッシュするには、<a href=\"@url\">ダウンロードの方法を「パブリック」</a>にする必要があります。"
 
 #: googleanalytics.module:423
 msgid "Depends on: !dependencies"
