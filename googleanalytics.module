@@ -64,14 +64,14 @@ function googleanalytics_init() {
 
     // Add link tracking.
     $link_settings = array();
-    if ($trackOutgoing = variable_get('googleanalytics_trackoutgoing', 1)) {
-      $link_settings['trackOutgoing'] = $trackOutgoing;
+    if ($track_outgoing = variable_get('googleanalytics_trackoutgoing', 1)) {
+      $link_settings['trackOutgoing'] = $track_outgoing;
     }
-    if ($trackMailto = variable_get('googleanalytics_trackmailto', 1)) {
-      $link_settings['trackMailto'] = $trackMailto;
+    if ($track_mailto = variable_get('googleanalytics_trackmailto', 1)) {
+      $link_settings['trackMailto'] = $track_mailto;
     }
-    if (($trackDownload = variable_get('googleanalytics_trackfiles', 1)) && ($trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS))) {
-      $link_settings['trackDownload'] = $trackDownload;
+    if (($track_download = variable_get('googleanalytics_trackfiles', 1)) && ($trackfiles_extensions = variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS))) {
+      $link_settings['trackDownload'] = $track_download;
       $link_settings['trackDownloadExtensions'] = $trackfiles_extensions;
     }
     if (!empty($link_settings)) {
@@ -156,7 +156,7 @@ function googleanalytics_footer($main = 0) {
     // Add any custom code snippets if specified.
     $codesnippet_before = variable_get('googleanalytics_codesnippet_before', '');
     $codesnippet_after = variable_get('googleanalytics_codesnippet_after', '');
-    
+
     // Should the legacy code be used?
     $script = '';
     if ($legacy_version) {
@@ -339,7 +339,7 @@ function _googleanalytics_visibility_roles($account) {
     }
   }
   else {
-    // No role is selected for tracking, therefor all roles should be tracked. 
+    // No role is selected for tracking, therefor all roles should be tracked.
     $enabled = TRUE;
   }
 
