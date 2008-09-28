@@ -185,8 +185,8 @@ msgid "If checked, the tracking code file is retrieved from Google Analytics and
 msgstr "Sobald aktiviert, wird die Datei mit Tracking-Code von Google Analytics heruntergeladen und lokal gecached. Diese wird täglich von den Google-Servern aktualisiert, damit sich Aktualisierungen des Tracking-Codes in der lokalen Kopie niederschlagen. Aktivieren Sie dies erst nachdem Google Analytics den Tracking-Code bestätigt hat!"
 
 #: googleanalytics.admin.inc:184
-msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
-msgstr "Zum lokalen Cachen muss die <a href=\"!url\">öffentliche Download-Methode</a> aktiviert sein."
+msgid "<a href=\"@url\">Public file transfers</a> must be enabled to allow local caching."
+msgstr "Zum lokalen Cachen muss die <a href=\"@url\">öffentliche Download-Methode</a> aktiviert sein."
 
 #: googleanalytics.admin.inc:188
 msgid "Depends on: !dependencies"
