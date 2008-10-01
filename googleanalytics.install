@@ -127,7 +127,7 @@ function googleanalytics_update_6002() {
   }
 
   // Delete outdated tracking settings.
-  $result = db_query("DELETE FROM {variable} WHERE name LIKE 'googleanalytics_track_%'");
+  $ret[] = update_sql("DELETE FROM {variable} WHERE name LIKE 'googleanalytics_track_%'");
 
   return $ret;
 }
