@@ -1,6 +1,11 @@
 <?php
 // $Id$
 
+/**
+ * @file
+ * Installation file for Google Analytics module.
+ */
+
 function googleanalytics_install() {
   variable_set('googleanalytics_visibility', 0);
 
