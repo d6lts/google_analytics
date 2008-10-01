@@ -2,6 +2,7 @@
 // $Id$
 
 /*
+ * @file
  * Drupal Module: GoogleAnalytics
  * Adds the required Javascript to the bottom of all your Drupal pages
  * to allow tracking by the Google Analytics statistics package.
