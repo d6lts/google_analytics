@@ -1,6 +1,11 @@
 <?php
 // $Id$
 
+/**
+ * @file
+ * Test file for Google Analytics module.
+ */
+
 class GoogleAnalyticsBasicTest extends DrupalTestCase {
   protected $web_user;
 
