@@ -100,6 +100,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
       '#title' => t('Pages'),
       '#default_value' => $pages,
       '#description' => $description,
+      '#wysiwyg' => FALSE,
     );
   }
 
@@ -221,6 +222,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#title' => t('Code snippet (before)'),
     '#default_value' => variable_get('googleanalytics_codesnippet_before', ''),
     '#rows' => 5,
+    '#wysiwyg' => FALSE,
     '#description' => t('Code in this textarea will be added <strong>before</strong> urchinTracker() or pageTracker._trackPageview().')
   );
   $form['advanced']['codesnippet']['googleanalytics_codesnippet_after'] = array(
@@ -228,6 +230,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#title' => t('Code snippet (after)'),
     '#default_value' => variable_get('googleanalytics_codesnippet_after', ''),
     '#rows' => 5,
+    '#wysiwyg' => FALSE,
     '#description' => t("Code in this textarea will be added <strong>after</strong> urchinTracker() or pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts.")
   );
 
