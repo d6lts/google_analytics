@@ -185,6 +185,16 @@ function googleanalytics_admin_settings_form(&$form_state) {
     $form['advanced']['googleanalytics_cache']['#description'] .= ' '. t('<a href="@url">Public file transfers</a> must be enabled to allow local caching.', array('@url' => url('admin/settings/file-system', array('query' => drupal_get_destination()))));
   }
 
+  // Allow for tracking of the originating node when viewing translation sets.
+  if (module_exists('translation')) {
+    $form['advanced']['googleanalytics_translation_set'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Track translation sets as one unit'),
+      '#description' => t('When a node is part of a translation set, record statistics for the originating node instead. This allows for a translation set to be treated as a single unit.'),
+      '#default_value' => variable_get('googleanalytics_translation_set', 0),
+    );
+  }
+
   $site_search_dependencies = '<div class="admin-dependencies">';
   $site_search_dependencies .= t('Depends on: !dependencies', array('!dependencies' => (module_exists('search') ? 'Search'. t(' (<span class="admin-enabled">enabled</span>)') : 'Search'. t(' (<span class="admin-disabled">disabled</span>)'))));
   $site_search_dependencies .= '</div>';
