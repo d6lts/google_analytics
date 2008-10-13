@@ -38,6 +38,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_roles');
   variable_del('googleanalytics_visibility');
   variable_del('googleanalytics_pages');
+  variable_del('googleanalytics_translation_set');
 }
 
 /**
