@@ -128,7 +128,7 @@ function googleanalytics_footer($main = 0) {
       if ($node && translation_supported_type($node->type) && isset($node->tnid) && ($node->tnid != $node->nid)) {
         $source_node = node_load($node->tnid);
         $languages = language_list();
-        $url_custom = drupal_to_js(url('node/' . $source_node->nid, array('language' => $languages[$source_node->language])));
+        $url_custom = drupal_to_js(url('node/'. $source_node->nid, array('language' => $languages[$source_node->language])));
       }
     }
 
