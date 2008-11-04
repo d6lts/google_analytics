@@ -140,7 +140,6 @@ function googleanalytics_update_6002() {
  */
 function googleanalytics_update_6003() {
   $ret = array();
-  cache_clear_all();
   menu_rebuild();
   return $ret;
 }
