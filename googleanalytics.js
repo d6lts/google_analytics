@@ -1,9 +1,9 @@
 // $Id$
 
-Drupal.behaviors.gaTrackerAttach = function () {
+Drupal.behaviors.gaTrackerAttach = function(context) {
 
   // Attach onclick event to all links.
-  $('a').click( function() {
+  $('a', context).click( function() {
     var ga = Drupal.settings.googleanalytics;
     // Extract the domain from the location (the domain is in domain[2]).
     // http://docs.jquery.com/Plugins/Validation/Methods/url
