@@ -223,6 +223,24 @@ function googleanalytics_update_6006() {
 }
 
 /**
+ * Remove "User identifier" and "User name" from segmentation fields.
+ * 
+ * This is a data protection and privacy law change. For more information see Google Analytics
+ * terms of use section 8.1 (http://www.google.com/analytics/en-GB/tos.html).
+ */
+function googleanalytics_update_6007() {
+  $ret = array();
+
+  $profile_fields = variable_get('googleanalytics_segmentation', array());
+  unset($profile_fields['uid']);
+  unset($profile_fields['name']);
+  variable_set('googleanalytics_segmentation', $profile_fields);
+  $ret[] = array('success' => TRUE, 'query' => 'Removed "User identifier" and "User name" from segmentation fields.');
+
+  return $ret;
+}
+
+/**
  * Remove outdated legacy support variables and files.
  */
 function googleanalytics_update_6200() {
