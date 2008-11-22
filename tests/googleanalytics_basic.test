@@ -39,7 +39,6 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
   function testGoogleAnalyticsTracking() {
     // Set visibility to hide tracking code on admin page only,
     // track authenticated users.
-    variable_set('googleanalytics_cache', 0);
     variable_set('googleanalytics_visibility', 0);
     variable_set('googleanalytics_pages', 'admin*');
     variable_set('googleanalytics_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
@@ -57,6 +56,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     */
 
     // Test whether tracking code uses latest JS.
+    variable_set('googleanalytics_cache', 0);
     $this->drupalGet('');
     $this->assertRaw('google-analytics.com/ga.js', '[testGoogleAnalyticsTracking]: Latest tracking code used.');
 
