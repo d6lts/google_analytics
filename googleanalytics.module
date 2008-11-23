@@ -337,7 +337,7 @@ function googleanalytics_admin_settings_form() {
   );
 
   // Compile a list of fields to show.
-  $fields = variable_get('googleanalytics_segmentation_fields', array('roles' => t('User roles')));
+  $fields = variable_get('googleanalytics_segmentation_default_fields', array('roles' => t('User roles')));
   if ($profile_enabled) {
     $result = db_query('SELECT name, title, type, weight FROM {profile_fields} ORDER BY weight');
     while ($record = db_fetch_object($result)) {
