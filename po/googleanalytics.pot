@@ -3,14 +3,14 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.module,v 1.14.2.80 2008/10/16 21:34:49 hass
+#  googleanalytics.module,v 1.14.2.83 2008/11/23 09:44:06 hass
 #  googleanalytics.info,v 1.2.2.5 2008/09/18 18:43:11 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-11-04 13:21+0100\n"
+"POT-Creation-Date: 2008-11-26 00:03+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -127,183 +127,179 @@ msgstr ""
 msgid "User segmentation settings"
 msgstr ""
 
-#: googleanalytics.module:341
-msgid "User identifier"
-msgstr ""
-
-#: googleanalytics.module:342
-msgid "User name"
-msgstr ""
-
-#: googleanalytics.module:343
+#: googleanalytics.module:340
 msgid "User roles"
 msgstr ""
 
-#: googleanalytics.module:354
+#: googleanalytics.module:350
 msgid "Add segmentation information to tracking code"
 msgstr ""
 
-#: googleanalytics.module:355
+#: googleanalytics.module:351
 msgid "Segment users based on different properties, additionally to the basic IP address based tracking provided by Google Analytics."
 msgstr ""
 
-#: googleanalytics.module:355
+#: googleanalytics.module:351
 msgid "<a href=\"@module_list\">Enable the profile module</a> to be able to use profile fields for more granular tracking."
 msgstr ""
 
-#: googleanalytics.module:355
+#: googleanalytics.module:351
+msgid "Make sure you will not associate (or permit any third party to associate) any data gathered from Your Website(s) (or such third parties' website(s)) with any personally identifying information from any source as part of Your use (or such third parties' use) of the Google Analytics service. For more information see section 8.1 in the <a href=\"@ga_tos\">Google Analytics terms of use</a>."
+msgstr ""
+
+#: googleanalytics.module:351
 msgid "Selecting one or more values is supported. To select multiple items, hold down CTRL while selecting fields."
 msgstr ""
 
-#: googleanalytics.module:365
+#: googleanalytics.module:361
 msgid "Link tracking settings"
 msgstr ""
 
-#: googleanalytics.module:371
+#: googleanalytics.module:367
 msgid "Track outgoing links"
 msgstr ""
 
-#: googleanalytics.module:373
+#: googleanalytics.module:369
 msgid "Enables tracking of clicks on outgoing links."
 msgstr ""
 
-#: googleanalytics.module:377
+#: googleanalytics.module:373
 msgid "Track mailto links"
 msgstr ""
 
-#: googleanalytics.module:379
+#: googleanalytics.module:375
 msgid "Enables tracking of clicks on mailto links."
 msgstr ""
 
-#: googleanalytics.module:383
+#: googleanalytics.module:379
 msgid "Track download links"
 msgstr ""
 
-#: googleanalytics.module:385
+#: googleanalytics.module:381
 msgid "Enables tracking of clicks on links to files based on the file extensions list below."
 msgstr ""
 
-#: googleanalytics.module:389
+#: googleanalytics.module:385
 msgid "File extensions to track"
 msgstr ""
 
-#: googleanalytics.module:391
+#: googleanalytics.module:387
 msgid "A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions"
 msgstr ""
 
-#: googleanalytics.module:397
+#: googleanalytics.module:394
 msgid "Advanced settings"
 msgstr ""
 
-#: googleanalytics.module:404
+#: googleanalytics.module:401
 msgid "Google Analytics version used"
 msgstr ""
 
-#: googleanalytics.module:407
+#: googleanalytics.module:404
 msgid "Latest (ga.js) tracking code"
 msgstr ""
 
-#: googleanalytics.module:408
+#: googleanalytics.module:405
 msgid "Legacy (urchin.js) tracking code"
 msgstr ""
 
-#: googleanalytics.module:410
+#: googleanalytics.module:407
 msgid "<a href=\"@ga_js_url\">On December 13, 2007, Google rolled out a new API</a> for its tracking code, and suggests all new sites to use this code. You should only use the older legacy code, if you have custom tracking code tied to that API. Otherwise it is suggested you use the latest API, as the legacy code will not receive feature updates and is not compatible with new features."
 msgstr ""
 
-#: googleanalytics.module:415
+#: googleanalytics.module:412
 msgid "Cache tracking code file locally"
 msgstr ""
 
-#: googleanalytics.module:416
+#: googleanalytics.module:413
 msgid "If checked, the tracking code file is retrieved from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker!"
 msgstr ""
 
-#: googleanalytics.module:421
+#: googleanalytics.module:418
 msgid "<a href=\"@url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr ""
 
-#: googleanalytics.module:425
+#: googleanalytics.module:422
 msgid "Depends on: !dependencies"
 msgstr ""
 
-#: googleanalytics.module:425
+#: googleanalytics.module:422
 msgid "@module (<span class=\"admin-enabled\">enabled</span>)"
 msgstr ""
 
-#: googleanalytics.module:425
+#: googleanalytics.module:422
 msgid "@module (<span class=\"admin-disabled\">disabled</span>)"
 msgstr ""
 
-#: googleanalytics.module:432
+#: googleanalytics.module:429
 msgid "Track internal search"
 msgstr ""
 
-#: googleanalytics.module:433
+#: googleanalytics.module:430
 msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href=\"@url\">How do I set up Site Search for my profile</a>."
 msgstr ""
 
-#: googleanalytics.module:440
+#: googleanalytics.module:437
 msgid "Custom JavaScript code"
 msgstr ""
 
-#: googleanalytics.module:443
+#: googleanalytics.module:440
 msgid "You can add custom Google Analytics <a href=\"@snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. Before you add custom code to the below textarea's you should read <a href=\"@ga_concepts_overview\">Google Analytics Tracking Code - Functional Overview</a> and the <a href=\"@ga_js_api\">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr ""
 
-#: googleanalytics.module:447
+#: googleanalytics.module:444
 msgid "Code snippet (before)"
 msgstr ""
 
-#: googleanalytics.module:451
+#: googleanalytics.module:448
 msgid "Code in this textarea will be added <strong>before</strong> urchinTracker() or pageTracker._trackPageview()."
 msgstr ""
 
-#: googleanalytics.module:455
+#: googleanalytics.module:452
 msgid "Code snippet (after)"
 msgstr ""
 
-#: googleanalytics.module:459
+#: googleanalytics.module:456
 msgid "Code in this textarea will be added <strong>after</strong> urchinTracker() or pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts."
 msgstr ""
 
-#: googleanalytics.module:464
+#: googleanalytics.module:461
 msgid "JavaScript scope"
 msgstr ""
 
-#: googleanalytics.module:465
+#: googleanalytics.module:462
 msgid "<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."
 msgstr ""
 
-#: googleanalytics.module:467
+#: googleanalytics.module:464
 msgid "Footer"
 msgstr ""
 
-#: googleanalytics.module:468
+#: googleanalytics.module:465
 msgid "Header"
 msgstr ""
 
-#: googleanalytics.module:478
+#: googleanalytics.module:475
 msgid "A valid Google Analytics account number is case sensitive and formatted like UA-xxxxxx-x."
 msgstr ""
 
-#: googleanalytics.module:483;486
+#: googleanalytics.module:480;483
 msgid "Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings."
 msgstr ""
 
-#: googleanalytics.module:489;492
+#: googleanalytics.module:486;489
 msgid "Do not include the &lt;script&gt; tags in the javascript code snippets."
 msgstr ""
 
-#: googleanalytics.module:514
+#: googleanalytics.module:511
 msgid "Google Analytics module"
 msgstr ""
 
-#: googleanalytics.module:515
+#: googleanalytics.module:512
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr ""
 
-#: googleanalytics.module:517
+#: googleanalytics.module:514
 msgid "Not configured"
 msgstr ""
 
