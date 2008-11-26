@@ -1,6 +1,6 @@
 // $Id$
 
-gaTrackerAttach = function(context) {
+Drupal.gaTrackerAttach = function(context) {
   context = context || document;
 
   $('a', context).click( function() {
@@ -59,5 +59,5 @@ gaTrackerAttach = function(context) {
 };
 
 if (Drupal.jsEnabled) {
-  $(document).ready(gaTrackerAttach);
+  $(document).ready(Drupal.gaTrackerAttach);
 }
