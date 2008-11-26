@@ -219,7 +219,7 @@ msgstr "カスタムJavaScriptコード"
 
 #: googleanalytics.admin.inc:214
 msgid "You can add custom Google Analytics <a href=\"@snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. Before you add custom code to the below textarea's you should read <a href=\"@ga_concepts_overview\">Google Analytics Tracking Code - Functional Overview</a> and the <a href=\"@ga_js_api\">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
-msgstr "ここに、カスタムGoogle Analyticsの<a href=\"@snippets">コードスニペット</a>を追加することができます。 これらはGoogle Analyticsが現れる、すべてのページに追加されます。 以下のテキストエリアにカスタムコードを加える前に、<a href=\"@ga_concepts_overview\">Google Analytics Tracking Code - Functional Overview</a> と <a href=\"@ga_js_api\">Google Analytics Tracking API</a> のドキュメントを読むべきです。 <strong>&lt;script&gt; タグは含めず</strong>、 コードの終端には常にセミコロン (;) を付加してください。"
+msgstr "ここに、カスタムGoogle Analyticsの<a href=\"@snippets\">コードスニペット</a>を追加することができます。 これらはGoogle Analyticsが現れる、すべてのページに追加されます。 以下のテキストエリアにカスタムコードを加える前に、<a href=\"@ga_concepts_overview\">Google Analytics Tracking Code - Functional Overview</a> と <a href=\"@ga_js_api\">Google Analytics Tracking API</a> のドキュメントを読むべきです。 <strong>&lt;script&gt; タグは含めず</strong>、 コードの終端には常にセミコロン (;) を付加してください。"
 
 #: googleanalytics.admin.inc:218
 msgid "Code snippet (before)"
