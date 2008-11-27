@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Google Analytics (all releases)\n"
 "POT-Creation-Date: 2008-11-26 00:01+0100\n"
-"PO-Revision-Date: 2008-11-27 20:13+0100\n"
+"PO-Revision-Date: 2008-11-27 20:33+0100\n"
 "Last-Translator: Alexander Haß\n"
 "Language-Team: Slovak\n"
 "MIME-Version: 1.0\n"
@@ -246,10 +246,9 @@ msgstr "Kód z tohto textového poľa sa pridá <strong>pred</strong> pageTracke
 msgid "Code snippet (after)"
 msgstr "Kód pridaný za"
 
-# Kód z tohto textového poľa sa pridá <strong>za</strong> pageTracker._trackPageview(). To je užitočné ak chcete stránku sledovať v dvoch kontách.
 #: googleanalytics.admin.inc:241
 msgid "Code in this textarea will be added <strong>after</strong> urchinTracker() or pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts."
-msgstr ""
+msgstr "Kód z tohto textového poľa sa pridá <strong>za</strong> urchinTracker() alebo pageTracker._trackPageview(). To je užitočné ak chcete stránku sledovať v dvoch kontách."
 
 #: googleanalytics.admin.inc:246
 msgid "JavaScript scope"
