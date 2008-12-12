@@ -16,9 +16,9 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
   }
 
   function setUp() {
-    $permissions = array(
-      'administer google analytics',
-    );
+    parent::setUp('googleanalytics');
+
+    $permissions = array('administer google analytics');
 
     // User to set up google_analytics.
     $user = $this->drupalCreateUser($permissions);
