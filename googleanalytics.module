@@ -172,7 +172,7 @@ function googleanalytics_footer($main = 0) {
     $codesnippet_after = variable_get('googleanalytics_codesnippet_after', '');
 
     // Should the legacy code be used?
-    $script = '';
+    $script = 'try{';
     if ($legacy_version) {
       $script .= '_uacct = '. drupal_to_js($id) .';';
       if (!empty($segmentation)) {
@@ -199,6 +199,7 @@ function googleanalytics_footer($main = 0) {
         $script .= $codesnippet_after;
       }
     }
+    $script .= '} catch(err) {}';
 
     drupal_add_js($script, 'inline', 'footer');
   }
