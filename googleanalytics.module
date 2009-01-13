@@ -149,7 +149,8 @@ function googleanalytics_footer($main = 0) {
     $codesnippet_after = variable_get('googleanalytics_codesnippet_after', '');
 
     // Build tracker code for footer.
-    $script = 'var pageTracker = _gat._getTracker('. drupal_to_js($id) .');';
+    $script = 'try{';
+    $script .= 'var pageTracker = _gat._getTracker('. drupal_to_js($id) .');';
     if (!empty($segmentation)) {
       $script .= $segmentation;
     }
@@ -160,6 +161,7 @@ function googleanalytics_footer($main = 0) {
     if (!empty($codesnippet_after)) {
       $script .= $codesnippet_after;
     }
+    $script .= '} catch(err) {}';
 
     drupal_add_js($script, 'inline', 'footer');
   }
