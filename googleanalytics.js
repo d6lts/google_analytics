@@ -12,7 +12,7 @@ Drupal.gaTrackerAttach = function(context) {
     // Expression to check for download links.
     var isDownload = new RegExp("\\.(" + ga.trackDownloadExtensions + ")$", "i");
 
-    try{
+    try {
       // Is the clicked URL internal?
       if (isInternal.test(this.href)) {
         // Is download tracking activated and the file extension configured for download tracking?
