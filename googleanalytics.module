@@ -81,6 +81,11 @@ function googleanalytics_init() {
       drupal_add_js(array('googleanalytics' => $link_settings), 'setting', 'header');
       drupal_add_js(drupal_get_path('module', 'googleanalytics') .'/googleanalytics.js', 'module', $scope);
     }
+
+    // Custom tracking.
+    if (variable_get('googleanalytics_trackadsense', FALSE)) {
+      drupal_add_js('window.google_analytics_uacct = ' . drupal_to_js($id) . ';', 'inline', 'header');
+    }
   }
 }
 
