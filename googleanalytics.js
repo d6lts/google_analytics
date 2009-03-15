@@ -61,5 +61,7 @@ Drupal.gaTrackerAttach = function(context) {
 };
 
 if (Drupal.jsEnabled) {
-  $(document).ready(Drupal.gaTrackerAttach);
+  $(document).ready(function() {
+    Drupal.gaTrackerAttach(this);
+  });
 }
