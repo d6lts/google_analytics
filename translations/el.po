@@ -1,4 +1,3 @@
-# translation of el.po to
 # translation of Google Analytics module to Greek
 # $Id$
 # Generated from files:
@@ -242,7 +241,7 @@ msgstr "Τμήμα κώδικα (μετά)"
 
 #: googleanalytics.admin.inc:237
 msgid "Code in this textarea will be added <strong>after</strong> pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts."
-msgstr "Ο κώδικας σε αυτή την περιοχή κειμένου θα προστίθεται <strong>μετά</strong> το pageTracker._trackPageview(). Αυτό χρησιμεύει στην περίπτωση που θέλετε να παρακολουθείτε ένα ιστοτόπο σε δύο λογαριασμούς."
+msgstr "Ο κώδικας σε αυτή την περιοχή κειμένου θα προστίθεται <strong>μετά</strong> το pageTracker._trackPageview(). Αυτό χρησιμεύει στην περίπτωση που θέλετε να παρακολουθείτε ένα ιστοτόπο από δύο λογαριασμούς."
 
 #: googleanalytics.admin.inc:242
 msgid "JavaScript scope"
