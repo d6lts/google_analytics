@@ -1,4 +1,3 @@
-# translation of el.po to
 # translation of Google Analytics module to Greek
 # $Id$
 # Generated from files:
