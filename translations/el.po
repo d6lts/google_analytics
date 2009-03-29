@@ -1,3 +1,4 @@
+# translation of el.po to
 # translation of Google Analytics module to Greek
 # $Id$
 # Generated from files:
@@ -9,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
-"POT-Creation-Date: 2009-03-19 19:59+0200\n"
-"PO-Revision-Date: 2009-03-20 19:46+0200\n"
+"POT-Creation-Date: 2009-03-29 14:19+0200\n"
+"PO-Revision-Date: 2009-03-29 19:49+0300\n"
 "Last-Translator: Vasileios Lourdas <drupal@lourdas.name>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -279,19 +280,31 @@ msgstr "Το <a href=\"@ga_url\">Google Analytics</a> είναι ένα δωρε
 msgid "Google Analytics configuration"
 msgstr "Ρυθμίσεις Google Analytics"
 
-#: googleanalytics.module:193
-msgid "User tracking"
-msgstr "Παρακολούθηση χρήστη"
+#: googleanalytics.module:194
+msgid "Disable user tracking"
+msgstr "Απενεργοποίηση παρακολούθησης χρήστη"
 
-#: googleanalytics.module:214
+#: googleanalytics.module:195
+msgid "Users are tracked by default, but you are able to opt out."
+msgstr "Οι χρήστες εξ' ορισμού παρακολουθούνται, αλλά επιτρέπεται να ορίσετε ως επιλογή να μην παρακολουθούνται."
+
+#: googleanalytics.module:199
+msgid "Enable user tracking"
+msgstr "Ενεργοποίηση παρακολούθησης χρήστη"
+
+#: googleanalytics.module:200
+msgid "Users are <em>not</em> tracked by default, but you are able to opt in."
+msgstr "Οι χρήστες εξ' ορισμού <em>δεν</em> παρακολουθούνται, αλλά επιτρέπεται να ορίσετε ως επιλογή να παρακολουθούνται."
+
+#: googleanalytics.module:228
 msgid "Google Analytics module"
 msgstr "Μονάδα Google Analytics"
 
-#: googleanalytics.module:215
+#: googleanalytics.module:229
 msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
 msgstr "Η μονάδα Google Analytics δεν έχει διευθετηθεί ακόμη. Διευθετήστε τις ρυθμίσεις του στη <a href=\"@url\">σελίδα ρυθμίσεων του Google Analytics</a>."
 
-#: googleanalytics.module:217
+#: googleanalytics.module:231
 msgid "Not configured"
 msgstr "Δεν έχει διευθετηθεί"
 
