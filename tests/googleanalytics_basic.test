@@ -7,7 +7,7 @@
  */
 class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
 
-  function getInfo() {
+  public static function getInfo() {
     return array(
       'name' => t('Google Analytics basic tests'),
       'description' => t('Test basic Google Analytics module functionality.'),
