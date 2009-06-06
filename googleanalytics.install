@@ -216,9 +216,13 @@ function googleanalytics_update_6005() {
 function googleanalytics_update_6006() {
   $ret = array();
 
-  variable_set('googleanalytics_codesnippet_before', variable_get('googleanalytics_codesnippet', ''));
-  variable_del('googleanalytics_codesnippet');
-  $ret[] = array('success' => TRUE, 'query' => 'Upgraded custom javascript codesnippet setting.');
+  // Prevent deleting of advanced D5 code snippet settings.
+  $googleanalytics_codesnippet = variable_get('googleanalytics_codesnippet', '');
+  if ($googleanalytics_codesnippet != '') {
+    variable_set('googleanalytics_codesnippet_before', $googleanalytics_codesnippet);
+    variable_del('googleanalytics_codesnippet');
+    $ret[] = array('success' => TRUE, 'query' => 'Upgraded custom javascript codesnippet setting.');
+  }
 
   return $ret;
 }
