@@ -5,7 +5,7 @@ $(document).ready(function() {
   // Attach onclick event to document only and catch clicks on all elements.
   $(document.body).click(function(event) {
     // Catch only the first parent link of a clicked element.
-    $(event.target).parents("a:first").andSelf().filter("a").each(function() {
+    $(event.target).parents("a:first,area:first").andSelf().filter("a,area").each(function() {
 
       var ga = Drupal.settings.googleanalytics;
       // Expression to check for absolute internal links.
@@ -30,7 +30,7 @@ $(document).ready(function() {
           }
         }
         else {
-          if (ga.trackMailto && $(this).is("a[href^=mailto:]")) {
+          if (ga.trackMailto && $(this).is("a[href^=mailto:],area[href^=mailto:]")) {
             // Mailto link clicked.
             pageTracker._trackEvent("Mails", "Click", this.href.substring(7));
           }
