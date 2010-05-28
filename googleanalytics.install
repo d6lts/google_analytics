@@ -52,6 +52,27 @@ function googleanalytics_disable() {
   }
 }
 
+/**
+ * Implementation of hook_requirements().
+ */
+function googleanalytics_requirements($phase) {
+  $requirements = array();
+
+  if ($phase == 'runtime') {
+    // Raise warning if Google user account has not been set yet.
+    if (!preg_match('/^UA-\d{4,}-\d+$/', variable_get('googleanalytics_account', 'UA-'))) {
+      $requirements['googleanalytics'] = array(
+        'title' => t('Google Analytics module'),
+        'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/googleanalytics'))),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => t('Not configured'),
+      );
+    }
+  }
+
+  return $requirements;
+}
+
 
 function googleanalytics_update_1() {
   $ret = array();
@@ -228,7 +249,7 @@ function googleanalytics_update_6006() {
 
 /**
  * Remove "User identifier" and "User name" from segmentation fields.
- * 
+ *
  * This is a data protection and privacy law change. For more information see Google Analytics
  * terms of use section 8.1 (http://www.google.com/analytics/en-GB/tos.html).
  */
