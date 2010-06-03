@@ -114,7 +114,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
   // Compile a list of fields to show.
   $fields = variable_get('googleanalytics_segmentation_default_fields', array('roles' => t('User roles')));
   if ($profile_enabled) {
-    $result = db_query('SELECT name, title, type, weight FROM {profile_fields} ORDER BY weight');
+    $result = db_query('SELECT name, title FROM {profile_fields} ORDER BY weight');
     while ($record = db_fetch_object($result)) {
       $fields[$record->name] = $record->title;
     }
@@ -124,7 +124,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#type' => 'select',
     '#title' => t('Add segmentation information to tracking code'),
     '#description' => t('Segment users based on different properties, additionally to the basic IP address based tracking provided by Google Analytics.') . (!$profile_enabled ? ' '. t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Make sure you will not associate (or permit any third party to associate) any data gathered from Your Website(s) (or such third parties\' website(s)) with any personally identifying information from any source as part of Your use (or such third parties\' use) of the Google Analytics service. For more information see section 8.1 in the <a href="@ga_tos">Google Analytics terms of use</a>.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')) .' '. t('Selecting one or more values is supported. To select multiple items, hold down CTRL (PC) or &#8984; (Mac) while selecting fields.'),
-    '#default_value' => variable_get('googleanalytics_segmentation', ''),
+    '#default_value' => variable_get('googleanalytics_segmentation', array()),
     '#options' => $fields,
     '#size' => count($fields)>3 ? 10 : 3,
     '#multiple' => TRUE
