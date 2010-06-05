@@ -237,16 +237,17 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#description' => t("Code in this textarea will be added <strong>after</strong> pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts.")
   );
 
+  /* hook_footer() is not able to add code to head. Upgrade to D7 required.
   $form['advanced']['googleanalytics_js_scope'] = array(
     '#type' => 'select',
     '#title' => t('JavaScript scope'),
-    '#description' => t("<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."),
+    '#description' => t("Google recommends adding the external JavaScript files to header for performance reasons."),
     '#options' => array(
       'footer' => t('Footer'),
       'header' => t('Header'),
     ),
-    '#default_value' => variable_get('googleanalytics_js_scope', 'footer'),
-  );
+    '#default_value' => variable_get('googleanalytics_js_scope', 'header'),
+  ); */
 
   return system_settings_form($form);
 }
