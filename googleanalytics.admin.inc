@@ -18,12 +18,12 @@ function googleanalytics_admin_settings_form(&$form_state) {
 
   $form['account']['googleanalytics_account'] = array(
     '#type' => 'textfield',
-    '#title' => t('Google Analytics account number'),
+    '#title' => t('Web Property ID'),
     '#default_value' => variable_get('googleanalytics_account', 'UA-'),
     '#size' => 15,
     '#maxlength' => 20,
     '#required' => TRUE,
-    '#description' => t('The account number is unique to the websites domain. Click the <strong>Edit</strong> link in your Google Analytics account next to the appropriate profile on the <strong>Analytics Settings</strong> page, then select <strong>Check Status</strong> at the top-right of the table to find the account number (UA-xxxx-x) of your site. You can obtain a user account from the <a href="@url">Google Analytics</a> website.', array('@url' => 'http://www.google.com/analytics/')),
+    '#description' => t('This ID is unique to each site you want to track separately, and is in the form of UA-xxxxxxx-yy. To get a Web Property ID, <a href="@analytics">register your site with Google Analytics</a>, or if you already have registered your site, go to your Google Analytics Settings page to see the ID next to every site profile. <a href="@webpropertyid">Find more information in the documentation</a>.', array('@analytics' => 'http://www.google.com/analytics/', '@webpropertyid' => 'http://code.google.com/apis/analytics/docs/concepts/gaConceptsAccounts.html#webProperty')),
   );
 
   // Standard tracking configurations.
@@ -123,7 +123,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
   $form['segmentation']['googleanalytics_segmentation'] = array(
     '#type' => 'select',
     '#title' => t('Add segmentation information to tracking code'),
-    '#description' => t('Segment users based on different properties, additionally to the basic IP address based tracking provided by Google Analytics.') . (!$profile_enabled ? ' '. t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Make sure you will not associate (or permit any third party to associate) any data gathered from Your Website(s) (or such third parties\' website(s)) with any personally identifying information from any source as part of Your use (or such third parties\' use) of the Google Analytics service. For more information see section 8.1 in the <a href="@ga_tos">Google Analytics terms of use</a>.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')) .' '. t('Selecting one or more values is supported. To select multiple items, hold down CTRL (PC) or &#8984; (Mac) while selecting fields.'),
+    '#description' => t('Segment users based on different properties, additionally to the basic IP address based tracking provided by Google Analytics.') . (!$profile_enabled ? ' '. t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Make sure you will not associate (or permit any third party to associate) any data gathered from Your Website(s) (or such third parties\' website(s)) with any personally identifying information from any source as part of Your use (or such third parties\' use) of the Google Analytics service. For more information see section 8.1 in the <a href="@ga_tos">Google Analytics terms of use</a>.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')) .' '. t('You can select multiple values.'),
     '#default_value' => variable_get('googleanalytics_segmentation', array()),
     '#options' => $fields,
     '#size' => count($fields)>3 ? 10 : 3,
@@ -173,8 +173,8 @@ function googleanalytics_admin_settings_form(&$form_state) {
 
   $form['advanced']['googleanalytics_cache'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Cache tracking code file locally'),
-    '#description' => t("If checked, the tracking code file is retrieved from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker!"),
+    '#title' => t('Locally cache tracking code file'),
+    '#description' => t("If checked, the tracking code file is retrieved from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed that site tracking is working!"),
     '#default_value' => variable_get('googleanalytics_cache', 0),
   );
   if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
@@ -226,7 +226,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#default_value' => variable_get('googleanalytics_codesnippet_before', ''),
     '#rows' => 5,
     '#wysiwyg' => FALSE,
-    '#description' => t('Code in this textarea will be added <strong>before</strong> pageTracker._trackPageview().')
+    '#description' => t("Code in this textarea will be added <strong>before</strong> _gaq.push(['_trackPageview'])."),
   );
   $form['advanced']['codesnippet']['googleanalytics_codesnippet_after'] = array(
     '#type' => 'textarea',
@@ -234,7 +234,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#default_value' => variable_get('googleanalytics_codesnippet_after', ''),
     '#rows' => 5,
     '#wysiwyg' => FALSE,
-    '#description' => t("Code in this textarea will be added <strong>after</strong> pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts.")
+    '#description' => t("Code in this textarea will be added <strong>after</strong> _gaq.push(['_trackPageview']). This is useful if you'd like to track a site in two accounts."),
   );
 
   /* hook_footer() is not able to add code to head. Upgrade to D7 required.
