@@ -140,6 +140,9 @@ function googleanalytics_footer($main = 0) {
     // Build tracker code.
     $script = 'var _gaq = _gaq || [];';
     $script .= '_gaq.push(["_setAccount", ' . drupal_to_js($id) . ']);';
+    if (variable_get('googleanalytics_tracker_anonymizeip', 0)) {
+      $script .= '_gaq.push(["_anonymizeIp"]);';
+    }
     if (!empty($segmentation)) {
       $script .= $segmentation;
     }

@@ -171,6 +171,13 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#collapsed' => TRUE,
   );
 
+  $form['advanced']['googleanalytics_tracker_anonymizeip'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Anonymize visitors IP address'),
+    '#default_value' => variable_get('googleanalytics_tracker_anonymizeip', 0),
+    '#description' => t('Tell Google Analytics to anonymize the information sent by the tracker objects by removing the last octet of the IP address prior to its storage. Note that this will slightly reduce the accuracy of geographic reporting. In some countries it is not allowed to collect personally identifying information for privacy reasons and this setting may help you to comply with the local laws.'),
+  );
+
   $form['advanced']['googleanalytics_cache'] = array(
     '#type' => 'checkbox',
     '#title' => t('Locally cache tracking code file'),
