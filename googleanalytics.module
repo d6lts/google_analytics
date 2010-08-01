@@ -137,11 +137,11 @@ function googleanalytics_footer($main = 0) {
     // Track access denied (403) and file not found (404) pages.
     if (function_exists('drupal_get_headers')) {
       $headers = drupal_get_headers();
-      if (strstr($headers, 'HTTP/1.1 403 Forbidden')) {
+      if (strstr($headers, '403 Forbidden')) {
         // See http://www.google.com/support/analytics/bin/answer.py?answer=86927
         $url_custom = '"/403.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer';
       }
-      elseif (strstr($headers, 'HTTP/1.1 404 Not Found')) {
+      elseif (strstr($headers, '404 Not Found')) {
         $url_custom = '"/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer';
       }
     }
