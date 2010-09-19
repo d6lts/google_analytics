@@ -34,7 +34,7 @@ $(document).ready(function() {
             // Mailto link clicked.
             pageTracker._trackEvent("Mails", "Click", this.href.substring(7));
           }
-          else if (ga.trackOutgoing) {
+          else if (ga.trackOutgoing && this.href) {
             // External link clicked.
             pageTracker._trackEvent("Outgoing links", "Click", this.href);
           }
