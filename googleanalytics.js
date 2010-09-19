@@ -33,7 +33,7 @@ $(document).ready(function() {
           // Mailto link clicked.
           _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
-        else if (ga.trackOutgoing) {
+        else if (ga.trackOutgoing && this.href) {
           // External link clicked.
           _gaq.push(["_trackEvent", "Outgoing links", "Click", this.href]);
         }
