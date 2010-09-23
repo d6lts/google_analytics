@@ -1,7 +1,7 @@
 // $Id$
 
 Module: Google Analytics
-Author: Mike Carter <www.ixis.co.uk/contact>
+Author: Alexander Hass <http://drupal.org/user/85918>
 
 
 Description
