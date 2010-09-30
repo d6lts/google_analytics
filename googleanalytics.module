@@ -165,8 +165,8 @@ function googleanalytics_footer($main = 0) {
     $script .= 'ga.async = true;';
 
     // Should a local cached copy of ga.js be used?
-    if (variable_get('googleanalytics_cache', 0) && $path = _googleanalytics_cache('http://www.google-analytics.com/ga.js')) {
-      $script .= 'ga.src = "' . url($path) . '";';
+    if (variable_get('googleanalytics_cache', 0) && $url = _googleanalytics_cache('http://www.google-analytics.com/ga.js')) {
+      $script .= 'ga.src = "' . $url . '";';
     }
     else {
       $script .= 'ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";';
@@ -246,19 +246,25 @@ function googleanalytics_cron() {
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
 function _googleanalytics_cache($location) {
-  $directory = file_directory_path() .'/googleanalytics';
-  $file_destination = $directory .'/'. basename($location);
+  // A dummy query-string is added to filenames, to gain control over
+  // browser-caching. The string changes on every update or full cache
+  // flush, forcing browsers to load a new copy of the files, as the
+  // URL changed.
+  $query_string = '?'. substr(variable_get('css_js_query_string', '0'), 0, 1);
+
+  $path = file_create_path('googleanalytics');
+  $file_destination = $path .'/'. basename($location);
   if (!file_exists($file_destination)) {
     $result = drupal_http_request($location);
     if ($result->code == 200) {
-      // Check that the files directory is writable
-      if (file_check_directory($directory, FILE_CREATE_DIRECTORY)) {
-        return file_save_data($result->data, $directory .'/'. basename($location), FILE_EXISTS_REPLACE);
+      // Check that the files directory is writable.
+      if (file_check_directory($path, FILE_CREATE_DIRECTORY)) {
+        return base_path() . file_save_data($result->data, $file_destination, FILE_EXISTS_REPLACE) . $query_string;
       }
     }
   }
   else {
-    return $file_destination;
+    return base_path() . $file_destination . $query_string;
   }
 }
 
