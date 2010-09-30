@@ -225,13 +225,30 @@ function googleanalytics_user($type, $edit, &$account, $category = NULL) {
  */
 function googleanalytics_cron() {
   // Regenerate the google analytics ga.js every day.
-  if (time() - variable_get('googleanalytics_last_cache', 0) >= 86400) {
-    // New google analytics version.
-    file_delete(file_directory_path() .'/googleanalytics/ga.js');
+  if (time() - variable_get('googleanalytics_last_cache', 0) >= 86400 && variable_get('googleanalytics_cache', 0)) {
+    $path = file_create_path('googleanalytics');
+    $file_destination = $path . '/ga.js';
 
-    // Clear aggregated JS files.
-    if (variable_get('preprocess_js', 0)) {
-      drupal_clear_js_cache();
+    // Download the latest ga.js code and replace local file if code have changed.
+    $result = drupal_http_request('http://www.google-analytics.com/ga.js');
+
+    if ($result->code == 200 && file_exists($file_destination)) {
+      $data_hash_local = md5(file_get_contents($file_destination));
+      $data_hash_remote = md5($result->data);
+      // Check that the files directory is writable.
+      if ($data_hash_local != $data_hash_remote && file_check_directory($path, FILE_CREATE_DIRECTORY)) {
+        // Save updated ga.js file to disk.
+        file_save_data($result->data, $file_destination, FILE_EXISTS_REPLACE);
+        watchdog('googleanalytics', 'Locally cached tracking code file has been updated.', array(), WATCHDOG_INFO);
+
+        // Change query-strings on css/js files to enforce reload for all users.
+        _drupal_flush_css_js();
+
+        // Clear aggregated JS files.
+        if (variable_get('preprocess_js', 0)) {
+          drupal_clear_js_cache();
+        }
+      }
     }
 
     variable_set('googleanalytics_last_cache', time());
@@ -265,6 +282,21 @@ function _googleanalytics_cache($location) {
   }
   else {
     return base_path() . $file_destination . $query_string;
+  }
+}
+
+/**
+ * Delete cached files and directory.
+ */
+function googleanalytics_clear_js_cache() {
+  $path = file_create_path('googleanalytics');
+  file_scan_directory($path, '.*', array('.', '..', 'CVS'), 'file_delete', TRUE);
+  rmdir($path);
+  _drupal_flush_css_js();
+
+  // Clear aggregated JS files.
+  if (variable_get('preprocess_js', 0)) {
+    drupal_clear_js_cache();
   }
 }
 

@@ -50,11 +50,7 @@ function googleanalytics_uninstall() {
  * Remove cache directory if module is disabled (or uninstalled).
  */
 function googleanalytics_disable() {
-  $path = file_directory_path() .'/googleanalytics';
-  if (file_exists($path)) {
-    file_delete($path .'/ga.js');
-    rmdir($path);
-  }
+  googleanalytics_clear_js_cache();
 }
 
 /**
