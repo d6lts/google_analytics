@@ -243,11 +243,6 @@ function googleanalytics_cron() {
 
         // Change query-strings on css/js files to enforce reload for all users.
         _drupal_flush_css_js();
-
-        // Clear aggregated JS files.
-        if (variable_get('preprocess_js', 0)) {
-          drupal_clear_js_cache();
-        }
       }
     }
 
@@ -290,13 +285,12 @@ function _googleanalytics_cache($location) {
  */
 function googleanalytics_clear_js_cache() {
   $path = file_create_path('googleanalytics');
-  file_scan_directory($path, '.*', array('.', '..', 'CVS'), 'file_delete', TRUE);
-  rmdir($path);
-  _drupal_flush_css_js();
+  if (file_check_directory($directory)) {
+    file_scan_directory($directory, '.*', array('.', '..', 'CVS'), 'file_delete', TRUE);
+    rmdir($directory);
 
-  // Clear aggregated JS files.
-  if (variable_get('preprocess_js', 0)) {
-    drupal_clear_js_cache();
+    // Change query-strings on css/js files to enforce reload for all users.
+    _drupal_flush_css_js();
   }
 }
 

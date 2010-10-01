@@ -270,8 +270,8 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
     form_set_error('googleanalytics_account', t('A valid Google Analytics account number is case sensitive and formatted like UA-xxxxxx-x.'));
   }
 
-  // Delete obsolete local cache.
-  if (empty($form_state['values']['googleanalytics_cache'])) {
+  // Clear obsolete local cache if cache has been disabled.
+  if (empty($form_state['values']['googleanalytics_cache']) && $form['advanced']['googleanalytics_cache']['#default_value']) {
     googleanalytics_clear_js_cache();
   }
 
