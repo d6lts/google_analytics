@@ -272,7 +272,7 @@ function _googleanalytics_cache($location, $sync_cached_file = FALSE) {
       }
       else {
         // Check that the files directory is writable.
-        if (file_check_directory($directory, FILE_CREATE_DIRECTORY)) {
+        if (file_check_directory($path, FILE_CREATE_DIRECTORY)) {
           // There is no need to flush JS here as core refreshes JS caches
           // automatically, if new files are added.
           file_save_data($result->data, $file_destination, FILE_EXISTS_REPLACE);
