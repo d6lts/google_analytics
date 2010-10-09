@@ -261,7 +261,7 @@ function _googleanalytics_cache($location, $sync_cached_file = FALSE) {
         $data_hash_local = md5(file_get_contents($file_destination));
         $data_hash_remote = md5($result->data);
         // Check that the files directory is writable.
-        if ($data_hash_local != $data_hash_remote && file_check_directory($path, FILE_CREATE_DIRECTORY)) {
+        if ($data_hash_local != $data_hash_remote && file_check_directory($path)) {
           // Save updated tracking code file to disk.
           file_save_data($result->data, $file_destination, FILE_EXISTS_REPLACE);
           watchdog('googleanalytics', 'Locally cached tracking code file has been updated.', array(), WATCHDOG_INFO);
