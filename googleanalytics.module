@@ -86,7 +86,7 @@ function googleanalytics_footer($main = 0) {
 
     // Add User profile segmentation values.
     $profile_fields = variable_get('googleanalytics_segmentation', array());
-    if (module_exists('profile') && !empty($profile_fields) && ($user->uid > 0)) {
+    if (module_exists('profile') && !empty($profile_fields)) {
       // Extend the $user object with profile data.
       profile_load_profile($user);
 
