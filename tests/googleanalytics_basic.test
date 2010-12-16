@@ -28,7 +28,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
   public function testGoogleAnalytics() {
     // Check for setting page's presence.
     $this->drupalGet('admin/settings/googleanalytics');
-    $this->assertRaw(t('Google Analytics account number'), '[testGoogleAnalytics]: Settings page displayed.');
+    $this->assertRaw(t('Web Property ID'), '[testGoogleAnalytics]: Settings page displayed.');
 
     // Check for account code validation.
     $edit['googleanalytics_account'] = $this->randomName(2);
