@@ -33,7 +33,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     // Check for account code validation.
     $edit['googleanalytics_account'] = $this->randomName(2);
     $this->drupalPost('admin/settings/googleanalytics', $edit, 'Save configuration');
-    $this->assertRaw(t('A valid Google Analytics account number is case sensitive and formatted like UA-xxxxxx-x.'), '[testGoogleAnalytics]: Invalid account number validated.');
+    $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxx-x.'), '[testGoogleAnalytics]: Invalid Web Property ID number validated.');
   }
 
   public function testGoogleAnalyticsTracking() {
@@ -55,7 +55,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-123456-7']);
       _gaq.push(['_trackPageview']);
-    
+
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
