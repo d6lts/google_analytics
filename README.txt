@@ -24,8 +24,6 @@ Usage
 =====
 In the settings page enter your Google Analytics account number.
 
-You can also track the username and/or user ID who visits each page.
-This data will be visible in Google Analytics as segmentation data.
 If you enable the profile.module you can also add more detailed
 information about each user to the segmentation tracking.
 
