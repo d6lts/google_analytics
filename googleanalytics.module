@@ -12,6 +12,9 @@
 
 define('GA_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip');
 
+/**
+ * Implements hook_help().
+ */
 function googleanalytics_help($path, $arg) {
   switch ($path) {
     case 'admin/config/system/googleanalytics':
@@ -20,7 +23,7 @@ function googleanalytics_help($path, $arg) {
 }
 
 /**
- * Implementation of hook_theme().
+ * Implements hook_theme().
  */
 function googleanalytics_theme() {
   return array(
@@ -30,6 +33,9 @@ function googleanalytics_theme() {
   );
 }
 
+/**
+ * Implements hook_permission().
+ */
 function googleanalytics_permission() {
   return array(
     'administer google analytics' => array(
@@ -47,6 +53,9 @@ function googleanalytics_permission() {
   );
 }
 
+/**
+ * Implements hook_menu().
+ */
 function googleanalytics_menu() {
   $items['admin/config/system/googleanalytics'] = array(
     'title' => 'Google Analytics',
@@ -62,7 +71,7 @@ function googleanalytics_menu() {
 }
 
 /**
- * Implementation of hook_page_alter() to insert JavaScript to the appropriate scope/region of the page.
+ * Implements hook_page_alter() to insert JavaScript to the appropriate scope/region of the page.
  */
 function googleanalytics_page_alter(&$page) {
   global $user;
@@ -130,7 +139,7 @@ function googleanalytics_page_alter(&$page) {
     // Site search tracking support.
     $url_custom = '';
     if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search' && $keys = googleanalytics_search_get_keys()) {
-      $url_custom = drupal_json_encode(rawurldecode(url('search/'. arg(1), array('query' => array('search' => $keys)))));
+      $url_custom = drupal_json_encode(rawurldecode(url('search/' . arg(1), array('query' => array('search' => $keys)))));
     }
 
     // If this node is a translation of another node, pass the original
@@ -142,7 +151,7 @@ function googleanalytics_page_alter(&$page) {
       if ($node && translation_supported_type($node->type) && isset($node->tnid) && ($node->tnid != $node->nid)) {
         $source_node = node_load($node->tnid);
         $languages = language_list();
-        $url_custom = drupal_json_encode(url('node/'. $source_node->nid, array('language' => $languages[$source_node->language])));
+        $url_custom = drupal_json_encode(url('node/' . $source_node->nid, array('language' => $languages[$source_node->language])));
       }
     }
 
@@ -174,13 +183,15 @@ function googleanalytics_page_alter(&$page) {
         }
 
         // Suppress empty custom variables.
-        if (!is_numeric($custom_var_value) && empty($custom_var_value)) { continue; }
+        if (!is_numeric($custom_var_value) && empty($custom_var_value)) {
+          continue;
+        }
 
         // The length of the string used for the 'name' and the length of the
         // string used for the 'value' must not exceed 64 bytes after url encoding.
-        $name_length = strlen(rawurlencode($custom_var_name));
+        $name_length = drupal_strlen(rawurlencode($custom_var_name));
         $tmp_value = rawurlencode($custom_var_value);
-        $value_length = strlen($tmp_value);
+        $value_length = drupal_strlen($tmp_value);
         if ($name_length + $value_length > 64) {
           // Trim value and remove fragments of url encoding.
           $tmp_value = rtrim(substr($tmp_value, 0, 63 - $name_length), '%0..9A..F');
@@ -247,7 +258,7 @@ function googleanalytics_page_alter(&$page) {
 }
 
 /**
- * Implement hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter().
  *
  * Allow users to decide if tracking code will be added to pages or not.
  */
@@ -295,13 +306,13 @@ function googleanalytics_user_presave(&$edit, $account, $category) {
 }
 
 /**
- * Implementation of hook_cron().
+ * Implements hook_cron().
  */
 function googleanalytics_cron() {
   // Regenerate the tracking code file every day.
-  if (time() - variable_get('googleanalytics_last_cache', 0) >= 86400 && variable_get('googleanalytics_cache', 0)) {
+  if (REQUEST_TIME - variable_get('googleanalytics_last_cache', 0) >= 86400 && variable_get('googleanalytics_cache', 0)) {
     _googleanalytics_cache('http://www.google-analytics.com/ga.js', TRUE);
-    variable_set('googleanalytics_last_cache', time());
+    variable_set('googleanalytics_last_cache', REQUEST_TIME);
   }
 }
 
@@ -480,7 +491,7 @@ function _googleanalytics_visibility_pages() {
         $page_match = !($visibility xor $page_match);
       }
       else {
-        $page_match = drupal_eval($pages);
+        $page_match = php_eval($pages);
       }
     }
     else {

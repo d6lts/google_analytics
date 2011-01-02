@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_admin_settings() for configuring the module
+ * Implements hook_admin_settings() for module settings configuration.
  */
 function googleanalytics_admin_settings_form($form_state) {
   $form['account'] = array(
@@ -157,7 +157,7 @@ function googleanalytics_admin_settings_form($form_state) {
   $form['tracking']['search_and_adsense']['googleanalytics_site_search'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track internal search'),
-    '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">How do I set up Site Search for my profile</a>.', array('@url' => 'http://www.google.com/support/analytics/bin/answer.py?hl='. $language->language .'&answer=75817')) . $site_search_dependencies,
+    '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">How do I set up Site Search for my profile</a>.', array('@url' => 'http://www.google.com/support/analytics/bin/answer.py?hl=' . $language->language . '&answer=75817')) . $site_search_dependencies,
     '#default_value' => variable_get('googleanalytics_site_search', FALSE),
     '#disabled' => (module_exists('search') ? FALSE : TRUE),
   );
@@ -192,7 +192,7 @@ function googleanalytics_admin_settings_form($form_state) {
     $form['segmentation']['googleanalytics_segmentation'] = array(
       '#type' => 'select',
       '#title' => t('Segment users based on these selected properties') . ' <span class="admin-disabled">***DEPRECATED***</span>',
-      '#description' => t("You can supplement Google Analytics' basic IP address tracking of visitors by segmenting users based on these selected properties.") . (!$profile_enabled ? ' '. t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Section 8.1 of the <a href="@ga_tos">Google Analytics terms of use</a> requires you to make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties\' websites) with any personally identifying information from any source as part of your use (or such third parties\' use) of the Google Analytics\' service.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')) .' '. t('You can select multiple values.'),
+      '#description' => t("You can supplement Google Analytics' basic IP address tracking of visitors by segmenting users based on these selected properties.") . (!$profile_enabled ? ' ' . t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') . ' ' . t('Section 8.1 of the <a href="@ga_tos">Google Analytics terms of use</a> requires you to make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties\' websites) with any personally identifying information from any source as part of your use (or such third parties\' use) of the Google Analytics\' service.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')) . ' ' . t('You can select multiple values.'),
       '#default_value' => variable_get('googleanalytics_segmentation', array()),
       '#options' => $fields,
       '#size' => count($fields)>3 ? 10 : 3,
@@ -247,7 +247,7 @@ function googleanalytics_admin_settings_form($form_state) {
 
   $form['googleanalytics_custom_var']['googleanalytics_custom_var_description'] = array(
     '#type' => 'item',
-    '#description' => t("You can supplement Google Analytics' basic IP address tracking of visitors by segmenting users based on these selected properties.") . (!$token_enabled ? ' '. t('<a href="@module_list">Enable the token module</a> to be able to use tokens for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Section 8.1 of the <a href="@ga_tos">Google Analytics terms of use</a> requires you to make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties\' websites) with any personally identifying information from any source as part of your use (or such third parties\' use) of the Google Analytics\' service.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')),
+    '#description' => t("You can supplement Google Analytics' basic IP address tracking of visitors by segmenting users based on these selected properties.") . (!$token_enabled ? ' ' . t('<a href="@module_list">Enable the token module</a> to be able to use tokens for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') . ' ' . t('Section 8.1 of the <a href="@ga_tos">Google Analytics terms of use</a> requires you to make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties\' websites) with any personally identifying information from any source as part of your use (or such third parties\' use) of the Google Analytics\' service.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')),
   );
   $form['googleanalytics_custom_var']['googleanalytics_custom_var_token_tree'] = array(
     '#access' => $token_enabled ? TRUE : FALSE,
@@ -326,6 +326,9 @@ function googleanalytics_admin_settings_form($form_state) {
   return system_settings_form($form);
 }
 
+/**
+ * Implements _form_validate().
+ */
 function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   // Custom variables validation.
   foreach ($form_state['values']['googleanalytics_custom_var']['slots'] as $custom_var) {

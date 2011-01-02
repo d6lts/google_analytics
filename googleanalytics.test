@@ -87,7 +87,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsTracking]: Tracking code is not displayed on front page.');
 
     // Test whether tracking code is not display for anonymous.
-    $this->drupalGet('logout');
+    $this->drupalGet('user/logout');
     $this->drupalGet('');
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsTracking]: Tracking code is not displayed for anonymous.');
   }

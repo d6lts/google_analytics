@@ -6,6 +6,9 @@
  * Installation file for Google Analytics module.
  */
 
+/**
+ * Implements hook_install().
+ */
 function googleanalytics_install() {
   variable_set('googleanalytics_visibility', 0);
 
@@ -29,6 +32,9 @@ function googleanalytics_install() {
   }
 }
 
+/**
+ * Implements hook_uninstall().
+ */
 function googleanalytics_uninstall() {
   variable_del('googleanalytics_account');
   variable_del('googleanalytics_custom_vars');
@@ -57,6 +63,8 @@ function googleanalytics_uninstall() {
 }
 
 /**
+ * Implements hook_disable().
+ *
  * Remove cache directory if module is disabled (or uninstalled).
  */
 function googleanalytics_disable() {
@@ -64,7 +72,7 @@ function googleanalytics_disable() {
 }
 
 /**
- * Implementation of hook_requirements().
+ * Implements hook_requirements().
  */
 function googleanalytics_requirements($phase) {
   $requirements = array();
@@ -120,7 +128,7 @@ function googleanalytics_update_6002() {
   $roles = array();
   $messages = array();
   foreach (user_roles() as $rid => $name) {
-    if (variable_get('googleanalytics_track_'. $rid, FALSE)) {
+    if (variable_get('googleanalytics_track_' . $rid, FALSE)) {
       // Role ID is activated for user tracking.
       $roles[$rid] = $rid;
       $messages[] = t('Enabled page tracking for role: @name.', array('@name' => $name));
@@ -136,14 +144,14 @@ function googleanalytics_update_6002() {
     variable_set('googleanalytics_custom', 1);
 
     // Load user 1 object, set appropiate value and save new user settings back.
-    $account = user_load(array('uid' => 1));
+    $account = user_load(1);
     $account = user_save($account, array('googleanalytics' => array('custom' => 0)), 'account');
     $messages[] = t('Disabled user specific page tracking for site administrator.');
   }
 
   // Delete outdated tracking settings.
   db_delete('variable')
-    ->condition('name', db_like('googleanalytics_track_') .'%', 'LIKE')
+    ->condition('name', db_like('googleanalytics_track_') . '%', 'LIKE')
     ->execute();
 
   return implode(', ', $messages);
@@ -247,7 +255,7 @@ function googleanalytics_update_6007() {
 function googleanalytics_update_6200() {
   $path = 'public://googleanalytics';
   if (file_exists($path)) {
-    file_unmanaged_delete($path .'/urchin.js');
+    file_unmanaged_delete($path . '/urchin.js');
   }
   variable_del('googleanalytics_legacy_version');
 
