@@ -4,7 +4,4 @@ description = Allows your site to be tracked by Google Analytics by adding a Jav
 core = 7.x
 package = Statistics
 configure = admin/config/system/googleanalytics
-
-files[] = googleanalytics.module
-files[] = googleanalytics.admin.inc
-files[] = googleanalytics.install
+files[] = googleanalytics.test
