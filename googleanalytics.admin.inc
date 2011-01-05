@@ -200,8 +200,6 @@ function googleanalytics_admin_settings_form($form_state) {
     );
   }
 
-  $token_enabled = module_exists('token');
-
   $form['googleanalytics_custom_var'] = array(
     '#collapsible' => TRUE,
     '#description' => t('You can add Google Analytics <a href="!custom_var_documentation">Custom Variables</a> here. These will be added to every page that Google Analytics tracking code appears on. Google Analytics will only accept custom variables if the <em>name</em> and <em>value</em> combined are less than 64 bytes after URL encoding. Keep the names as short as possible and expect long values to get trimmed. You may use tokens in custom variable values. Global and user tokens are always available; on node pages, node tokens are also available.', array('!custom_var_documentation' => 'http://code.google.com/intl/en/apis/analytics/docs/tracking/gaTrackingCustomVariables.html')),
@@ -247,10 +245,9 @@ function googleanalytics_admin_settings_form($form_state) {
 
   $form['googleanalytics_custom_var']['googleanalytics_custom_var_description'] = array(
     '#type' => 'item',
-    '#description' => t("You can supplement Google Analytics' basic IP address tracking of visitors by segmenting users based on these selected properties.") . (!$token_enabled ? ' ' . t('<a href="@module_list">Enable the token module</a> to be able to use tokens for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') . ' ' . t('Section 8.1 of the <a href="@ga_tos">Google Analytics terms of use</a> requires you to make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties\' websites) with any personally identifying information from any source as part of your use (or such third parties\' use) of the Google Analytics\' service.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')),
+    '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on these selected properties. Section 8.1 of the <a href="@ga_tos">Google Analytics terms of use</a> requires you to make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties\' websites) with any personally identifying information from any source as part of your use (or such third parties\' use) of the Google Analytics\' service.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')),
   );
   $form['googleanalytics_custom_var']['googleanalytics_custom_var_token_tree'] = array(
-    '#access' => $token_enabled ? TRUE : FALSE,
     '#theme' => 'token_tree',
     '#token_types' => array('node'),
   );
@@ -403,10 +400,7 @@ function theme_googleanalytics_admin_custom_var_table($variables) {
 
   $output = theme('table', array('header' => $header, 'rows' => $rows));
   $output .= drupal_render($form['googleanalytics_custom_var_description']);
-
-  if (!empty($form['googleanalytics_custom_var_token_tree'])) {
-    $output .= drupal_render($form['googleanalytics_custom_var_token_tree']);
-  }
+  $output .= drupal_render($form['googleanalytics_custom_var_token_tree']);
 
   return $output;
 }
