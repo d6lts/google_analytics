@@ -193,7 +193,7 @@ function googleanalytics_admin_settings_form($form_state) {
       '#type' => 'select',
       '#title' => t('Segment users based on these selected properties') . ' <span class="admin-disabled">***DEPRECATED***</span>',
       '#description' => t("You can supplement Google Analytics' basic IP address tracking of visitors by segmenting users based on these selected properties.") . (!$profile_enabled ? ' ' . t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') . ' ' . t('Section 8.1 of the <a href="@ga_tos">Google Analytics terms of use</a> requires you to make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties\' websites) with any personally identifying information from any source as part of your use (or such third parties\' use) of the Google Analytics\' service.', array('@ga_tos' => 'http://www.google.com/analytics/en-GB/tos.html')) . ' ' . t('You can select multiple values.'),
-      '#default_value' => variable_get('googleanalytics_segmentation', array()),
+      '#default_value' => $segmentation,
       '#options' => $fields,
       '#size' => count($fields)>3 ? 10 : 3,
       '#multiple' => TRUE
