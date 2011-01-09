@@ -203,7 +203,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['value']) ? $googleanalytics_custom_vars['slots'][$i]['value'] : '',
       '#description' => ($token_enabled ? t('The custom variable value. You may use tokens in this field.') : t('The custom variable value.')),
       '#type' => 'textfield',
-      '#element_validate' => array('token_element_validate_token_context'),
+      '#element_validate' => array('token_element_validate'),
       '#token_types' => array('all'),
     );
     $form['googleanalytics_custom_var']['slots'][$i]['scope'] = array(
