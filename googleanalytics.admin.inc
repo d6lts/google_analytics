@@ -164,6 +164,7 @@ function googleanalytics_admin_settings_form($form_state) {
   $form['tracking']['search_and_adsense']['googleanalytics_trackadsense'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track AdSense ads'),
+    '#description' => t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
     '#default_value' => variable_get('googleanalytics_trackadsense', FALSE),
   );
 
