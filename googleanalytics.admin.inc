@@ -235,8 +235,8 @@ function googleanalytics_admin_settings_form($form_state) {
       '#title' => t('Custom variable value #@slot', array('@slot' => $i)),
       '#title_display' => 'invisible',
       '#type' => 'textfield',
-      //'#element_validate' => array('token_element_validate_token_context'),
-      //'#token_types' => array('all'),
+      '#element_validate' => array('token_element_validate'),
+      '#token_types' => array('all'),
     );
     $form['googleanalytics_custom_var']['slots'][$i]['scope'] = array(
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3,
