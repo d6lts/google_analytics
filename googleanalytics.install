@@ -307,12 +307,22 @@ function googleanalytics_update_6300() {
 }
 
 /**
- * Update JavaScript scope to 'header'.
+ * Run D6 -> D7 upgrades.
  */
 function googleanalytics_update_7000() {
+  // Update JavaScript scope to 'header'.
   variable_set('googleanalytics_js_scope', 'header');
+  $messages[] = t('Google tracking code has been moved to header.');
 
-  return t('Google tracking code has been moved to header.');
+  // Upgrade D6 token placeholder to D7. update_6301 is not required.
+  $googleanalytics_custom_vars = variable_get('googleanalytics_custom_var', array());
+  if (!empty($googleanalytics_custom_vars['slots'][1]) && $googleanalytics_custom_vars['slots'][1]['name'] == 'User roles' && $googleanalytics_custom_vars['slots'][1]['value'] = '[roles]') {
+    $googleanalytics_custom_vars['slots'][1]['value'] = '[current-user:roles]';
+    variable_set('googleanalytics_custom_var', $googleanalytics_custom_vars);
+    $messages[] = t("The token placeholder [roles] used in the custom variable 'User roles' has been replaced with [current-user:roles].");
+  }
+
+  return implode(' ', $messages);
 }
 
 /**
@@ -340,7 +350,8 @@ function googleanalytics_update_7002() {
   // Read previous segmentation settings.
   $segmentation = variable_get('googleanalytics_segmentation', array());
 
-  if (in_array('roles', $segmentation)) {
+  // If this is an upgrade from D6 the slot 1 may not empty.
+  if (empty($googleanalytics_custom_vars['slots'][1]) && in_array('roles', $segmentation)) {
     // Upgrade previous segmentation settings to new custom variables settings.
     $googleanalytics_custom_vars = variable_get('googleanalytics_custom_var', array());
 
