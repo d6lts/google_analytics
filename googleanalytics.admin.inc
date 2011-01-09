@@ -217,22 +217,32 @@ function googleanalytics_admin_settings_form($form_state) {
       '#description' => t('Slot number'),
       '#disabled' => TRUE,
       '#size' => 1,
+      '#title' => t('Custom variable slot #@slot', array('@slot' => $i)),
+      '#title_display' => 'invisible',
       '#type' => 'textfield',
     );
     $form['googleanalytics_custom_var']['slots'][$i]['name'] = array(
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['name']) ? $googleanalytics_custom_vars['slots'][$i]['name'] : '',
       '#description' => t('The custom variable name.'),
       '#size' => 20,
+      '#title' => t('Custom variable name #@slot', array('@slot' => $i)),
+      '#title_display' => 'invisible',
       '#type' => 'textfield',
     );
     $form['googleanalytics_custom_var']['slots'][$i]['value'] = array(
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['value']) ? $googleanalytics_custom_vars['slots'][$i]['value'] : '',
       '#description' => t('The custom variable value. You may use tokens in this field.'),
+      '#title' => t('Custom variable value #@slot', array('@slot' => $i)),
+      '#title_display' => 'invisible',
       '#type' => 'textfield',
+      //'#element_validate' => array('token_element_validate_token_context'),
+      //'#token_types' => array('all'),
     );
     $form['googleanalytics_custom_var']['slots'][$i]['scope'] = array(
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3,
       '#description' => t('The scope for the custom variable.'),
+      '#title' => t('Custom variable slot #@slot', array('@slot' => $i)),
+      '#title_display' => 'invisible',
       '#type' => 'select',
       '#options' => array(
         1 => t('Visitor'),
