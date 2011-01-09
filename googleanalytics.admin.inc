@@ -171,7 +171,7 @@ function googleanalytics_admin_settings_form($form_state) {
   // TODO: If currently not in use, hide the UI and later remove the code.
   $segmentation = variable_get('googleanalytics_segmentation', array());
 
-  if (!empty($segmentation)) {
+  if (!empty($segmentation) || variable_get('googleanalytics_segmentation_DEPRECATED', FALSE)) {
     $profile_enabled = module_exists('profile');
     $form['segmentation'] = array(
       '#type' => 'fieldset',
