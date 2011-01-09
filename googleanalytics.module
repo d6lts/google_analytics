@@ -19,6 +19,20 @@ function googleanalytics_help($path, $arg) {
   }
 }
 
+/**
+ * Implementation of hook_theme().
+ *
+ * @see drupal_common_theme(), common.inc
+ * @see template_preprocess_page(), theme.inc
+ */
+function googleanalytics_theme() {
+  return array(
+    'googleanalytics_admin_custom_var_table' => array(
+      'arguments' => array('form' => NULL),
+    ),
+  );
+}
+
 function googleanalytics_perm() {
   return array('administer google analytics', 'opt-in or out of tracking', 'use PHP for tracking visibility');
 }
@@ -138,6 +152,42 @@ function googleanalytics_footer($main = 0) {
     $codesnippet_before = variable_get('googleanalytics_codesnippet_before', '');
     $codesnippet_after = variable_get('googleanalytics_codesnippet_after', '');
 
+    // Add custom variables.
+    $googleanalytics_custom_vars = variable_get('googleanalytics_custom_var', array());
+    $custom_var = '';
+    for ($i = 1; $i < 6; $i++) {
+      $custom_var_name = !empty($googleanalytics_custom_vars['slots'][$i]['name']) ? $googleanalytics_custom_vars['slots'][$i]['name'] : '';
+      if (!empty($custom_var_name)) {
+        $custom_var_value = !empty($googleanalytics_custom_vars['slots'][$i]['value']) ? $googleanalytics_custom_vars['slots'][$i]['value'] : '';
+        $custom_var_scope = !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3;
+
+        if (module_exists('token')) {
+          $node = menu_get_object();
+          $custom_var_value = token_replace_multiple($custom_var_value, array('global' => NULL, 'user' => $user, 'node' => $node), '[', ']', array('clear' => TRUE));
+        }
+
+        // Suppress empty custom variables.
+        if (!is_numeric($custom_var_value) && empty($custom_var_value)) {
+          continue;
+        }
+
+        // The length of the string used for the 'name' and the length of the
+        // string used for the 'value' must not exceed 64 bytes after url encoding.
+        $name_length = drupal_strlen(rawurlencode($custom_var_name));
+        $tmp_value = rawurlencode($custom_var_value);
+        $value_length = drupal_strlen($tmp_value);
+        if ($name_length + $value_length > 64) {
+          // Trim value and remove fragments of url encoding.
+          $tmp_value = rtrim(substr($tmp_value, 0, 63 - $name_length), '%0..9A..F');
+          $custom_var_value = urldecode($tmp_value);
+        }
+
+        $custom_var_name = drupal_to_js($custom_var_name);
+        $custom_var_value = drupal_to_js($custom_var_value);
+        $custom_var .= "_gaq.push(['_setCustomVar', $i, $custom_var_name, $custom_var_value, $custom_var_scope]);";
+      }
+    }
+
     // Build tracker code.
     $script = 'var _gaq = _gaq || [];';
     $script .= '_gaq.push(["_setAccount", ' . drupal_to_js($id) . ']);';
@@ -151,6 +201,9 @@ function googleanalytics_footer($main = 0) {
     }
     if (!empty($codesnippet_before)) {
       $script .= $codesnippet_before;
+    }
+    if (!empty($custom_var)) {
+      $script .= $custom_var;
     }
     if (empty($url_custom)) {
       $script .= '_gaq.push(["_trackPageview"]);';
@@ -407,4 +460,25 @@ function _googleanalytics_visibility_pages() {
 
   }
   return $page_match;
+}
+
+/**
+ * Implementation of hook_token_values().
+ */
+function googleanalytics_token_values($type, $object = NULL, $options = array()) {
+  if ($type == 'user') {
+    $user = $object;
+    $tokens['roles'] = implode(',', $user->roles);
+    return $tokens;
+  }
+}
+
+/**
+ * Implementation of hook_token_list().
+ */
+function googleanalytics_token_list($type = 'all') {
+  if ($type == 'user' || $type == 'all') {
+    $tokens['user']['roles'] = t("User's roles as comma separated list.");
+    return $tokens;
+  }
 }

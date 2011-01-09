@@ -24,9 +24,6 @@ Usage
 =====
 In the settings page enter your Google Analytics account number.
 
-If you enable the profile.module you can also add more detailed
-information about each user to the segmentation tracking.
-
 All pages will now have the required JavaScript added to the
 HTML footer can confirm this by viewing the page source from
 your browser.
@@ -56,6 +53,20 @@ that can be used in this textarea can be found on the handbook page
 
 A code snippet that creates opt-out by role functionality for unchecked roles
 can be found in the Google Analytics handbook at http://drupal.org/node/261997.
+
+Custom variables
+=================
+One example for custom variables tracking is the "User roles" tracking. Enter
+the below configuration data into the custom variables settings form under
+admin/settings/googleanalytics.
+
+Slot: 1
+Name: User roles
+Value: [roles]
+Scope: Visitor
+
+More details about Custom variables can be found in the Google API documentation at
+http://code.google.com/intl/en/apis/analytics/docs/tracking/gaTrackingCustomVariables.html
 
 Advanced Settings
 =================
