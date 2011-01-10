@@ -236,7 +236,7 @@ function googleanalytics_admin_settings_form($form_state) {
       '#title' => t('Custom variable value #@slot', array('@slot' => $i)),
       '#title_display' => 'invisible',
       '#type' => 'textfield',
-      '#element_validate' => array('token_element_validate'),
+      '#element_validate' => array('googleanalytics_token_element_validate'),
       '#token_types' => array('all'),
     );
     $form['googleanalytics_custom_var']['slots'][$i]['scope'] = array(
@@ -259,7 +259,7 @@ function googleanalytics_admin_settings_form($form_state) {
   );
   $form['googleanalytics_custom_var']['googleanalytics_custom_var_token_tree'] = array(
     '#theme' => 'token_tree',
-    '#token_types' => array('node'),
+    '#token_types' => 'all',
   );
 
 
@@ -344,11 +344,6 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
     elseif (!empty($custom_var['name']) && empty($custom_var['value'])) {
       form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('Custom variable #@slot: <em>Value</em> is required, if <em>name</em> has been provided.', array('@slot' =>  $custom_var['slot'])));
     }
-
-    // Block tokens with personally identifying information.
-    if (_googleanalytics_contains_forbidden_token($custom_var['value'])) {
-      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('Custom variable #@slot: Forbidden token has been found in custom variable named %name. Never use tokens with personally identifying information!', array('%name' => $custom_var['name'], '@slot' => $custom_var['slot'])));
-    }
   }
 
   // Trim some text values.
@@ -411,6 +406,58 @@ function theme_googleanalytics_admin_custom_var_table($variables) {
   $output .= drupal_render($form['googleanalytics_custom_var_token_tree']);
 
   return $output;
+}
+
+/**
+ * Validate a form element that should have tokens in it.
+ *
+ * For example:
+ * @code
+ * $form['my_node_text_element'] = array(
+ *   '#type' => 'textfield',
+ *   '#title' => t('Some text to token-ize that has a node context.'),
+ *   '#default_value' => 'The title of this node is [node:title].',
+ *   '#element_validate' => array('googleanalytics_token_element_validate'),
+ * );
+ * @endcode
+ */
+function googleanalytics_token_element_validate(&$element, &$form_state) {
+  $value = isset($element['#value']) ? $element['#value'] : $element['#default_value'];
+
+  if (!drupal_strlen($value)) {
+    // Empty value needs no further validation since the element should depend
+    // on using the '#required' FAPI property.
+    return $element;
+  }
+
+  // If token module is installed, it is possible to check if the token is valid.
+  if (module_exists('token')) {
+    token_element_validate($element, $form_state);
+  }
+
+  $tokens = token_scan($value);
+  $title = empty($element['#title']) ? $element['#parents'][0] : $element['#title'];
+
+  $invalid_tokens = _googleanalytics_get_forbidden_tokens($tokens);
+  if ($invalid_tokens) {
+    form_error($element, t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => $title, '@invalid-tokens' => implode(', ', $invalid_tokens))));
+  }
+
+  return $element;
+}
+
+function _googleanalytics_get_forbidden_tokens($value) {
+  $invalid_tokens = array();
+  $value_tokens = is_string($value) ? token_scan($value) : $value;
+
+  foreach ($value_tokens as $type => $tokens) {
+    if (array_filter($tokens, '_googleanalytics_contains_forbidden_token')) {
+      $invalid_tokens = array_merge($invalid_tokens, array_values($tokens));
+    }
+  }
+
+  array_unique($invalid_tokens);
+  return $invalid_tokens;
 }
 
 /**
