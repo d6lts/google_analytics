@@ -24,9 +24,6 @@ function googleanalytics_help($path, $arg) {
 
 /**
  * Implementation of hook_theme().
- *
- * @see drupal_common_theme(), common.inc
- * @see template_preprocess_page(), theme.inc
  */
 function googleanalytics_theme() {
   return array(
