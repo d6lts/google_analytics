@@ -49,7 +49,7 @@ function googleanalytics_admin_settings_form($form_state) {
     '#options' => array(
       t('No customization allowed'),
       t('Tracking on by default, users with %permission permission can opt out', $t_permission),
-      t('Tracking off by default, users with %permission permission can opt in', $t_permission)
+      t('Tracking off by default, users with %permission permission can opt in', $t_permission),
     ),
     '#default_value' => variable_get('googleanalytics_custom', 0),
   );
@@ -89,7 +89,7 @@ function googleanalytics_admin_settings_form($form_state) {
   else {
     $options = array(
       t('Every page except the listed pages'),
-      t('The listed pages only')
+      t('The listed pages only'),
     );
     $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
 
@@ -109,7 +109,8 @@ function googleanalytics_admin_settings_form($form_state) {
     );
     $form['tracking']['page_vis_settings']['googleanalytics_pages'] = array(
       '#type' => 'textarea',
-      '#title' => '<span class="element-invisible">' . $title . '</span>',
+      '#title' => $title,
+      '#title_display' => 'invisible',
       '#default_value' => $pages,
       '#description' => $description,
     );
@@ -136,9 +137,11 @@ function googleanalytics_admin_settings_form($form_state) {
     '#default_value' => variable_get('googleanalytics_trackfiles', 1),
   );
   $form['tracking']['linktracking']['googleanalytics_trackfiles_extensions'] = array(
+    '#title' => t('List of download file extensions'),
+    '#title_display' => 'invisible',
     '#type' => 'textfield',
     '#default_value' => variable_get('googleanalytics_trackfiles_extensions', GA_TRACKFILES_EXTENSIONS),
-    '#description' => t('A file extension list separated by the | character that will be tracked when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GA_TRACKFILES_EXTENSIONS)),
+    '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GA_TRACKFILES_EXTENSIONS)),
     '#maxlength' => 255,
   );
 
@@ -196,7 +199,7 @@ function googleanalytics_admin_settings_form($form_state) {
       '#default_value' => $segmentation,
       '#options' => $fields,
       '#size' => count($fields)>3 ? 10 : 3,
-      '#multiple' => TRUE
+      '#multiple' => TRUE,
     );
   }
 
@@ -300,7 +303,7 @@ function googleanalytics_admin_settings_form($form_state) {
     '#title' => t('Custom JavaScript code'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
-    '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href="@ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="@ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699', '@ga_concepts_overview' => 'http://code.google.com/apis/analytics/docs/gaConceptsOverview.html', '@ga_js_api' => 'http://code.google.com/apis/analytics/docs/gaJSApi.html'))
+    '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href="@ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="@ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699', '@ga_concepts_overview' => 'http://code.google.com/apis/analytics/docs/gaConceptsOverview.html', '@ga_js_api' => 'http://code.google.com/apis/analytics/docs/gaJSApi.html')),
   );
   $form['advanced']['codesnippet']['googleanalytics_codesnippet_before'] = array(
     '#type' => 'textarea',
