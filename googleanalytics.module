@@ -443,24 +443,28 @@ function _googleanalytics_visibility_pages() {
   if (!isset($page_match)) {
 
     $visibility = variable_get('googleanalytics_visibility', 0);
-    $pages = variable_get('googleanalytics_pages', '');
+    $setting_pages = variable_get('googleanalytics_pages', '');
 
     // Match path if necessary.
-    if (!empty($pages)) {
+    if (!empty($setting_pages)) {
+      // Convert path to lowercase. This allows comparison of the same path
+      // with different case. Ex: /Page, /page, /PAGE.
+      $pages = drupal_strtolower($setting_pages);
       if ($visibility < 2) {
-        $path = drupal_get_path_alias($_GET['q']);
-        // Compare with the internal and path alias (if any).
+        // Convert the Drupal path to lowercase
+        $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+        // Compare the lowercase internal and lowercase path alias (if any).
         $page_match = drupal_match_path($path, $pages);
         if ($path != $_GET['q']) {
           $page_match = $page_match || drupal_match_path($_GET['q'], $pages);
         }
-        // When $visibility has a value of 0, the block is displayed on
+        // When $visibility has a value of 0, the tracking code is displayed on
         // all pages except those listed in $pages. When set to 1, it
         // is displayed only on those pages listed in $pages.
         $page_match = !($visibility xor $page_match);
       }
       else {
-        $page_match = drupal_eval($pages);
+        $page_match = drupal_eval($setting_pages);
       }
     }
     else {
