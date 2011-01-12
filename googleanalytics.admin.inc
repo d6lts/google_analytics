@@ -237,7 +237,7 @@ function googleanalytics_admin_settings_form($form_state) {
       '#title_display' => 'invisible',
       '#type' => 'textfield',
       '#element_validate' => array('googleanalytics_token_element_validate'),
-      '#token_types' => array('all'),
+      '#token_types' => array('node'),
     );
     $form['googleanalytics_custom_var']['slots'][$i]['scope'] = array(
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3,
@@ -259,7 +259,7 @@ function googleanalytics_admin_settings_form($form_state) {
   );
   $form['googleanalytics_custom_var']['googleanalytics_custom_var_token_tree'] = array(
     '#theme' => 'token_tree',
-    '#token_types' => 'all',
+    '#token_types' => array('node'),
   );
 
 
