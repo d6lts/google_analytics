@@ -10,9 +10,15 @@
  * Implements hook_token_info().
  */
 function googleanalytics_token_info() {
-  $user['roles'] = array(
-    'name' => t('User roles'),
-    'description' => t('The roles the user account is a member of as comma separated list.'),
+  $user['role-names'] = array(
+    'name' => t('User role names'),
+    'description' => t('The role names the user account is a member of as comma separated list.'),
+    'needs-data' => 'user',
+  );
+  $user['role-ids'] = array(
+    'name' => t('User role ids'),
+    'description' => t('The role ids the user account is a member of as comma separated list.'),
+    'needs-data' => 'user',
   );
 
   return array(
@@ -33,9 +39,14 @@ function googleanalytics_tokens($type, $tokens, array $data = array(), array $op
     foreach ($tokens as $name => $original) {
       switch ($name) {
         // Basic user account information.
-        case 'roles':
-          $roles = implode(',', $account->roles);
-          $replacements[$original] = $sanitize ? check_plain($roles) : $roles;
+        case 'role-names':
+          $names = implode(',', $account->roles);
+          $replacements[$original] = $sanitize ? check_plain($names) : $names;
+          break;
+
+        case 'role-ids':
+          $ids = implode(',', array_keys($account->roles));
+          $replacements[$original] = $sanitize ? check_plain($ids) : $ids;
           break;
       }
     }

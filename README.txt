@@ -62,7 +62,7 @@ admin/config/system/googleanalytics.
 
 Slot: 1
 Name: User roles
-Value: [current-user:roles]
+Value: [current-user:role-names]
 Scope: Visitor
 
 More details about Custom variables can be found in the Google API documentation at

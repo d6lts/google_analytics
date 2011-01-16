@@ -316,10 +316,10 @@ function googleanalytics_update_7000() {
 
   // Upgrade D6 token placeholder to D7. update_6301 is not required.
   $googleanalytics_custom_vars = variable_get('googleanalytics_custom_var', array());
-  if (!empty($googleanalytics_custom_vars['slots'][1]) && $googleanalytics_custom_vars['slots'][1]['name'] == 'User roles' && $googleanalytics_custom_vars['slots'][1]['value'] = '[roles]') {
-    $googleanalytics_custom_vars['slots'][1]['value'] = '[current-user:roles]';
+  if (!empty($googleanalytics_custom_vars['slots'][1]) && $googleanalytics_custom_vars['slots'][1]['name'] == 'User roles' && $googleanalytics_custom_vars['slots'][1]['value'] = '[user-role-names]') {
+    $googleanalytics_custom_vars['slots'][1]['value'] = '[current-user:role-names]';
     variable_set('googleanalytics_custom_var', $googleanalytics_custom_vars);
-    $messages[] = t("The token placeholder [roles] used in the custom variable 'User roles' has been replaced with [current-user:roles].");
+    $messages[] = t("The D6 token placeholder [user-role-names] used in the custom variable 'User roles' has been replaced with [current-user:role-names].");
   }
 
   return implode(' ', $messages);
@@ -357,7 +357,7 @@ function googleanalytics_update_7002() {
 
     $googleanalytics_custom_vars['slots'][1]['slot'] = 1;
     $googleanalytics_custom_vars['slots'][1]['name'] = 'User roles';
-    $googleanalytics_custom_vars['slots'][1]['value'] = '[current-user:roles]';
+    $googleanalytics_custom_vars['slots'][1]['value'] = '[current-user:role-names]';
     $googleanalytics_custom_vars['slots'][1]['scope'] = 1; // Sets the scope to visitor-level.
 
     variable_set('googleanalytics_custom_var', $googleanalytics_custom_vars);
