@@ -481,7 +481,8 @@ function _googleanalytics_visibility_pages() {
 function googleanalytics_token_values($type, $object = NULL, $options = array()) {
   if ($type == 'user') {
     $user = $object;
-    $tokens['roles'] = implode(',', $user->roles);
+    $tokens['user-role-names'] = implode(',', $user->roles);
+    $tokens['user-role-ids'] = implode(',', array_keys($user->roles));
     return $tokens;
   }
 }
@@ -491,7 +492,8 @@ function googleanalytics_token_values($type, $object = NULL, $options = array())
  */
 function googleanalytics_token_list($type = 'all') {
   if ($type == 'user' || $type == 'all') {
-    $tokens['user']['roles'] = t("User's roles as comma separated list.");
+    $tokens['user']['user-role-names'] = t('The role names the user account is a member of as comma separated list.');
+    $tokens['user']['user-role-ids'] = t('The role ids the user account is a member of as comma separated list.');
     return $tokens;
   }
 }
