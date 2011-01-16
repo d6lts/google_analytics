@@ -345,10 +345,10 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   foreach ($form_state['values']['googleanalytics_custom_var']['slots'] as $custom_var) {
     // Validate empty names/values.
     if (empty($custom_var['name']) && !empty($custom_var['value'])) {
-      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][name", t('Custom variable #@slot: <em>Name</em> is required, if <em>value</em> has been provided.', array('@slot' =>  $custom_var['slot'])));
+      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][name", t('The custom variable @slot-number requires a <em>Value</em> if a <em>Name</em> has been provided.', array('@slot-number' =>  $custom_var['slot'])));
     }
     elseif (!empty($custom_var['name']) && empty($custom_var['value'])) {
-      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('Custom variable #@slot: <em>Value</em> is required, if <em>name</em> has been provided.', array('@slot' =>  $custom_var['slot'])));
+      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('The custom variable @slot-number requires a <em>Name</em> if a <em>Value</em> has been provided.', array('@slot-number' =>  $custom_var['slot'])));
     }
   }
 
