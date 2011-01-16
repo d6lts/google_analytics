@@ -242,6 +242,9 @@ function googleanalytics_admin_settings_form($form_state) {
       '#element_validate' => array('googleanalytics_token_element_validate'),
       '#token_types' => array('node'),
     );
+    if (module_exists('token')) {
+      $form['googleanalytics_custom_var']['slots'][$i]['value']['#element_validate'][] = 'token_element_validate';
+    }
     $form['googleanalytics_custom_var']['slots'][$i]['scope'] = array(
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3,
       '#description' => t('The scope for the custom variable.'),
@@ -433,17 +436,10 @@ function googleanalytics_token_element_validate(&$element, &$form_state) {
     return $element;
   }
 
-  // If token module is installed, it is possible to check if the token is valid.
-  if (module_exists('token')) {
-    token_element_validate($element, $form_state);
-  }
-
   $tokens = token_scan($value);
-  $title = empty($element['#title']) ? $element['#parents'][0] : $element['#title'];
-
   $invalid_tokens = _googleanalytics_get_forbidden_tokens($tokens);
   if ($invalid_tokens) {
-    form_error($element, t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => $title, '@invalid-tokens' => implode(', ', $invalid_tokens))));
+    form_error($element, t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => $element['#title'], '@invalid-tokens' => implode(', ', $invalid_tokens))));
   }
 
   return $element;
