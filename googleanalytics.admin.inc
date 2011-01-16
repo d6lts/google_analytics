@@ -203,10 +203,13 @@ function googleanalytics_admin_settings_form(&$form_state) {
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['value']) ? $googleanalytics_custom_vars['slots'][$i]['value'] : '',
       '#description' => ($token_enabled ? t('The custom variable value. You may use tokens in this field.') : t('The custom variable value.')),
       '#type' => 'textfield',
-      // FIXME
-      //'#element_validate' => array('token_element_validate'),
-      //'#token_types' => array('node'),
     );
+    if ($token_enabled) {
+      $form['googleanalytics_custom_var']['slots'][$i]['value']['#element_validate'][] = 'googleanalytics_token_element_validate';
+      $form['googleanalytics_custom_var']['slots'][$i]['value']['#element_validate'][] = 'token_element_validate';
+      $form['googleanalytics_custom_var']['slots'][$i]['value']['#token_types'][] = 'node';
+      $form['googleanalytics_custom_var']['slots'][$i]['value']['#token_types'][] = 'user';
+    }
     $form['googleanalytics_custom_var']['slots'][$i]['scope'] = array(
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3,
       '#description' => t('The scope for the custom variable.'),
@@ -225,7 +228,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
   );
   $form['googleanalytics_custom_var']['googleanalytics_custom_var_token_tree'] = array(
     '#theme' => 'token_tree',
-    '#token_types' => array('node'),
+    '#token_types' => array('node', 'user'),
   );
 
   // Advanced feature configurations.
@@ -329,15 +332,17 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   foreach ($form_state['values']['googleanalytics_custom_var']['slots'] as $custom_var) {
     // Validate empty names/values.
     if (empty($custom_var['name']) && !empty($custom_var['value'])) {
-      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][name", t('Custom variable #@slot: <em>Name</em> is required, if <em>value</em> has been provided.', array('@slot' =>  $custom_var['slot'])));
+      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][name", t('The custom variable @slot-number requires a <em>Value</em> if a <em>Name</em> has been provided.', array('@slot-number' =>  $custom_var['slot'])));
     }
     elseif (!empty($custom_var['name']) && empty($custom_var['value'])) {
-      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('Custom variable #@slot: <em>Value</em> is required, if <em>name</em> has been provided.', array('@slot' =>  $custom_var['slot'])));
+      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('The custom variable @slot-number requires a <em>Name</em> if a <em>Value</em> has been provided.', array('@slot-number' =>  $custom_var['slot'])));
     }
 
-    // Block tokens with personally identifying information.
-    if (_googleanalytics_contains_forbidden_token($custom_var['value'])) {
-      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('Custom variable #@slot: Forbidden token has been found in custom variable named %name. Never use tokens with personally identifying information!', array('%name' => $custom_var['name'], '@slot' => $custom_var['slot'])));
+    // If token module is not available, block tokens with personally identifying
+    // information with an "ugly" value check. Normally the values are validated
+    // via '#element_validate' functions that are not available without token module.
+    if (!module_exists('token') && _googleanalytics_contains_forbidden_token($custom_var['value'])) {
+      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('The custom variable %element-title is using forbidden tokens with personal identifying information.', array('%element-title' => $custom_var['name'] ? $custom_var['name'] : $custom_var['slot'])));
     }
   }
 
@@ -400,6 +405,58 @@ function theme_googleanalytics_admin_custom_var_table($form) {
   $output .= drupal_render($form['googleanalytics_custom_var_token_tree']);
 
   return $output;
+}
+
+/**
+ * Validate a form element that should have tokens in it.
+ *
+ * For example:
+ * @code
+ * $form['my_node_text_element'] = array(
+ *   '#type' => 'textfield',
+ *   '#title' => t('Some text to token-ize that has a node context.'),
+ *   '#default_value' => 'The title of this node is [node:title].',
+ *   '#element_validate' => array('googleanalytics_token_element_validate'),
+ * );
+ * @endcode
+ */
+function googleanalytics_token_element_validate(&$element, &$form_state) {
+  $value = isset($element['#value']) ? $element['#value'] : $element['#default_value'];
+
+  if (!drupal_strlen($value)) {
+    // Empty value needs no further validation since the element should depend
+    // on using the '#required' FAPI property.
+    return $element;
+  }
+
+  $tokens = token_scan($value);
+  $title = empty($element['#title']) ? $element['#parents'][0] : $element['#title'];
+
+  $invalid_tokens = _googleanalytics_get_forbidden_tokens($tokens);
+  if ($invalid_tokens) {
+    form_error($element, t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => $title, '@invalid-tokens' => implode(', ', $invalid_tokens))));
+  }
+
+  return $element;
+}
+
+function _googleanalytics_get_forbidden_tokens($value) {
+  $invalid_tokens = array();
+  $value_tokens = is_string($value) ? token_scan($value) : $value;
+
+  // For porting/compatibility reasons with _googleanalytics_contains_forbidden_token()
+  // the leading and trailing token separator need to be added to every value.
+  $value_tokens = token_prepare_tokens($value_tokens);
+
+  foreach ($value_tokens as $token) {
+    // If token is forbidden, add it to invalid tokens array.
+    if (_googleanalytics_contains_forbidden_token($token)) {
+      $invalid_tokens[] = $token;
+    }
+  }
+
+  array_unique($invalid_tokens);
+  return $invalid_tokens;
 }
 
 /**
