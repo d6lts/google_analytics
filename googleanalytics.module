@@ -480,9 +480,16 @@ function _googleanalytics_visibility_pages() {
  */
 function googleanalytics_token_values($type, $object = NULL, $options = array()) {
   if ($type == 'user') {
-    $user = $object;
-    $tokens['user-role-names'] = implode(',', $user->roles);
-    $tokens['user-role-ids'] = implode(',', array_keys($user->roles));
+    if (!empty($object)) {
+      $account = $object;
+    }
+    else {
+      $account = user_load(array('uid' => $GLOBALS['user']->uid));
+    }
+
+    $tokens['user-role-names'] = implode(',', $account->roles);
+    $tokens['user-role-ids'] = implode(',', array_keys($account->roles));
+
     return $tokens;
   }
 }
