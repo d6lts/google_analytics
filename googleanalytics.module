@@ -234,14 +234,14 @@ function googleanalytics_page_alter(&$page) {
     $script .= 'ga.type = "text/javascript";';
     $script .= 'ga.async = true;';
 
-    // A dummy query-string is added to filenames, to gain control over
-    // browser-caching. The string changes on every update or full cache
-    // flush, forcing browsers to load a new copy of the files, as the
-    // URL changed.
-    $query_string = '?' . variable_get('css_js_query_string', '0');
-
     // Should a local cached copy of ga.js be used?
     if (variable_get('googleanalytics_cache', 0) && $url = _googleanalytics_cache('http://www.google-analytics.com/ga.js')) {
+      // A dummy query-string is added to filenames, to gain control over
+      // browser-caching. The string changes on every update or full cache
+      // flush, forcing browsers to load a new copy of the files, as the
+      // URL changed.
+      $query_string = '?' . variable_get('css_js_query_string', '0');
+
       $script .= 'ga.src = "' . $url . $query_string . '";';
     }
     else {
