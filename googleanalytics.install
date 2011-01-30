@@ -277,6 +277,8 @@ function googleanalytics_update_6201() {
  * Try to update Google Analytics custom code snippet to async version.
  */
 function googleanalytics_update_6300() {
+  $messages = array();
+
   // TODO: Backup synchronous code snippets. Remove variables in D8.
   variable_set('googleanalytics_codesnippet_before_backup_6300', variable_get('googleanalytics_codesnippet_before', ''));
   variable_set('googleanalytics_codesnippet_after_backup_6300', variable_get('googleanalytics_codesnippet_after', ''));
@@ -294,7 +296,7 @@ function googleanalytics_update_6300() {
     variable_set('googleanalytics_codesnippet_before', $code_before);
 
     drupal_set_message(Database::getConnection()->prefixTables("<strong>Attempted</strong> to upgrade Google Analytics custom 'before' code snippet. Backup of previous code snippet has been saved in database table '{variable}' as 'googleanalytics_codesnippet_before_backup_6300'. Please consult Google's <a href='http://code.google.com/intl/de-DE/apis/analytics/docs/tracking/asyncUsageGuide.html'>Asynchronous Tracking Usage Guide</a> if the upgrade was successfully."), 'warning');
-    return t('Upgraded custom "before" code snippet.');
+    $messages[] = t('Upgraded custom "before" code snippet.');
   }
 
   // Upgrade of AFTER code snippet.
@@ -302,8 +304,10 @@ function googleanalytics_update_6300() {
   $code_after = variable_get('googleanalytics_codesnippet_after', '');
   if (!empty($code_after)) {
     drupal_set_message(Database::getConnection()->prefixTables("Automatic upgrade of Google Analytics custom 'after' code snippet has been skipped. Backup of previous code snippet has been saved in database table '{variable}' as 'googleanalytics_codesnippet_after_backup_6300'. You need to manually upgrade the custom 'after' code snippet."), 'error');
-    return t('Skipped custom "after" code snippet.');
+    $messages[] = t('Skipped custom "after" code snippet.');
   }
+
+  return empty($messages) ? t('No custom code snipped found. Nothing to do.') : implode(' ', $messages);
 }
 
 /**
