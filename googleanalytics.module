@@ -231,7 +231,13 @@ function googleanalytics_footer($main = 0) {
 
     // Should a local cached copy of ga.js be used?
     if (variable_get('googleanalytics_cache', 0) && $url = _googleanalytics_cache('http://www.google-analytics.com/ga.js')) {
-      $script .= 'ga.src = "' . $url . '";';
+      // A dummy query-string is added to filenames, to gain control over
+      // browser-caching. The string changes on every update or full cache
+      // flush, forcing browsers to load a new copy of the files, as the
+      // URL changed.
+      $query_string = '?'. substr(variable_get('css_js_query_string', '0'), 0, 1);
+
+      $script .= 'ga.src = "' . $url . $query_string . '";';
     }
     else {
       $script .= 'ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";';
@@ -307,11 +313,6 @@ function googleanalytics_cron() {
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
 function _googleanalytics_cache($location, $sync_cached_file = FALSE) {
-  // A dummy query-string is added to filenames, to gain control over
-  // browser-caching. The string changes on every update or full cache
-  // flush, forcing browsers to load a new copy of the files, as the
-  // URL changed.
-  $query_string = '?'. substr(variable_get('css_js_query_string', '0'), 0, 1);
 
   $path = file_create_path('googleanalytics');
   $file_destination = $path . '/' . basename($location);
@@ -344,14 +345,14 @@ function _googleanalytics_cache($location, $sync_cached_file = FALSE) {
           watchdog('googleanalytics', 'Locally cached tracking code file has been saved.', array(), WATCHDOG_INFO);
 
           // Return the local JS file path.
-          return base_path() . $file_destination . $query_string;
+          return base_path() . $file_destination;
         }
       }
     }
   }
   else {
     // Return the local JS file path.
-    return base_path() . $file_destination . $query_string;
+    return base_path() . $file_destination;
   }
 }
 
