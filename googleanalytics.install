@@ -354,10 +354,10 @@ function googleanalytics_update_6301() {
     $googleanalytics_custom_vars['slots'][1]['scope'] = 1; // Sets the scope to visitor-level.
 
     variable_set('googleanalytics_custom_var', $googleanalytics_custom_vars);
-    $ret[] = array('success' => TRUE, 'query' => 'The deprecated profile segmentation setting for "User roles" has been upgraded to custom variables. You need to upgrade other profile fields manually or you may loose tracking data in future!');
+    $ret[] = array('success' => TRUE, 'query' => 'The deprecated profile segmentation setting for "User roles" has been upgraded to custom variables. You need to upgrade other profile fields manually or you may lose tracking data in future!');
   }
   else {
-    $ret[] = array('success' => TRUE, 'query' => 'You need to upgrade the deprecated profile segmentation settings to custom variables manually or you may loose tracking data in future!');
+    $ret[] = array('success' => TRUE, 'query' => 'You need to upgrade the deprecated profile segmentation settings to custom variables manually or you may lose tracking data in future!');
     $ret[] = array('success' => TRUE, 'query' => 'Token module is recommended for custom variables.');
   }
 
