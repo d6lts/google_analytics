@@ -481,7 +481,7 @@ function _googleanalytics_visibility_pages() {
  */
 function googleanalytics_token_values($type, $object = NULL, $options = array()) {
   if ($type == 'user') {
-    if (!empty($object)) {
+    if (!empty($object->roles)) {
       $account = $object;
     }
     else {
