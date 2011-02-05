@@ -113,7 +113,7 @@ function googleanalytics_admin_settings_form($form_state) {
       '#title_display' => 'invisible',
       '#default_value' => $pages,
       '#description' => $description,
-    	'#rows' => 10,
+      '#rows' => 10,
     );
   }
 
