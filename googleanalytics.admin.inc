@@ -122,10 +122,10 @@ function googleanalytics_admin_settings_form($form_state) {
     '#type' => 'fieldset',
     '#title' => t('Links and downloads'),
   );
-  $form['tracking']['linktracking']['googleanalytics_trackoutgoing'] = array(
+  $form['tracking']['linktracking']['googleanalytics_trackoutbound'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Track clicks on outgoing links'),
-    '#default_value' => variable_get('googleanalytics_trackoutgoing', 1),
+    '#title' => t('Track clicks on outbound links'),
+    '#default_value' => variable_get('googleanalytics_trackoutbound', 1),
   );
   $form['tracking']['linktracking']['googleanalytics_trackmailto'] = array(
     '#type' => 'checkbox',

@@ -52,8 +52,8 @@ Drupal.behaviors.trackingSettingsSummary = {
 
     $('fieldset#edit-linktracking', context).drupalSetSummary(function (context) {
       var vals = [];
-      if ($('input#edit-googleanalytics-trackoutgoing', context).is(':checked')) {
-        vals.push('Outgoing links');
+      if ($('input#edit-googleanalytics-trackoutbound', context).is(':checked')) {
+        vals.push('Outbound links');
       }
       if ($('input#edit-googleanalytics-trackmailto', context).is(':checked')) {
         vals.push('Mailto links');

@@ -35,7 +35,7 @@ $(document).ready(function() {
           // Mailto link clicked.
           _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
-        else if (ga.trackOutgoing && this.href) {
+        else if (ga.trackOutbound && this.href) {
           if (ga.trackOutboundAsPageview) {
             // Track all external links as page views after URL cleanup.
             // Currently required, if click should be tracked as goal.
@@ -44,7 +44,7 @@ $(document).ready(function() {
           }
           else {
             // External link clicked.
-            _gaq.push(["_trackEvent", "Outgoing links", "Click", this.href]);
+            _gaq.push(["_trackEvent", "Outbound links", "Click", this.href]);
   
             // First, delay the outbound click by a fraction of a second.
             // This delay will hardly be noticeable by the user, but it will provide the

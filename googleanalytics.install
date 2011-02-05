@@ -53,7 +53,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_trackfiles');
   variable_del('googleanalytics_trackfiles_extensions');
   variable_del('googleanalytics_trackmailto');
-  variable_del('googleanalytics_trackoutgoing');
+  variable_del('googleanalytics_trackoutbound');
   variable_del('googleanalytics_trackoutboundaspageview');
   variable_del('googleanalytics_translation_set');
   variable_del('googleanalytics_visibility');
@@ -371,4 +371,14 @@ function googleanalytics_update_7002() {
   else {
     return t('You need to deselect all selected profile fields in <a href="@admin">Google Analytics settings</a> and upgrade other profile fields manually or you may loose tracking data in future! See Google Analytics <a href="@customvar">Custom Variables</a> for more information.', array('@customvar' => 'http://code.google.com/intl/en/apis/analytics/docs/tracking/gaTrackingCustomVariables.html', '@admin' => url('admin/config/system/googleanalytics')));
   }
+}
+
+/**
+ * Rename googleanalytics_trackoutgoing variable to googleanalytics_trackoutbound.
+ */
+function googleanalytics_update_7003() {
+  variable_set('googleanalytics_trackoutbound', variable_get('googleanalytics_trackoutgoing', 1));
+  variable_del('googleanalytics_trackoutgoing');
+
+  return t('Renamed "googleanalytics_trackoutgoing" settings variable to googleanalytics_trackoutbound.');
 }
