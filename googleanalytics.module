@@ -111,6 +111,9 @@ function googleanalytics_page_alter(&$page) {
       $link_settings['trackDownload'] = $track_download;
       $link_settings['trackDownloadExtensions'] = $trackfiles_extensions;
     }
+    if ($track_outbound_as_pageview = variable_get('googleanalytics_trackoutboundaspageview', 0)) {
+      $link_settings['trackOutboundAsPageview'] = $track_outbound_as_pageview;
+    }
     if (!empty($link_settings)) {
       drupal_add_js(array('googleanalytics' => $link_settings), 'setting');
       drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.js');

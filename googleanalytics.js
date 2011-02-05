@@ -36,16 +36,24 @@ $(document).ready(function() {
           _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
         else if (ga.trackOutgoing && this.href) {
-          // External link clicked.
-          _gaq.push(["_trackEvent", "Outgoing links", "Click", this.href]);
-
-          // First, delay the outbound click by a fraction of a second.
-          // This delay will hardly be noticeable by the user, but it will provide the
-          // browser more time load the tracking code. Without this method, it's possible
-          // that a user can click on the outbound link before the tracking code loads,
-          // in which case the event will not be recorded.
-          // See http://www.google.com/support/analytics/bin/answer.py?hl=en&answer=55527
-          setTimeout('document.location = "' + this.href + '"', 100);
+          if (ga.trackOutboundAsPageview) {
+            // Track all external links as page views after URL cleanup.
+            // Currently required, if click should be tracked as goal.
+            _gaq.push(["_trackPageview", '/outbound/' + this.href.replace(/^(https?|ftp|news|nntp|telnet|irc|ssh|sftp|webcal):\/\//i, '').split('/').join('--')]);
+            setTimeout('document.location = "' + this.href + '"', 100);
+          }
+          else {
+            // External link clicked.
+            _gaq.push(["_trackEvent", "Outgoing links", "Click", this.href]);
+  
+            // First, delay the outbound click by a fraction of a second.
+            // This delay will hardly be noticeable by the user, but it will provide the
+            // browser more time load the tracking code. Without this method, it's possible
+            // that a user can click on the outbound link before the tracking code loads,
+            // in which case the event will not be recorded.
+            // See http://www.google.com/support/analytics/bin/answer.py?hl=en&answer=55527
+            setTimeout('document.location = "' + this.href + '"', 100);
+          }
         }
       }
     });
