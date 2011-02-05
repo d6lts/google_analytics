@@ -114,7 +114,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
   );
   $form['linktracking']['googleanalytics_trackoutgoing'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Track outgoing links'),
+    '#title' => t('Track outbound links'),
     '#default_value' => variable_get('googleanalytics_trackoutgoing', 1),
     '#description' => t('Enables tracking of clicks on outgoing links.')
   );

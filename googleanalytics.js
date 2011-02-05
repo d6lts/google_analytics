@@ -43,7 +43,7 @@ $(document).ready(function() {
           }
           else {
             // External link clicked.
-            _gaq.push(["_trackEvent", "Outgoing links", "Click", this.href]);
+            _gaq.push(["_trackEvent", "Outbound links", "Click", this.href]);
   
             // First, delay the outbound click by a fraction of a second.
             // This delay will hardly be noticeable by the user, but it will provide the
