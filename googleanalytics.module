@@ -114,6 +114,14 @@ function googleanalytics_page_alter(&$page) {
     if ($track_outbound_as_pageview = variable_get('googleanalytics_trackoutboundaspageview', 0)) {
       $link_settings['trackOutboundAsPageview'] = $track_outbound_as_pageview;
     }
+    if ($track_domain_mode = variable_get('googleanalytics_domain_mode', 0)) {
+      $link_settings['trackDomainMode'] = $track_domain_mode;
+    }
+    if ($track_cross_domains = variable_get('googleanalytics_cross_domains', '')) {
+      $domains = preg_split('/(\r\n?|\n)/', $track_cross_domains);
+      $link_settings['trackCrossDomains'] = implode('|', $domains);
+    }
+
     if (!empty($link_settings)) {
       drupal_add_js(array('googleanalytics' => $link_settings), 'setting');
       drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.js');
@@ -213,6 +221,21 @@ function googleanalytics_page_alter(&$page) {
       // a workaround until "_anonymizeIp" has been implemented/fixed.
       $script .= '_gaq.push(["_gat._anonymizeIp"]);';
     }
+
+    // Domain tracking type.
+    global $cookie_domain;
+    $domain_mode = variable_get('googleanalytics_domain_mode', 0);
+
+    // Per RFC 2109, cookie domains must contain at least one dot other than the
+    // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
+    if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
+      $script .= '_gaq.push(["_setDomainName", ' . drupal_json_encode($cookie_domain) . ']);';
+    }
+    else if ($domain_mode == 2) {
+      $script .= '_gaq.push(["_setDomainName", "none"]);';
+      $script .= '_gaq.push(["_setAllowLinker", true]);';
+    }
+
     if (!empty($segmentation)) {
       $script .= $segmentation;
     }

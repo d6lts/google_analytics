@@ -178,6 +178,53 @@ function googleanalytics_admin_settings_form($form_state) {
     '#default_value' => variable_get('googleanalytics_trackadsense', FALSE),
   );
 
+  $form['tracking']['domain_tracking'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Domains'),
+  );
+
+  global $cookie_domain;
+  $multiple_sub_domains = array();
+  foreach (array('www', 'app', 'shop') as $subdomain) {
+    if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
+      $multiple_sub_domains[] = $subdomain . $cookie_domain;
+    }
+    // IP addresses or localhost.
+    else {
+      $multiple_sub_domains[] = $subdomain . '.example.com';
+    }
+  }
+
+  $multiple_toplevel_domains = array();
+  foreach (array('.com', '.net', '.org') as $tldomain) {
+    $host = $_SERVER['HTTP_HOST'];
+    $domain = substr($host, 0, strrpos($host, '.'));
+    if (count(explode('.', $host)) > 2 && !is_numeric(str_replace('.', '', $host))) {
+      $multiple_toplevel_domains[] = $domain . $tldomain;
+    }
+    // IP addresses or localhost
+    else {
+      $multiple_toplevel_domains[] = 'www.example' . $tldomain;
+    }
+  }
+
+  $form['tracking']['domain_tracking']['googleanalytics_domain_mode'] = array(
+    '#type' => 'radios',
+    '#title' => t('What are you tracking?'),
+    '#options' => array(
+      0 => t('A single domain (default)') . '<div class="description">' . t('Domain: @domain', array('@domain' => $_SERVER['HTTP_HOST'])) . '</div>',
+      1 => t('One domain with multiple subdomains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_sub_domains))) . '</div>',
+      2 => t('Multiple top-level domains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_toplevel_domains))) . '</div>',
+    ),
+    '#default_value' => variable_get('googleanalytics_domain_mode', 0),
+  );
+  $form['tracking']['domain_tracking']['googleanalytics_cross_domains'] = array(
+    '#title' => t('List of top-level domains'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('googleanalytics_cross_domains', ''),
+    '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href="http://www.google.com/support/analytics/bin/answer.py?answer=175538">Tracking multiple domains</a>.'),
+  );
+
   // Backward compatibility only.
   // TODO: If currently not in use, hide the UI and later remove the code.
   $segmentation = variable_get('googleanalytics_segmentation', array());
@@ -362,11 +409,17 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   // Trim some text values.
   $form_state['values']['googleanalytics_account'] = trim($form_state['values']['googleanalytics_account']);
   $form_state['values']['googleanalytics_pages'] = trim($form_state['values']['googleanalytics_pages']);
+  $form_state['values']['googleanalytics_cross_domains'] = trim($form_state['values']['googleanalytics_cross_domains']);
   $form_state['values']['googleanalytics_codesnippet_before'] = trim($form_state['values']['googleanalytics_codesnippet_before']);
   $form_state['values']['googleanalytics_codesnippet_after'] = trim($form_state['values']['googleanalytics_codesnippet_after']);
 
   if (!preg_match('/^UA-\d{4,}-\d+$/', $form_state['values']['googleanalytics_account'])) {
     form_set_error('googleanalytics_account', t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'));
+  }
+
+  // If multiple top-level domains has been selected, a domain names list is required.
+  if ($form_state['values']['googleanalytics_domain_mode'] == 2 && empty($form_state['values']['googleanalytics_cross_domains'])) {
+    form_set_error('googleanalytics_cross_domains', t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
   }
 
   // Clear obsolete local cache if cache has been disabled.

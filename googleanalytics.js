@@ -3,6 +3,14 @@
 
 $(document).ready(function() {
 
+  // Accepts a string; returns the string with regex metacharacters escaped. The returned string
+  // can safely be used at any point within a regex to match the provided literal string. Escaped
+  // characters are [ ] { } ( ) * + ? - . , \ ^ $ # and whitespace. The character | is excluded
+  // in this function as it's used to separate the domains names.
+  RegExp.escapeDomains = function(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&");
+  }
+
   // Attach onclick event to document only and catch clicks on all elements.
   $(document.body).click(function(event) {
     // Catch only the first parent link of a clicked element.
@@ -15,6 +23,8 @@ $(document).ready(function() {
       var isInternalSpecial = new RegExp("(\/go\/.*)$", "i");
       // Expression to check for download links.
       var isDownload = new RegExp("\\.(" + ga.trackDownloadExtensions + ")$", "i");
+      // Expression to check for the sites cross domains.
+      var isCrossDomain = new RegExp("^(https?|ftp|news|nntp|telnet|irc|ssh|sftp|webcal):\/\/.*(" + RegExp.escapeDomains(ga.trackCrossDomains) + ")", "i");
 
       // Is the clicked URL internal?
       if (isInternal.test(this.href)) {
@@ -36,7 +46,12 @@ $(document).ready(function() {
           _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
         else if (ga.trackOutbound && this.href) {
-          if (ga.trackOutboundAsPageview) {
+          if (ga.trackDomainMode == 2 && isCrossDomain.test(this.href)) {
+            // Top-level cross domain clicked.
+            _gaq.push(["_link", this.href]);
+            setTimeout('document.location = "' + this.href + '"', 100);
+          }
+          else if (ga.trackOutboundAsPageview) {
             // Track all external links as page views after URL cleanup.
             // Currently required, if click should be tracked as goal.
             _gaq.push(["_trackPageview", '/outbound/' + this.href.replace(/^(https?|ftp|news|nntp|telnet|irc|ssh|sftp|webcal):\/\//i, '').split('/').join('--')]);

@@ -80,6 +80,19 @@ Drupal.behaviors.trackingSettingsSummary = {
       }
       return Drupal.t('@items tracked', {'@items' : vals.join(', ')});
     });
+
+    $('fieldset#edit-domain-tracking', context).drupalSetSummary(function (context) {
+      var $radio = $('input[name="googleanalytics_domain_mode"]:checked', context);
+      if ($radio.val() == 0) {
+        return Drupal.t('A single domain');
+      }
+      else if ($radio.val() == 1) {
+        return Drupal.t('One domain with multiple subdomains');
+      }
+      else {
+        return Drupal.t('Multiple top-level domains');
+      }
+    });
   }
 };
 
