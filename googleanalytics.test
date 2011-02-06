@@ -18,7 +18,10 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
   public function setUp() {
     parent::setUp('googleanalytics');
 
-    $permissions = array('administer google analytics');
+    $permissions = array(
+      'access administration pages',
+      'administer google analytics',
+    );
 
     // User to set up google_analytics.
     $user = $this->drupalCreateUser($permissions);
@@ -33,14 +36,15 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     // Check for account code validation.
     $edit['googleanalytics_account'] = $this->randomName(2);
     $this->drupalPost('admin/config/system/googleanalytics', $edit, 'Save configuration');
-    $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxx-x.'), '[testGoogleAnalytics]: Invalid Web Property ID number validated.');
+    $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'), '[testGoogleAnalytics]: Invalid Web Property ID number validated.');
   }
 
   public function testGoogleAnalyticsTracking() {
-    // Set visibility to hide tracking code on admin page only,
-    // track authenticated users.
+    // Show tracking on "every page except the listed pages".
     variable_set('googleanalytics_visibility', 0);
+    // Disable tracking one "admin*" pages only.
     variable_set('googleanalytics_pages', 'admin*');
+    // Enable tracking only for authenticated users.
     variable_set('googleanalytics_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
     $ua_code = 'UA-123456-7';
     variable_set('googleanalytics_account', $ua_code);
@@ -87,9 +91,16 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsTracking]: Tracking code is not displayed on front page.');
 
     // Test whether tracking code is not display for anonymous.
-    $this->drupalGet('user/logout');
+    $this->drupalLogout();
     $this->drupalGet('');
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsTracking]: Tracking code is not displayed for anonymous.');
+
+    // Enable tracking code for all users.
+    variable_set('googleanalytics_roles', array());
+
+    // Test whether access denied tracking code is shown on pages to omit.
+    $this->drupalGet('admin');
+    $this->assertRaw('/403.html', '[testGoogleAnalyticsTracking]: Access denied tracking code shown on admin pages.');
   }
 
 }
