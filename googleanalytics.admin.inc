@@ -37,36 +37,51 @@ function googleanalytics_admin_settings_form($form_state) {
     ),
   );
 
-  // Standard tracking configurations.
-  $form['tracking']['user_vis_settings'] = array(
+  $form['tracking']['domain_tracking'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Users'),
+    '#title' => t('Domains'),
   );
-  $t_permission = array('%permission' => t('opt-in or out of tracking'));
-  $form['tracking']['user_vis_settings']['googleanalytics_custom'] = array(
+
+  global $cookie_domain;
+  $multiple_sub_domains = array();
+  foreach (array('www', 'app', 'shop') as $subdomain) {
+    if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
+      $multiple_sub_domains[] = $subdomain . $cookie_domain;
+    }
+    // IP addresses or localhost.
+    else {
+      $multiple_sub_domains[] = $subdomain . '.example.com';
+    }
+  }
+
+  $multiple_toplevel_domains = array();
+  foreach (array('.com', '.net', '.org') as $tldomain) {
+    $host = $_SERVER['HTTP_HOST'];
+    $domain = substr($host, 0, strrpos($host, '.'));
+    if (count(explode('.', $host)) > 2 && !is_numeric(str_replace('.', '', $host))) {
+      $multiple_toplevel_domains[] = $domain . $tldomain;
+    }
+    // IP addresses or localhost
+    else {
+      $multiple_toplevel_domains[] = 'www.example' . $tldomain;
+    }
+  }
+
+  $form['tracking']['domain_tracking']['googleanalytics_domain_mode'] = array(
     '#type' => 'radios',
-    '#title' => t('Allow users to customize tracking on their account page'),
+    '#title' => t('What are you tracking?'),
     '#options' => array(
-      t('No customization allowed'),
-      t('Tracking on by default, users with %permission permission can opt out', $t_permission),
-      t('Tracking off by default, users with %permission permission can opt in', $t_permission),
+      0 => t('A single domain (default)') . '<div class="description">' . t('Domain: @domain', array('@domain' => $_SERVER['HTTP_HOST'])) . '</div>',
+      1 => t('One domain with multiple subdomains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_sub_domains))) . '</div>',
+      2 => t('Multiple top-level domains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_toplevel_domains))) . '</div>',
     ),
-    '#default_value' => variable_get('googleanalytics_custom', 0),
+    '#default_value' => variable_get('googleanalytics_domain_mode', 0),
   );
-
-  // Render the role overview.
-  $form['tracking']['role_vis_settings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Roles'),
-  );
-
-  $role_options = array_map('check_plain', user_roles());
-  $form['tracking']['role_vis_settings']['googleanalytics_roles'] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Add tracking for specific roles'),
-    '#default_value' => variable_get('googleanalytics_roles', array()),
-    '#options' => $role_options,
-    '#description' => t('If none are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked.'),
+  $form['tracking']['domain_tracking']['googleanalytics_cross_domains'] = array(
+    '#title' => t('List of top-level domains'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('googleanalytics_cross_domains', ''),
+    '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href="http://www.google.com/support/analytics/bin/answer.py?answer=175538">Tracking multiple domains</a>.'),
   );
 
   // Page specific visibility configurations.
@@ -116,6 +131,38 @@ function googleanalytics_admin_settings_form($form_state) {
       '#rows' => 10,
     );
   }
+
+  // Render the role overview.
+  $form['tracking']['role_vis_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Roles'),
+  );
+
+  $role_options = array_map('check_plain', user_roles());
+  $form['tracking']['role_vis_settings']['googleanalytics_roles'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Add tracking for specific roles'),
+    '#default_value' => variable_get('googleanalytics_roles', array()),
+    '#options' => $role_options,
+    '#description' => t('If none are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked.'),
+  );
+
+  // Standard tracking configurations.
+  $form['tracking']['user_vis_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Users'),
+  );
+  $t_permission = array('%permission' => t('opt-in or out of tracking'));
+  $form['tracking']['user_vis_settings']['googleanalytics_custom'] = array(
+    '#type' => 'radios',
+    '#title' => t('Allow users to customize tracking on their account page'),
+    '#options' => array(
+      t('No customization allowed'),
+      t('Tracking on by default, users with %permission permission can opt out', $t_permission),
+      t('Tracking off by default, users with %permission permission can opt in', $t_permission),
+    ),
+    '#default_value' => variable_get('googleanalytics_custom', 0),
+  );
 
   // Link specific configurations.
   $form['tracking']['linktracking'] = array(
@@ -176,53 +223,6 @@ function googleanalytics_admin_settings_form($form_state) {
     '#title' => t('Track AdSense ads'),
     '#description' => t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
     '#default_value' => variable_get('googleanalytics_trackadsense', FALSE),
-  );
-
-  $form['tracking']['domain_tracking'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Domains'),
-  );
-
-  global $cookie_domain;
-  $multiple_sub_domains = array();
-  foreach (array('www', 'app', 'shop') as $subdomain) {
-    if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
-      $multiple_sub_domains[] = $subdomain . $cookie_domain;
-    }
-    // IP addresses or localhost.
-    else {
-      $multiple_sub_domains[] = $subdomain . '.example.com';
-    }
-  }
-
-  $multiple_toplevel_domains = array();
-  foreach (array('.com', '.net', '.org') as $tldomain) {
-    $host = $_SERVER['HTTP_HOST'];
-    $domain = substr($host, 0, strrpos($host, '.'));
-    if (count(explode('.', $host)) > 2 && !is_numeric(str_replace('.', '', $host))) {
-      $multiple_toplevel_domains[] = $domain . $tldomain;
-    }
-    // IP addresses or localhost
-    else {
-      $multiple_toplevel_domains[] = 'www.example' . $tldomain;
-    }
-  }
-
-  $form['tracking']['domain_tracking']['googleanalytics_domain_mode'] = array(
-    '#type' => 'radios',
-    '#title' => t('What are you tracking?'),
-    '#options' => array(
-      0 => t('A single domain (default)') . '<div class="description">' . t('Domain: @domain', array('@domain' => $_SERVER['HTTP_HOST'])) . '</div>',
-      1 => t('One domain with multiple subdomains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_sub_domains))) . '</div>',
-      2 => t('Multiple top-level domains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_toplevel_domains))) . '</div>',
-    ),
-    '#default_value' => variable_get('googleanalytics_domain_mode', 0),
-  );
-  $form['tracking']['domain_tracking']['googleanalytics_cross_domains'] = array(
-    '#title' => t('List of top-level domains'),
-    '#type' => 'textarea',
-    '#default_value' => variable_get('googleanalytics_cross_domains', ''),
-    '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href="http://www.google.com/support/analytics/bin/answer.py?answer=175538">Tracking multiple domains</a>.'),
   );
 
   // Backward compatibility only.
