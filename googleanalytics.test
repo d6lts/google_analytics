@@ -98,9 +98,13 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     // Enable tracking code for all users.
     variable_set('googleanalytics_roles', array());
 
-    // Test whether access denied tracking code is shown on pages to omit.
+    // Test whether 403 forbidden tracking code is shown if user has no access.
     $this->drupalGet('admin');
-    $this->assertRaw('/403.html', '[testGoogleAnalyticsTracking]: Access denied tracking code shown on admin pages.');
+    $this->assertRaw('/403.html', '[testGoogleAnalyticsTracking]: 403 Forbidden tracking code shown if user has no access.');
+
+    // Test whether 404 not found tracking code is shown on non-existent pages.
+    $this->drupalGet($this->randomName(128));
+    $this->assertRaw('/404.html', '[testGoogleAnalyticsTracking]: 404 Not Found tracking code shown on non-existent page.');
   }
 
 }
