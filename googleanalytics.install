@@ -146,9 +146,9 @@ function googleanalytics_update_6002() {
   if (!$track_user1 = variable_get('googleanalytics_track__user1', 1)) {
     variable_set('googleanalytics_custom', 1);
 
-    // Load user 1 object, set appropiate value and save new user settings back.
+    // Load user 1 object, set appropriate value and save new user settings back.
     $account = user_load(1);
-    $account = user_save($account, array('googleanalytics' => array('custom' => 0)), 'account');
+    $account = user_save($account, array('data' => array('googleanalytics' => array('custom' => 0))), 'account');
     $messages[] = t('Disabled user specific page tracking for site administrator.');
   }
 
