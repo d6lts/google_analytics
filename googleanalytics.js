@@ -49,7 +49,6 @@ $(document).ready(function() {
           if (ga.trackDomainMode == 2 && isCrossDomain.test(this.href)) {
             // Top-level cross domain clicked.
             _gaq.push(["_link", this.href]);
-            setTimeout('document.location = "' + this.href + '"', 100);
           }
           else if (ga.trackOutboundAsPageview) {
             // Track all external links as page views after URL cleanup.
