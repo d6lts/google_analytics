@@ -231,7 +231,7 @@ function googleanalytics_page_alter(&$page) {
     if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
       $script .= '_gaq.push(["_setDomainName", ' . drupal_json_encode($cookie_domain) . ']);';
     }
-    else if ($domain_mode == 2) {
+    elseif ($domain_mode == 2) {
       $script .= '_gaq.push(["_setDomainName", "none"]);';
       $script .= '_gaq.push(["_setAllowLinker", true]);';
     }
