@@ -51,7 +51,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#collapsible' => TRUE,
   );
 
-  $form['tracking']['role_vis_settings']['googleanalytics_visibility_roles'] = array(
+  $form['role_vis_settings']['googleanalytics_visibility_roles'] = array(
     '#type' => 'radios',
     '#title' => t('Add tracking for specific roles'),
     '#options' => array(
@@ -147,7 +147,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#description' => t('A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions', array('!extensions' => GA_TRACKFILES_EXTENSIONS)),
     '#maxlength' => 255,
   );
-  $form['tracking']['linktracking']['googleanalytics_trackoutboundaspageview'] = array(
+  $form['linktracking']['googleanalytics_trackoutboundaspageview'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track clicks on outbound links as page views'),
     '#default_value' => variable_get('googleanalytics_trackoutboundaspageview', 0),
