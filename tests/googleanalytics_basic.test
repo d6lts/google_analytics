@@ -15,7 +15,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     );
   }
 
-  public function setUp() {
+  function setUp() {
     parent::setUp('googleanalytics');
 
     $permissions = array('administer google analytics');
@@ -25,7 +25,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->drupalLogin($user);
   }
 
-  public function testGoogleAnalytics() {
+  function testGoogleAnalytics() {
     // Check for setting page's presence.
     $this->drupalGet('admin/settings/googleanalytics');
     $this->assertRaw(t('Web Property ID'), '[testGoogleAnalytics]: Settings page displayed.');
@@ -36,7 +36,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'), '[testGoogleAnalytics]: Invalid Web Property ID number validated.');
   }
 
-  public function testGoogleAnalyticsTracking() {
+  function testGoogleAnalyticsTracking() {
     // Set visibility to hide tracking code on admin page only,
     // track authenticated users.
     variable_set('googleanalytics_visibility', 0);
