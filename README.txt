@@ -51,9 +51,6 @@ choice for "Add if the following PHP code returns TRUE." Sample PHP snippets
 that can be used in this textarea can be found on the handbook page
 "Overview-approach to block visibility" at http://drupal.org/node/64135.
 
-A code snippet that creates opt-out by role functionality for unchecked roles
-can be found in the Google Analytics handbook at http://drupal.org/node/261997.
-
 Custom variables
 =================
 One example for custom variables tracking is the "User roles" tracking. Enter
