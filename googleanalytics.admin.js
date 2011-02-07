@@ -12,7 +12,7 @@ Drupal.behaviors.trackingSettingsSummary = {
     }
 
     $('fieldset#edit-page-vis-settings', context).drupalSetSummary(function (context) {
-      var $radio = $('input[name="googleanalytics_visibility"]:checked', context);
+      var $radio = $('input[name="googleanalytics_visibility_pages"]:checked', context);
       if ($radio.val() == 0) {
         if (!$('textarea[name="googleanalytics_pages"]', context).val()) {
           return Drupal.t('Not restricted');

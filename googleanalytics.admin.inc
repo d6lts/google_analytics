@@ -86,7 +86,7 @@ function googleanalytics_admin_settings_form($form_state) {
 
   // Page specific visibility configurations.
   $php_access = user_access('use PHP for tracking visibility');
-  $visibility = variable_get('googleanalytics_visibility', 0);
+  $visibility = variable_get('googleanalytics_visibility_pages', 0);
   $pages = variable_get('googleanalytics_pages', '');
 
   $form['tracking']['page_vis_settings'] = array(
@@ -116,7 +116,7 @@ function googleanalytics_admin_settings_form($form_state) {
     else {
       $title = t('Pages');
     }
-    $form['tracking']['page_vis_settings']['googleanalytics_visibility'] = array(
+    $form['tracking']['page_vis_settings']['googleanalytics_visibility_pages'] = array(
       '#type' => 'radios',
       '#title' => t('Add tracking to specific pages'),
       '#options' => $options,

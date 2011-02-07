@@ -11,7 +11,7 @@
  */
 function googleanalytics_install() {
   variable_set('googleanalytics_visibility_roles', 0);
-  variable_set('googleanalytics_visibility', 0);
+  variable_set('googleanalytics_visibility_pages', 0);
 
   // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
   $pages = array(
@@ -59,7 +59,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_trackoutbound');
   variable_del('googleanalytics_trackoutboundaspageview');
   variable_del('googleanalytics_translation_set');
-  variable_del('googleanalytics_visibility');
+  variable_del('googleanalytics_visibility_pages');
   variable_del('googleanalytics_visibility_roles');
 
   // Remove backup variables if exits. Remove this code in D8.
@@ -385,4 +385,14 @@ function googleanalytics_update_7003() {
   variable_del('googleanalytics_trackoutgoing');
 
   return t('Renamed "googleanalytics_trackoutgoing" settings variable to googleanalytics_trackoutbound.');
+}
+
+/**
+ * Rename googleanalytics_visibility variable to googleanalytics_visibility_pages for consistency.
+ */
+function googleanalytics_update_7004() {
+  variable_set('googleanalytics_visibility_pages', variable_get('googleanalytics_visibility', 1));
+  variable_del('googleanalytics_visibility');
+
+  return t('Renamed "googleanalytics_visibility" settings variable to googleanalytics_visibility_pages.');
 }

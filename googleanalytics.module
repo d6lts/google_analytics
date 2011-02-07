@@ -498,7 +498,7 @@ function _googleanalytics_visibility_pages() {
   // Cache visibility result if function is called more than once.
   if (!isset($page_match)) {
 
-    $visibility = variable_get('googleanalytics_visibility', 0);
+    $visibility = variable_get('googleanalytics_visibility_pages', 0);
     $setting_pages = variable_get('googleanalytics_pages', '');
 
     // Match path if necessary.
