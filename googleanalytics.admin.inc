@@ -390,12 +390,13 @@ function googleanalytics_admin_settings_form($form_state) {
   $form['advanced']['googleanalytics_js_scope'] = array(
     '#type' => 'select',
     '#title' => t('JavaScript scope'),
-    '#description' => t('Google recommends adding the external JavaScript files to the header for performance reasons.'),
+    '#description' => t('Google recommends adding the external JavaScript files to the header for performance reasons. If <em>Multiple top-level domains</em> has been selected, this setting will be forced to header.'),
     '#options' => array(
       'footer' => t('Footer'),
       'header' => t('Header'),
     ),
     '#default_value' => variable_get('googleanalytics_js_scope', 'header'),
+    '#disabled' => (variable_get('googleanalytics_domain_mode', 0) == 2) ? TRUE : FALSE,
   );
 
   return system_settings_form($form);
@@ -431,7 +432,6 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   if ($form_state['values']['googleanalytics_domain_mode'] == 2 && empty($form_state['values']['googleanalytics_cross_domains'])) {
     form_set_error('googleanalytics_cross_domains', t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
   }
-
   // Clear obsolete local cache if cache has been disabled.
   if (empty($form_state['values']['googleanalytics_cache']) && $form['advanced']['googleanalytics_cache']['#default_value']) {
     googleanalytics_clear_js_cache();
@@ -449,6 +449,11 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   }
   if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['googleanalytics_codesnippet_after'])) {
     form_set_error('googleanalytics_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+  }
+
+  // Header section must be forced for multiple top-level domains.
+  if ($form_state['values']['googleanalytics_domain_mode'] == 2) {
+    $form_state['values']['googleanalytics_js_scope'] = 'header';
   }
 }
 
