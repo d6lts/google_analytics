@@ -51,6 +51,16 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#collapsible' => TRUE,
   );
 
+  $form['tracking']['role_vis_settings']['googleanalytics_visibility_roles'] = array(
+    '#type' => 'radios',
+    '#title' => t('Add tracking for specific roles'),
+    '#options' => array(
+      t('Add to the selected roles only'),
+      t('Add to every role except the selected ones'),
+    ),
+    '#default_value' => variable_get('googleanalytics_visibility_roles', 0),
+  );
+
   $roles = user_roles();
   $role_options = array();
   foreach ($roles as $rid => $name) {
@@ -58,10 +68,10 @@ function googleanalytics_admin_settings_form(&$form_state) {
   }
   $form['role_vis_settings']['googleanalytics_roles'] = array(
     '#type' => 'checkboxes',
-    '#title' => t('Add tracking for specific roles'),
+    '#title' => t('Roles'),
     '#default_value' => variable_get('googleanalytics_roles', array()),
     '#options' => $role_options,
-    '#description' => t('Add tracking only for the selected role(s). If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked.'),
+    '#description' => t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
   );
 
   // Page specific visibility configurations.
