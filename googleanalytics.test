@@ -93,3 +93,90 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
   }
 
 }
+
+class GoogleAnalyticsRolesTest extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => t('Google Analytics role tests'),
+      'description' => t('Test roles functionality of Google Analytics module.'),
+      'group' => 'Google Analytics',
+    );
+  }
+
+  function setUp() {
+    parent::setUp('googleanalytics');
+
+    $permissions = array(
+      'access administration pages',
+      'administer google analytics',
+    );
+
+    // User to set up google_analytics.
+    $this->admin_user = $this->drupalCreateUser($permissions);
+  }
+
+  function testGoogleAnalyticsRolesTracking() {
+    $ua_code = 'UA-123456-4';
+    variable_set('googleanalytics_account', $ua_code);
+
+    // Test if the default settings are working as expected.
+
+    // Add to the selected roles only.
+    variable_set('googleanalytics_visibility_roles', 0);
+    // Enable tracking for all users.
+    variable_set('googleanalytics_roles', array());
+
+    // Check tracking code visibility.
+    $this->drupalGet('');
+    $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is displayed for anonymous users on frontpage with default settings.');
+
+    $this->drupalLogin($this->admin_user);
+
+    $this->drupalGet('');
+    $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is displayed for authenticated users on frontpage with default settings.');
+    $this->drupalGet('admin');
+    $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is NOT displayed for authenticated users in admin section with default settings.');
+
+    // Test if the non-default settings are working as expected.
+
+    // Enable tracking only for authenticated users.
+    variable_set('googleanalytics_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
+
+    $this->drupalGet('');
+    $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is displayed for authenticated users only on frontpage.');
+
+    $this->drupalLogout();
+    $this->drupalGet('');
+    $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is NOT displayed for anonymous users on frontpage.');
+
+    // Add to every role except the selected ones.
+    variable_set('googleanalytics_visibility_roles', 1);
+    // Enable tracking for all users.
+    variable_set('googleanalytics_roles', array());
+
+    // Check tracking code visibility.
+    $this->drupalGet('');
+    $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is added to every role and displayed for anonymous users.');
+
+    $this->drupalLogin($this->admin_user);
+
+    $this->drupalGet('');
+    $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is added to every role and displayed on frontpage for authenticated users.');
+    $this->drupalGet('admin');
+    $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is added to every role and NOT displayed in admin section for authenticated users.');
+
+    // Disable tracking for authenticated users.
+    variable_set('googleanalytics_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
+
+    $this->drupalGet('');
+    $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is NOT displayed on frontpage for excluded authenticated users.');
+    $this->drupalGet('admin');
+    $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is NOT displayed in admin section for excluded authenticated users.');
+
+    $this->drupalLogout();
+    $this->drupalGet('');
+    $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is displayed on frontpage for included anonymous users.');
+  }
+
+}
