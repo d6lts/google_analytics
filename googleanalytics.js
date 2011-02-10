@@ -47,7 +47,7 @@ $(document).ready(function() {
         }
         else if (ga.trackOutbound && this.href) {
           if (ga.trackDomainMode == 2 && isCrossDomain.test(this.href)) {
-            // Top-level cross domain clicked.
+            // Top-level cross domain clicked. document.location is handled by _link internally.
             _gaq.push(["_link", this.href]);
           }
           else if (ga.trackOutboundAsPageview) {
