@@ -14,9 +14,10 @@ function googleanalytics_install() {
   $pages = array(
     'admin',
     'admin/*',
-    'user/*/*',
+    'batch',
     'node/add*',
     'node/*/*',
+    'user/*/*',
   );
   variable_set('googleanalytics_pages', implode("\n", $pages));
 }
