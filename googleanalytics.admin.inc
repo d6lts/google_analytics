@@ -158,6 +158,8 @@ function googleanalytics_admin_settings_form(&$form_state) {
   $form['tracking']['privacy'] = array(
     '#type' => 'fieldset',
     '#title' => t('Privacy'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
   );
   $form['tracking']['privacy']['googleanalytics_tracker_anonymizeip'] = array(
     '#type' => 'checkbox',
