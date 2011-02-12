@@ -39,9 +39,10 @@ default the following pages are listed for exclusion:
 
 admin
 admin/*
-user/*/*
+batch
 node/add*
 node/*/*
+user/*/*
 
 These defaults are changeable by the website administrator or any other
 user with 'administer google analytics' permission.

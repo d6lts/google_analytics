@@ -367,3 +367,39 @@ function googleanalytics_update_6301() {
 
   return $ret;
 }
+
+/**
+ * Path visibility filter setting should hide "batch" path.
+ */
+function googleanalytics_update_6302() {
+  $ret = array();
+
+  // Current pages setting.
+  $pages = array(
+    'admin',
+    'admin/*',
+    'user/*/*',
+    'node/add*',
+    'node/*/*',
+  );
+
+  $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('googleanalytics_pages', implode("\n", $pages))));
+  if (empty($diff)) {
+    // No diff to previous settings found. Update with new settings.
+    $pages = array(
+      'admin',
+      'admin/*',
+      'batch',
+      'node/add*',
+      'node/*/*',
+      'user/*/*',
+    );
+    variable_set('googleanalytics_pages', implode("\n", $pages));
+    $ret[] = array('success' => TRUE, 'query' => 'Added "batch" to path visibility filter setting.');
+  }
+  else {
+    $ret[] = array('success' => TRUE, 'query' => 'Custom path visibility filter setting found. Update skipped!');
+  }
+
+  return $ret;
+}
