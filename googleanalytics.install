@@ -43,6 +43,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_visibility_roles');
   variable_del('googleanalytics_pages');
   variable_del('googleanalytics_tracker_anonymizeip');
+  variable_del('googleanalytics_privacy_donottrack');
   variable_del('googleanalytics_translation_set');
 
   // Remove backup variables if exits. Remove this code in D8.

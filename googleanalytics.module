@@ -280,11 +280,25 @@ function googleanalytics_user($type, $edit, &$account, $category = NULL) {
             break;
         }
 
+        // Disable tracking for visitors who have opted out from tracking via DNT (Do-Not-Track) header.
+        $disabled = FALSE;
+        if (variable_get('googleanalytics_privacy_donottrack', 1) && !empty($_SERVER['HTTP_DNT'])) {
+          $disabled = TRUE;
+
+          // Override settings value.
+          $account->googleanalytics['custom'] = FALSE;
+
+          $description .= '<span class="admin-disabled">';
+          $description .= ' ' . t('You have opted out from tracking via browser privacy settings.');
+          $description .= '</span>';
+        }
+
         $form['googleanalytics']['custom'] = array(
           '#type' => 'checkbox',
           '#title' => t('Enable user tracking'),
           '#description' => $description,
-          '#default_value' => isset($account->googleanalytics['custom']) ? $account->googleanalytics['custom'] : ($custom == 1)
+          '#default_value' => isset($account->googleanalytics['custom']) ? $account->googleanalytics['custom'] : ($custom == 1),
+          '#disabled' => $disabled,
         );
 
         return $form;
@@ -387,8 +401,11 @@ function _googleanalytics_visibility_user($account) {
 
   $enabled = FALSE;
 
+  // Disable tracking for visitors who have opted out from tracking via DNT (Do-Not-Track) header.
+  $dnt = (variable_get('googleanalytics_privacy_donottrack', 1) && !empty($_SERVER['HTTP_DNT'])) ? TRUE : FALSE;
+
   // Is current user a member of a role that should be tracked?
-  if (_googleanalytics_visibility_roles($account)) {
+  if (!$dnt && _googleanalytics_visibility_roles($account)) {
 
     // Use the user's block visibility setting, if necessary.
     if (($custom = variable_get('googleanalytics_custom', 0)) != 0) {
