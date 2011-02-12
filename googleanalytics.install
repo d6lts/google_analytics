@@ -48,7 +48,6 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_js_scope');
   variable_del('googleanalytics_last_cache');
   variable_del('googleanalytics_pages');
-  variable_del('googleanalytics_privacy_donottrack');
   variable_del('googleanalytics_roles');
   variable_del('googleanalytics_segmentation');
   variable_del('googleanalytics_site_search');
@@ -396,4 +395,36 @@ function googleanalytics_update_7004() {
   variable_del('googleanalytics_visibility');
 
   return t('Renamed "googleanalytics_visibility" settings variable to googleanalytics_visibility_pages.');
+}
+
+/**
+ * Path visibility filter setting should hide "batch" path.
+ */
+function googleanalytics_update_7005() {
+  // Latest pages setting.
+  $pages = array(
+    'admin',
+    'admin/*',
+    'user/*/*',
+    'node/add*',
+    'node/*/*',
+  );
+
+  $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('googleanalytics_pages', implode("\n", $pages))));
+  if (empty($diff)) {
+    // No diff to latest settings found. Update with new settings.
+    $pages = array(
+      'admin',
+      'admin/*',
+      'batch',
+      'node/add*',
+      'node/*/*',
+      'user/*/*',
+    );
+    variable_set('googleanalytics_pages', implode("\n", $pages));
+    return t('Added "batch" to path visibility filter setting.');
+  }
+  else {
+    return t('Custom path visibility filter setting found. Update skipped!');
+  }
 }
