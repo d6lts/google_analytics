@@ -412,7 +412,7 @@ function googleanalytics_update_7005() {
 
   $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('googleanalytics_pages', implode("\n", $pages))));
   if (empty($diff)) {
-    // No diff to latest settings found. Update with new settings.
+    // No diff to previous settings found. Update with new settings.
     $pages = array(
       'admin',
       'admin/*',
