@@ -401,7 +401,7 @@ function googleanalytics_update_7004() {
  * Path visibility filter setting should hide "batch" path.
  */
 function googleanalytics_update_7005() {
-  // Latest pages setting.
+  // Current pages setting.
   $pages = array(
     'admin',
     'admin/*',
