@@ -98,6 +98,20 @@ Drupal.behaviors.trackingSettingsSummary = {
         return Drupal.t('Multiple top-level domains');
       }
     });
+
+    $('fieldset#edit-privacy', context).drupalSetSummary(function (context) {
+      var vals = [];
+      if ($('input#edit-googleanalytics-tracker-anonymizeip', context).is(':checked')) {
+        vals.push('Anonymize IP');
+      }
+      if ($('input#edit-googleanalytics-privacy-donottrack', context).is(':checked')) {
+        vals.push('Universal web tracking opt-out');
+      }
+      if (!vals.length) {
+        return Drupal.t('No privacy');
+      }
+      return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
+    });
   }
 };
 
