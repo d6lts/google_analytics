@@ -8,7 +8,7 @@ $(document).ready(function() {
   // characters are [ ] { } ( ) * + ? - . , \ ^ $ # and whitespace. The character | is excluded
   // in this function as it's used to separate the domains names.
   RegExp.escapeDomains = function(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&");
+    return (text) ? text.replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&") : '';
   }
 
   // Attach onclick event to document only and catch clicks on all elements.
