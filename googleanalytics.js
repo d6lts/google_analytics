@@ -13,7 +13,7 @@ $(document).ready(function() {
 
   // Attach onclick event to document only and catch clicks on all elements.
   $(document.body).click(function(event) {
-    // Catch the closest link of a clicked element.
+    // Catch the closest surrounding link of a clicked element.
     $(event.target).closest("a,area").each(function() {
 
       var ga = Drupal.settings.googleanalytics;
