@@ -454,7 +454,7 @@ function _googleanalytics_visibility_user($account) {
 
   // Disable tracking if caching is disabled or a visitors is logged in and
   // have opted out from tracking via DNT (Do-Not-Track) header.
-  $dnt = (($account->uid || variable_get('googleanalytics_cache', 0) == 0) && variable_get('googleanalytics_privacy_donottrack', 1) && !empty($_SERVER['HTTP_DNT'])) ? TRUE : FALSE;
+  $dnt = (($account->uid || variable_get('cache', 0) == 0) && variable_get('googleanalytics_privacy_donottrack', 1) && !empty($_SERVER['HTTP_DNT'])) ? TRUE : FALSE;
 
   // Is current user a member of a role that should be tracked?
   if (!$dnt && _googleanalytics_visibility_roles($account)) {
