@@ -13,8 +13,8 @@ $(document).ready(function() {
 
   // Attach onclick event to document only and catch clicks on all elements.
   $(document.body).click(function(event) {
-    // Catch only the first parent link of a clicked element.
-    $(event.target).parents("a:first,area:first").andSelf().filter("a,area").each(function() {
+    // Catch only closest link of a clicked element.
+    $(event.target).closest("a,area").each(function() {
 
       var ga = Drupal.settings.googleanalytics;
       // Expression to check for absolute internal links.
