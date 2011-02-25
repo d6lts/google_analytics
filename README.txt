@@ -1,4 +1,3 @@
-// $Id$
 
 Module: Google Analytics
 Author: Alexander Hass <http://drupal.org/user/85918>
