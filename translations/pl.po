@@ -1,4 +1,3 @@
-# $Id$
 #
 # Polski / Polish translation of Drupal (google_analytics.module)
 # Copyright 2008 <bartlomiej.opajdowski@optionall.pl>
