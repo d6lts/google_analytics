@@ -238,11 +238,11 @@ function googleanalytics_page_alter(&$page) {
     if (!empty($segmentation)) {
       $script .= $segmentation;
     }
-    if (!empty($codesnippet_before)) {
-      $script .= $codesnippet_before;
-    }
     if (!empty($custom_var)) {
       $script .= $custom_var;
+    }
+    if (!empty($codesnippet_before)) {
+      $script .= $codesnippet_before;
     }
     if (empty($url_custom)) {
       $script .= '_gaq.push(["_trackPageview"]);';
