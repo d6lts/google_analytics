@@ -403,12 +403,8 @@ function _googleanalytics_visibility_user($account) {
 
   $enabled = FALSE;
 
-  // Disable tracking if caching is disabled or a visitors is logged in and
-  // have opted out from tracking via DNT (Do-Not-Track) header.
-  $dnt = (($account->uid || variable_get('cache', 0) == 0) && variable_get('googleanalytics_privacy_donottrack', 1) && !empty($_SERVER['HTTP_DNT'])) ? TRUE : FALSE;
-
   // Is current user a member of a role that should be tracked?
-  if (!$dnt && _googleanalytics_visibility_roles($account)) {
+  if (_googleanalytics_visibility_header($account) && _googleanalytics_visibility_roles($account)) {
 
     // Use the user's block visibility setting, if necessary.
     if (($custom = variable_get('googleanalytics_custom', 0)) != 0) {
@@ -498,6 +494,21 @@ function _googleanalytics_visibility_pages() {
 
   }
   return $page_match;
+}
+
+/**
+ * Based on headers send by clients this function returns TRUE if GA code should
+ * be added to the current page and otherwise FALSE.
+ */
+function _googleanalytics_visibility_header($account) {
+
+  if (($account->uid || variable_get('cache', 0) == 0) && variable_get('googleanalytics_privacy_donottrack', 1) && !empty($_SERVER['HTTP_DNT'])) {
+    // Disable tracking if caching is disabled or a visitors is logged in and
+    // have opted out from tracking via DNT (Do-Not-Track) header.
+    return FALSE;
+  }
+
+  return TRUE;
 }
 
 /**
