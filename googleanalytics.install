@@ -5,22 +5,6 @@
  * Installation file for Google Analytics module.
  */
 
-function googleanalytics_install() {
-  variable_set('googleanalytics_visibility_roles', 0);
-  variable_set('googleanalytics_visibility', 0);
-
-  // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
-  $pages = array(
-    'admin',
-    'admin/*',
-    'batch',
-    'node/add*',
-    'node/*/*',
-    'user/*/*',
-  );
-  variable_set('googleanalytics_pages', implode("\n", $pages));
-}
-
 function googleanalytics_uninstall() {
   variable_del('googleanalytics_account');
   variable_del('googleanalytics_custom_var');

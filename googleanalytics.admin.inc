@@ -83,7 +83,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
 
   $access = user_access('use PHP for tracking visibility');
   $visibility = variable_get('googleanalytics_visibility', 0);
-  $pages = variable_get('googleanalytics_pages', '');
+  $pages = variable_get('googleanalytics_pages', GOOGLEANALYTICS_PAGES);
 
   if ($visibility == 2 && !$access) {
     $form['page_vis_settings'] = array();
