@@ -136,7 +136,7 @@ function googleanalytics_footer($main = 0) {
     // Site search tracking support.
     $url_custom = '';
     if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search' && $keys = search_get_keys()) {
-      $url_custom = '(window.googleanalytics_search_results) ? ' . drupal_to_js(url('search/'. arg(1), array('query' => 'search='. $keys))) . ' : ' . drupal_to_js(url('search/'. arg(1), array('query' => 'search=no-results:'. $keys .'&cat=no-results')));
+      $url_custom = '(window.googleanalytics_search_results) ? ' . drupal_to_js(url('search/'. arg(1), array('query' => 'search='. drupal_urlencode($keys)))) . ' : ' . drupal_to_js(url('search/'. arg(1), array('query' => 'search=no-results:'. drupal_urlencode($keys) .'&cat=no-results')));
     }
 
     // If this node is a translation of another node, pass the original
