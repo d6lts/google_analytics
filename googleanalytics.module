@@ -152,7 +152,7 @@ function googleanalytics_page_alter(&$page) {
     // Site search tracking support.
     $url_custom = '';
     if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search' && $keys = googleanalytics_search_get_keys()) {
-      $url_custom = drupal_json_encode(rawurldecode(url('search/' . arg(1), array('query' => array('search' => $keys)))));
+      $url_custom = '(window.googleanalytics_search_results) ? ' . drupal_json_encode(rawurldecode(url('search/' . arg(1), array('query' => array('search' => $keys))))) . ' : ' . drupal_json_encode(rawurldecode(url('search/' . arg(1), array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results')))));
     }
 
     // If this node is a translation of another node, pass the original
@@ -357,6 +357,36 @@ function googleanalytics_cron() {
 }
 
 /**
+ * Implements hook_preprocess_search_results().
+ *
+ * Collects and adds the number of search results to the head.
+ */
+function googleanalytics_preprocess_search_results(&$variables) {
+  // There is no search result $variable available that hold the number of items
+  // found. But the pager item mumber can tell the number of search results.
+  global $pager_total_items;
+
+  drupal_add_js('window.googleanalytics_search_results = ' . intval($pager_total_items[0]) . ';', array('type' => 'inline', 'group' => JS_LIBRARY-1));
+}
+
+/**
+ * Helper function for grabbing search keys. Function is missing in D7.
+ *
+ * http://api.drupal.org/api/function/search_get_keys/6
+ */
+function googleanalytics_search_get_keys() {
+  static $return;
+  if (!isset($return)) {
+    // Extract keys as remainder of path
+    // Note: support old GET format of searches for existing links.
+    $path = explode('/', $_GET['q'], 3);
+    $keys = empty($_REQUEST['keys']) ? '' : $_REQUEST['keys'];
+    $return = count($path) == 3 ? $path[2] : $keys;
+  }
+  return $return;
+}
+
+/**
  * Download/Synchronize/Cache tracking code file locally.
  *
  * @param $location
@@ -423,23 +453,6 @@ function googleanalytics_clear_js_cache() {
 
     watchdog('googleanalytics', 'Local cache has been purged.', array(), WATCHDOG_INFO);
   }
-}
-
-/**
- * Helper function for grabbing search keys. Function is missing in D7.
- *
- * http://api.drupal.org/api/function/search_get_keys/6
- */
-function googleanalytics_search_get_keys() {
-  static $return;
-  if (!isset($return)) {
-    // Extract keys as remainder of path
-    // Note: support old GET format of searches for existing links.
-    $path = explode('/', $_GET['q'], 3);
-    $keys = empty($_REQUEST['keys']) ? '' : $_REQUEST['keys'];
-    $return = count($path) == 3 ? $path[2] : $keys;
-  }
-  return $return;
 }
 
 /**
