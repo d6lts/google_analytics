@@ -53,54 +53,6 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#default_value' => variable_get('googleanalytics_domain_mode', 0),
   );
 
-  // Standard tracking configurations.
-  $form['user_vis_settings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('User specific tracking settings'),
-    '#collapsible' => TRUE,
-  );
-  $form['user_vis_settings']['googleanalytics_custom'] = array(
-    '#type' => 'radios',
-    '#title' => t('Custom tracking settings'),
-    '#options' => array(
-      t('Users cannot control whether they are tracked or not.'),
-      t('Track users by default, but let individual users to opt out.'),
-      t('Do not track users by default, but let individual users to opt in.')
-    ),
-    '#description' => t('Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference.', array('%permission' => t('opt-in or out of tracking'))),
-    '#default_value' => variable_get('googleanalytics_custom', 0),
-  );
-
-  // Render the role overview.
-  $form['role_vis_settings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Role specific tracking settings'),
-    '#collapsible' => TRUE,
-  );
-
-  $form['role_vis_settings']['googleanalytics_visibility_roles'] = array(
-    '#type' => 'radios',
-    '#title' => t('Add tracking for specific roles'),
-    '#options' => array(
-      t('Add to the selected roles only'),
-      t('Add to every role except the selected ones'),
-    ),
-    '#default_value' => variable_get('googleanalytics_visibility_roles', 0),
-  );
-
-  $roles = user_roles();
-  $role_options = array();
-  foreach ($roles as $rid => $name) {
-    $role_options[$rid] = $name;
-  }
-  $form['role_vis_settings']['googleanalytics_roles'] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Roles'),
-    '#default_value' => variable_get('googleanalytics_roles', array()),
-    '#options' => $role_options,
-    '#description' => t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
-  );
-
   // Page specific visibility configurations.
   $form['page_vis_settings'] = array(
     '#type' => 'fieldset',
@@ -141,6 +93,54 @@ function googleanalytics_admin_settings_form(&$form_state) {
       '#rows' => 10,
     );
   }
+
+  // Render the role overview.
+  $form['role_vis_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Role specific tracking settings'),
+    '#collapsible' => TRUE,
+  );
+
+  $form['role_vis_settings']['googleanalytics_visibility_roles'] = array(
+    '#type' => 'radios',
+    '#title' => t('Add tracking for specific roles'),
+    '#options' => array(
+      t('Add to the selected roles only'),
+      t('Add to every role except the selected ones'),
+    ),
+    '#default_value' => variable_get('googleanalytics_visibility_roles', 0),
+  );
+
+  $roles = user_roles();
+  $role_options = array();
+  foreach ($roles as $rid => $name) {
+    $role_options[$rid] = $name;
+  }
+  $form['role_vis_settings']['googleanalytics_roles'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Roles'),
+    '#default_value' => variable_get('googleanalytics_roles', array()),
+    '#options' => $role_options,
+    '#description' => t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
+  );
+
+  // Standard tracking configurations.
+  $form['user_vis_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('User specific tracking settings'),
+    '#collapsible' => TRUE,
+  );
+  $form['user_vis_settings']['googleanalytics_custom'] = array(
+    '#type' => 'radios',
+    '#title' => t('Custom tracking settings'),
+    '#options' => array(
+      t('Users cannot control whether they are tracked or not.'),
+      t('Track users by default, but let individual users to opt out.'),
+      t('Do not track users by default, but let individual users to opt in.')
+    ),
+    '#description' => t('Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference.', array('%permission' => t('opt-in or out of tracking'))),
+    '#default_value' => variable_get('googleanalytics_custom', 0),
+  );
 
   // Link specific configurations.
   $form['linktracking'] = array(
