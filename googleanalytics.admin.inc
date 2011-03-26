@@ -28,6 +28,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
   $form['domain_tracking'] = array(
     '#type' => 'fieldset',
     '#title' => t('Domains'),
+  	'#collapsible' => TRUE,
   );
 
   global $cookie_domain;
