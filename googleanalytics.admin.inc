@@ -25,6 +25,33 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#description' => t('This ID is unique to each site you want to track separately, and is in the form of UA-xxxxxxx-yy. To get a Web Property ID, <a href="@analytics">register your site with Google Analytics</a>, or if you already have registered your site, go to your Google Analytics Settings page to see the ID next to every site profile. <a href="@webpropertyid">Find more information in the documentation</a>.', array('@analytics' => 'http://www.google.com/analytics/', '@webpropertyid' => 'http://code.google.com/apis/analytics/docs/concepts/gaConceptsAccounts.html#webProperty')),
   );
 
+  $form['domain_tracking'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Domains'),
+  );
+
+  global $cookie_domain;
+  $multiple_sub_domains = array();
+  foreach (array('www', 'app', 'shop') as $subdomain) {
+    if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
+      $multiple_sub_domains[] = $subdomain . $cookie_domain;
+    }
+    // IP addresses or localhost.
+    else {
+      $multiple_sub_domains[] = $subdomain . '.example.com';
+    }
+  }
+
+  $form['domain_tracking']['googleanalytics_domain_mode'] = array(
+    '#type' => 'radios',
+    '#title' => t('What are you tracking?'),
+    '#options' => array(
+      0 => t('A single domain (default)') . '<div class="description">' . t('Domain: @domain', array('@domain' => $_SERVER['HTTP_HOST'])) . '</div>',
+      1 => t('One domain with multiple subdomains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_sub_domains))) . '</div>',
+    ),
+    '#default_value' => variable_get('googleanalytics_domain_mode', 0),
+  );
+
   // Standard tracking configurations.
   $form['user_vis_settings'] = array(
     '#type' => 'fieldset',

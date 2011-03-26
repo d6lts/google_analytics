@@ -210,6 +210,17 @@ function googleanalytics_footer($main = 0) {
       // a workaround until "_anonymizeIp" has been implemented/fixed.
       $script .= '_gaq.push(["_gat._anonymizeIp"]);';
     }
+
+    // Domain tracking type.
+    global $cookie_domain;
+    $domain_mode = variable_get('googleanalytics_domain_mode', 0);
+
+    // Per RFC 2109, cookie domains must contain at least one dot other than the
+    // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
+    if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
+      $script .= '_gaq.push(["_setDomainName", ' . drupal_json_encode($cookie_domain) . ']);';
+    }
+
     if (!empty($segmentation)) {
       $script .= $segmentation;
     }
