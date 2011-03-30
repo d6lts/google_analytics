@@ -267,6 +267,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     $form['googleanalytics_custom_var']['slots'][$i]['value'] = array(
       '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['value']) ? $googleanalytics_custom_vars['slots'][$i]['value'] : '',
       '#description' => ($token_enabled ? t('The custom variable value. You may use tokens in this field.') : t('The custom variable value.')),
+      '#maxlength' => 255,
       '#type' => 'textfield',
     );
     if ($token_enabled) {
