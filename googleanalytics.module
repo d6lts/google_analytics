@@ -537,31 +537,27 @@ function _googleanalytics_visibility_header($account) {
 }
 
 /**
- * Implementation of hook_token_values().
- */
-function googleanalytics_token_values($type, $object = NULL, $options = array()) {
-  if ($type == 'user') {
-    if (!empty($object->roles)) {
-      $account = $object;
-    }
-    else {
-      $account = user_load(array('uid' => $GLOBALS['user']->uid));
-    }
-
-    $tokens['user-role-names'] = implode(',', $account->roles);
-    $tokens['user-role-ids'] = implode(',', array_keys($account->roles));
-
-    return $tokens;
-  }
-}
-
-/**
  * Implementation of hook_token_list().
  */
 function googleanalytics_token_list($type = 'all') {
   if ($type == 'user' || $type == 'all') {
     $tokens['user']['user-role-names'] = t('The role names the user account is a member of as comma separated list.');
     $tokens['user']['user-role-ids'] = t('The role ids the user account is a member of as comma separated list.');
+    return $tokens;
+  }
+}
+
+/**
+ * Implementation of hook_token_values().
+ */
+function googleanalytics_token_values($type, $object = NULL, $options = array()) {
+  if ($type == 'user' && !empty($object->roles)) {
+    $account = $object;
+
+    // Basic user account information.
+    $tokens['user-role-names'] = implode(',', $account->roles);
+    $tokens['user-role-ids'] = implode(',', array_keys($account->roles));
+
     return $tokens;
   }
 }
