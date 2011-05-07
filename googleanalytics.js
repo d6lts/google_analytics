@@ -33,15 +33,8 @@ $(document).ready(function() {
           _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
         else if (ga.trackOutgoing && this.href) {
-          if (ga.trackOutboundAsPageview) {
-            // Track all external links as page views after URL cleanup.
-            // Currently required, if click should be tracked as goal.
-            _gaq.push(["_trackPageview", '/outbound/' + this.href.replace(/^(https?|ftp|news|nntp|telnet|irc|ssh|sftp|webcal):\/\//i, '').split('/').join('--')]);
-          }
-          else {
-            // External link clicked.
-            _gaq.push(["_trackEvent", "Outbound links", "Click", this.href]);
-          }
+          // External link clicked.
+          _gaq.push(["_trackEvent", "Outbound links", "Click", this.href]);
         }
       }
     });
