@@ -113,9 +113,6 @@ function googleanalytics_page_alter(&$page) {
       $link_settings['trackDownload'] = $track_download;
       $link_settings['trackDownloadExtensions'] = $trackfiles_extensions;
     }
-    if ($track_outbound_as_pageview = variable_get('googleanalytics_trackoutboundaspageview', 0)) {
-      $link_settings['trackOutboundAsPageview'] = $track_outbound_as_pageview;
-    }
     if ($track_domain_mode = variable_get('googleanalytics_domain_mode', 0)) {
       $link_settings['trackDomainMode'] = $track_domain_mode;
     }

@@ -48,11 +48,6 @@ $(document).ready(function() {
             // Top-level cross domain clicked. document.location is handled by _link internally.
             _gaq.push(["_link", this.href]);
           }
-          else if (ga.trackOutboundAsPageview) {
-            // Track all external links as page views after URL cleanup.
-            // Currently required, if click should be tracked as goal.
-            _gaq.push(["_trackPageview", '/outbound/' + this.href.replace(/^(https?|ftp|news|nntp|telnet|irc|ssh|sftp|webcal):\/\//i, '').split('/').join('--')]);
-          }
           else {
             // External link clicked.
             _gaq.push(["_trackEvent", "Outbound links", "Click", this.href]);

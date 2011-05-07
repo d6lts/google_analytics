@@ -43,7 +43,6 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_trackfiles_extensions');
   variable_del('googleanalytics_trackmailto');
   variable_del('googleanalytics_trackoutbound');
-  variable_del('googleanalytics_trackoutboundaspageview');
   variable_del('googleanalytics_translation_set');
   variable_del('googleanalytics_visibility_pages');
   variable_del('googleanalytics_visibility_roles');
@@ -413,4 +412,13 @@ function googleanalytics_update_7005() {
   else {
     return t('Custom path visibility filter setting found. Update skipped!');
   }
+}
+
+/**
+ * Delete obsolete trackOutboundAsPageview variable.
+ */
+function googleanalytics_update_7006() {
+  variable_del('googleanalytics_trackoutboundaspageview');
+
+  return t('Deleted obsolete trackOutboundAsPageview variable.');
 }
