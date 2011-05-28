@@ -57,13 +57,13 @@ Drupal.behaviors.trackingSettingsSummary = {
     $('fieldset#edit-linktracking', context).drupalSetSummary(function (context) {
       var vals = [];
       if ($('input#edit-googleanalytics-trackoutbound', context).is(':checked')) {
-        vals.push('Outbound links');
+        vals.push(Drupal.t('Outbound links'));
       }
       if ($('input#edit-googleanalytics-trackmailto', context).is(':checked')) {
-        vals.push('Mailto links');
+        vals.push(Drupal.t('Mailto links'));
       }
       if ($('input#edit-googleanalytics-trackfiles', context).is(':checked')) {
-        vals.push('Downloads');
+        vals.push(Drupal.t('Downloads'));
       }
       if (!vals.length) {
         return Drupal.t('Not tracked');
@@ -74,10 +74,10 @@ Drupal.behaviors.trackingSettingsSummary = {
     $('fieldset#edit-search-and-adsense', context).drupalSetSummary(function (context) {
       var vals = [];
       if ($('input#edit-googleanalytics-site-search', context).is(':checked')) {
-        vals.push('Site search');
+        vals.push(Drupal.t('Site search'));
       }
       if ($('input#edit-googleanalytics-trackadsense', context).is(':checked')) {
-        vals.push('AdSense ads');
+        vals.push(Drupal.t('AdSense ads'));
       }
       if (!vals.length) {
         return Drupal.t('Not tracked');
@@ -101,10 +101,10 @@ Drupal.behaviors.trackingSettingsSummary = {
     $('fieldset#edit-privacy', context).drupalSetSummary(function (context) {
       var vals = [];
       if ($('input#edit-googleanalytics-tracker-anonymizeip', context).is(':checked')) {
-        vals.push('Anonymize IP');
+        vals.push(Drupal.t('Anonymize IP'));
       }
       if ($('input#edit-googleanalytics-privacy-donottrack', context).is(':checked')) {
-        vals.push('Universal web tracking opt-out');
+        vals.push(Drupal.t('Universal web tracking opt-out'));
       }
       if (!vals.length) {
         return Drupal.t('No privacy');
