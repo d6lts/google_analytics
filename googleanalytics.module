@@ -237,6 +237,11 @@ function googleanalytics_footer($main = 0) {
     else {
       $script .= '_gaq.push(["_trackPageview", ' . $url_custom . ']);';
     }
+
+    if (variable_get('googleanalytics_trackpageloadtime', 0)) {
+      $script .= '_gaq.push(["_trackPageLoadTime"]);';
+    }
+
     if (!empty($codesnippet_after)) {
       $script .= $codesnippet_after;
     }
