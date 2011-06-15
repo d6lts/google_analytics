@@ -173,8 +173,12 @@ function googleanalytics_footer($main = 0) {
         $custom_var_scope = !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3;
 
         if (module_exists('token')) {
+          $types = array('global' => NULL, 'user' => $user);
           $node = menu_get_object();
-          $custom_var_value = token_replace_multiple($custom_var_value, array('global' => NULL, 'user' => $user, 'node' => $node), '[', ']', array('clear' => TRUE));
+          if (is_object($node)) {
+            $types += array('node' => $node);
+          }
+          $custom_var_value = token_replace_multiple($custom_var_value, $types, '[', ']', array('clear' => TRUE));
         }
 
         // Suppress empty custom variables.
