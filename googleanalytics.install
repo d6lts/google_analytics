@@ -422,3 +422,12 @@ function googleanalytics_update_7006() {
 
   return t('Deleted obsolete trackOutboundAsPageview variable.');
 }
+
+/**
+* Delete obsolete googleanalytics_trackpageloadtime variable.
+*/
+function googleanalytics_update_7007() {
+  variable_del('googleanalytics_trackpageloadtime');
+
+  return t('Deleted obsolete googleanalytics_trackpageloadtime variable.');
+}
