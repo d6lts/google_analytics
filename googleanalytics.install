@@ -399,3 +399,15 @@ function googleanalytics_update_6303() {
 
   return $ret;
 }
+
+/**
+ * Delete obsolete googleanalytics_trackpageloadtime variable.
+ */
+function googleanalytics_update_6304() {
+  $ret = array();
+
+  variable_del('googleanalytics_trackpageloadtime');
+  $ret[] = array('success' => TRUE, 'query' => 'Deleted obsolete googleanalytics_trackpageloadtime variable.');
+
+  return $ret;
+}
