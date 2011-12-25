@@ -16,7 +16,6 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_trackmailto');
   variable_del('googleanalytics_trackfiles');
   variable_del('googleanalytics_trackfiles_extensions');
-  variable_del('googleanalytics_trackpageloadtime');
   variable_del('googleanalytics_cache');
   variable_del('googleanalytics_last_cache');
   variable_del('googleanalytics_site_search');
