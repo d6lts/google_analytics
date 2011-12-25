@@ -371,14 +371,6 @@ function googleanalytics_admin_settings_form($form_state) {
     );
   }
 
-  // Allow tracking of page load times.
-  $form['advanced']['googleanalytics_trackpageloadtime'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Site Speed reporting'),
-    '#default_value' => variable_get('googleanalytics_trackpageloadtime', 0),
-    '#description' => t('The Site Speed report measures the page load time (latency) for a sample of pageviews on your website pages. For more information see <a href="@url">Site Speed</a> page.', array('@url' => 'https://www.google.com/support/analyticshelp/bin/answer.py?answer=1205784'))
-  );
-
   $form['advanced']['codesnippet'] = array(
     '#type' => 'fieldset',
     '#title' => t('Custom JavaScript code'),
