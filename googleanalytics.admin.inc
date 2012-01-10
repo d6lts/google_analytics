@@ -28,7 +28,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
   $form['domain_tracking'] = array(
     '#type' => 'fieldset',
     '#title' => t('Domains'),
-  	'#collapsible' => TRUE,
+    '#collapsible' => TRUE,
   );
 
   global $cookie_domain;
@@ -228,8 +228,8 @@ function googleanalytics_admin_settings_form(&$form_state) {
   }
 
   $form['googleanalytics_custom_var'] = array(
-  	'#collapsed' => TRUE,
-  	'#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#collapsible' => TRUE,
     '#description' => t('You can add Google Analytics <a href="!custom_var_documentation">Custom Variables</a> here. These will be added to every page that Google Analytics tracking code appears on. Google Analytics will only accept custom variables if the <em>name</em> and <em>value</em> combined are less than 64 bytes after URL encoding. Keep the names as short as possible and expect long values to get trimmed. You may use tokens in custom variable values. Global and user tokens are always available; on node pages, node tokens are also available.', array('!custom_var_documentation' => 'http://code.google.com/intl/en/apis/analytics/docs/tracking/gaTrackingCustomVariables.html')),
     '#theme' => 'googleanalytics_admin_custom_var_table',
     '#title' => t('Custom variables'),
