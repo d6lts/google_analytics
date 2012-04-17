@@ -36,6 +36,15 @@ function googleanalytics_theme() {
 }
 
 /**
+ * Implementation of hook_theme_registry_alter().
+ */
+function googleanalytics_theme_registry_alter(&$registry) {
+  // Add custom preprocess function to the beginning of the stack.
+  // This allows use of the drupal_add_js() function before $vars is populated.
+  array_unshift($registry['page']['preprocess functions'], 'googleanalytics_add_js');
+}
+
+/**
  * Implementation of hook_perm().
  */
 function googleanalytics_perm() {
@@ -60,9 +69,9 @@ function googleanalytics_menu() {
 }
 
 /**
- * Implementation of hook_init().
+ * Adds Google Analytics tracking scripts.
  */
-function googleanalytics_init() {
+function googleanalytics_add_js(&$vars, $hook) {
   global $user;
 
   $id = variable_get('googleanalytics_account', '');
@@ -93,21 +102,6 @@ function googleanalytics_init() {
       drupal_add_js(array('googleanalytics' => $link_settings), 'setting', 'header');
       drupal_add_js(drupal_get_path('module', 'googleanalytics') .'/googleanalytics.js', 'module', 'header');
     }
-  }
-}
-
-/**
- * Implementation of hook_footer() to insert JavaScript at the end of the page.
- */
-function googleanalytics_footer($main = 0) {
-  global $user;
-
-  $id = variable_get('googleanalytics_account', '');
-
-  // 1. Check if the GA account number has a value.
-  // 2. Track page views based on visibility value.
-  // 3. Check if we should track the currently active user's role.
-  if (!empty($id) && _googleanalytics_visibility_pages() && _googleanalytics_visibility_user($user)) {
 
     // Add User profile segmentation values.
     $profile_fields = variable_get('googleanalytics_segmentation', array());
@@ -263,7 +257,7 @@ function googleanalytics_footer($main = 0) {
     $script .= 's.parentNode.insertBefore(ga, s);';
     $script .= '})();';
 
-    drupal_add_js($script, 'inline', 'footer');
+    drupal_add_js($script, 'inline', 'header');
   }
 }
 
@@ -486,7 +480,7 @@ function _googleanalytics_visibility_roles($account) {
 function _googleanalytics_visibility_pages() {
   static $page_match;
 
-  // Cache visibility setting in hook_init for hook_footer.
+  // Cache visibility setting in googleanalytics_add_js.
   if (!isset($page_match)) {
 
     $visibility = variable_get('googleanalytics_visibility', 0);
