@@ -286,6 +286,19 @@ function googleanalytics_page_alter(&$page) {
 }
 
 /**
+ * Implements hook_field_extra_fields().
+ */
+function googleanalytics_field_extra_fields() {
+  $extra['user']['user']['form']['googleanalytics'] = array(
+      'label' => t('Google Analytics configuration'),
+      'description' => t('Google Analytics module form element.'),
+      'weight' => 3,
+  );
+
+  return $extra;
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  *
  * Allow users to decide if tracking code will be added to pages or not.
