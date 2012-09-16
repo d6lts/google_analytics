@@ -187,13 +187,13 @@ function googleanalytics_footer($main = 0) {
         }
 
         // The length of the string used for the 'name' and the length of the
-        // string used for the 'value' must not exceed 64 bytes after url encoding.
+        // string used for the 'value' must not exceed 128 bytes after url encoding.
         $name_length = drupal_strlen(rawurlencode($custom_var_name));
         $tmp_value = rawurlencode($custom_var_value);
         $value_length = drupal_strlen($tmp_value);
-        if ($name_length + $value_length > 64) {
+        if ($name_length + $value_length > 128) {
           // Trim value and remove fragments of url encoding.
-          $tmp_value = rtrim(substr($tmp_value, 0, 63 - $name_length), '%0..9A..F');
+          $tmp_value = rtrim(substr($tmp_value, 0, 127 - $name_length), '%0..9A..F');
           $custom_var_value = urldecode($tmp_value);
         }
 
