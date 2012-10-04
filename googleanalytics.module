@@ -193,10 +193,11 @@ function googleanalytics_page_alter(&$page) {
         if (is_object($node)) {
           $types += array('node' => $node);
         }
+        $custom_var_name = token_replace($custom_var_name, $types, array('clear' => TRUE));
         $custom_var_value = token_replace($custom_var_value, $types, array('clear' => TRUE));
 
-        // Suppress empty custom variables.
-        if (!is_numeric($custom_var_value) && empty($custom_var_value)) {
+        // Suppress empty custom names and/or variables.
+        if (!drupal_strlen(trim($custom_var_name)) || !drupal_strlen(trim($custom_var_value))) {
           continue;
         }
 
