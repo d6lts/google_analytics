@@ -1,4 +1,4 @@
-name = "Google Analytics"
+name = Google Analytics
 description = Adds Google Analytics javascript tracking code to all your site's pages.
 core = 6.x
 package = Statistics
