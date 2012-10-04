@@ -285,7 +285,7 @@ function googleanalytics_update_6300() {
 
     variable_set('googleanalytics_codesnippet_before', $code_before);
 
-    drupal_set_message(Database::getConnection()->prefixTables("<strong>Attempted</strong> to upgrade Google Analytics custom 'before' code snippet. Backup of previous code snippet has been saved in database table '{variable}' as 'googleanalytics_codesnippet_before_backup_6300'. Please consult Google's <a href='http://code.google.com/intl/de-DE/apis/analytics/docs/tracking/asyncUsageGuide.html'>Asynchronous Tracking Usage Guide</a> if the upgrade was successfully."), 'warning');
+    drupal_set_message(Database::getConnection()->prefixTables("<strong>Attempted</strong> to upgrade Google Analytics custom 'before' code snippet. Backup of previous code snippet has been saved in database table '{variable}' as 'googleanalytics_codesnippet_before_backup_6300'. Please consult Google's <a href='https://developers.google.com/analytics/devguides/collection/gajs/'>Asynchronous Tracking Usage Guide</a> if the upgrade was successfully."), 'warning');
     $messages[] = t('Upgraded custom "before" code snippet.');
   }
 
@@ -355,10 +355,10 @@ function googleanalytics_update_7002() {
     $googleanalytics_custom_vars['slots'][1]['scope'] = 1; // Sets the scope to visitor-level.
 
     variable_set('googleanalytics_custom_var', $googleanalytics_custom_vars);
-    return t('The deprecated profile segmentation setting for "User roles" has been added to custom variables. You need to deselect all selected profile fields in <a href="@admin">Google Analytics settings</a> and upgrade other profile fields manually or you may loose tracking data in future! See Google Analytics <a href="@customvar">Custom Variables</a> for more information.', array('@customvar' => 'http://code.google.com/intl/en/apis/analytics/docs/tracking/gaTrackingCustomVariables.html', '@admin' => url('admin/config/system/googleanalytics')));
+    return t('The deprecated profile segmentation setting for "User roles" has been added to custom variables. You need to deselect all selected profile fields in <a href="@admin">Google Analytics settings</a> and upgrade other profile fields manually or you may loose tracking data in future! See Google Analytics <a href="@customvar">Custom Variables</a> for more information.', array('@customvar' => 'https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables', '@admin' => url('admin/config/system/googleanalytics')));
   }
   else {
-    return t('You need to deselect all selected profile fields in <a href="@admin">Google Analytics settings</a> and upgrade other profile fields manually or you may loose tracking data in future! See Google Analytics <a href="@customvar">Custom Variables</a> for more information.', array('@customvar' => 'http://code.google.com/intl/en/apis/analytics/docs/tracking/gaTrackingCustomVariables.html', '@admin' => url('admin/config/system/googleanalytics')));
+    return t('You need to deselect all selected profile fields in <a href="@admin">Google Analytics settings</a> and upgrade other profile fields manually or you may loose tracking data in future! See Google Analytics <a href="@customvar">Custom Variables</a> for more information.', array('@customvar' => 'https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables', '@admin' => url('admin/config/system/googleanalytics')));
   }
 }
 
