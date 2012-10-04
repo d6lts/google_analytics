@@ -1,4 +1,4 @@
-name = "Google Analytics"
+name = Google Analytics
 description = Allows your site to be tracked by Google Analytics by adding a Javascript tracking code to every page.
 core = 7.x
 package = Statistics
