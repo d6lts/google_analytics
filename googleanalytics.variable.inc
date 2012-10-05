@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of variables for Variable API module..
+ * Definition of variables for Variable API module.
  */
 
 /**
