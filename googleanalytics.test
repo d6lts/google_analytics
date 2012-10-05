@@ -169,15 +169,12 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
       'name' => t('Google Analytics Custom Variables tests'),
       'description' => t('Test custom variables functionality of Google Analytics module.'),
       'group' => 'Google Analytics',
+      'dependencies' => array('token'),
     );
   }
 
   function setUp() {
-    // @todo: Enabling token module fails. The reason maybe that GA does not
-    // require token module and therefore it's not set in the .info file.
-    // No idea how to fake this for the testing infrastucture.
-    //parent::setUp('googleanalytics', 'token');
-    parent::setUp('googleanalytics');
+    parent::setUp('googleanalytics', 'token');
 
     $permissions = array(
       'access administration pages',
