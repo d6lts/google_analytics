@@ -575,6 +575,8 @@ function _googleanalytics_contains_forbidden_token($token_string) {
     ':author:edit-url]',
     ':author:url]',
     ':author:path]',
+    ':current-user]',
+    ':current-user:original]',
     ':fid]',
     ':mail]',
     ':name]',
@@ -589,6 +591,18 @@ function _googleanalytics_contains_forbidden_token($token_string) {
     'user:edit-url]',
     'user:url]',
     'user:path]',
+    'user:picture]',
+    // addressfield_tokens.module
+    ':first-name]',
+    ':last-name]',
+    ':name-line]',
+    ':mc-address]',
+    ':thoroughfare]',
+    ':premise]',
+    // realname.module
+    ':name-raw]',
+    // token.module
+    ':ip-address]',
   );
 
   return preg_match('/' . implode('|', array_map('preg_quote', $token_blacklist)) . '/i', $token_string);
