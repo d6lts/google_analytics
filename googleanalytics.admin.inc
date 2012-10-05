@@ -564,6 +564,8 @@ function _googleanalytics_contains_forbidden_token($token_string) {
     '[mail]',
     '[account-url]',
     '[account-edit]',
+    // realname module
+    '[realname',
   );
 
   return preg_match('/' . implode('|', array_map('preg_quote', $token_blacklist)) . '/i', $token_string);
