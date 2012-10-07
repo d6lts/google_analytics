@@ -80,6 +80,24 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     // Test whether 404 not found tracking code is shown on non-existent pages.
     $this->drupalGet($this->randomName(64));
     $this->assertRaw('/404.html', '[testGoogleAnalyticsPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
+
+    // DNT Tests:
+    // Enable caching of pages for anonymous users.
+    variable_set('cache', 1);
+    // Test whether DNT headers will fail to disable embedding of tracking code.
+    $this->drupalGet('', array(), array('DNT: 1'));
+    $this->assertRaw('_gaq.push(["_trackPageview"]);', '[testGoogleAnalyticsDNTVisibility]: DNT header send from client, but page caching is enabled and tracker cannot removed.');
+    // DNT works only with caching of pages for anonymous users disabled.
+    variable_set('cache', 0);
+    $this->drupalGet('');
+    $this->assertRaw('_gaq.push(["_trackPageview"]);', '[testGoogleAnalyticsDNTVisibility]: Tracking is enabled without DNT header.');
+    // Test whether DNT header is able to remove the tracking code.
+    $this->drupalGet('', array(), array('DNT: 1'));
+    $this->assertNoRaw('_gaq.push(["_trackPageview"]);', '[testGoogleAnalyticsDNTVisibility]: DNT header received from client. Tracking has been disabled by browser.');
+    // Disable DNT feature and see if tracker is still embedded.
+    variable_set('googleanalytics_privacy_donottrack', 0);
+    $this->drupalGet('', array(), array('DNT: 1'));
+    $this->assertRaw('_gaq.push(["_trackPageview"]);', '[testGoogleAnalyticsDNTVisibility]: DNT feature is disabled, DNT header from browser has been ignored.');
   }
 
   function testGoogleAnalyticsTrackingCode() {
