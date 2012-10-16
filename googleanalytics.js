@@ -39,7 +39,7 @@ $(document).ready(function() {
         }
       }
       else {
-        if (ga.trackMailto && $(this).is("a[href^=mailto:],area[href^=mailto:]")) {
+        if (ga.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
           // Mailto link clicked.
           _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
