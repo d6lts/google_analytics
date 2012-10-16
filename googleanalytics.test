@@ -299,6 +299,52 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
   }
 }
 
+class GoogleAnalyticsStatusMessagesTest extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => t('Google Analytics status messages tests'),
+      'description' => t('Test status messages functionality of Google Analytics module.'),
+      'group' => 'Google Analytics',
+    );
+  }
+
+  function setUp() {
+    parent::setUp('googleanalytics');
+
+    $permissions = array(
+      'access administration pages',
+      'administer google analytics',
+    );
+
+    // User to set up google_analytics.
+    $this->admin_user = $this->drupalCreateUser($permissions);
+  }
+
+  function testGoogleAnalyticsStatusMessages() {
+    $ua_code = 'UA-123456-4';
+    variable_set('googleanalytics_account', $ua_code);
+
+    // Enable logging of errors only.
+    variable_set('googleanalytics_trackmessages', array('error' => 'error'));
+
+    $this->drupalPost('user/login', array(), 'Log in');
+    $this->assertRaw('_gaq.push(["_trackEvent", "Messages", "Error message", "Username field is required."]);', '[testGoogleAnalyticsStatusMessages]: _trackEvent "Username field is required." is shown.');
+    $this->assertRaw('_gaq.push(["_trackEvent", "Messages", "Error message", "Password field is required."]);', '[testGoogleAnalyticsStatusMessages]: _trackEvent "Password field is required." is shown.');
+
+    // @todo: investigate why drupal_set_message() fails.
+    //drupal_set_message('Example status message.', 'status');
+    //drupal_set_message('Example warning message.', 'warning');
+    //drupal_set_message('Example error message.', 'error');
+    //drupal_set_message('Example error <em>message</em> with html tags and <a href="http://example.com/">link</a>.', 'error');
+    //$this->drupalGet('');
+    //$this->assertNoRaw('_gaq.push(["_trackEvent", "Messages", "Status message", "Example status message."]);', '[testGoogleAnalyticsStatusMessages]: Example status message is not enabled for tracking.');
+    //$this->assertNoRaw('_gaq.push(["_trackEvent", "Messages", "Warning message", "Example warning message."]);', '[testGoogleAnalyticsStatusMessages]: Example warning message is not enabled for tracking.');
+    //$this->assertRaw('_gaq.push(["_trackEvent", "Messages", "Error message", "Example error message."]);', '[testGoogleAnalyticsStatusMessages]: Example error message is shown.');
+    //$this->assertRaw('_gaq.push(["_trackEvent", "Messages", "Error message", "Example error message with html tags and link."]);', '[testGoogleAnalyticsStatusMessages]: HTML has been stripped successful from Example error message with html tags and link.');
+  }
+}
+
 class GoogleAnalyticsRolesTest extends DrupalWebTestCase {
 
   public static function getInfo() {

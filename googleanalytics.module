@@ -127,6 +127,26 @@ function googleanalytics_page_alter(&$page) {
       drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.js');
     }
 
+    // Add messages tracking.
+    $message_events = '';
+    if ($message_types = variable_get('googleanalytics_trackmessages', array())) {
+      $message_types = array_values(array_filter($message_types));
+      $status_heading = array(
+        'status' => t('Status message'),
+        'warning' => t('Warning message'),
+        'error' => t('Error message'),
+      );
+
+      foreach (drupal_get_messages(NULL, FALSE) as $type => $messages) {
+        // Track only the selected message types.
+        if (in_array($type, $message_types)) {
+          foreach ($messages as $message) {
+            $message_events .= '_gaq.push(["_trackEvent", ' . drupal_json_encode(t('Messages')) . ', ' . drupal_json_encode($status_heading[$type]) . ', ' . drupal_json_encode(strip_tags($message)) . ']);';
+          }
+        }
+      }
+    }
+
     // Add User profile segmentation values.
     $profile_fields = variable_get('googleanalytics_segmentation', array());
     if (!empty($profile_fields)) {
@@ -255,6 +275,9 @@ function googleanalytics_page_alter(&$page) {
     }
     else {
       $script .= '_gaq.push(["_trackPageview", ' . $url_custom . ']);';
+    }
+    if (!empty($message_events)) {
+      $script .= $message_events;
     }
     if (!empty($codesnippet_after)) {
       $script .= $codesnippet_after;

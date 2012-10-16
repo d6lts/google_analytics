@@ -202,6 +202,23 @@ function googleanalytics_admin_settings_form($form_state) {
     '#maxlength' => 255,
   );
 
+  // Message specific configurations.
+  $form['tracking']['messagetracking'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Messages'),
+  );
+  $form['tracking']['messagetracking']['googleanalytics_trackmessages'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Track messages of type'),
+    '#default_value' => variable_get('googleanalytics_trackmessages', array()),
+    '#description' => t('This will track the selected message types shown to users. Tracking of form validation errors may help you identifying usability issues in your site. Keep in mind that Google allows a maximum of 500 events per session only and every message is tracked as one individual event. If the limit has been exceeded no further events are tracked, but normal page tracking is not effected. Messages from excluded pages cannot tracked.'),
+    '#options' => array(
+      'status' => t('Status message'),
+      'warning' => t('Warning message'),
+      'error' => t('Error message'),
+    ),
+  );
+
   // Google already have many translations, if not - they display a note to change the language.
   global $language;
   $form['tracking']['search_and_adsense'] = array(
