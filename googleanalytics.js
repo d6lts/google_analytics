@@ -1,14 +1,15 @@
 
 $(document).ready(function() {
 
+  // Expression to check for absolute internal links.
+  var isInternal = new RegExp("^(https?):\/\/" + window.location.host, "i");
+
   // Attach onclick event to document only and catch clicks on all elements.
   $(document.body).click(function(event) {
     // Catch only the first parent link of a clicked element.
     $(event.target).parents("a:first,area:first").andSelf().filter("a,area").each(function() {
 
       var ga = Drupal.settings.googleanalytics;
-      // Expression to check for absolute internal links.
-      var isInternal = new RegExp("^(https?):\/\/" + window.location.host, "i");
       // Expression to check for special links like gotwo.module /go/* links.
       var isInternalSpecial = new RegExp("(\/go\/.*)$", "i");
       // Expression to check for download links.
@@ -49,7 +50,7 @@ $(document).ready(function() {
   $(document).bind("cbox_complete", function() {
     var href = $.colorbox.element().attr("href");
     if (href) {
-      _gaq.push(["_trackPageview", href]);
+      _gaq.push(["_trackPageview", href.replace(isInternal, '')]);
     }
   });
 
