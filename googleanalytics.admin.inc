@@ -268,38 +268,7 @@ function googleanalytics_admin_settings_form($form_state) {
     '#default_value' => variable_get('googleanalytics_privacy_donottrack', 1),
   );
 
-  // Backward compatibility only.
-  // TODO: If currently not in use, hide the UI and later remove the code.
-  $segmentation = variable_get('googleanalytics_segmentation', array());
-
-  if (!empty($segmentation) || variable_get('googleanalytics_segmentation_DEPRECATED', FALSE)) {
-    $profile_enabled = module_exists('profile');
-    $form['segmentation'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Additional user information'),
-      '#collapsible' => TRUE,
-    );
-
-    // Compile a list of fields to show.
-    $fields = variable_get('googleanalytics_segmentation_default_fields', array('roles' => t('User roles')));
-    if ($profile_enabled) {
-      $result = db_query('SELECT name, title FROM {profile_field} ORDER BY weight');
-      foreach ($result as $record) {
-        $fields[$record->name] = $record->title;
-      }
-    }
-
-    $form['segmentation']['googleanalytics_segmentation'] = array(
-      '#type' => 'select',
-      '#title' => t('Segment users based on these selected properties') . ' <span class="admin-disabled">***DEPRECATED***</span>',
-      '#description' => t("You can supplement Google Analytics' basic IP address tracking of visitors by segmenting users based on these selected properties.") . ' <span class="admin-disabled">' . t('For most situations, Google recommend that you use Custom Variables to segment your visitors.') . '</span>' . (!$profile_enabled ? ' ' . t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') . ' ' . t('Section 7 of the <a href="@ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', array('@ga_tos' => 'http://www.google.com/analytics/terms/gb.html')) . ' ' . t('You can select multiple values.'),
-      '#default_value' => $segmentation,
-      '#options' => $fields,
-      '#size' => count($fields)>3 ? 10 : 3,
-      '#multiple' => TRUE,
-    );
-  }
-
+  // Custom variables.
   $form['googleanalytics_custom_var'] = array(
     '#collapsed' => TRUE,
     '#collapsible' => TRUE,

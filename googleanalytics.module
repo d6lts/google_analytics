@@ -146,26 +146,6 @@ function googleanalytics_page_alter(&$page) {
       }
     }
 
-    // Add User profile segmentation values.
-    $profile_fields = variable_get('googleanalytics_segmentation', array());
-    if (!empty($profile_fields)) {
-      // Invoke all modules having a hook_user_load() implemented.
-      // If the invoked modules extend the $user object, the additional
-      // data can be tracked.
-      module_invoke_all('user_load', array($user->uid => $user));
-
-      $fields = array();
-      foreach ($profile_fields as $field => $title) {
-        $fields[$field] = is_array($user->$field) ? implode(',', $user->$field) : $user->$field;
-      }
-
-      // Only show segmentation variable if there are specified fields.
-      $segmentation = '';
-      if (count($fields) > 0) {
-        $segmentation = '_gaq.push(["_setVar", ' . drupal_json_encode(implode(':', $fields)) . ']);';
-      }
-    }
-
     // Site search tracking support.
     $url_custom = '';
     if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search' && $keys = googleanalytics_search_get_keys()) {
@@ -260,9 +240,6 @@ function googleanalytics_page_alter(&$page) {
       $script .= '_gaq.push(["_setAllowLinker", true]);';
     }
 
-    if (!empty($segmentation)) {
-      $script .= $segmentation;
-    }
     if (!empty($custom_var)) {
       $script .= $custom_var;
     }
