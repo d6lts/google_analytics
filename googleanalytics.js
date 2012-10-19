@@ -16,8 +16,12 @@ $(document).ready(function() {
 
       // Is the clicked URL internal?
       if (isInternal.test(this.href)) {
+        // Skip 'click' tracking, if custom tracking events are bound.
+        if ($(this).is('.colorbox')) {
+          // Do nothing here. The custom event will handle all tracking.
+        }
         // Is download tracking activated and the file extension configured for download tracking?
-        if (ga.trackDownload && isDownload.test(this.href)) {
+        else if (ga.trackDownload && isDownload.test(this.href)) {
           // Download link clicked.
           var extension = isDownload.exec(this.href);
           _gaq.push(["_trackEvent", "Downloads", extension[1].toUpperCase(), this.href.replace(isInternal, '')]);
@@ -46,6 +50,16 @@ $(document).ready(function() {
       }
     });
   });
+
+  // Colorbox: This event triggers when the transition has completed and the
+  // newly loaded content has been revealed.
+  $(document).bind("cbox_complete", function() {
+    var href = $.colorbox.element().attr("href");
+    if (href) {
+      _gaq.push(["_trackPageview", href]);
+    }
+  });
+
 });
 
 /**
