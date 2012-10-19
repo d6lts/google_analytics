@@ -221,28 +221,33 @@ function googleanalytics_admin_settings_form($form_state) {
 
   // Google already have many translations, if not - they display a note to change the language.
   global $language;
-  $form['tracking']['search_and_adsense'] = array(
+  $form['tracking']['search_and_advertising'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Search and AdSense'),
+    '#title' => t('Search and Advertising'),
   );
 
   $site_search_dependencies = '<div class="admin-dependencies">';
   $site_search_dependencies .= t('Depends on: !dependencies', array('!dependencies' => (module_exists('search') ? t('@module (<span class="admin-enabled">enabled</span>)', array('@module' => 'Search')) : t('@module (<span class="admin-disabled">disabled</span>)', array('@module' => 'Search')))));
   $site_search_dependencies .= '</div>';
 
-  $form['tracking']['search_and_adsense']['googleanalytics_site_search'] = array(
+  $form['tracking']['search_and_advertising']['googleanalytics_site_search'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track internal search'),
     '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">Setting Up Site Search for a Profile</a>.', array('@url' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '1012264'))))) . $site_search_dependencies,
     '#default_value' => variable_get('googleanalytics_site_search', FALSE),
     '#disabled' => (module_exists('search') ? FALSE : TRUE),
   );
-
-  $form['tracking']['search_and_adsense']['googleanalytics_trackadsense'] = array(
+  $form['tracking']['search_and_advertising']['googleanalytics_trackadsense'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track AdSense ads'),
     '#description' => t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
     '#default_value' => variable_get('googleanalytics_trackadsense', FALSE),
+  );
+  $form['tracking']['search_and_advertising']['googleanalytics_trackdoubleclick'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track DoubleClick data'),
+    '#description' => t('If checked, the alternative Google <a href="@doubleclick">DoubleClick data tracking</a> is used to enable AdWords remarketing features. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', array('@doubleclick' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2444872'))), '@privacy' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2636405'))))),
+    '#default_value' => variable_get('googleanalytics_trackdoubleclick', FALSE),
   );
 
   // Privacy specific configurations.

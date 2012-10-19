@@ -82,13 +82,16 @@ Drupal.behaviors.trackingSettingsSummary = {
       return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
     });
 
-    $('fieldset#edit-search-and-adsense', context).drupalSetSummary(function (context) {
+    $('fieldset#edit-search-and-advertising', context).drupalSetSummary(function (context) {
       var vals = [];
       if ($('input#edit-googleanalytics-site-search', context).is(':checked')) {
         vals.push(Drupal.t('Site search'));
       }
       if ($('input#edit-googleanalytics-trackadsense', context).is(':checked')) {
         vals.push(Drupal.t('AdSense ads'));
+      }
+      if ($('input#edit-googleanalytics-trackdoubleclick', context).is(':checked')) {
+        vals.push(Drupal.t('DoubleClick data'));
       }
       if (!vals.length) {
         return Drupal.t('Not tracked');
