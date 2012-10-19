@@ -364,6 +364,7 @@ function googleanalytics_admin_settings_form($form_state) {
   $form['googleanalytics_custom_var']['googleanalytics_custom_var_token_tree'] = array(
     '#theme' => 'token_tree',
     '#token_types' => array('node'),
+    '#dialog' => TRUE,
   );
 
 
