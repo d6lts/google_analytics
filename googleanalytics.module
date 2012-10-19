@@ -118,8 +118,7 @@ function googleanalytics_page_alter(&$page) {
       $link_settings['trackDomainMode'] = $track_domain_mode;
     }
     if ($track_cross_domains = variable_get('googleanalytics_cross_domains', '')) {
-      $domains = preg_split('/(\r\n?|\n)/', $track_cross_domains);
-      $link_settings['trackCrossDomains'] = implode('|', $domains);
+      $link_settings['trackCrossDomains'] = preg_split('/(\r\n?|\n)/', $track_cross_domains);
     }
 
     if (!empty($link_settings)) {

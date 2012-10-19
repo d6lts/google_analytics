@@ -169,7 +169,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->drupalGet('');
     $this->assertRaw('_gaq.push(["_setDomainName", "none"]);', '[testGoogleAnalyticsTrackingCode]: _setDomainName: "none" found. Cross domain tracking is active.');
     $this->assertRaw('_gaq.push(["_setAllowLinker", true]);', '[testGoogleAnalyticsTrackingCode]: _setAllowLinker: true found. Cross domain tracking is active.');
-    $this->assertRaw('www.example.com|www.example.net', '[testGoogleAnalyticsTrackingCode]: Cross domain tracking with www.example.com and www.example.net is active.');
+    $this->assertRaw('"trackCrossDomains":["www.example.com","www.example.net"]', '[testGoogleAnalyticsTrackingCode]: Cross domain tracking with www.example.com and www.example.net is active.');
 
     // Test whether the BEFORE and AFTER code is added to the tracker.
     variable_set('googleanalytics_codesnippet_before', '_setDetectFlash(false);');

@@ -1,15 +1,6 @@
 (function ($) {
 
 $(document).ready(function() {
-
-  // Accepts a string; returns the string with regex metacharacters escaped. The returned string
-  // can safely be used at any point within a regex to match the provided literal string. Escaped
-  // characters are [ ] { } ( ) * + ? - . , \ ^ $ # and whitespace. The character | is excluded
-  // in this function as it's used to separate the domains names.
-  RegExp.escapeDomains = function(text) {
-    return (text) ? text.replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&") : '';
-  }
-
   // Attach onclick event to document only and catch clicks on all elements.
   $(document.body).click(function(event) {
     // Catch the closest surrounding link of a clicked element.
@@ -22,8 +13,6 @@ $(document).ready(function() {
       var isInternalSpecial = new RegExp("(\/go\/.*)$", "i");
       // Expression to check for download links.
       var isDownload = new RegExp("\\.(" + ga.trackDownloadExtensions + ")$", "i");
-      // Expression to check for the sites cross domains.
-      var isCrossDomain = new RegExp("^(https?|ftp|news|nntp|telnet|irc|ssh|sftp|webcal):\/\/.*(" + RegExp.escapeDomains(ga.trackCrossDomains) + ")", "i");
 
       // Is the clicked URL internal?
       if (isInternal.test(this.href)) {
@@ -44,7 +33,7 @@ $(document).ready(function() {
           _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
         else if (ga.trackOutbound && this.href) {
-          if (ga.trackDomainMode == 2 && isCrossDomain.test(this.href)) {
+          if (ga.trackDomainMode == 2 && isCrossDomain($(this).attr('hostname'), ga.trackCrossDomains)) {
             // Top-level cross domain clicked. document.location is handled by _link internally.
             event.preventDefault();
             _gaq.push(["_link", this.href]);
@@ -58,5 +47,31 @@ $(document).ready(function() {
     });
   });
 });
+
+/**
+ * Check whether the hostname is part of the cross domains or not.
+ *
+ * @param string hostname
+ *   The hostname of the clicked URL.
+ * @param array crossDomains
+ *   All cross domain hostnames as JS array.
+ *
+ * @return boolean
+ */
+function isCrossDomain(hostname, crossDomains) {
+  /**
+   * jQuery < 1.6.3 bug: $.inArray crushes IE6 and Chrome if second argument is
+   * `null` or `undefined`, http://bugs.jquery.com/ticket/10076,
+   * https://github.com/jquery/jquery/commit/a839af034db2bd934e4d4fa6758a3fed8de74174
+   *
+   * @todo: Remove/Refactor in D8
+   */
+  if (!crossDomains) {
+    return false;
+  }
+  else {
+    return $.inArray(hostname, crossDomains) > -1 ? true : false;
+  }
+}
 
 })(jQuery);
