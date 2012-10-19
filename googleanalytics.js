@@ -32,7 +32,7 @@ $(document).ready(function() {
           // Mailto link clicked.
           _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
-        else if (ga.trackOutbound && this.href) {
+        else if (ga.trackOutbound && this.href.match(/^\w+:\/\//i)) {
           if (ga.trackDomainMode == 2 && isCrossDomain($(this).attr('hostname'), ga.trackCrossDomains)) {
             // Top-level cross domain clicked. document.location is handled by _link internally.
             event.preventDefault();
