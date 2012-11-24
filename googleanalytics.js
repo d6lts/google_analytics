@@ -26,27 +26,29 @@ $(document).ready(function() {
         else if (ga.trackDownload && isDownload.test(this.href)) {
           // Download link clicked.
           var extension = isDownload.exec(this.href);
-          _gaq.push(["_trackEvent", "Downloads", extension[1].toUpperCase(), this.href.replace(isInternal, '')]);
+          ga("send", "event", "Downloads", extension[1].toUpperCase(), this.href.replace(isInternal, ''));
         }
         else if (isInternalSpecial.test(this.href)) {
           // Keep the internal URL for Google Analytics website overlay intact.
-          _gaq.push(["_trackPageview", this.href.replace(isInternal, '')]);
+          ga("send", "pageview", { page: this.href.replace(isInternal, '')});
         }
       }
       else {
         if (ga.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
           // Mailto link clicked.
-          _gaq.push(["_trackEvent", "Mails", "Click", this.href.substring(7)]);
+          ga("send", "event", "Mails", "Click", this.href.substring(7));
         }
         else if (ga.trackOutbound && this.href.match(/^\w+:\/\//i)) {
           if (ga.trackDomainMode == 2 && isCrossDomain($(this).attr('hostname'), ga.trackCrossDomains)) {
             // Top-level cross domain clicked. document.location is handled by _link internally.
             event.preventDefault();
-            _gaq.push(["_link", this.href]);
+            // @todo: unknown upgrade path
+            //_gaq.push(["_link", this.href]);
+            //ga("link", this.href); ???
           }
           else {
             // External link clicked.
-            _gaq.push(["_trackEvent", "Outbound links", "Click", this.href]);
+            ga("send", "event", "Outbound links", "Click", this.href);
           }
         }
       }
@@ -58,7 +60,7 @@ $(document).ready(function() {
   $(document).bind("cbox_complete", function() {
     var href = $.colorbox.element().attr("href");
     if (href) {
-      _gaq.push(["_trackPageview", href.replace(isInternal, '')]);
+      ga("send", "pageview", { page: href.replace(isInternal, '') });
     }
   });
 
