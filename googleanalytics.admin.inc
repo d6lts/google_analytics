@@ -412,6 +412,7 @@ function googleanalytics_admin_settings_form($form_state) {
  */
 function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   // Custom variables validation.
+  /* @todo: upgrade to custom dimensions
   foreach ($form_state['values']['googleanalytics_custom_var']['slots'] as $custom_var) {
     $form_state['values']['googleanalytics_custom_var']['slots'][$custom_var['slot']]['name'] = trim($custom_var['name']);
     $form_state['values']['googleanalytics_custom_var']['slots'][$custom_var['slot']]['value'] = trim($custom_var['value']);
@@ -423,7 +424,7 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
     elseif (!empty($custom_var['name']) && empty($custom_var['value'])) {
       form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('The custom variable @slot-number requires a <em>Value</em> if a <em>Name</em> has been provided.', array('@slot-number' =>  $custom_var['slot'])));
     }
-  }
+  } */
 
   // Trim some text values.
   $form_state['values']['googleanalytics_account'] = trim($form_state['values']['googleanalytics_account']);
