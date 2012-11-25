@@ -141,7 +141,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     // Enable anonymizing of IP addresses.
     variable_set('googleanalytics_tracker_anonymizeip', 1);
     $this->drupalGet('');
-    $this->assertRaw('ga("set", "anonymizeIp", true);', '[testGoogleAnalyticsTrackingCode]: Anonymize visitors IP address found on frontpage.');
+    $this->assertRaw('ga("set", "anonymizeIp", 1);', '[testGoogleAnalyticsTrackingCode]: Anonymize visitors IP address found on frontpage.');
 
     // Test whether single domain tracking is active.
     $this->drupalGet('');
