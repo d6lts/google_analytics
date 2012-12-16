@@ -211,7 +211,7 @@ function googleanalytics_admin_settings_form($form_state) {
     '#type' => 'checkboxes',
     '#title' => t('Track messages of type'),
     '#default_value' => variable_get('googleanalytics_trackmessages', array()),
-    '#description' => t('This will track the selected message types shown to users. Tracking of form validation errors may help you identifying usability issues in your site. Keep in mind that Google allows a maximum of 500 events per session only and every message is tracked as one individual event. If the limit has been exceeded no further events are tracked, but normal page tracking is not effected. Messages from excluded pages cannot tracked.'),
+    '#description' => t('This will track the selected message types shown to users. Tracking of form validation errors may help you identifying usability issues in your site. For each visit (user session), a maximum of approximately 500 combined GATC requests (both events and page views) can be tracked. Every message is tracked as one individual event. Note that - as the number of events in a session approaches the limit - additional events might not be tracked. Messages from excluded pages cannot tracked.'),
     '#options' => array(
       'status' => t('Status message'),
       'warning' => t('Warning message'),
