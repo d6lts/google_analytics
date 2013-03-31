@@ -262,9 +262,6 @@ function googleanalytics_page_alter(&$page) {
     $script .= 'ga("create", ' . drupal_json_encode($id) . ');';
 
     if (variable_get('googleanalytics_tracker_anonymizeip', 0)) {
-      // @todo: unknown
-      // FIXME: The Google API is currently broken and "_gat._anonymizeIp" is only
-      // a workaround until "_anonymizeIp" has been implemented/fixed.
       $script .= 'ga("set", "anonymizeIp", 1);';
     }
 
