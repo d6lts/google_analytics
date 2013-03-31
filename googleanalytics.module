@@ -105,12 +105,6 @@ function googleanalytics_page_alter(&$page) {
     // @todo: footer may no longer suppored
     $scope = variable_get('googleanalytics_js_scope', 'header');
 
-    /* @todo: not supported, https://support.google.com/analytics/bin/answer.py?hl=en&hlrm=de&answer=2795983
-    if (variable_get('googleanalytics_trackadsense', FALSE)) {
-      // Custom tracking. Prepend before all other JavaScript.
-      //drupal_add_js('window.google_analytics_uacct = ' . drupal_json_encode($id) . ';', array('type' => 'inline', 'group' => JS_LIBRARY-1));
-    } */
-
     // Add link tracking.
     $link_settings = array();
     if ($track_outbound = variable_get('googleanalytics_trackoutbound', 1)) {
@@ -265,6 +259,9 @@ function googleanalytics_page_alter(&$page) {
       $script .= 'ga("set", "anonymizeIp", 1);';
     }
 
+    // Prepare Adsense tracking.
+    $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . drupal_json_encode($id) . ';';
+
     // Domain tracking type.
     global $cookie_domain;
     $domain_mode = variable_get('googleanalytics_domain_mode', 0);
@@ -273,11 +270,13 @@ function googleanalytics_page_alter(&$page) {
     // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
     if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
       $script .= 'ga("set", "cookieDomain", ' . drupal_json_encode($cookie_domain) . ');';
+      $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = ' . drupal_json_encode($cookie_domain) . ';';
     }
     elseif ($domain_mode == 2) {
       // @todo: unclear, cookieDomain = "none" is not documented.
       $script .= 'ga("set", "cookieDomain", "none");';
       $script .= 'ga("set", "allowLinker", true);';
+      $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = "none";';
     }
 
     if (!empty($custom_var)) {
@@ -297,6 +296,14 @@ function googleanalytics_page_alter(&$page) {
     if (!empty($codesnippet_after)) {
       $script .= $codesnippet_after;
     }
+
+    // @TODO: not available yet, comming soon per Google.
+    //if (variable_get('googleanalytics_trackadsense', FALSE)) {
+      // Custom tracking. Prepend before all other JavaScript.
+      // @TODO: http://support.google.com/adsense/bin/answer.py?answer=98142
+      // sounds like it could be appended to $script.
+      //drupal_add_js($googleanalytics_adsense_script, array('type' => 'inline', 'group' => JS_LIBRARY-1));
+    //}
 
     drupal_add_js($script, array('scope' => $scope, 'type' => 'inline'));
   }
