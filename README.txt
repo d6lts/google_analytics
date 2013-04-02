@@ -15,8 +15,8 @@ Requirements
 
 Installation
 ============
-* Copy the 'googleanalytics' module directory in to your Drupal
-sites/all/modules directory as usual.
+* Copy the 'google_analytics' module directory in to your Drupal 'modules'
+directory as usual.
 
 
 Usage
@@ -27,12 +27,8 @@ All pages will now have the required JavaScript added to the
 HTML footer can confirm this by viewing the page source from
 your browser.
 
-New approach to page tracking in 5.x-1.5 and 6.x-1.1
+Page specific tracking
 ====================================================
-With 5.x-1.5 and 6.x-1.1 there are new settings on the settings page at
-admin/config/system/googleanalytics. The "Page specific tracking" area now
-comes with an interface that copies Drupal's block visibility settings.
-
 The default is set to "Add to every page except the listed pages". By
 default the following pages are listed for exclusion:
 
@@ -55,7 +51,7 @@ Custom variables
 =================
 One example for custom variables tracking is the "User roles" tracking. Enter
 the below configuration data into the custom variables settings form under
-admin/config/system/googleanalytics.
+admin/config/system/google_analytics.
 
 Slot: 1
 Name: User roles
