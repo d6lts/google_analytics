@@ -1,7 +1,8 @@
-name = Google Analytics
-description = Allows your site to be tracked by Google Analytics by adding a Javascript tracking code to every page.
-core = 7.x
-package = Statistics
-configure = admin/config/system/googleanalytics
-files[] = googleanalytics.test
-test_dependencies[] = token
+name: Google Analytics
+description: 'Allows your site to be tracked by Google Analytics by adding a Javascript tracking code to every page.'
+package: Statistics
+version: VERSION
+core: 8.x
+configure: admin/config/system/googleanalytics
+test_dependencies:
+  - token
