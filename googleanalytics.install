@@ -38,11 +38,11 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_site_search');
   variable_del('googleanalytics_trackadsense'); // @todo
   variable_del('googleanalytics_trackdoubleclick'); // @todo
-  variable_del('googleanalytics_trackmessages');
   variable_del('googleanalytics_tracker_anonymizeip');
   variable_del('googleanalytics_trackfiles');
   variable_del('googleanalytics_trackfiles_extensions');
   variable_del('googleanalytics_trackmailto');
+  variable_del('googleanalytics_trackmessages');
   variable_del('googleanalytics_trackoutbound');
   variable_del('googleanalytics_translation_set');
   variable_del('googleanalytics_visibility_pages');
