@@ -1,19 +1,21 @@
-(function ($) {
+(function ($, window) {
 
+"use strict";
+  
 /**
  * Provide the summary information for the tracking settings vertical tabs.
  */
 Drupal.behaviors.trackingSettingsSummary = {
-  attach: function (context) {
+  attach: function () {
     // Make sure this behavior is processed only if drupalSetSummary is defined.
     if (typeof jQuery.fn.drupalSetSummary == 'undefined') {
       return;
     }
 
-    $('fieldset#edit-page-vis-settings', context).drupalSetSummary(function (context) {
-      var $radio = $('input[name="googleanalytics_visibility_pages"]:checked', context);
+    $('#edit-page-vis-settings').drupalSetSummary(function (context) {
+      var $radio = $('input[name="google_analytics_visibility_pages"]:checked', context);
       if ($radio.val() == 0) {
-        if (!$('textarea[name="googleanalytics_pages"]', context).val()) {
+        if (!$('textarea[name="google_analytics_pages"]', context).val()) {
           return Drupal.t('Not restricted');
         }
         else {
@@ -25,7 +27,7 @@ Drupal.behaviors.trackingSettingsSummary = {
       }
     });
 
-    $('fieldset#edit-role-vis-settings', context).drupalSetSummary(function (context) {
+    $('#edit-role-vis-settings').drupalSetSummary(function (context) {
       var vals = [];
       $('input[type="checkbox"]:checked', context).each(function () {
         vals.push($.trim($(this).next('label').text()));
@@ -33,7 +35,7 @@ Drupal.behaviors.trackingSettingsSummary = {
       if (!vals.length) {
         return Drupal.t('Not restricted');
       }
-      else if ($('input[name="googleanalytics_visibility_roles"]:checked', context).val() == 1) {
+      else if ($('input[name="google_analytics_visibility_roles"]:checked', context).val() == 1) {
         return Drupal.t('Excepted: @roles', {'@roles' : vals.join(', ')});
       }
       else {
@@ -41,8 +43,8 @@ Drupal.behaviors.trackingSettingsSummary = {
       }
     });
 
-    $('fieldset#edit-user-vis-settings', context).drupalSetSummary(function (context) {
-      var $radio = $('input[name="googleanalytics_custom"]:checked', context);
+    $('#edit-user-vis-settings').drupalSetSummary(function (context) {
+      var $radio = $('input[name="google_analytics_custom"]:checked', context);
       if ($radio.val() == 0) {
         return Drupal.t('Not customizable');
       }
@@ -54,15 +56,15 @@ Drupal.behaviors.trackingSettingsSummary = {
       }
     });
 
-    $('fieldset#edit-linktracking', context).drupalSetSummary(function (context) {
+    $('#edit-linktracking').drupalSetSummary(function (context) {
       var vals = [];
-      if ($('input#edit-googleanalytics-trackoutbound', context).is(':checked')) {
+      if ($('input#edit-google-analytics-trackoutbound', context).is(':checked')) {
         vals.push(Drupal.t('Outbound links'));
       }
-      if ($('input#edit-googleanalytics-trackmailto', context).is(':checked')) {
+      if ($('input#edit-google-analytics-trackmailto', context).is(':checked')) {
         vals.push(Drupal.t('Mailto links'));
       }
-      if ($('input#edit-googleanalytics-trackfiles', context).is(':checked')) {
+      if ($('input#edit-google-analytics-trackfiles', context).is(':checked')) {
         vals.push(Drupal.t('Downloads'));
       }
       if (!vals.length) {
@@ -71,7 +73,7 @@ Drupal.behaviors.trackingSettingsSummary = {
       return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
     });
 
-    $('fieldset#edit-messagetracking', context).drupalSetSummary(function (context) {
+    $('#edit-messagetracking').drupalSetSummary(function (context) {
       var vals = [];
       $('input[type="checkbox"]:checked', context).each(function () {
         vals.push($.trim($(this).next('label').text()));
@@ -82,9 +84,9 @@ Drupal.behaviors.trackingSettingsSummary = {
       return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
     });
 
-    $('fieldset#edit-search-and-advertising', context).drupalSetSummary(function (context) {
+    $('#edit-search-and-advertising').drupalSetSummary(function (context) {
       var vals = [];
-      if ($('input#edit-googleanalytics-site-search', context).is(':checked')) {
+      if ($('input#edit-google-analytics-site-search', context).is(':checked')) {
         vals.push(Drupal.t('Site search'));
       }
       /* @todo: Features not yet supported by analytics.js
@@ -100,8 +102,8 @@ Drupal.behaviors.trackingSettingsSummary = {
       return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
     });
 
-    $('fieldset#edit-domain-tracking', context).drupalSetSummary(function (context) {
-      var $radio = $('input[name="googleanalytics_domain_mode"]:checked', context);
+    $('#edit-domain-tracking').drupalSetSummary(function (context) {
+      var $radio = $('input[name="google_analytics_domain_mode"]:checked', context);
       if ($radio.val() == 0) {
         return Drupal.t('A single domain');
       }
@@ -113,12 +115,12 @@ Drupal.behaviors.trackingSettingsSummary = {
       }
     });
 
-    $('fieldset#edit-privacy', context).drupalSetSummary(function (context) {
+    $('#edit-privacy').drupalSetSummary(function (context) {
       var vals = [];
-      if ($('input#edit-googleanalytics-tracker-anonymizeip', context).is(':checked')) {
+      if ($('input#edit-google-analytics-tracker-anonymizeip', context).is(':checked')) {
         vals.push(Drupal.t('Anonymize IP'));
       }
-      if ($('input#edit-googleanalytics-privacy-donottrack', context).is(':checked')) {
+      if ($('input#edit-google-analytics-privacy-donottrack', context).is(':checked')) {
         vals.push(Drupal.t('Universal web tracking opt-out'));
       }
       if (!vals.length) {
@@ -129,4 +131,4 @@ Drupal.behaviors.trackingSettingsSummary = {
   }
 };
 
-})(jQuery);
+})(jQuery, window);
