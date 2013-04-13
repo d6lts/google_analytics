@@ -519,9 +519,9 @@ function _google_analytics_visibility_user($account) {
 
     // Use the user's block visibility setting, if necessary.
     if (($custom = $config->get('visibility.custom')) != 0) {
-      // @FIXME: $account->data['google_analytics']['custom'] does not exists.
-      if ($account->uid && isset($account->data['google_analytics']['custom'])) {
-        $enabled = $account->data['google_analytics']['custom'];
+      $user_data = drupal_container()->get('user.data')->get('google_analytics', $account->uid);
+      if ($account->uid && isset($user_data['custom'])) {
+        $enabled = $user_data['custom'];
       }
       else {
         $enabled = ($custom == 1);
