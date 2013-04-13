@@ -8,7 +8,7 @@
 /**
  * Implements hook_token_info().
  */
-function googleanalytics_token_info() {
+function google_analytics_token_info() {
   $user['role-names'] = array(
     'name' => t('User role names'),
     'description' => t('The role names the user account is a member of as comma separated list.'),
@@ -28,7 +28,7 @@ function googleanalytics_token_info() {
 /**
  * Implements hook_tokens().
  */
-function googleanalytics_tokens($type, $tokens, array $data = array(), array $options = array()) {
+function google_analytics_tokens($type, $tokens, array $data = array(), array $options = array()) {
   $sanitize = !empty($options['sanitize']);
   $replacements = array();
 
