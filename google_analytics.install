@@ -90,7 +90,7 @@ function googleanalytics_update_7000() {
   $messages[] = t('Google tracking code has been moved to header.');
 
   // Upgrade D6 token placeholder to D7. update_6301 is not required.
-  $googleanalytics_custom_vars = variable_get('googleanalytics_custom_var', array());
+  $googleanalytics_custom_vars = update_variable_get('googleanalytics_custom_var', array());
   if (!empty($googleanalytics_custom_vars['slots'][1]) && $googleanalytics_custom_vars['slots'][1]['name'] == 'User roles' && $googleanalytics_custom_vars['slots'][1]['value'] = '[user-role-names]') {
     $googleanalytics_custom_vars['slots'][1]['value'] = '[current-user:role-names]';
     update_variable_set('googleanalytics_custom_var', $googleanalytics_custom_vars);

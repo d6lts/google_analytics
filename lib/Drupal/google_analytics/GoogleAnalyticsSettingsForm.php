@@ -461,7 +461,7 @@ class GoogleAnalyticsSettingsForm extends SystemConfigFormBase {
     $form_state['values']['google_analytics_trackmessages'] = array_filter($form_state['values']['google_analytics_trackmessages']);
 
     // Replace all type of dashes (n-dash, m-dash, minus) with the normal dashes.
-    $form_state['values']['google_analytics_account'] = str_replace(array('?', '?', '?'), '-', $form_state['values']['google_analytics_account']);
+    $form_state['values']['google_analytics_account'] = str_replace(array('–', '—', '−'), '-', $form_state['values']['google_analytics_account']);
 
     if (!preg_match('/^UA-\d{4,}-\d+$/', $form_state['values']['google_analytics_account'])) {
       form_set_error('google_analytics_account', t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'));
