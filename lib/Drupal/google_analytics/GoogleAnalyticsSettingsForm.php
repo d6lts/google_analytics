@@ -473,7 +473,7 @@ class GoogleAnalyticsSettingsForm extends SystemConfigFormBase {
     }
     // Clear obsolete local cache if cache has been disabled.
     if (empty($form_state['values']['google_analytics_cache']) && $form['advanced']['google_analytics_cache']['#default_value']) {
-      googleanalytics_clear_js_cache();
+      google_analytics_clear_js_cache();
     }
 
     // This is for the Newbie's who cannot read a text area description.

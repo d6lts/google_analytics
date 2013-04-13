@@ -55,7 +55,7 @@ function google_analytics_install() {
  * Remove cache directory if module is disabled (or uninstalled).
  */
 function google_analytics_disable() {
-  googleanalytics_clear_js_cache();
+  google_analytics_clear_js_cache();
 }
 
 /**
