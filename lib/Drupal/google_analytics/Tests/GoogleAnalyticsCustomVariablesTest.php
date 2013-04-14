@@ -2,10 +2,21 @@
 
 /**
  * @file
- * Test file for Google Analytics module.
+ * Contains \Drupal\google_analytics\Tests\GoogleAnalyticsCustomVariablesTest.
  */
-/* @todo: upgrade to custom dimensions
-class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
+
+namespace Drupal\google_analytics\Tests;
+
+use Drupal\simpletest\WebTestBase;
+
+class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
+
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  public static $modules = array('google_analytics', 'token');
 
   public static function getInfo() {
     return array(
@@ -17,7 +28,7 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
   }
 
   function setUp() {
-    parent::setUp('googleanalytics', 'token');
+    parent::setUp();
 
     $permissions = array(
       'access administration pages',
@@ -30,7 +41,7 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
 
   function testGoogleAnalyticsCustomVariables() {
     $ua_code = 'UA-123456-3';
-    variable_set('googleanalytics_account', $ua_code);
+    config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Basic test if the feature works.
     $custom_vars = array(
@@ -67,7 +78,7 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
         ),
       )
     );
-    variable_set('googleanalytics_custom_var', $custom_vars);
+    config('google_analytics.settings')->set('custom_var', $custom_vars)->save();
     $this->drupalGet('');
 
     foreach ($custom_vars['slots'] as $slot) {
@@ -76,7 +87,7 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
 
     // Test whether tokens are replaced in custom variable names.
     $site_slogan = $this->randomName(16);
-    variable_set('site_slogan', $site_slogan);
+    config('system.site')->set('slogan', $site_slogan)->save();
 
     $custom_vars = array(
       'slots' => array(
@@ -112,7 +123,7 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
         ),
       )
     );
-    variable_set('googleanalytics_custom_var', $custom_vars);
+    config('google_analytics.settings')->set('custom_var', $custom_vars)->save();
     $this->verbose('<pre>' . print_r($custom_vars, TRUE) . '</pre>');
 
     $this->drupalGet('');
@@ -122,4 +133,4 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
     $this->assertNoRaw("ga('set', 'customvar', 4,", '[testGoogleAnalyticsCustomVariables]: Empty name and value is not shown.');
     $this->assertNoRaw("ga('set', 'customvar', 5,", '[testGoogleAnalyticsCustomVariables]: Empty name and value is not shown.');
   }
-} */
+}
