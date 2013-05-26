@@ -1,4 +1,5 @@
 name: 'Google Analytics'
+type: module
 description: 'Allows your site to be tracked by Google Analytics by adding a Javascript tracking code to every page.'
 package: Statistics
 version: VERSION
