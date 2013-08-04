@@ -22,7 +22,6 @@ function google_analytics_install() {
     //'googleanalytics_custom_var' => 'custom_var',
     'googleanalytics_domain_mode' => 'domain_mode',
     'googleanalytics_js_scope' => 'js_scope',
-    'googleanalytics_last_cache' => 'last_cache',
     'googleanalytics_pages' => 'visibility.pages',
     'googleanalytics_roles' => 'visibility.roles',
     'googleanalytics_site_search' => 'track.site_search',
@@ -44,6 +43,7 @@ function google_analytics_install() {
   file_unmanaged_delete_recursive('public://googleanalytics');
 
   // Remove backup variables if exist. No migration required.
+  update_variable_del('googleanalytics_last_cache');
   update_variable_del('googleanalytics_codesnippet_after_backup_6300');
   update_variable_del('googleanalytics_codesnippet_before_backup_6300');
   update_variable_del('googleanalytics_segmentation');
