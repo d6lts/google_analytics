@@ -8,8 +8,8 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => t('Google Analytics basic tests'),
-      'description' => t('Test basic functionality of Google Analytics module.'),
+      'name' => 'Google Analytics basic tests',
+      'description' => 'Test basic functionality of Google Analytics module.',
       'group' => 'Google Analytics',
     );
   }
@@ -189,8 +189,8 @@ class GoogleAnalyticsCustomVariablesTest extends DrupalWebTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => t('Google Analytics Custom Variables tests'),
-      'description' => t('Test custom variables functionality of Google Analytics module.'),
+      'name' => 'Google Analytics Custom Variables tests',
+      'description' => 'Test custom variables functionality of Google Analytics module.',
       'group' => 'Google Analytics',
       'dependencies' => array('token'),
     );
@@ -308,8 +308,8 @@ class GoogleAnalyticsStatusMessagesTest extends DrupalWebTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => t('Google Analytics status messages tests'),
-      'description' => t('Test status messages functionality of Google Analytics module.'),
+      'name' => 'Google Analytics status messages tests',
+      'description' => 'Test status messages functionality of Google Analytics module.',
       'group' => 'Google Analytics',
     );
   }
@@ -354,8 +354,8 @@ class GoogleAnalyticsRolesTest extends DrupalWebTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => t('Google Analytics role tests'),
-      'description' => t('Test roles functionality of Google Analytics module.'),
+      'name' => 'Google Analytics role tests',
+      'description' => 'Test roles functionality of Google Analytics module.',
       'group' => 'Google Analytics',
     );
   }
