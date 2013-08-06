@@ -20,8 +20,8 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
   public static function getInfo() {
     return array(
-      'name' => t('Google Analytics basic tests'),
-      'description' => t('Test basic functionality of Google Analytics module.'),
+      'name' => 'Google Analytics basic tests',
+      'description' => 'Test basic functionality of Google Analytics module.',
       'group' => 'Google Analytics',
     );
   }

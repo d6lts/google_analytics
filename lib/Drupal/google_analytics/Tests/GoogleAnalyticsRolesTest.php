@@ -20,8 +20,8 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
 
   public static function getInfo() {
     return array(
-      'name' => t('Google Analytics role tests'),
-      'description' => t('Test roles functionality of Google Analytics module.'),
+      'name' => 'Google Analytics role tests',
+      'description' => 'Test roles functionality of Google Analytics module.',
       'group' => 'Google Analytics',
     );
   }

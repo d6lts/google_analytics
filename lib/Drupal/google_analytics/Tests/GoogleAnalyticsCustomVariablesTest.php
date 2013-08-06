@@ -20,8 +20,8 @@ class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
 
   public static function getInfo() {
     return array(
-      'name' => t('Google Analytics Custom Variables tests'),
-      'description' => t('Test custom variables functionality of Google Analytics module.'),
+      'name' => 'Google Analytics Custom Variables tests',
+      'description' => 'Test custom variables functionality of Google Analytics module.',
       'group' => 'Google Analytics',
       'dependencies' => array('token'),
     );

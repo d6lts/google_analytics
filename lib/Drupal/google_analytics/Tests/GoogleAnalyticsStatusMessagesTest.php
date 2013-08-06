@@ -20,8 +20,8 @@ class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
 
   public static function getInfo() {
     return array(
-      'name' => t('Google Analytics status messages tests'),
-      'description' => t('Test status messages functionality of Google Analytics module.'),
+      'name' => 'Google Analytics status messages tests',
+      'description' => 'Test status messages functionality of Google Analytics module.',
       'group' => 'Google Analytics',
     );
   }
