@@ -34,7 +34,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
 
     // Check for account code validation.
     $edit['googleanalytics_account'] = $this->randomName(2);
-    $this->drupalPost('admin/config/system/googleanalytics', $edit, 'Save configuration');
+    $this->drupalPost('admin/config/system/googleanalytics', $edit, t('Save configuration'));
     $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'), '[testGoogleAnalyticsConfiguration]: Invalid Web Property ID number validated.');
   }
 
