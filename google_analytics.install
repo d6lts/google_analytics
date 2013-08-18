@@ -63,17 +63,16 @@ function google_analytics_disable() {
  */
 function google_analytics_requirements($phase) {
   $requirements = array();
-  $t = get_t();
 
   if ($phase == 'runtime') {
     // Raise warning if Google user account has not been set yet.
     $config = config('google_analytics.settings');
     if (!preg_match('/^UA-\d{4,}-\d+$/', $config->get('account'))) {
       $requirements['google_analytics'] = array(
-        'title' => $t('Google Analytics module'),
-        'description' => $t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/google_analytics'))),
+        'title' => t('Google Analytics module'),
+        'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/google_analytics'))),
         'severity' => REQUIREMENT_WARNING,
-        'value' => $t('Not configured'),
+        'value' => t('Not configured'),
       );
     }
   }
