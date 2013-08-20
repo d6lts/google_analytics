@@ -13,7 +13,7 @@ $(document).ready(function() {
       // Expression to check for special links like gotwo.module /go/* links.
       var isInternalSpecial = new RegExp("(\/go\/.*)$", "i");
       // Expression to check for download links.
-      var isDownload = new RegExp("\\.(" + Drupal.settings.google_analytics.trackDownloadExtensions + ")$", "i");
+      var isDownload = new RegExp("\\.(" + Drupal.settings.googleanalytics.trackDownloadExtensions + ")$", "i");
 
       // Is the clicked URL internal?
       if (isInternal.test(this.href)) {
@@ -22,7 +22,7 @@ $(document).ready(function() {
           // Do nothing here. The custom event will handle all tracking.
         }
         // Is download tracking activated and the file extension configured for download tracking?
-        else if (Drupal.settings.google_analytics.trackDownload && isDownload.test(this.href)) {
+        else if (Drupal.settings.googleanalytics.trackDownload && isDownload.test(this.href)) {
           // Download link clicked.
           var extension = isDownload.exec(this.href);
           ga("send", "event", "Downloads", extension[1].toUpperCase(), this.href.replace(isInternal, ''));
@@ -33,12 +33,12 @@ $(document).ready(function() {
         }
       }
       else {
-        if (Drupal.settings.google_analytics.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
+        if (Drupal.settings.googleanalytics.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
           // Mailto link clicked.
           ga("send", "event", "Mails", "Click", this.href.substring(7));
         }
-        else if (Drupal.settings.google_analytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
-          if (Drupal.settings.google_analytics.trackDomainMode == 2 && isCrossDomain(this.hostname, Drupal.settings.google_analytics.trackCrossDomains)) {
+        else if (Drupal.settings.googleanalytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
+          if (Drupal.settings.googleanalytics.trackDomainMode == 2 && isCrossDomain(this.hostname, Drupal.settings.googleanalytics.trackCrossDomains)) {
             // Top-level cross domain clicked. document.location is handled by _link internally.
             event.preventDefault();
             // @todo: unknown upgrade path
