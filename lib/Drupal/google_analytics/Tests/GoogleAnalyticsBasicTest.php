@@ -41,12 +41,12 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
   function testGoogleAnalyticsConfiguration() {
     // Check for setting page's presence.
-    $this->drupalGet('admin/config/system/google_analytics');
+    $this->drupalGet('admin/config/system/google-analytics');
     $this->assertRaw(t('Web Property ID'), '[testGoogleAnalyticsConfiguration]: Settings page displayed.');
 
     // Check for account code validation.
     $edit['google_analytics_account'] = $this->randomName(2);
-    $this->drupalPostForm('admin/config/system/google_analytics', $edit, t('Save configuration'));
+    $this->drupalPostForm('admin/config/system/google-analytics', $edit, t('Save configuration'));
     $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'), '[testGoogleAnalyticsConfiguration]: Invalid Web Property ID number validated.');
   }
 
@@ -68,7 +68,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Test whether tracking code is not included on pages to omit.
     $this->drupalGet('admin');
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin page.');
-    $this->drupalGet('admin/config/system/google_analytics');
+    $this->drupalGet('admin/config/system/google-analytics');
     // Checking for tracking code URI here, as $ua_code is displayed in the form.
     $this->assertNoRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin subpage.');
 
@@ -76,7 +76,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     config('google_analytics.settings')->set('visibility.pages_enabled', 1)->save();
     $this->drupalGet('admin');
     $this->assertRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin page.');
-    $this->drupalGet('admin/config/system/google_analytics');
+    $this->drupalGet('admin/config/system/google-analytics');
     // Checking for tracking code URI here, as $ua_code is displayed in the form.
     $this->assertRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
