@@ -85,8 +85,7 @@ function google_analytics_menu() {
  * Implements hook_page_alter() to insert JavaScript to the appropriate scope/region of the page.
  */
 function google_analytics_page_alter(&$page) {
-  global $user;
-
+  $account = \Drupal::currentUser();
   $config = config('google_analytics.settings');
   $id = $config->get('account');
 
@@ -102,7 +101,7 @@ function google_analytics_page_alter(&$page) {
   // 2. Track page views based on visibility value.
   // 3. Check if we should track the currently active user's role.
   // 4. Ignore pages visibility filter for 404 or 403 status codes.
-  if (!empty($id) && (_google_analytics_visibility_pages() || in_array($status, $trackable_status_codes)) && _google_analytics_visibility_user($user)) {
+  if (!empty($id) && (_google_analytics_visibility_pages() || in_array($status, $trackable_status_codes)) && _google_analytics_visibility_user($account)) {
 
     // Add link tracking.
     $link_settings = array();
@@ -545,7 +544,7 @@ function _google_analytics_visibility_roles($account) {
 
   if (array_sum($roles) > 0) {
     // One or more roles are selected.
-    foreach (array_keys($account->roles) as $rid) {
+    foreach (array_keys($account->getRoles()) as $rid) {
       // Is the current user a member of one of these roles?
       if (isset($roles[$rid]) && $rid == $roles[$rid]) {
         // Current user is a member of a role that should be tracked/excluded from tracking.
