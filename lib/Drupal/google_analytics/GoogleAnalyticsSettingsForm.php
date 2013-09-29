@@ -6,12 +6,12 @@
 
 namespace Drupal\google_analytics;
 
-use Drupal\system\SystemConfigFormBase;
+use Drupal\Core\Form\ConfigFormBase;
 
 /**
  * Configure Google_Analytics settings for this site.
  */
-class GoogleAnalyticsSettingsForm extends SystemConfigFormBase {
+class GoogleAnalyticsSettingsForm extends ConfigFormBase {
 
   /**
    * Implements \Drupal\Core\Form\FormInterface::getFormID().
