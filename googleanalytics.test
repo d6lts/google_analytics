@@ -333,7 +333,7 @@ class GoogleAnalyticsStatusMessagesTest extends DrupalWebTestCase {
     // Enable logging of errors only.
     variable_set('googleanalytics_trackmessages', array('error' => 'error'));
 
-    $this->drupalPost('user/login', array(), 'Log in');
+    $this->drupalPost('user/login', array(), t('Log in'));
     $this->assertRaw('_gaq.push(["_trackEvent", "Messages", "Error message", "Username field is required."]);', '[testGoogleAnalyticsStatusMessages]: _trackEvent "Username field is required." is shown.');
     $this->assertRaw('_gaq.push(["_trackEvent", "Messages", "Error message", "Password field is required."]);', '[testGoogleAnalyticsStatusMessages]: _trackEvent "Password field is required." is shown.');
 
