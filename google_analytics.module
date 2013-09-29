@@ -389,9 +389,9 @@ function google_analytics_cron() {
   $config = config('google_analytics.settings');
 
   // Regenerate the tracking code file every day.
-  if (REQUEST_TIME - Drupal::state()->get('google_analytics.last_cache') >= 86400 && $config->get('cache')) {
+  if (REQUEST_TIME - \Drupal::state()->get('google_analytics.last_cache') >= 86400 && $config->get('cache')) {
     _google_analytics_cache('http://www.google-analytics.com/analytics.js', TRUE);
-    Drupal::state()->set('google_analytics.last_cache', REQUEST_TIME);
+    \Drupal::state()->set('google_analytics.last_cache', REQUEST_TIME);
   }
 }
 
@@ -442,7 +442,7 @@ function _google_analytics_cache($location, $sync_cached_file = FALSE) {
   if (!file_exists($file_destination) || $sync_cached_file) {
     // Download the latest tracking code.
     try {
-      $data = Drupal::httpClient()
+      $data = \Drupal::httpClient()
         ->get($location)
         ->send()
         ->getBody(TRUE);
