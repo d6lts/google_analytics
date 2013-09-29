@@ -1,4 +1,4 @@
-system.google_analytics_settings:
+google_analytics.settings:
   path: '/admin/config/system/google-analytics'
   defaults:
     _form: 'Drupal\google_analytics\GoogleAnalyticsSettingsForm'
