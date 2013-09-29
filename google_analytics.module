@@ -10,6 +10,7 @@
  * @author: Alexander Hass <http://drupal.org/user/85918>
  */
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Session\AccountInterface;
 use Guzzle\Http\Exception\RequestException;
 
@@ -449,8 +450,8 @@ function _google_analytics_cache($location, $sync_cached_file = FALSE) {
 
       if (file_exists($file_destination)) {
         // Synchronize tracking code and and replace local file if outdated.
-        $data_hash_local = drupal_hash_base64(file_get_contents($file_destination));
-        $data_hash_remote = drupal_hash_base64($data);
+        $data_hash_local = Crypt::hashBase64(file_get_contents($file_destination));
+        $data_hash_remote = Crypt::hashBase64($data);
         // Check that the files directory is writable.
         if ($data_hash_local != $data_hash_remote && file_prepare_directory($path)) {
           // Save updated tracking code file to disk.
