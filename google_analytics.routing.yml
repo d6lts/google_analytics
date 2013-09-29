@@ -1,5 +1,5 @@
-google_analytics_settings:
-  pattern: '/admin/config/system/google_analytics'
+google_analytics.settings:
+  path: '/admin/config/system/google_analytics'
   defaults:
     _form: 'Drupal\google_analytics\GoogleAnalyticsSettingsForm'
   requirements:
