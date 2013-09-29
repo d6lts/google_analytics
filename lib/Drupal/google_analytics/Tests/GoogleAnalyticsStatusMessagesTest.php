@@ -45,7 +45,7 @@ class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
     // Enable logging of errors only.
     config('google_analytics.settings')->set('track.messages', array('error' => 'error'))->save();
 
-    $this->drupalPost('user/login', array(), t('Log in'));
+    $this->drupalPostForm('user/login', array(), t('Log in'));
     $this->assertRaw('ga("send", "event", "Messages", "Error message", "Username field is required.");', '[testGoogleAnalyticsStatusMessages]: Event message "Username field is required." is shown.');
     $this->assertRaw('ga("send", "event", "Messages", "Error message", "Password field is required.");', '[testGoogleAnalyticsStatusMessages]: Event message "Password field is required." is shown.');
 
