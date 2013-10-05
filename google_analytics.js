@@ -4,13 +4,13 @@
 
 Drupal.google_analytics = {};
 
-$(document).ready(function () {
+$(document).ready(function() {
 
   // Attach onclick event to document only and catch clicks on all elements.
-  $(document.body).click(function (event) {
-    
+  $(document.body).click(function(event) {
+
     // Catch the closest surrounding link of a clicked element.
-    $(event.target).closest("a,area").each(function () {
+    $(event.target).closest("a,area").each(function() {
 
       // Is the clicked URL internal?
       if (Drupal.google_analytics.isInternal(this.href)) {
