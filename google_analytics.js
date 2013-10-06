@@ -122,6 +122,10 @@ Drupal.google_analytics.isInternalSpecial = function (url) {
 /**
  * Extract the relative internal URL from an absolute internal URL.
  *
+ * Examples:
+ * - http://mydomain.com/node/1 -> /node/1
+ * - http://example.com/foo/bar -> http://example.com/foo/bar
+ *
  * @param string url
  *   The web url to check.
  *
