@@ -30,10 +30,10 @@ console.log("Check if base_url + '/go/foo' url is internal special. Expected: tr
 console.log("Check if base_url + '/node/1' url is internal special. Expected: false, Result: %s.", Drupal.google_analytics.isInternalSpecial(base_url + '/node/1'));
 console.groupEnd();
 
-console.group("Test 'getInternalUrl':");
-console.log("Get absolute internal url from full qualified url. Expected: '/node/1', Result: '%s'.", Drupal.google_analytics.getInternalUrl(base_url + '/node/1'));
-console.log("Get absolute internal url from absolute url. Expected: '/node/1', Result: '%s'.", Drupal.google_analytics.getInternalUrl('/node/1'));
-console.log("Get full qualified external url. Expected: 'http://example.com/node/2', Result: '%s'.", Drupal.google_analytics.getInternalUrl('http://example.com/node/2'));
+console.group("Test 'getPageUrl':");
+console.log("Get absolute internal url from full qualified url. Expected: '/node/1', Result: '%s'.", Drupal.google_analytics.getPageUrl(base_url + '/node/1'));
+console.log("Get absolute internal url from absolute url. Expected: '/node/1', Result: '%s'.", Drupal.google_analytics.getPageUrl('/node/1'));
+console.log("Get full qualified external url. Expected: 'http://example.com/node/2', Result: '%s'.", Drupal.google_analytics.getPageUrl('http://example.com/node/2'));
 console.groupEnd();
 
 console.group("Test 'getDownloadExtension':");
