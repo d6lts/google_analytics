@@ -20,11 +20,11 @@ $(document).ready(function() {
         // Is download tracking activated and the file extension configured for download tracking?
         else if (Drupal.settings.googleanalytics.trackDownload && Drupal.googleanalytics.isDownload(this.href)) {
           // Download link clicked.
-          ga("send", "event", "Downloads", Drupal.googleanalytics.getDownloadExtension(this.href).toUpperCase(), Drupal.googleanalytics.getInternalUrl(this.href));
+          ga("send", "event", "Downloads", Drupal.googleanalytics.getDownloadExtension(this.href).toUpperCase(), Drupal.googleanalytics.getPageUrl(this.href));
         }
         else if (Drupal.googleanalytics.isInternalSpecial(this.href)) {
           // Keep the internal URL for Google Analytics website overlay intact.
-          ga("send", "pageview", { page: Drupal.googleanalytics.getInternalUrl(this.href) });
+          ga("send", "pageview", { page: Drupal.googleanalytics.getPageUrl(this.href) });
         }
       }
       else {
@@ -55,7 +55,7 @@ $(document).ready(function() {
   $(document).bind("cbox_complete", function () {
     var href = $.colorbox.element().attr("href");
     if (href) {
-      ga("send", "pageview", { page: Drupal.googleanalytics.getInternalUrl(href) });
+      ga("send", "pageview", { page: Drupal.googleanalytics.getPageUrl(href) });
     }
   });
 
@@ -138,7 +138,7 @@ Drupal.googleanalytics.isInternalSpecial = function (url) {
  * @return string
  *   Internal website URL
  */
-Drupal.googleanalytics.getInternalUrl = function (url) {
+Drupal.googleanalytics.getPageUrl = function (url) {
   var extractInternalUrl = new RegExp("^(https?):\/\/" + window.location.host, "i");
   return url.replace(extractInternalUrl, '');
 }
