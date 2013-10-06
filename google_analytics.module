@@ -125,8 +125,8 @@ function google_analytics_page_alter(&$page) {
     }
 
     if (!empty($link_settings)) {
-      drupal_add_js(array('google_analytics' => $link_settings), 'setting');
-      drupal_add_js(drupal_get_path('module', 'google_analytics') . '/google_analytics.js');
+      $page['#attached']['js'][] = array('data' => array('google_analytics' => $link_settings), 'type' => 'setting');
+      $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/google_analytics.js';
     }
 
     // Add messages tracking.
@@ -303,10 +303,10 @@ function google_analytics_page_alter(&$page) {
       // Custom tracking. Prepend before all other JavaScript.
       // @TODO: http://support.google.com/adsense/bin/answer.py?answer=98142
       // sounds like it could be appended to $script.
-      //drupal_add_js($googleanalytics_adsense_script, array('type' => 'inline', 'group' => JS_LIBRARY-1));
+      //$page['#attached']['js'][$googleanalytics_adsense_script] = array('type' => 'inline', 'group' => JS_LIBRARY-1);
     //}
 
-    drupal_add_js($script, array('scope' => $config->get('js_scope'), 'type' => 'inline'));
+    $page['#attached']['js'][$script] = array('scope' => $config->get('js_scope'), 'type' => 'inline');
   }
 }
 
