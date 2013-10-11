@@ -40,14 +40,14 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
 
   function testGoogleAnalyticsRolesTracking() {
     $ua_code = 'UA-123456-4';
-    config('google_analytics.settings')->set('account', $ua_code)->save();
+    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Test if the default settings are working as expected.
 
     // Add to the selected roles only.
-    config('google_analytics.settings')->set('visibility.roles_enabled', 0)->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.roles_enabled', 0)->save();
     // Enable tracking for all users.
-    config('google_analytics.settings')->set('visibility.roles', array())->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.roles', array())->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -65,7 +65,7 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     // Test if the non-default settings are working as expected.
 
     // Enable tracking only for authenticated users.
-    config('google_analytics.settings')->set('visibility.roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
 
     $this->drupalGet('');
     $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is displayed for authenticated users only on frontpage.');
@@ -75,9 +75,9 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is NOT displayed for anonymous users on frontpage.');
 
     // Add to every role except the selected ones.
-    config('google_analytics.settings')->set('visibility.roles_enabled', 1)->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.roles_enabled', 1)->save();
     // Enable tracking for all users.
-    config('google_analytics.settings')->set('visibility.roles', array())->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.roles', array())->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -93,7 +93,7 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is added to every role and NOT displayed in admin section for authenticated users.');
 
     // Disable tracking for authenticated users.
-    config('google_analytics.settings')->set('visibility.roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
 
     $this->drupalGet('');
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is NOT displayed on frontpage for excluded authenticated users.');

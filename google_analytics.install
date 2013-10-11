@@ -67,7 +67,7 @@ function google_analytics_requirements($phase) {
 
   if ($phase == 'runtime') {
     // Raise warning if Google user account has not been set yet.
-    $config = config('google_analytics.settings');
+    $config = \Drupal::config('google_analytics.settings');
     if (!preg_match('/^UA-\d{4,}-\d+$/', $config->get('account'))) {
       $requirements['google_analytics'] = array(
         'title' => t('Google Analytics module'),

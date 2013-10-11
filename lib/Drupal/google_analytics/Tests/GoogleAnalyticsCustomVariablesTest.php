@@ -41,7 +41,7 @@ class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
 
   function testGoogleAnalyticsCustomVariables() {
     $ua_code = 'UA-123456-3';
-    config('google_analytics.settings')->set('account', $ua_code)->save();
+    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Basic test if the feature works.
     $custom_vars = array(
@@ -78,7 +78,7 @@ class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
         ),
       )
     );
-    config('google_analytics.settings')->set('custom_var', $custom_vars)->save();
+    \Drupal::config('google_analytics.settings')->set('custom_var', $custom_vars)->save();
     $this->drupalGet('');
 
     foreach ($custom_vars['slots'] as $slot) {
@@ -87,7 +87,7 @@ class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
 
     // Test whether tokens are replaced in custom variable names.
     $site_slogan = $this->randomName(16);
-    config('system.site')->set('slogan', $site_slogan)->save();
+    \Drupal::config('system.site')->set('slogan', $site_slogan)->save();
 
     $custom_vars = array(
       'slots' => array(
@@ -123,7 +123,7 @@ class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
         ),
       )
     );
-    config('google_analytics.settings')->set('custom_var', $custom_vars)->save();
+    \Drupal::config('google_analytics.settings')->set('custom_var', $custom_vars)->save();
     $this->verbose('<pre>' . print_r($custom_vars, TRUE) . '</pre>');
 
     $this->drupalGet('');

@@ -52,14 +52,14 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
   function testGoogleAnalyticsPageVisibility() {
     $ua_code = 'UA-123456-1';
-    config('google_analytics.settings')->set('account', $ua_code)->save();
+    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Show tracking on "every page except the listed pages".
-    config('google_analytics.settings')->set('visibility.pages_enable', 0)->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.pages_enable', 0)->save();
     // Disable tracking one "admin*" pages only.
-    config('google_analytics.settings')->set('visibility.pages', "admin\nadmin/*")->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.pages', "admin\nadmin/*")->save();
     // Enable tracking only for authenticated users only.
-    config('google_analytics.settings')->set('visibility.', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -73,7 +73,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertNoRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin subpage.');
 
     // Test whether tracking code display is properly flipped.
-    config('google_analytics.settings')->set('visibility.pages_enabled', 1)->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.pages_enabled', 1)->save();
     $this->drupalGet('admin');
     $this->assertRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin page.');
     $this->drupalGet('admin/config/system/google-analytics');
@@ -88,9 +88,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is NOT displayed for anonymous.');
 
     // Switch back to every page except the listed pages.
-    config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
     // Enable tracking code for all user roles.
-    config('google_analytics.settings')->set('visibility.roles', array())->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.roles', array())->save();
 
     // Test whether 403 forbidden tracking code is shown if user has no access.
     $this->drupalGet('admin');
@@ -102,31 +102,31 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
     // DNT Tests:
     // Enable caching of pages for anonymous users.
-    config('google_analytics.settings')->set('cache', 1)->save();
+    \Drupal::config('google_analytics.settings')->set('cache', 1)->save();
     // Test whether DNT headers will fail to disable embedding of tracking code.
     $this->drupalGet('', array(), array('DNT: 1'));
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: DNT header send from client, but page caching is enabled and tracker cannot removed.');
     // DNT works only with caching of pages for anonymous users disabled.
-    config('google_analytics.settings')->set('cache', 0)->save();
+    \Drupal::config('google_analytics.settings')->set('cache', 0)->save();
     $this->drupalGet('');
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: Tracking is enabled without DNT header.');
     // Test whether DNT header is able to remove the tracking code.
     $this->drupalGet('', array(), array('DNT: 1'));
     $this->assertNoRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: DNT header received from client. Tracking has been disabled by browser.');
     // Disable DNT feature and see if tracker is still embedded.
-    config('google_analytics.settings')->set('privacy.donottrack', 0)->save();
+    \Drupal::config('google_analytics.settings')->set('privacy.donottrack', 0)->save();
     $this->drupalGet('', array(), array('DNT: 1'));
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: DNT feature is disabled, DNT header from browser has been ignored.');
   }
 
   function testGoogleAnalyticsTrackingCode() {
     $ua_code = 'UA-123456-2';
-    config('google_analytics.settings')->set('account', $ua_code)->save();
+    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Show tracking code on every page except the listed pages.
-    config('google_analytics.settings')->set('visibility.pages_enabled', 1)->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.pages_enabled', 1)->save();
     // Enable tracking code for all user roles.
-    config('google_analytics.settings')->set('visibility.roles', array())->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.roles', array())->save();
 
     /* Sample JS code as added to page:
     <script type="text/javascript" src="/sites/all/modules/google_analytics/google_analytics.js?w"></script>
@@ -143,7 +143,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     */
 
     // Test whether tracking code uses latest JS.
-    config('google_analytics.settings')->set('cache', 0)->save();
+    \Drupal::config('google_analytics.settings')->set('cache', 0)->save();
     $this->drupalGet('');
     $this->assertRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsTrackingCode]: Latest tracking code used.');
 
@@ -151,7 +151,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('');
     $this->assertNoRaw('ga("set", "anonymizeIp", 1);', '[testGoogleAnalyticsTrackingCode]: Anonymize visitors IP address not found on frontpage.');
     // Enable anonymizing of IP addresses.
-    config('google_analytics.settings')->set('privacy.anonymizeip', 1)->save();
+    \Drupal::config('google_analytics.settings')->set('privacy.anonymizeip', 1)->save();
     $this->drupalGet('');
     $this->assertRaw('ga("set", "anonymizeIp", 1);', '[testGoogleAnalyticsTrackingCode]: Anonymize visitors IP address found on frontpage.');
 
@@ -160,7 +160,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertNoRaw('ga("set", "cookieDomain",', '[testGoogleAnalyticsTrackingCode]: Single domain tracking is active.');
 
     // Enable "One domain with multiple subdomains".
-    config('google_analytics.settings')->set('domain_mode', 1)->save();
+    \Drupal::config('google_analytics.settings')->set('domain_mode', 1)->save();
     $this->drupalGet('');
 
     // Test may run on localhost, an ipaddress or real domain name.
@@ -175,8 +175,8 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     }
 
     // Enable "Multiple top-level domains" tracking.
-    config('google_analytics.settings')->set('domain_mode', 2)->save();
-    config('google_analytics.settings')->set('cross_domains', "www.example.com\nwww.example.net")->save();
+    \Drupal::config('google_analytics.settings')->set('domain_mode', 2)->save();
+    \Drupal::config('google_analytics.settings')->set('cross_domains', "www.example.com\nwww.example.net")->save();
     $this->drupalGet('');
     $this->assertRaw('ga("set", "cookieDomain", "none");', '[testGoogleAnalyticsTrackingCode]: _setDomainName: "none" found. Cross domain tracking is active.');
     $this->assertRaw('ga("set", "allowLinker", true);', '[testGoogleAnalyticsTrackingCode]: _setAllowLinker: true found. Cross domain tracking is active.');
@@ -184,8 +184,8 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
     // Test whether the BEFORE and AFTER code is added to the tracker.
     // @todo: review detectFlash once API docs are available.
-    config('google_analytics.settings')->set('codesnippet.before', 'ga("set", "detectFlash", false);')->save();
-    config('google_analytics.settings')->set('codesnippet.after', 'ga("create", "UA-123456-3", {name: "newTracker"});ga("newTracker.send", "pageview");')->save();
+    \Drupal::config('google_analytics.settings')->set('codesnippet.before', 'ga("set", "detectFlash", false);')->save();
+    \Drupal::config('google_analytics.settings')->set('codesnippet.after', 'ga("create", "UA-123456-3", {name: "newTracker"});ga("newTracker.send", "pageview");')->save();
     $this->drupalGet('');
     $this->assertRaw('ga("set", "detectFlash", false);', '[testGoogleAnalyticsTrackingCode]: Before codesnippet has been found with "Flash" detection disabled.');
     $this->assertRaw('ga("create", "UA-123456-3", {name: "newTracker"});', '[testGoogleAnalyticsTrackingCode]: After codesnippet with "newTracker" tracker has been found.');

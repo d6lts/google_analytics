@@ -40,10 +40,10 @@ class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
 
   function testGoogleAnalyticsStatusMessages() {
     $ua_code = 'UA-123456-4';
-    config('google_analytics.settings')->set('account', $ua_code)->save();
+    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Enable logging of errors only.
-    config('google_analytics.settings')->set('track.messages', array('error' => 'error'))->save();
+    \Drupal::config('google_analytics.settings')->set('track.messages', array('error' => 'error'))->save();
 
     $this->drupalPostForm('user/login', array(), t('Log in'));
     $this->assertRaw('ga("send", "event", "Messages", "Error message", "Username field is required.");', '[testGoogleAnalyticsStatusMessages]: Event message "Username field is required." is shown.');

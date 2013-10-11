@@ -88,7 +88,7 @@ function google_analytics_menu() {
  */
 function google_analytics_page_alter(&$page) {
   $account = \Drupal::currentUser();
-  $config = config('google_analytics.settings');
+  $config = \Drupal::config('google_analytics.settings');
   $id = $config->get('account');
 
   // Get page status code for visibility filtering.
@@ -327,7 +327,7 @@ function google_analytics_field_extra_fields() {
  * Implements hook_form_FORM_ID_alter().
  */
 function google_analytics_form_user_profile_form_alter(&$form, &$form_state) {
-  $config = config('google_analytics.settings');
+  $config = \Drupal::config('google_analytics.settings');
   $account = $form_state['controller']->getEntity($form_state);
 
   if (user_access('opt-in or out of tracking', $account) && ($custom = $config->get('visibility.custom')) != 0 && _google_analytics_visibility_roles($account)) {
@@ -387,7 +387,7 @@ function google_analytics_user_update($account) {
  * Implements hook_cron().
  */
 function google_analytics_cron() {
-  $config = config('google_analytics.settings');
+  $config = \Drupal::config('google_analytics.settings');
 
   // Regenerate the tracking code file every day.
   if (REQUEST_TIME - \Drupal::state()->get('google_analytics.last_cache') >= 86400 && $config->get('cache')) {
@@ -510,7 +510,7 @@ function google_analytics_clear_js_cache() {
  *   A decision on if the current user is being tracked by Google Analytics.
  */
 function _google_analytics_visibility_user($account) {
-  $config = config('google_analytics.settings');
+  $config = \Drupal::config('google_analytics.settings');
   $enabled = FALSE;
 
   // Is current user a member of a role that should be tracked?
@@ -540,7 +540,7 @@ function _google_analytics_visibility_user($account) {
  * be added for the current role and otherwise FALSE.
  */
 function _google_analytics_visibility_roles($account) {
-  $config = config('google_analytics.settings');
+  $config = \Drupal::config('google_analytics.settings');
   $enabled = $visibility = $config->get('visibility.roles_enabled');
   $roles = $config->get('visibility.roles');
 
@@ -574,7 +574,7 @@ function _google_analytics_visibility_pages() {
 
   // Cache visibility result if function is called more than once.
   if (!isset($page_match)) {
-    $config = config('google_analytics.settings');
+    $config = \Drupal::config('google_analytics.settings');
     $visibility = $config->get('visibility.pages_enabled');
     $setting_pages = $config->get('visibility.pages');
 
@@ -613,7 +613,7 @@ function _google_analytics_visibility_pages() {
  * be added to the current page and otherwise FALSE.
  */
 function _google_analytics_visibility_header($account) {
-  $config = config('google_analytics.settings');
+  $config = \Drupal::config('google_analytics.settings');
   $visibility = $config->get('visibility.pages_enabled');
 
   if (($account->id() || $config->get('cache') == 0) && $config->get('privacy.donottrack') && !empty($_SERVER['HTTP_DNT'])) {
