@@ -1,0 +1,94 @@
+# Schema for the configuration files of the google_analytics module.
+
+google_analytics.settings:
+  type: mapping
+  label: 'Google Analytics settings'
+  mapping:
+    account:
+      type: string
+      label: 'Web Property ID'
+    domain_mode:
+      type: integer
+      label: 'What are you tracking?'
+    cross_domains:
+      type: string
+      label: 'List of top-level domains'
+    visibility:
+      type: mapping
+      label: 'Visibility'
+      mapping:
+        pages_enabled:
+          type: integer
+          label: 'Add tracking to specific pages'
+        pages:
+          type: string
+          label: 'Pages by their paths'
+        roles_enabled:
+          type: integer
+          label: 'Add tracking for specific roles'
+        roles:
+          type: string
+          label: 'Roles'
+        custom:
+          type: integer
+          label: 'Allow users to customize tracking on their account page'
+    track:
+      type: mapping
+      label: 'Links and downloads'
+      mapping:
+        outbound:
+          type: integer
+          label: 'Track clicks on outbound links'
+        mailto:
+          type: integer
+          label: 'Track clicks on mailto links'
+        files:
+          type: integer
+          label: 'Track downloads'
+        files_extensions:
+          type: string
+          label: 'File extension list'
+        messages:
+          type: integer
+          label: 'Track messages of type'
+        site_search:
+          type: integer
+          label: 'Track internal search'
+        adsense:
+          type: integer
+          label: 'Track AdSense ads'
+        doubleclick:
+          type: integer
+          label: 'Track DoubleClick data'
+    privacy:
+      type: mapping
+      label: 'Privacy'
+      mapping:
+        anonymizeip:
+          type: integer
+          label: 'Anonymize visitors IP address'
+        donottrack:
+          type: integer
+          label: 'Universal web tracking opt-out'
+    codesnippet:
+      type: mapping
+      label: 'Custom code snippets'
+      mapping:
+        before:
+          type: string
+          label: 'Code snippet (before)'
+        after:
+          type: string
+          label: 'Code snippet (after)'
+    translation_set:
+      type: integer
+      label: 'Track translation sets as one unit'
+    js_scope:
+      type: integer
+      label: 'JavaScript scope'
+    cache:
+      type: integer
+      label: 'Locally cache tracking code file'
+    custom_var:
+      type: string
+      label: 'Custom variables'
