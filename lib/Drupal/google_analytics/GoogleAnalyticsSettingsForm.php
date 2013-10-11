@@ -218,7 +218,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#title_display' => 'invisible',
       '#type' => 'textfield',
       '#default_value' => $settings['track']['files_extensions'],
-      '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GOOGLEANALYTICS_TRACKFILES_EXTENSIONS)),
+      '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GOOGLE_ANALYTICS_TRACKFILES_EXTENSIONS)),
       '#maxlength' => 255,
     );
 
