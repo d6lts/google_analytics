@@ -6,8 +6,9 @@ Drupal.google_analytics = {};
 
 $(document).ready(function() {
 
-  // Attach onclick event to document only and catch clicks on all elements.
-  $(document.body).click(function(event) {
+  // Attach mousedown, keyup, touchstart events to document only and catch
+  // clicks on all elements.
+  $(document.body).on("mousedown keyup touchstart", function(event) {
 
     // Catch the closest surrounding link of a clicked element.
     $(event.target).closest("a,area").each(function() {
@@ -54,7 +55,7 @@ $(document).ready(function() {
 
   // Colorbox: This event triggers when the transition has completed and the
   // newly loaded content has been revealed.
-  $(document).bind("cbox_complete", function () {
+  $(document).on("cbox_complete", function () {
     var href = $.colorbox.element().attr("href");
     if (href) {
       ga("send", "pageview", { page: Drupal.google_analytics.getPageUrl(href) });
