@@ -4,8 +4,9 @@ Drupal.googleanalytics = {};
 
 $(document).ready(function() {
 
-  // Attach onclick event to document only and catch clicks on all elements.
-  $(document.body).click(function(event) {
+  // Attach mousedown, keyup, touchstart events to document only and catch
+  // clicks on all elements.
+  $(document.body).bind("mousedown keyup touchstart", function(event) {
 
     // Catch the closest surrounding link of a clicked element.
     $(event.target).closest("a,area").each(function() {
