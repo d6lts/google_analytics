@@ -12,6 +12,7 @@
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Json;
+use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Session\AccountInterface;
 use Guzzle\Http\Exception\RequestException;
 
@@ -583,11 +584,11 @@ function _google_analytics_visibility_pages() {
     if (!empty($setting_pages)) {
       // Convert path to lowercase. This allows comparison of the same path
       // with different case. Ex: /Page, /page, /PAGE.
-      $pages = drupal_strtolower($setting_pages);
+      $pages = Unicode::strtolower($setting_pages);
       if ($visibility < 2) {
         // Compare the lowercase path alias (if any) and internal path.
         $path = current_path();
-        $path_alias = drupal_strtolower(\Drupal::service('path.alias_manager')->getPathAlias($path));
+        $path_alias = Unicode::strtolower(\Drupal::service('path.alias_manager')->getPathAlias($path));
         $page_match = drupal_match_path($path_alias, $pages) || (($path != $path_alias) && drupal_match_path($path, $pages));
         // When $visibility has a value of 0, the tracking code is displayed on
         // all pages except those listed in $pages. When set to 1, it
