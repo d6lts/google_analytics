@@ -7,6 +7,7 @@
 namespace Drupal\google_analytics;
 
 use Drupal\Core\Form\ConfigFormBase;
+#use Drupal\Core\Session\AccountInterface;
 
 /**
  * Configure Google_Analytics settings for this site.
@@ -102,7 +103,9 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
 
     // Page specific visibility configurations.
     $visibility = $settings['visibility'];
-    $php_access = user_access('use PHP for tracking visibility');
+
+    $account = \Drupal::currentUser();
+    $php_access = $account->hasPermission('use PHP for tracking visibility')
 
     $form['tracking']['page_vis_settings'] = array(
       '#type' => 'details',

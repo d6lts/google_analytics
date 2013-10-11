@@ -328,9 +328,10 @@ function google_analytics_field_extra_fields() {
  */
 function google_analytics_form_user_profile_form_alter(&$form, &$form_state) {
   $config = \Drupal::config('google_analytics.settings');
+  // @todo ?: $account = \Drupal::currentUser();
   $account = $form_state['controller']->getEntity($form_state);
 
-  if (user_access('opt-in or out of tracking', $account) && ($custom = $config->get('visibility.custom')) != 0 && _google_analytics_visibility_roles($account)) {
+  if ($account->hasPermission('opt-in or out of tracking') && ($custom = $config->get('visibility.custom')) != 0 && _google_analytics_visibility_roles($account)) {
     $account_data_google_analytics = drupal_container()->get('user.data')->get('google_analytics', $account->id());
 
     $form['google_analytics'] = array(
