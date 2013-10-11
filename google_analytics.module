@@ -244,7 +244,6 @@ function google_analytics_page_alter(&$page) {
       // browser-caching. The string changes on every update or full cache
       // flush, forcing browsers to load a new copy of the files, as the
       // URL changed.
-      // @FIXME config namespace?
       $query_string = '?' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
 
       $script .= '"' . $url . $query_string . '"';
