@@ -153,7 +153,7 @@ function google_analytics_page_alter(&$page) {
 
     // Site search tracking support.
     $url_custom = '';
-    if (module_exists('search') && $config->get('track.site_search') && arg(0) == 'search' && $keys = google_analytics_search_get_keys()) {
+    if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && arg(0) == 'search' && $keys = google_analytics_search_get_keys()) {
       // hook_preprocess_search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
       $url_custom = '(window.googleanalytics_search_results) ? ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => $keys)))) . ' : ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results'))));
@@ -161,7 +161,7 @@ function google_analytics_page_alter(&$page) {
 
     // If this node is a translation of another node, pass the original
     // node instead.
-    if (module_exists('translation') && $config->get('translation_set')) {
+    if (\Drupal::moduleHandler()->moduleExists('translation') && $config->get('translation_set')) {
       // Check we have a node object, it supports translation, and its
       // translated node ID (tnid) doesn't match its own node ID.
       $node = menu_get_object();
@@ -594,7 +594,7 @@ function _google_analytics_visibility_pages() {
         // is displayed only on those pages listed in $pages.
         $page_match = !($visibility xor $page_match);
       }
-      elseif (module_exists('php')) {
+      elseif (\Drupal::moduleHandler()->moduleExists('php')) {
         $page_match = php_eval($setting_pages);
       }
       else {

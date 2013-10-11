@@ -123,7 +123,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       );
       $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
 
-      if (module_exists('php') && $php_access) {
+      if (\Drupal::moduleHandler()->moduleExists('php') && $php_access) {
         $options[] = t('Pages on which this PHP code returns <code>TRUE</code> (experts only)');
         $title = t('Pages or PHP code');
         $description .= ' ' . t('If the PHP option is chosen, enter PHP code between %php. Note that executing incorrect PHP code can break your Drupal site.', array('%php' => '<?php ?>'));
@@ -249,7 +249,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     );
 
     $site_search_dependencies = '<div class="admin-requirements">';
-    $site_search_dependencies .= t('Requires: !module-list', array('!module-list' => (module_exists('search') ? t('@module (<span class="admin-enabled">enabled</span>)', array('@module' => 'Search')) : t('@module (<span class="admin-disabled">disabled</span>)', array('@module' => 'Search')))));
+    $site_search_dependencies .= t('Requires: !module-list', array('!module-list' => (\Drupal::moduleHandler()->moduleExists('search') ? t('@module (<span class="admin-enabled">enabled</span>)', array('@module' => 'Search')) : t('@module (<span class="admin-disabled">disabled</span>)', array('@module' => 'Search')))));
     $site_search_dependencies .= '</div>';
 
     $form['tracking']['search_and_advertising']['google_analytics_site_search'] = array(
@@ -257,7 +257,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#title' => t('Track internal search'),
       '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">Setting Up Site Search for a Profile</a>.', array('@url' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '1012264'))))) . $site_search_dependencies,
       '#default_value' => $settings['track']['site_search'],
-      '#disabled' => (module_exists('search') ? FALSE : TRUE),
+      '#disabled' => (\Drupal::moduleHandler()->moduleExists('search') ? FALSE : TRUE),
     );
     /* @todo: not supported, https://support.google.com/analytics/bin/answer.py?hl=en&hlrm=de&answer=2795983
      $form['tracking']['search_and_advertising']['google_analytics_trackadsense'] = array(
@@ -338,7 +338,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
         '#element_validate' => array('googleanalytics_token_element_validate'),
         '#token_types' => array('node'),
       );
-      if (module_exists('token')) {
+      if (\Drupal::moduleHandler()->moduleExists('token')) {
         $form['google_analytics_custom_var']['slots'][$i]['name']['#element_validate'][] = 'token_element_validate';
         $form['google_analytics_custom_var']['slots'][$i]['value']['#element_validate'][] = 'token_element_validate';
       }
@@ -383,7 +383,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     );
 
     // Allow for tracking of the originating node when viewing translation sets.
-    if (module_exists('translation')) {
+    if (\Drupal::moduleHandler()->moduleExists('translation')) {
       $form['advanced']['google_analytics_translation_set'] = array(
         '#type' => 'checkbox',
         '#title' => t('Track translation sets as one unit'),
