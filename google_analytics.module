@@ -11,6 +11,7 @@
  */
 
 use Drupal\Component\Utility\Crypt;
+use Drupal\Component\Utility\Json;
 use Drupal\Core\Session\AccountInterface;
 use Guzzle\Http\Exception\RequestException;
 
@@ -144,7 +145,7 @@ function google_analytics_page_alter(&$page) {
         if (in_array($type, $message_types)) {
           foreach ($messages as $message) {
             // @todo: Track as exceptions?
-            $message_events .= 'ga("send", "event", ' . drupal_json_encode(t('Messages')) . ', ' . drupal_json_encode($status_heading[$type]) . ', ' . drupal_json_encode(strip_tags($message)) . ');';
+            $message_events .= 'ga("send", "event", ' . Json::encode(t('Messages')) . ', ' . Json::encode($status_heading[$type]) . ', ' . Json::encode(strip_tags($message)) . ');';
           }
         }
       }
@@ -155,7 +156,7 @@ function google_analytics_page_alter(&$page) {
     if (module_exists('search') && $config->get('track.site_search') && arg(0) == 'search' && $keys = google_analytics_search_get_keys()) {
       // hook_preprocess_search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
-      $url_custom = '(window.googleanalytics_search_results) ? ' . drupal_json_encode(url('search/' . arg(1), array('query' => array('search' => $keys)))) . ' : ' . drupal_json_encode(url('search/' . arg(1), array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results'))));
+      $url_custom = '(window.googleanalytics_search_results) ? ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => $keys)))) . ' : ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results'))));
     }
 
     // If this node is a translation of another node, pass the original
@@ -167,7 +168,7 @@ function google_analytics_page_alter(&$page) {
       if ($node && translation_supported_type($node->type) && !empty($node->tnid) && ($node->tnid != $node->nid)) {
         $source_node = node_load($node->tnid);
         $languages = language_list();
-        $url_custom = drupal_json_encode(url('node/' . $source_node->nid, array('language' => $languages[$source_node->language])));
+        $url_custom = Json::encode(url('node/' . $source_node->nid, array('language' => $languages[$source_node->language])));
       }
     }
 
@@ -218,8 +219,8 @@ function google_analytics_page_alter(&$page) {
           $custom_var_value = urldecode($tmp_value);
         }
 
-        $custom_var_name = drupal_json_encode($custom_var_name);
-        $custom_var_value = drupal_json_encode($custom_var_value);
+        $custom_var_name = Json::encode($custom_var_name);
+        $custom_var_value = Json::encode($custom_var_value);
 
         $custom_var .= "ga('set', 'dimension" . $i . "', $custom_var_name);"; // Max 150 bytes
         $custom_var .= "ga('set', 'metric" . $i . "', $custom_var_value);";
@@ -254,14 +255,14 @@ function google_analytics_page_alter(&$page) {
     $script .= ',"ga");';
 
     // Create a tracker.
-    $script .= 'ga("create", ' . drupal_json_encode($id) . ');';
+    $script .= 'ga("create", ' . Json::encode($id) . ');';
 
     if ($config->get('privacy.anonymizeip')) {
       $script .= 'ga("set", "anonymizeIp", 1);';
     }
 
     // Prepare Adsense tracking.
-    $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . drupal_json_encode($id) . ';';
+    $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . Json::encode($id) . ';';
 
     // Domain tracking type.
     global $cookie_domain;
@@ -270,8 +271,8 @@ function google_analytics_page_alter(&$page) {
     // Per RFC 2109, cookie domains must contain at least one dot other than the
     // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
     if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
-      $script .= 'ga("set", "cookieDomain", ' . drupal_json_encode($cookie_domain) . ');';
-      $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = ' . drupal_json_encode($cookie_domain) . ';';
+      $script .= 'ga("set", "cookieDomain", ' . Json::encode($cookie_domain) . ');';
+      $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = ' . Json::encode($cookie_domain) . ';';
     }
     elseif ($domain_mode == 2) {
       // @todo: unclear, cookieDomain = "none" is not documented.
