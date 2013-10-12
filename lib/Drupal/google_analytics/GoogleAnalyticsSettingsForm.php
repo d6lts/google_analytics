@@ -105,7 +105,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $visibility = $settings['visibility'];
 
     $account = \Drupal::currentUser();
-    $php_access = $account->hasPermission('use PHP for tracking visibility')
+    $php_access = $account->hasPermission('use PHP for tracking visibility');
 
     $form['tracking']['page_vis_settings'] = array(
       '#type' => 'details',
