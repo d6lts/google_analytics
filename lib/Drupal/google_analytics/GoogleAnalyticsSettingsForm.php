@@ -7,7 +7,6 @@
 namespace Drupal\google_analytics;
 
 use Drupal\Core\Form\ConfigFormBase;
-#use Drupal\Core\Session\AccountInterface;
 
 /**
  * Configure Google_Analytics settings for this site.
