@@ -27,7 +27,7 @@ define('GOOGLE_ANALYTICS_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin
  */
 function google_analytics_help($path, $arg) {
   switch ($path) {
-    case 'admin/config/system/googleanalytics':
+    case 'admin/config/system/google-analytics':
       return t('<a href="@ga_url">Google Analytics</a> is a free (registration required) website traffic and marketing effectiveness service.', array('@ga_url' => 'http://www.google.com/analytics/'));
   }
 }
@@ -609,7 +609,6 @@ function _google_analytics_visibility_pages() {
  */
 function _google_analytics_visibility_header($account) {
   $config = \Drupal::config('google_analytics.settings');
-  $visibility = $config->get('visibility.pages_enabled');
 
   if (($account->id() || $config->get('cache') == 0) && $config->get('privacy.donottrack') && !empty($_SERVER['HTTP_DNT'])) {
     // Disable tracking if caching is disabled or a visitors is logged in and
