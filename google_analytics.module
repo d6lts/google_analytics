@@ -161,7 +161,7 @@ function google_analytics_page_alter(&$page) {
       $request = \Drupal::request();
       if ($request->attributes->has('node')) {
         $node = $request->attributes->get('node');
-        if ($node && content_translation_enabled('node', $node->getType()) && $node->language()->id != $node->prepareLangcode()) {
+        if ($node && $node->isTranslatable() && $node->language()->id != $node->prepareLangcode()) {
           $languages = language_list();
           $url_custom = Json::encode(url('node/' . $node->id(), array('language' => $languages[$node->language()->id])));
         }
