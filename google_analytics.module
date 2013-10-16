@@ -155,14 +155,16 @@ function google_analytics_page_alter(&$page) {
 
     // If this node is a translation of another node, pass the original
     // node instead.
-    if (\Drupal::moduleHandler()->moduleExists('translation') && $config->get('translation_set')) {
-      // Check we have a node object, it supports translation, and its
-      // translated node ID (tnid) doesn't match its own node ID.
-      $node = menu_get_object();
-      if ($node && translation_supported_type($node->type) && !empty($node->tnid) && ($node->tnid != $node->nid)) {
-        $source_node = node_load($node->tnid);
-        $languages = language_list();
-        $url_custom = Json::encode(url('node/' . $source_node->nid, array('language' => $languages[$source_node->language])));
+    if (\Drupal::moduleHandler()->moduleExists('content_translation') && $config->get('translation_set')) {
+      // Check if we have a node object, it has translation enabled, and its
+      // language code does not match its source language code.
+      $request = \Drupal::request();
+      if ($request->attributes->has('node')) {
+        $node = $request->attributes->get('node');
+        if ($node && content_translation_enabled('node', $node->getType()) && $node->language()->id != $node->prepareLangcode()) {
+          $languages = language_list();
+          $url_custom = Json::encode(url('node/' . $node->id(), array('language' => $languages[$node->language()->id])));
+        }
       }
     }
 

@@ -385,7 +385,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     );
 
     // Allow for tracking of the originating node when viewing translation sets.
-    if (\Drupal::moduleHandler()->moduleExists('translation')) {
+    if (\Drupal::moduleHandler()->moduleExists('content_translation')) {
       $form['advanced']['google_analytics_translation_set'] = array(
         '#type' => 'checkbox',
         '#title' => t('Track translation sets as one unit'),
