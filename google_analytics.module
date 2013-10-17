@@ -161,9 +161,11 @@ function google_analytics_page_alter(&$page) {
       $request = \Drupal::request();
       if ($request->attributes->has('node')) {
         $node = $request->attributes->get('node');
-        if ($node && $node->isTranslatable() && $node->language()->id != $node->prepareLangcode()) {
-          $languages = language_list();
-          $url_custom = Json::encode(url('node/' . $node->id(), array('language' => $languages[$node->language()->id])));
+        // @todo: Should work per https://drupal.org/node/2112151#comment-7971475
+        // -> revisit after https://drupal.org/node/2019055 got in.
+        //if ($node && $node !== $node->getUntranslated()) {
+        if ($node && $node->isTranslatable() && $node->getUntranslated()->language()->id != $node->prepareLangcode()) {
+          $url_custom = Json::encode(url('node/' . $node->id(), array('language' => $node->getUntranslated()->language())));
         }
       }
     }
