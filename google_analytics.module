@@ -416,7 +416,12 @@ function google_analytics_preprocess_search_results(&$variables) {
   // found. But the pager item mumber can tell the number of search results.
   global $pager_total_items;
 
-  drupal_add_js('window.googleanalytics_search_results = ' . intval($pager_total_items[0]) . ';', array('type' => 'inline', 'group' => JS_LIBRARY-1));
+  $page['#attached']['js'][] = array(
+    'data' => 'window.googleanalytics_search_results = ' . intval($pager_total_items[0]) . ';',
+    'type' => 'inline',
+    'group' => JS_LIBRARY-1,
+  );
+  drupal_render($page);
 }
 
 /**
