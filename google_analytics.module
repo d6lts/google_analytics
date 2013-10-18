@@ -425,7 +425,7 @@ function google_analytics_preprocess_search_results(&$variables) {
 }
 
 /**
- * Helper function for grabbing search keys. Function is missing in D7.
+ * Helper function for grabbing search keys. Function is missing in D8.
  *
  * http://api.drupal.org/api/function/search_get_keys/6
  */
