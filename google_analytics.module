@@ -120,7 +120,10 @@ function google_analytics_page_alter(&$page) {
     }
 
     if (!empty($link_settings)) {
-      $page['#attached']['js'][] = array('data' => array('google_analytics' => $link_settings), 'type' => 'setting');
+      $page['#attached']['js'][] = array(
+        'data' => array('google_analytics' => $link_settings),
+        'type' => 'setting',
+      );
       $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/google_analytics.js';
     }
 
@@ -301,10 +304,18 @@ function google_analytics_page_alter(&$page) {
       // Custom tracking. Prepend before all other JavaScript.
       // @TODO: http://support.google.com/adsense/bin/answer.py?answer=98142
       // sounds like it could be appended to $script.
-      //$page['#attached']['js'][$googleanalytics_adsense_script] = array('type' => 'inline', 'group' => JS_LIBRARY-1);
+      //$page['#attached']['js'][] = array(
+      //  'data' => $googleanalytics_adsense_script,
+      //  'group' => JS_LIBRARY-1,
+      //  'type' => 'inline',
+      //);
     //}
 
-    $page['#attached']['js'][$script] = array('scope' => $config->get('js_scope'), 'type' => 'inline');
+    $page['#attached']['js'][] = array(
+      'data' => $script,
+      'scope' => $config->get('js_scope'),
+      'type' => 'inline',
+    );
   }
 }
 
