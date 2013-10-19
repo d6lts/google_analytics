@@ -433,9 +433,8 @@ function google_analytics_search_get_keys() {
   static $return;
   if (!isset($return)) {
     // Extract keys as remainder of path
-    // Note: support old GET format of searches for existing links.
-    $path = explode('/', $_GET['q'], 3);
-    $keys = empty($_REQUEST['keys']) ? '' : $_REQUEST['keys'];
+    $path = explode('/', current_path(), 3);
+    $keys = \Drupal::request()->attributes->get('keys');
     $return = count($path) == 3 ? $path[2] : $keys;
   }
   return $return;
