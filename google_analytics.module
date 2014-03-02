@@ -65,14 +65,14 @@ function google_analytics_permission() {
 }
 
 /**
- * Implements hook_menu().
+ * Implements hook_menu_link_defaults().
  */
-function google_analytics_menu() {
-  $items['admin/config/system/google-analytics'] = array(
-    'title' => 'Google Analytics',
+function google_analytics_menu_link_defaults() {
+  $items['system.admin.config.system.google-analytics'] = array(
+    'link_title' => 'Google Analytics',
     'description' => 'Configure tracking behavior to get insights into your website traffic and marketing effectiveness.',
+    'parent' => 'system.admin.config.system',
     'route_name' => 'google_analytics.settings',
-    'type' => MENU_NORMAL_ITEM,
   );
 
   return $items;
