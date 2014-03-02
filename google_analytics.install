@@ -8,6 +8,7 @@
 /**
  * Implements hook_install().
  */
+/* TODO: use Migrate module
 function google_analytics_install() {
   // #1967410: Undefined function update_variables_to_config() in hook_install().
   require_once DRUPAL_ROOT . '/core/includes/update.inc';
@@ -47,7 +48,7 @@ function google_analytics_install() {
   update_variable_del('googleanalytics_codesnippet_after_backup_6300');
   update_variable_del('googleanalytics_codesnippet_before_backup_6300');
   update_variable_del('googleanalytics_segmentation');
-}
+} */
 
 /**
  * Implements hook_uninstall().
