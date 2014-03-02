@@ -20,9 +20,9 @@ source:
     - googleanalytics_trackfiles
     - googleanalytics_trackfiles_extensions
     - googleanalytics_trackmailto
-    - googleanalytics_trackoutbound
+    - googleanalytics_trackoutgoing
     - googleanalytics_translation_set
-    - googleanalytics_visibility_pages
+    - googleanalytics_visibility
     - googleanalytics_visibility_roles
     - googleanalytics_privacy_donottrack
 process:
@@ -44,9 +44,9 @@ process:
   'track:files': googleanalytics_trackfiles
   'track:files_extensions': googleanalytics_trackfiles_extensions
   'track:mailto': googleanalytics_trackmailto
-  'track:outbound': googleanalytics_trackoutbound
+  'track:outbound': googleanalytics_trackoutgoing
   'translation_set': googleanalytics_translation_set
-  'visibility:pages_enabled': googleanalytics_visibility_pages
+  'visibility:pages_enabled': googleanalytics_visibility
   'visibility:roles_enabled': googleanalytics_visibility_roles
   'privacy.donottrack': googleanalytics_privacy_donottrack
 destination:
