@@ -277,7 +277,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['tracking']['search_and_advertising']['google_analytics_trackdoubleclick'] = array(
       '#type' => 'checkbox',
       '#title' => t('Track DoubleClick data'),
-      '#description' => t('If checked, the alternative Google <a href="@doubleclick">DoubleClick data tracking</a> is used to enable AdWords remarketing features. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', array('@doubleclick' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2444872'))), '@privacy' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2636405'))))),
+      '#description' => t('If checked, the alternative Google <a href="@doubleclick">DoubleClick data tracking</a> is used to enable AdWords remarketing features. This is required for Remarketing, Demographics and Interests reporting and GDN Impression Reporting features. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', array('@doubleclick' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2444872'))), '@privacy' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2636405'))))),
       '#default_value' => $settings['track']['doubleclick'],
     ); */
 
