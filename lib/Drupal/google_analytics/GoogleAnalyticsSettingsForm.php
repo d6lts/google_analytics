@@ -257,7 +257,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['tracking']['search_and_advertising']['google_analytics_site_search'] = array(
       '#type' => 'checkbox',
       '#title' => t('Track internal search'),
-      '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">Setting Up Site Search for a Profile</a>.', array('@url' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '1012264'))))) . $site_search_dependencies,
+      '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">Setting Up Site Search for a Profile</a>.', array('@url' => url('https://support.google.com/analytics/answer/1012264'))) . $site_search_dependencies,
       '#default_value' => $settings['track']['site_search'],
       '#disabled' => (\Drupal::moduleHandler()->moduleExists('search') ? FALSE : TRUE),
     );
