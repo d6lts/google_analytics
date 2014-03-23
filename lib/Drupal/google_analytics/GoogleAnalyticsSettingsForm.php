@@ -518,6 +518,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       ->set('domain_mode', $form_state['values']['google_analytics_domain_mode'])
       ->set('track.files', $form_state['values']['google_analytics_trackfiles'])
       ->set('track.files_extensions', $form_state['values']['google_analytics_trackfiles_extensions'])
+      ->set('track.linkid', $form_state['values']['google_analytics_tracklinkid'])
       ->set('track.mailto', $form_state['values']['google_analytics_trackmailto'])
       ->set('track.messages', $form_state['values']['google_analytics_trackmessages'])
       ->set('track.outbound', $form_state['values']['google_analytics_trackmailto'])
