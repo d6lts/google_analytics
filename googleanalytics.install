@@ -41,6 +41,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_tracker_anonymizeip');
   variable_del('googleanalytics_trackfiles');
   variable_del('googleanalytics_trackfiles_extensions');
+  variable_del('googleanalytics_tracklinkid');
   variable_del('googleanalytics_trackmailto');
   variable_del('googleanalytics_trackmessages');
   variable_del('googleanalytics_trackoutbound');

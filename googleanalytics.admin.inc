@@ -201,6 +201,12 @@ function googleanalytics_admin_settings_form($form_state) {
     '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GOOGLEANALYTICS_TRACKFILES_EXTENSIONS)),
     '#maxlength' => 255,
   );
+  $form['tracking']['linktracking']['googleanalytics_tracklinkid'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable enhanced link attribution'),
+    '#default_value' => variable_get('googleanalytics_tracklinkid', 0),
+    '#description' => t('Enhancements: separate click tracking for multiple links on a page with the same destination, better tracking for search buttons, and tracking for javascript links/buttons. To use this you must enable <a href="@url">enhanced link attribution</a> for this site on your Google Analytics account.', array('@url' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2558867'))))),
+  );
 
   // Message specific configurations.
   $form['tracking']['messagetracking'] = array(
