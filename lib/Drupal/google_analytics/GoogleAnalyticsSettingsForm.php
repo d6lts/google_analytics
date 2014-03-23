@@ -472,12 +472,12 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form_state['values']['google_analytics_account'] = str_replace(array('–', '—', '−'), '-', $form_state['values']['google_analytics_account']);
 
     if (!preg_match('/^UA-\d{4,}-\d+$/', $form_state['values']['google_analytics_account'])) {
-      form_set_error('google_analytics_account', t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'));
+      \Drupal::formBuilder()->setErrorByName('google_analytics_account', $form_state, t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'));
     }
 
     // If multiple top-level domains has been selected, a domain names list is required.
     if ($form_state['values']['google_analytics_domain_mode'] == 2 && empty($form_state['values']['google_analytics_cross_domains'])) {
-      form_set_error('google_analytics_cross_domains', t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
+      \Drupal::formBuilder()->setErrorByName('google_analytics_cross_domains', $form_state, t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
     }
     // Clear obsolete local cache if cache has been disabled.
     if (empty($form_state['values']['google_analytics_cache']) && $form['advanced']['google_analytics_cache']['#default_value']) {
@@ -486,16 +486,16 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
 
     // This is for the Newbie's who cannot read a text area description.
     if (stristr($form_state['values']['google_analytics_codesnippet_before'], 'google-analytics.com/analytics.js')) {
-      form_set_error('google_analytics_codesnippet_before', t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
+      \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_before', $form_state, t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
     }
     if (stristr($form_state['values']['google_analytics_codesnippet_after'], 'google-analytics.com/analytics.js')) {
-      form_set_error('google_analytics_codesnippet_after', t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
+      \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_after', $form_state, t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
     }
     if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['google_analytics_codesnippet_before'])) {
-      form_set_error('google_analytics_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+      \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_before', $form_state, t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
     if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['google_analytics_codesnippet_after'])) {
-      form_set_error('google_analytics_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+      \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_after', $form_state, t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
 
     // Header section must be forced for multiple top-level domains.
