@@ -223,6 +223,12 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GOOGLE_ANALYTICS_TRACKFILES_EXTENSIONS)),
       '#maxlength' => 255,
     );
+    $form['tracking']['linktracking']['google_analytics_tracklinkid'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enable enhanced link attribution'),
+      '#default_value' => $settings['track']['linkid'],
+      '#description' => t('Enhancements: separate click tracking for multiple links on a page with the same destination, better tracking for search buttons, and tracking for javascript links/buttons. To use this you must enable <a href="@url">enhanced link attribution</a> for this site on your Google Analytics account.', array('@url' => 'https://support.google.com/analytics/answer/2558867')),
+    );
 
     // Message specific configurations.
     $form['tracking']['messagetracking'] = array(

@@ -48,6 +48,9 @@ google_analytics.settings:
         files_extensions:
           type: string
           label: 'File extension list'
+        linkid:
+          type: integer
+          label: 'Enable enhanced link attribution'
         messages:
           type: integer
           label: 'Track messages of type'

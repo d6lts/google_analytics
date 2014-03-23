@@ -258,6 +258,12 @@ function google_analytics_page_alter(&$page) {
       $script .= 'ga("set", "anonymizeIp", 1);';
     }
 
+    // Add enhanced link attribution after 'create', but before 'pageview' send.
+    // @see https://support.google.com/analytics/answer/2558867
+    if ($config->get('track.linkid')) {
+      $script .= 'ga("require", "linkid", "linkid.js");';
+    }
+
     // Prepare Adsense tracking.
     $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . Json::encode($id) . ';';
 
