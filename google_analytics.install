@@ -72,7 +72,7 @@ function google_analytics_requirements($phase) {
     if (!preg_match('/^UA-\d{4,}-\d+$/', $config->get('account'))) {
       $requirements['google_analytics'] = array(
         'title' => t('Google Analytics module'),
-        'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/google_analytics'))),
+        'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/google-analytics'))),
         'severity' => REQUIREMENT_WARNING,
         'value' => t('Not configured'),
       );
