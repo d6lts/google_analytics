@@ -25,7 +25,6 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, array &$form_state) {
     $config = $this->configFactory->get('google_analytics.settings');
-    $settings = $config->get();
 
     $form['general'] = array(
       '#type' => 'details',
@@ -35,7 +34,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['general']['google_analytics_account'] = array(
       '#title' => t('Web Property ID'),
       '#type' => 'textfield',
-      '#default_value' => $settings['account'],
+      '#default_value' => $config->get('account'),
       '#size' => 15,
       '#maxlength' => 20,
       '#required' => TRUE,
@@ -91,20 +90,19 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
         1 => t('One domain with multiple subdomains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_sub_domains))) . '</div>',
         2 => t('Multiple top-level domains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_toplevel_domains))) . '</div>',
       ),
-      '#default_value' => $settings['domain_mode'],
+      '#default_value' => $config->get('domain_mode'),
     );
     $form['tracking']['domain_tracking']['google_analytics_cross_domains'] = array(
       '#title' => t('List of top-level domains'),
       '#type' => 'textarea',
-      '#default_value' => $settings['cross_domains'],
+      '#default_value' => $config->get('cross_domains'),
       '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href="@url">Tracking Multiple Domains</a>.', array('@url' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '1034342'))))),
     );
 
     // Page specific visibility configurations.
-    $visibility = $settings['visibility'];
-
     $account = \Drupal::currentUser();
     $php_access = $account->hasPermission('use PHP for tracking visibility');
+    $visibility_pages = $config->get('visibility.pages');
 
     $form['tracking']['page_vis_settings'] = array(
       '#type' => 'details',
@@ -112,10 +110,10 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#group' => 'tracking_scope',
     );
 
-    if ($settings['visibility']['pages_enabled'] == 2 && !$php_access) {
+    if ($config->get('visibility.pages_enabled') == 2 && !$php_access) {
       $form['tracking']['page_vis_settings'] = array();
       $form['tracking']['page_vis_settings']['visibility'] = array('#type' => 'value', '#value' => 2);
-      $form['tracking']['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $settings['visibility']['pages']);
+      $form['tracking']['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $visibility_pages);
     }
     else {
       // @TODO: see BlockBase.php for upgrade
@@ -137,19 +135,21 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
         '#type' => 'radios',
         '#title' => t('Add tracking to specific pages'),
         '#options' => $options,
-        '#default_value' => $settings['visibility']['pages_enabled'],
+        '#default_value' => $config->get('visibility.pages_enabled'),
       );
       $form['tracking']['page_vis_settings']['google_analytics_pages'] = array(
         '#type' => 'textarea',
         '#title' => $title,
         '#title_display' => 'invisible',
-        '#default_value' => !empty($settings['visibility']['pages']) ? $settings['visibility']['pages'] : '',
+        '#default_value' => !empty($visibility_pages) ? $visibility_pages : '',
         '#description' => $description,
         '#rows' => 10,
       );
     }
 
     // Render the role overview.
+    $visibility_roles = $config->get('visibility.roles');
+
     $form['tracking']['role_vis_settings'] = array(
       '#type' => 'details',
       '#title' => t('Roles'),
@@ -163,19 +163,20 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
         t('Add to the selected roles only'),
         t('Add to every role except the selected ones'),
       ),
-      '#default_value' => $settings['visibility']['roles_enabled'], // @FIXME rename variable
+      '#default_value' => $config->get('visibility.roles_enabled'), // @FIXME rename variable
     );
-
     $role_options = array_map('check_plain', user_role_names());
     $form['tracking']['role_vis_settings']['google_analytics_roles'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Roles'),
-      '#default_value' => !empty($settings['visibility']['roles']) ? $settings['visibility']['roles'] : array(),
+      '#default_value' => !empty($visibility_roles) ? $visibility_roles : array(),
       '#options' => $role_options,
       '#description' => t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
     );
 
     // Standard tracking configurations.
+    $visibility_custom = $config->get('visibility.custom');
+
     $form['tracking']['user_vis_settings'] = array(
       '#type' => 'details',
       '#title' => t('Users'),
@@ -190,7 +191,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
         t('Tracking on by default, users with %permission permission can opt out', $t_permission),
         t('Tracking off by default, users with %permission permission can opt in', $t_permission),
       ),
-      '#default_value' => !empty($settings['visibility']['custom']) ? $settings['visibility']['custom'] : 0,
+      '#default_value' => !empty($visibility_custom) ? $visibility_custom : 0,
     );
 
     // Link specific configurations.
@@ -203,30 +204,30 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['tracking']['linktracking']['google_analytics_trackoutbound'] = array(
       '#type' => 'checkbox',
       '#title' => t('Track clicks on outbound links'),
-      '#default_value' => $settings['track']['outbound'],
+      '#default_value' => $config->get('track.outbound'),
     );
     $form['tracking']['linktracking']['google_analytics_trackmailto'] = array(
       '#type' => 'checkbox',
       '#title' => t('Track clicks on mailto links'),
-      '#default_value' => $settings['track']['mailto'],
+      '#default_value' => $config->get('track.mailto'),
     );
     $form['tracking']['linktracking']['google_analytics_trackfiles'] = array(
       '#type' => 'checkbox',
       '#title' => t('Track downloads (clicks on file links) for the following extensions'),
-      '#default_value' => $settings['track']['files'],
+      '#default_value' => $config->get('track.files'),
     );
     $form['tracking']['linktracking']['google_analytics_trackfiles_extensions'] = array(
       '#title' => t('List of download file extensions'),
       '#title_display' => 'invisible',
       '#type' => 'textfield',
-      '#default_value' => $settings['track']['files_extensions'],
+      '#default_value' => $config->get('track.files_extensions'),
       '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GOOGLE_ANALYTICS_TRACKFILES_EXTENSIONS)),
       '#maxlength' => 255,
     );
     $form['tracking']['linktracking']['google_analytics_tracklinkid'] = array(
       '#type' => 'checkbox',
       '#title' => t('Enable enhanced link attribution'),
-      '#default_value' => $settings['track']['linkid'],
+      '#default_value' => $config->get('track.linkid'),
       '#description' => t('Enhancements: separate click tracking for multiple links on a page with the same destination, better tracking for search buttons, and tracking for javascript links/buttons. To use this you must enable <a href="@url">enhanced link attribution</a> for this site on your Google Analytics account.', array('@url' => 'https://support.google.com/analytics/answer/2558867')),
     );
 
@@ -236,10 +237,11 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#title' => t('Messages'),
       '#group' => 'tracking_scope',
     );
+    $track_messages = $config->get('track.messages');
     $form['tracking']['messagetracking']['google_analytics_trackmessages'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Track messages of type'),
-      '#default_value' => !empty($settings['track']['messages']) ? $settings['track']['messages'] : array(),
+      '#default_value' => !empty($track_messages) ? $track_messages : array(),
       '#description' => t('This will track the selected message types shown to users. Tracking of form validation errors may help you identifying usability issues in your site. For each visit (user session), a maximum of approximately 500 combined GATC requests (both events and page views) can be tracked. Every message is tracked as one individual event. Note that - as the number of events in a session approaches the limit - additional events might not be tracked. Messages from excluded pages cannot tracked.'),
       '#options' => array(
         'status' => t('Status message'),
@@ -264,7 +266,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => t('Track internal search'),
       '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">Setting Up Site Search for a Profile</a>.', array('@url' => url('https://support.google.com/analytics/answer/1012264'))) . $site_search_dependencies,
-      '#default_value' => $settings['track']['site_search'],
+      '#default_value' => $config->get('track.site_search'),
       '#disabled' => (\Drupal::moduleHandler()->moduleExists('search') ? FALSE : TRUE),
     );
     /* @todo: not supported, https://support.google.com/analytics/bin/answer.py?hl=en&hlrm=de&answer=2795983
@@ -272,13 +274,13 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
        '#type' => 'checkbox',
        '#title' => t('Track AdSense ads'),
        '#description' => t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
-       '#default_value' => $settings['track']['adsense'],
+       '#default_value' => $config->get('track.adsense'),
     );
     $form['tracking']['search_and_advertising']['google_analytics_trackdoubleclick'] = array(
       '#type' => 'checkbox',
       '#title' => t('Track DoubleClick data'),
       '#description' => t('If checked, the alternative Google <a href="@doubleclick">DoubleClick data tracking</a> is used to enable AdWords remarketing features. This is required for Remarketing, Demographics and Interests reporting and GDN Impression Reporting features. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', array('@doubleclick' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2444872'))), '@privacy' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2636405'))))),
-      '#default_value' => $settings['track']['doubleclick'],
+      '#default_value' => $config->get('track.doubleclick'),
     ); */
 
     // Privacy specific configurations.
@@ -291,13 +293,13 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => t('Anonymize visitors IP address'),
       '#description' => t('Tell Google Analytics to anonymize the information sent by the tracker objects by removing the last octet of the IP address prior to its storage. Note that this will slightly reduce the accuracy of geographic reporting. In some countries it is not allowed to collect personally identifying information for privacy reasons and this setting may help you to comply with the local laws.'),
-      '#default_value' => $settings['privacy']['anonymizeip'],
+      '#default_value' => $config->get('privacy.anonymizeip'),
     );
     $form['tracking']['privacy']['google_analytics_privacy_donottrack'] = array(
       '#type' => 'checkbox',
       '#title' => t('Universal web tracking opt-out'),
       '#description' => t('If enabled and your server receives the <a href="@donottrack">Do-Not-Track</a> header from the client browser, the Google Analytics module will not embed any tracking code into your site. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision. This feature is currently limited to logged in users and disabled page caching.', array('@donottrack' => 'http://donottrack.us/')),
-      '#default_value' => $settings['privacy']['donottrack'],
+      '#default_value' => $config->get('privacy.donottrack'),
     );
 
     // Custom variables.
@@ -387,7 +389,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => t('Locally cache tracking code file'),
       '#description' => t("If checked, the tracking code file is retrieved from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed that site tracking is working!"),
-      '#default_value' => $settings['cache'],
+      '#default_value' => $config->get('cache'),
     );
 
     // Allow for tracking of the originating node when viewing translation sets.
@@ -396,7 +398,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
         '#type' => 'checkbox',
         '#title' => t('Track translation sets as one unit'),
         '#description' => t('When a node is part of a translation set, record statistics for the originating node instead. This allows for a translation set to be treated as a single unit.'),
-        '#default_value' => $settings['translation_set'],
+        '#default_value' => $config->get('translation_set'),
       );
     }
 
@@ -411,14 +413,14 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['advanced']['codesnippet']['google_analytics_codesnippet_before'] = array(
       '#type' => 'textarea',
       '#title' => t('Code snippet (before)'),
-      '#default_value' => $settings['codesnippet']['before'],
+      '#default_value' => $config->get('codesnippet.before'),
       '#rows' => 5,
       '#description' => t("Code in this textarea will be added <strong>before</strong> <code>ga('send', 'pageview');</code>."),
     );
     $form['advanced']['codesnippet']['google_analytics_codesnippet_after'] = array(
       '#type' => 'textarea',
       '#title' => t('Code snippet (after)'),
-      '#default_value' => $settings['codesnippet']['after'],
+      '#default_value' => $config->get('codesnippet.after'),
       '#rows' => 5,
       '#description' => t("Code in this textarea will be added <strong>after</strong> <code>ga('send', 'pageview');</code>. This is useful if you'd like to track a site in two accounts."),
     );
@@ -431,8 +433,8 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
         'footer' => t('Footer'),
         'header' => t('Header'),
       ),
-      '#default_value' => $settings['js_scope'],
-      '#disabled' => ($settings['domain_mode'] == 2) ? TRUE : FALSE,
+      '#default_value' => $config->get('js_scope'),
+      '#disabled' => ($config->get('domain_mode') == 2) ? TRUE : FALSE,
     );
 
     return parent::buildForm($form, $form_state);
