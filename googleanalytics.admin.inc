@@ -67,8 +67,8 @@ function googleanalytics_admin_settings_form(&$form_state) {
 
   if ($visibility == 2 && !$access) {
     $form['page_vis_settings'] = array();
-    $form['page_vis_settings']['visibility'] = array('#type' => 'value', '#value' => 2);
-    $form['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $pages);
+    $form['page_vis_settings']['googleanalytics_visibility'] = array('#type' => 'value', '#value' => 2);
+    $form['page_vis_settings']['googleanalytics_pages'] = array('#type' => 'value', '#value' => $pages);
   }
   else {
     $options = array(t('Add to every page except the listed pages.'), t('Add to the listed pages only.'));
