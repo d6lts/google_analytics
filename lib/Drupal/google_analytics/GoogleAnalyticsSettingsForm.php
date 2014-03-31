@@ -112,8 +112,8 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
 
     if ($config->get('visibility.pages_enabled') == 2 && !$php_access) {
       $form['tracking']['page_vis_settings'] = array();
-      $form['tracking']['page_vis_settings']['visibility'] = array('#type' => 'value', '#value' => 2);
-      $form['tracking']['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $visibility_pages);
+      $form['tracking']['page_vis_settings']['google_analytics_visibility_pages'] = array('#type' => 'value', '#value' => 2);
+      $form['tracking']['page_vis_settings']['google_analytics_pages'] = array('#type' => 'value', '#value' => $visibility_pages);
     }
     else {
       // @TODO: see BlockBase.php for upgrade
