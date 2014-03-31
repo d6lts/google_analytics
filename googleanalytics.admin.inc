@@ -97,8 +97,8 @@ function googleanalytics_admin_settings_form($form_state) {
 
   if ($visibility == 2 && !$php_access) {
     $form['tracking']['page_vis_settings'] = array();
-    $form['tracking']['page_vis_settings']['visibility'] = array('#type' => 'value', '#value' => 2);
-    $form['tracking']['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $pages);
+    $form['tracking']['page_vis_settings']['googleanalytics_visibility_pages'] = array('#type' => 'value', '#value' => 2);
+    $form['tracking']['page_vis_settings']['googleanalytics_pages'] = array('#type' => 'value', '#value' => $pages);
   }
   else {
     $options = array(
