@@ -19,6 +19,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_last_cache');
   variable_del('googleanalytics_site_search');
   variable_del('googleanalytics_trackadsense');
+  variable_del('googleanalytics_trackdoubleclick');
   variable_del('googleanalytics_js_scope');
   variable_del('googleanalytics_custom');
   variable_del('googleanalytics_roles');
