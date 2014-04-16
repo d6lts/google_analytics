@@ -561,11 +561,11 @@ function _google_analytics_visibility_roles($account) {
   $enabled = $visibility = $config->get('visibility.roles_enabled');
   $roles = $config->get('visibility.roles');
 
-  if (array_sum($roles) > 0) {
+  if (count($roles) > 0) {
     // One or more roles are selected.
-    foreach (array_keys($account->getRoles()) as $rid) {
+    foreach (array_values($account->getRoles()) as $roles) {
       // Is the current user a member of one of these roles?
-      if (isset($roles[$rid]) && $rid == $roles[$rid]) {
+      if (in_array($role, $roles)) {
         // Current user is a member of a role that should be tracked/excluded from tracking.
         $enabled = !$visibility;
         break;
