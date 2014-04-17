@@ -266,7 +266,7 @@ function googleanalytics_admin_settings_form($form_state) {
     '#type' => 'checkbox',
     '#title' => t('Anonymize visitors IP address'),
     '#description' => t('Tell Google Analytics to anonymize the information sent by the tracker objects by removing the last octet of the IP address prior to its storage. Note that this will slightly reduce the accuracy of geographic reporting. In some countries it is not allowed to collect personally identifying information for privacy reasons and this setting may help you to comply with the local laws.'),
-    '#default_value' => variable_get('googleanalytics_tracker_anonymizeip', 0),
+    '#default_value' => variable_get('googleanalytics_tracker_anonymizeip', 1),
   );
   $form['tracking']['privacy']['googleanalytics_privacy_donottrack'] = array(
     '#type' => 'checkbox',
