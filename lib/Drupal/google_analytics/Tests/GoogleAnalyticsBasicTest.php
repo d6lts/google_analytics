@@ -124,7 +124,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Show tracking code on every page except the listed pages.
-    \Drupal::config('google_analytics.settings')->set('visibility.pages_enabled', 1)->save();
+    \Drupal::config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
     // Enable tracking code for all user roles.
     \Drupal::config('google_analytics.settings')->set('visibility.roles', array())->save();
 
