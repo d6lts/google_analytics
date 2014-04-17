@@ -148,6 +148,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsTrackingCode]: Latest tracking code used.');
 
     // Test whether anonymize visitors IP address feature has been enabled.
+    \Drupal::config('google_analytics.settings')->set('privacy.anonymizeip', 0)->save();
     $this->drupalGet('');
     $this->assertNoRaw('ga("set", "anonymizeIp", 1);', '[testGoogleAnalyticsTrackingCode]: Anonymize visitors IP address not found on frontpage.');
     // Enable anonymizing of IP addresses.
