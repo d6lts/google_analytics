@@ -118,6 +118,8 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
       ->set('cache.page.use_internal', 1)
       ->set('cache.page.max_age', 3600)
       ->save();
+    // Make sure we have the page in cache if DNT header is send.
+    $this->drupalGet('');
     // Test whether DNT headers will fail to disable embedding of tracking code.
     $this->drupalGet('', array(), array('DNT: 1'));
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: DNT header send from client, but page caching is enabled and tracker cannot removed.');
