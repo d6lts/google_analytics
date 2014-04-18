@@ -32,6 +32,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $permissions = array(
       'access administration pages',
       'administer google analytics',
+      'administer modules',
     );
 
     // User to set up google_analytics.
@@ -40,6 +41,11 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
   }
 
   function testGoogleAnalyticsConfiguration() {
+    // Check if Configure link is available on 'Extend' page.
+    // Requires 'administer modules' permission.
+    $this->drupalGet('admin/modules');
+    $this->assertRaw('admin/config/system/google-analytics', '[testGoogleAnalyticsConfiguration]: Configure link from Extend page to Google Analytics Settings page exists.');
+
     // Check for setting page's presence.
     $this->drupalGet('admin/config/system/google-analytics');
     $this->assertRaw(t('Web Property ID'), '[testGoogleAnalyticsConfiguration]: Settings page displayed.');
