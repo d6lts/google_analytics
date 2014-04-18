@@ -65,20 +65,6 @@ function google_analytics_permission() {
 }
 
 /**
- * Implements hook_menu_link_defaults().
- */
-function google_analytics_menu_link_defaults() {
-  $items['system.admin.config.system.google-analytics'] = array(
-    'link_title' => 'Google Analytics',
-    'description' => 'Configure tracking behavior to get insights into your website traffic and marketing effectiveness.',
-    'parent' => 'system.admin.config.system',
-    'route_name' => 'google_analytics.settings',
-  );
-
-  return $items;
-}
-
-/**
  * Implements hook_page_alter() to insert JavaScript to the appropriate scope/region of the page.
  */
 function google_analytics_page_alter(&$page) {
