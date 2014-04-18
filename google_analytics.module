@@ -448,7 +448,6 @@ function _google_analytics_cache($location, $sync_cached_file = FALSE) {
     try {
       $data = \Drupal::httpClient()
         ->get($location)
-        ->send()
         ->getBody(TRUE);
 
       if (file_exists($file_destination)) {
