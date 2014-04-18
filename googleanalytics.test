@@ -89,12 +89,12 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->assertRaw('/404.html', '[testGoogleAnalyticsPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
 
     // DNT Tests:
-    // Enable caching of pages for anonymous users.
+    // Enable system internal page cache for anonymous users.
     variable_set('cache', 1);
     // Test whether DNT headers will fail to disable embedding of tracking code.
     $this->drupalGet('', array(), array('DNT: 1'));
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: DNT header send from client, but page caching is enabled and tracker cannot removed.');
-    // DNT works only with caching of pages for anonymous users disabled.
+    // DNT works only with system internal page cache for anonymous users disabled.
     variable_set('cache', 0);
     $this->drupalGet('');
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: Tracking is enabled without DNT header.');
