@@ -56,7 +56,8 @@ function google_analytics_install() {
  * Remove cache directory if module is uninstalled.
  */
 function google_analytics_uninstall() {
-  drupal_load('module', 'google_analytics');
+  // @todo: seems no longer required to run the clear?
+  //drupal_load('module', 'google_analytics');
   google_analytics_clear_js_cache();
 }
 
