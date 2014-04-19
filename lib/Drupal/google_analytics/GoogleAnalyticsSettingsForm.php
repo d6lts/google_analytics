@@ -29,6 +29,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['general'] = array(
       '#type' => 'details',
       '#title' => t('General settings'),
+      '#open' => TRUE,
     );
 
     $form['general']['google_analytics_account'] = array(
@@ -381,8 +382,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['advanced'] = array(
       '#type' => 'details',
       '#title' => t('Advanced settings'),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE,
+      '#open' => FALSE,
     );
 
     $form['advanced']['google_analytics_cache'] = array(
@@ -406,8 +406,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['advanced']['codesnippet'] = array(
       '#type' => 'details',
       '#title' => t('Custom JavaScript code'),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE,
+      '#open' => TRUE,
       '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href="@ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="@ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699', '@ga_concepts_overview' => 'https://developers.google.com/analytics/resources/concepts/gaConceptsTrackingOverview', '@ga_js_api' => 'https://developers.google.com/analytics/devguides/collection/gajs/methods/')),
     );
     $form['advanced']['codesnippet']['google_analytics_codesnippet_create'] = array(
