@@ -522,7 +522,6 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $config
       ->set('account', $form_state['values']['google_analytics_account'])
       ->set('cross_domains', $form_state['values']['google_analytics_cross_domains'])
-      //->set('custom_var', $form_state['values']['google_analytics_custom_var'])
       ->set('codesnippet.create', $form_state['values']['google_analytics_codesnippet_create'])
       ->set('codesnippet.before', $form_state['values']['google_analytics_codesnippet_before'])
       ->set('codesnippet.after', $form_state['values']['google_analytics_codesnippet_after'])
