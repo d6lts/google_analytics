@@ -90,7 +90,7 @@ google_analytics.settings:
       type: integer
       label: 'Track translation sets as one unit'
     js_scope:
-      type: integer
+      type: string
       label: 'JavaScript scope'
     cache:
       type: integer
