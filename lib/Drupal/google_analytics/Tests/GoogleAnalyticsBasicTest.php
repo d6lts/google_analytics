@@ -174,15 +174,25 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('');
     $this->assertRaw('ga("set", "anonymizeIp", 1);', '[testGoogleAnalyticsTrackingCode]: Anonymize visitors IP address found on frontpage.');
 
-    // Test if Enhanced Link Attribution is enabled.
+    // Test if track Enhanced Link Attribution is enabled.
     \Drupal::config('google_analytics.settings')->set('track.linkid', 1)->save();
     $this->drupalGet('');
     $this->assertRaw('ga("require", "linkid", "linkid.js");', '[testGoogleAnalyticsTrackingCode]: Tracking code for Enhanced Link Attribution is enabled.');
 
-    // Test if Enhanced Link Attribution is disabled.
+    // Test if track Enhanced Link Attribution is disabled.
     \Drupal::config('google_analytics.settings')->set('track.linkid', 0)->save();
     $this->drupalGet('');
     $this->assertNoRaw('ga("require", "linkid", "linkid.js");', '[testGoogleAnalyticsTrackingCode]: Tracking code for Enhanced Link Attribution is not enabled.');
+
+    // Test if track display features is enabled.
+    \Drupal::config('google_analytics.settings')->set('track.displayfeatures', 1)->save();
+    $this->drupalGet('');
+    $this->assertRaw('ga("require", "displayfeatures");', '[testGoogleAnalyticsTrackingCode]: Tracking code for display features is enabled.');
+
+    // Test if track display features is disabled.
+    \Drupal::config('google_analytics.settings')->set('track.displayfeatures', 0)->save();
+    $this->drupalGet('');
+    $this->assertNoRaw('ga("require", "displayfeatures");', '[testGoogleAnalyticsTrackingCode]: Tracking code for display features is not enabled.');
 
     // Test whether single domain tracking is active.
     $this->drupalGet('');

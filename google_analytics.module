@@ -250,6 +250,12 @@ function google_analytics_page_alter(&$page) {
       $script .= 'ga("require", "linkid", "linkid.js");';
     }
 
+    // Add display features after 'create', but before 'pageview' send.
+    // @see https://support.google.com/analytics/answer/2444872
+    if ($config->get('track.displayfeatures')) {
+      $script .= 'ga("require", "displayfeatures");';
+    }
+
     // Prepare Adsense tracking.
     $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . Json::encode($id) . ';';
 

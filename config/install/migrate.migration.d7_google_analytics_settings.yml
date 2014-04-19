@@ -39,7 +39,7 @@ process:
   'visibility:roles': googleanalytics_roles
   'track:site_search': googleanalytics_site_search
   'track:adsense': googleanalytics_trackadsense
-  'track:doubleclick': googleanalytics_trackdoubleclick
+  'track:displayfeatures': googleanalytics_trackdoubleclick
   'track:messages': googleanalytics_trackmessages
   'privacy:anonymizeip': googleanalytics_tracker_anonymizeip
   'track:files': googleanalytics_trackfiles

@@ -60,9 +60,9 @@ google_analytics.settings:
         adsense:
           type: integer
           label: 'Track AdSense ads'
-        doubleclick:
+        displayfeatures:
           type: integer
-          label: 'Track DoubleClick data'
+          label: 'Track display features'
     privacy:
       type: mapping
       label: 'Privacy'

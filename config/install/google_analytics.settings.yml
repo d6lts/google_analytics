@@ -16,7 +16,7 @@ track:
   messages: {  }
   site_search: '0'
   adsense: '0'
-  doubleclick: '0'
+  displayfeatures: '0'
 privacy:
   anonymizeip: '1'
   donottrack: '1'
