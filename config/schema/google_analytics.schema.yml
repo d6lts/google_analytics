@@ -27,7 +27,7 @@ google_analytics.settings:
           type: integer
           label: 'Add tracking for specific roles'
         roles:
-          type: string
+          type: array
           label: 'Roles'
         custom:
           type: integer
@@ -52,7 +52,7 @@ google_analytics.settings:
           type: integer
           label: 'Enable enhanced link attribution'
         messages:
-          type: integer
+          type: array
           label: 'Track messages of type'
         site_search:
           type: integer
