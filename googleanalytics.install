@@ -6,20 +6,6 @@
  */
 
 /**
- * Implements hook_install().
- */
-function googleanalytics_install() {
-  // By German laws it's always best to enable the anonymizing of IP addresses.
-  // NOTE: If this is also an important default setting in other countries, please let us know!
-  $countries = array(
-    'DE',
-  );
-  if (in_array(variable_get('site_default_country', ''), $countries)) {
-    variable_set('googleanalytics_tracker_anonymizeip', 1);
-  }
-}
-
-/**
  * Implements hook_uninstall().
  */
 function googleanalytics_uninstall() {
