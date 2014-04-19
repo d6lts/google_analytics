@@ -238,7 +238,8 @@ function google_analytics_page_alter(&$page) {
     $script .= ',"ga");';
 
     // Create a tracker.
-    $script .= 'ga("create", ' . Json::encode($id) . ');';
+    $codesnippet_create = $config->get('codesnippet.create') ?: 'auto';
+    $script .= 'ga("create", ' . Json::encode($id) . ', ' . Json::encode($codesnippet_create) .');';
 
     // Add enhanced link attribution after 'create', but before 'pageview' send.
     // @see https://support.google.com/analytics/answer/2558867

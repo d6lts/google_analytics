@@ -21,6 +21,7 @@ privacy:
   anonymizeip: '1'
   donottrack: '1'
 codesnippet:
+  create: {  }
   before: ''
   after: ''
 translation_set: '0'

@@ -410,6 +410,14 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#collapsed' => TRUE,
       '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href="@ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="@ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699', '@ga_concepts_overview' => 'https://developers.google.com/analytics/resources/concepts/gaConceptsTrackingOverview', '@ga_js_api' => 'https://developers.google.com/analytics/devguides/collection/gajs/methods/')),
     );
+    $form['advanced']['codesnippet']['google_analytics_codesnippet_create'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Create only fields'),
+      '#default_value' => $this->getKeyValuesString($config->get('codesnippet.create')),
+      '#rows' => 5,
+      '#description' => t("Enter one value per line, in the format key|value. Settings in this textarea will be added to <code>ga('create', 'UA-XXXX-Y', { 'key': 'value' });</code>. For more information, read <a href='@url'>create only fields</a> documentation in the Analytics.js field reference.", array('@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create')),
+      '#element_validate' => array(array(get_class($this), 'validateCreateFieldValues')),
+    );
     $form['advanced']['codesnippet']['google_analytics_codesnippet_before'] = array(
       '#type' => 'textarea',
       '#title' => t('Code snippet (before)'),
@@ -515,6 +523,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       ->set('account', $form_state['values']['google_analytics_account'])
       ->set('cross_domains', $form_state['values']['google_analytics_cross_domains'])
       //->set('custom_var', $form_state['values']['google_analytics_custom_var'])
+      ->set('codesnippet.create', $form_state['values']['google_analytics_codesnippet_create'])
       ->set('codesnippet.before', $form_state['values']['google_analytics_codesnippet_before'])
       ->set('codesnippet.after', $form_state['values']['google_analytics_codesnippet_after'])
       ->set('domain_mode', $form_state['values']['google_analytics_domain_mode'])
@@ -543,6 +552,113 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     }
 
     parent::submitForm($form, $form_state);
+  }
+
+  /**
+   * #element_validate callback for create only fields code snippet.
+   *
+   * @param $element
+   *   An associative array containing the properties and children of the
+   *   generic form element.
+   * @param $form_state
+   *   The $form_state array for the form this element belongs to.
+   *
+   * @see form_process_pattern()
+   */
+  public static function validateCreateFieldValues($element, &$form_state) {
+    $values = static::extractCreateFieldValues($element['#value']);
+
+    if (!is_array($values)) {
+      \Drupal::formBuilder()->setError($element, $form_state, t('Create only fields: invalid input.'));
+    }
+    else {
+      // Check that keys are valid for the field type.
+      foreach ($values as $key => $value) {
+        if ($error = static::validateCreateFieldValue($key)) {
+          \Drupal::formBuilder()->setError($element, $form_state, $error);
+          break;
+        }
+      }
+
+      \Drupal::formBuilder()->setValue($element, $values, $form_state);
+    }
+  }
+
+  /**
+   * Extracts the values array from the element.
+   *
+   * @param string $string
+   *   The raw string to extract values from.
+   *
+   * @return array|null
+   *   The array of extracted key/value pairs, or NULL if the string is invalid.
+   *
+   * @see \Drupal\options\Plugin\Field\FieldType\ListTextItem::allowedValuesString()
+   */
+  protected static function extractCreateFieldValues($string) {
+    $values = array();
+
+    $list = explode("\n", $string);
+    $list = array_map('trim', $list);
+    $list = array_filter($list, 'strlen');
+
+    foreach ($list as $position => $text) {
+      // Check for an explicit key.
+      $matches = array();
+      if (preg_match('/(.*)\|(.*)/', $text, $matches)) {
+        // Trim key and value to avoid unwanted spaces issues.
+        $key = trim($matches[1]);
+        $value = trim($matches[2]);
+      }
+      // Otherwise see if we can use the value as the key.
+      elseif (!static::validateCreateFieldValue($text)) {
+        $key = $value = $text;
+      }
+      else {
+        return;
+      }
+
+      $values[$key] = $value;
+    }
+
+    return $values;
+  }
+
+  /**
+   * Checks whether a candidate allowed value is valid.
+   *
+   * @param string $option
+   *   The option value entered by the user.
+   *
+   * @return string
+   *   The error message if the specified value is invalid, NULL otherwise.
+   */
+  protected static function validateCreateFieldValue($option) {
+    if (drupal_strlen($option) > 255) {
+      return t('Each name must be a string at most 255 characters long.');
+    }
+  }
+
+  /**
+   * Generates a string representation of an array.
+   *
+   * This string format is suitable for edition in a textarea.
+   *
+   * @param array $values
+   *   An array of values, where array keys are values and array values are
+   *   labels.
+   *
+   * @return string
+   *   The string representation of the $values array:
+   *    - Values are separated by a carriage return.
+   *    - Each value is in the format "name|value" or "value".
+   */
+  protected function getKeyValuesString($values) {
+    $lines = array();
+    foreach ($values as $name => $value) {
+      $lines[] = "$name|$value";
+    }
+    return implode("\n", $lines);
   }
 
 }

@@ -77,6 +77,9 @@ google_analytics.settings:
       type: mapping
       label: 'Custom code snippets'
       mapping:
+        create:
+          type: array
+          label: 'Create only fields'
         before:
           type: string
           label: 'Code snippet (before)'
