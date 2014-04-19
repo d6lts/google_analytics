@@ -203,7 +203,7 @@ function googleanalytics_admin_settings_form($form_state) {
   );
   $form['tracking']['linktracking']['googleanalytics_tracklinkid'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Enable enhanced link attribution'),
+    '#title' => t('Track enhanced link attribution'),
     '#default_value' => variable_get('googleanalytics_tracklinkid', 0),
     '#description' => t('Enhanced Link Attribution improves the accuracy of your In-Page Analytics report by automatically differentiating between multiple links to the same URL on a single page by using link element IDs. <a href="@url">Enable enhanced link attribution</a> in the Admin UI of your Google Analytics account.', array('@url' => 'https://support.google.com/analytics/answer/2558867')),
   );
@@ -249,13 +249,13 @@ function googleanalytics_admin_settings_form($form_state) {
     '#title' => t('Track AdSense ads'),
     '#description' => t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
     '#default_value' => variable_get('googleanalytics_trackadsense', FALSE),
-  );
+  );*/
   $form['tracking']['search_and_advertising']['googleanalytics_trackdoubleclick'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Track DoubleClick data'),
-    '#description' => t('If checked, the alternative Google <a href="@doubleclick">DoubleClick data tracking</a> is used to enable AdWords remarketing features. This is required for Remarketing, Demographics and Interests reporting and GDN Impression Reporting features. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', array('@doubleclick' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2444872'))), '@privacy' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '2636405'))))),
+    '#title' => t('Track display features'),
+    '#description' => t('The display features plugin can be used to enable Display Advertising Features in Google Analytics, such as Remarketing, Demographics and Interest Reporting, and more. <a href="@displayfeatures">Learn more about Display Advertising Features in Google Analytics</a>. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', array('@displayfeatures' => 'https://support.google.com/analytics/answer/3450482', '@privacy' => url('https://support.google.com/analytics/answer/2700409'))),
     '#default_value' => variable_get('googleanalytics_trackdoubleclick', FALSE),
-  ); */
+  );
 
   // Privacy specific configurations.
   $form['tracking']['privacy'] = array(

@@ -90,10 +90,10 @@ Drupal.behaviors.trackingSettingsSummary = {
       /* @todo: Features not yet supported by analytics.js
       if ($('input#edit-googleanalytics-trackadsense', context).is(':checked')) {
         vals.push(Drupal.t('AdSense ads'));
-      }
+      }*/
       if ($('input#edit-googleanalytics-trackdoubleclick', context).is(':checked')) {
-        vals.push(Drupal.t('DoubleClick data'));
-      } */
+        vals.push(Drupal.t('Display features'));
+      }
       if (!vals.length) {
         return Drupal.t('Not tracked');
       }
