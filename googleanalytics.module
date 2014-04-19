@@ -255,10 +255,6 @@ function googleanalytics_page_alter(&$page) {
     // Create a tracker.
     $script .= 'ga("create", ' . drupal_json_encode($id) . ');';
 
-    if (variable_get('googleanalytics_tracker_anonymizeip', 0)) {
-      $script .= 'ga("set", "anonymizeIp", 1);';
-    }
-
     // Add enhanced link attribution after 'create', but before 'pageview' send.
     // @see https://support.google.com/analytics/answer/2558867
     if (variable_get('googleanalytics_tracklinkid', 0)) {
@@ -273,6 +269,10 @@ function googleanalytics_page_alter(&$page) {
 
     // Prepare Adsense tracking.
     $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . drupal_json_encode($id) . ';';
+
+    if (variable_get('googleanalytics_tracker_anonymizeip', 1)) {
+      $script .= 'ga("set", "anonymizeIp", 1);';
+    }
 
     // Domain tracking type.
     global $cookie_domain;
