@@ -227,7 +227,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $codesnippet_create = array(
       'cookieDomain' => 'foo.example.com',
       'cookieName' => 'myNewName',
-      'cookieExpires' => 20000,
+      'cookieExpires' => '20000',
     );
     \Drupal::config('google_analytics.settings')
       ->set('codesnippet.create', $codesnippet_create)
