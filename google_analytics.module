@@ -240,10 +240,6 @@ function google_analytics_page_alter(&$page) {
     // Create a tracker.
     $script .= 'ga("create", ' . Json::encode($id) . ');';
 
-    if ($config->get('privacy.anonymizeip')) {
-      $script .= 'ga("set", "anonymizeIp", 1);';
-    }
-
     // Add enhanced link attribution after 'create', but before 'pageview' send.
     // @see https://support.google.com/analytics/answer/2558867
     if ($config->get('track.linkid')) {
@@ -258,6 +254,10 @@ function google_analytics_page_alter(&$page) {
 
     // Prepare Adsense tracking.
     $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . Json::encode($id) . ';';
+
+    if ($config->get('privacy.anonymizeip')) {
+      $script .= 'ga("set", "anonymizeIp", 1);';
+    }
 
     // Domain tracking type.
     global $cookie_domain;
