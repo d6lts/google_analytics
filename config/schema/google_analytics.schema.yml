@@ -92,6 +92,3 @@ google_analytics.settings:
     cache:
       type: integer
       label: 'Locally cache tracking code file'
-    custom_var:
-      type: string
-      label: 'Custom variables'
