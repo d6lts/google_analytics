@@ -156,7 +156,6 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
 
     // Test if track display features is enabled.
     variable_set('googleanalytics_trackdoubleclick', 1);
-    \Drupal::config('google_analytics.settings')->set('track.displayfeatures', 1)->save();
     $this->drupalGet('');
     $this->assertRaw('ga("require", "displayfeatures");', '[testGoogleAnalyticsTrackingCode]: Tracking code for display features is enabled.');
 
