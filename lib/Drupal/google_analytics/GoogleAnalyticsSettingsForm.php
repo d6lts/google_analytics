@@ -414,7 +414,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#title' => t('Create only fields'),
       '#default_value' => $this->getKeyValuesString($config->get('codesnippet.create')),
       '#rows' => 5,
-      '#description' => t("Enter one value per line, in the format key|value. Settings in this textarea will be added to <code>ga('create', 'UA-XXXX-Y', { 'key': 'value' });</code>. For more information, read <a href='@url'>create only fields</a> documentation in the Analytics.js field reference.", array('@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create')),
+      '#description' => t("Enter one value per line, in the format name|value. Settings in this textarea will be added to <code>ga('create', 'UA-XXXX-Y', { 'name': 'value' });</code>. For more information, read <a href='@url'>create only fields</a> documentation in the Analytics.js field reference.", array('@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create')),
       '#element_validate' => array(array(get_class($this), 'validateCreateFieldValues')),
     );
     $form['advanced']['codesnippet']['google_analytics_codesnippet_before'] = array(
