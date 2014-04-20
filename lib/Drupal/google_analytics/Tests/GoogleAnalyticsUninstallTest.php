@@ -55,7 +55,7 @@ class GoogleAnalyticsUninstallTest extends WebTestBase {
 
     // Test if the directory and analytics.js exists.
     $this->assertTrue(file_prepare_directory($cache_path), 'Cache directory "public://google_analytics" has been found.');
-    $this->assertTrue(file_scan_directory($cache_path, '/analytics.js/'), 'Cached Google Universal Analytics tracking file has been found.');
+    $this->assertTrue(file_exists($cache_path . '/analytics.js'), 'Cached analytics.js tracking file has been found.');
 
     // Uninstall the module.
     $edit = array();
