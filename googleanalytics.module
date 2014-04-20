@@ -442,16 +442,16 @@ function googleanalytics_search_get_keys() {
  *
  * @param $location
  *   The full URL to the external javascript file.
- * @param $sync_cached_file
- *   Synchronize tracking code and update if remote file have changed.
+ * @param $force_synchronization
+ *   Synchronize to local cache if remote file has changed.
  * @return mixed
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
-function _googleanalytics_cache($location, $sync_cached_file = FALSE) {
+function _googleanalytics_cache($location, $force_synchronization = FALSE) {
   $path = 'public://googleanalytics';
   $file_destination = $path . '/' . basename($location);
 
-  if (!file_exists($file_destination) || $sync_cached_file) {
+  if (!file_exists($file_destination) || $force_synchronization) {
     // Download the latest tracking code.
     $result = drupal_http_request($location);
 
