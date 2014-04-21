@@ -11,6 +11,7 @@
 function googleanalytics_uninstall() {
   variable_del('googleanalytics_account');
   variable_del('googleanalytics_cache');
+  variable_del('googleanalytics_codesnippet_create');
   variable_del('googleanalytics_codesnippet_before');
   variable_del('googleanalytics_codesnippet_after');
   variable_del('googleanalytics_cross_domains');

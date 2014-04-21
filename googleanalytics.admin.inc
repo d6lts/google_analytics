@@ -383,6 +383,14 @@ function googleanalytics_admin_settings_form($form_state) {
     '#collapsed' => TRUE,
     '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href="@ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="@ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699', '@ga_concepts_overview' => 'https://developers.google.com/analytics/resources/concepts/gaConceptsTrackingOverview', '@ga_js_api' => 'https://developers.google.com/analytics/devguides/collection/gajs/methods/')),
   );
+  $form['advanced']['codesnippet']['googleanalytics_codesnippet_create'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Create only fields'),
+    '#default_value' => _googleanalytics_get_key_values_string(variable_get('googleanalytics_codesnippet_create', array())),
+    '#rows' => 5,
+    '#description' => t("Enter one value per line, in the format name|value. Settings in this textarea will be added to <code>ga('create', 'UA-XXXX-Y', { 'name': 'value' });</code>. For more information, read <a href='@url'>create only fields</a> documentation in the Analytics.js field reference.", array('@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create')),
+    '#element_validate' => array('googleanalytics_validate_create_field_values'),
+  );
   $form['advanced']['codesnippet']['googleanalytics_codesnippet_before'] = array(
     '#type' => 'textarea',
     '#title' => t('Code snippet (before)'),
@@ -436,6 +444,7 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   $form_state['values']['googleanalytics_account'] = trim($form_state['values']['googleanalytics_account']);
   $form_state['values']['googleanalytics_pages'] = trim($form_state['values']['googleanalytics_pages']);
   $form_state['values']['googleanalytics_cross_domains'] = trim($form_state['values']['googleanalytics_cross_domains']);
+  $form_state['values']['googleanalytics_codesnippet_create'] = _googleanalytics_extract_create_field_values($form_state['values']['googleanalytics_codesnippet_create']);
   $form_state['values']['googleanalytics_codesnippet_before'] = trim($form_state['values']['googleanalytics_codesnippet_before']);
   $form_state['values']['googleanalytics_codesnippet_after'] = trim($form_state['values']['googleanalytics_codesnippet_after']);
 
@@ -608,4 +617,145 @@ function _googleanalytics_contains_forbidden_token($token_string) {
   );
 
   return preg_match('/' . implode('|', array_map('preg_quote', $token_blacklist)) . '/i', $token_string);
+}
+
+/**
+ * #element_validate callback for create only fields.
+ *
+ * @param $element
+ *   An associative array containing the properties and children of the
+ *   generic form element.
+ * @param $form_state
+ *   The $form_state array for the form this element belongs to.
+ *
+ * @see form_process_pattern()
+ */
+function googleanalytics_validate_create_field_values(&$element, &$form_state) {
+  $values = _googleanalytics_extract_create_field_values($element['#value']);
+
+  if (!is_array($values)) {
+    form_error($element, t('The %element-title field contains invalid input.', array('%element-title' => $element['#title'])));
+  }
+  else {
+    // Check that name and value are valid for the field type.
+    foreach ($values as $name => $value) {
+      if ($error = _googleanalytics_validate_create_field_name($name)) {
+        form_error($element, $error);
+        break;
+      }
+      if ($error = _googleanalytics_validate_create_field_value($value)) {
+        form_error($element, $error);
+        break;
+      }
+    }
+
+    return $element;
+  }
+}
+
+/**
+ * Extracts the values array from the element.
+ *
+ * @param string $string
+ *   The raw string to extract values from.
+ *
+ * @return array|null
+ *   The array of extracted key/value pairs, or NULL if the string is invalid.
+ *
+ * @see \Drupal\options\Plugin\Field\FieldType\ListTextItem::allowedValuesString()
+ */
+function _googleanalytics_extract_create_field_values($string) {
+  $values = array();
+
+  $list = explode("\n", $string);
+  $list = array_map('trim', $list);
+  $list = array_filter($list, 'strlen');
+
+  foreach ($list as $position => $text) {
+    // Check for an explicit key.
+    $matches = array();
+    if (preg_match('/(.*)\|(.*)/', $text, $matches)) {
+      // Trim key and value to avoid unwanted spaces issues.
+      $name = trim($matches[1]);
+      $value = trim($matches[2]);
+    }
+    else {
+      return;
+    }
+
+    $values[$name] = $value;
+  }
+
+  return $values;
+}
+
+/**
+ * Checks whether a field name is valid.
+ *
+ * @param string $name
+ *   The option value entered by the user.
+ *
+ * @return string
+ *   The error message if the specified value is invalid, NULL otherwise.
+ */
+function _googleanalytics_validate_create_field_name($name) {
+  // List of supported field names:
+  // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create
+  $create_only_fields = array(
+    'name',
+    'clientId',
+    'userId',
+    'sampleRate',
+    'siteSpeedSampleRate',
+    'alwaysSendReferrer',
+    'allowAnchor',
+    'cookieName',
+    'cookieDomain',
+    'cookieExpires',
+    'legacyCookieDomain',
+  );
+
+  if (!in_array($name, $create_only_fields)) {
+    return t('Field name %name is an unknown field name. Please see <a href="@url">create only fields</a> documentation for supported field names.', array('%name' => $name, '@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create'));
+  }
+}
+
+/**
+ * Checks whether a field value is valid.
+ *
+ * @param string $value
+ *   The option value entered by the user.
+ *
+ * @return string
+ *   The error message if the specified value is invalid, NULL otherwise.
+ */
+function _googleanalytics_validate_create_field_value($value) {
+  if (empty($value)) {
+    return t('A value is required.');
+  }
+  if (drupal_strlen($value) > 255) {
+    return t('Each value must be a string at most 255 characters long.');
+  }
+}
+
+/**
+ * Generates a string representation of an array.
+ *
+ * This string format is suitable for edition in a textarea.
+ *
+ * @param array $values
+ *   An array of values, where array keys are values and array values are
+ *   labels.
+ *
+ * @return string
+ *   The string representation of the $values array:
+ *    - Values are separated by a carriage return.
+ *    - Each value is in the format "name|value" or "value".
+ */
+function _googleanalytics_get_key_values_string($values) {
+  $lines = array();
+  foreach ($values as $name => $value) {
+    $lines[] = "$name|$value";
+  }
+  return implode("\n", $lines);
 }

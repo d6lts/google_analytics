@@ -191,12 +191,18 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->assertRaw('ga("set", "allowLinker", true);', '[testGoogleAnalyticsTrackingCode]: _setAllowLinker: true found. Cross domain tracking is active.');
     $this->assertRaw('"trackCrossDomains":["www.example.com","www.example.net"]', '[testGoogleAnalyticsTrackingCode]: Cross domain tracking with www.example.com and www.example.net is active.');
 
-    // Test whether the BEFORE and AFTER code is added to the tracker.
-    // @todo: review detectFlash once API docs are available.
-    variable_set('googleanalytics_codesnippet_before', 'ga("set", "detectFlash", false);');
+    // Test whether the CREATE and BEFORE and AFTER code is added to the tracker.
+    $codesnippet_create = array(
+      'cookieDomain' => 'foo.example.com',
+      'cookieName' => 'myNewName',
+      'cookieExpires' => '20000',
+    );
+    variable_set('googleanalytics_codesnippet_before', $codesnippet_create);
+    variable_set('googleanalytics_codesnippet_before', 'ga("set", "forceSSL", true);');
     variable_set('googleanalytics_codesnippet_after', 'ga("create", "UA-123456-3", {name: "newTracker"});ga("newTracker.send", "pageview");');
     $this->drupalGet('');
-    $this->assertRaw('ga("set", "detectFlash", false);', '[testGoogleAnalyticsTrackingCode]: Before codesnippet has been found with "Flash" detection disabled.');
+    $this->assertRaw('ga("create", "' . $ua_code . '", {"cookieDomain":"foo.example.com","cookieName":"myNewName","cookieExpires":"20000"});', '[testGoogleAnalyticsTrackingCode]: Create only fields have been found.');
+    $this->assertRaw('ga("set", "forceSSL", true);', '[testGoogleAnalyticsTrackingCode]: Before codesnippet will force http pages to also send all beacons using https.');
     $this->assertRaw('ga("create", "UA-123456-3", {name: "newTracker"});', '[testGoogleAnalyticsTrackingCode]: After codesnippet with "newTracker" tracker has been found.');
   }
 }
