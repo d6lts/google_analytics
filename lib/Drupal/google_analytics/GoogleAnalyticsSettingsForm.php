@@ -553,7 +553,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
   }
 
   /**
-   * #element_validate callback for create only fields code snippet.
+   * #element_validate callback for create only fields.
    *
    * @param $element
    *   An associative array containing the properties and children of the
@@ -567,12 +567,16 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $values = static::extractCreateFieldValues($element['#value']);
 
     if (!is_array($values)) {
-      \Drupal::formBuilder()->setError($element, $form_state, t('Create only fields: invalid input.'));
+      \Drupal::formBuilder()->setError($element, $form_state, t('The %element-title field contains invalid input.', array('%element-title' => $element['#title'])));
     }
     else {
       // Check that keys are valid for the field type.
-      foreach ($values as $key => $value) {
-        if ($error = static::validateCreateFieldValue($key)) {
+      foreach ($values as $name => $value) {
+        if ($error = static::validateCreateFieldName($name)) {
+          \Drupal::formBuilder()->setError($element, $form_state, $error);
+          break;
+        }
+        if ($error = static::validateCreateFieldValue($value)) {
           \Drupal::formBuilder()->setError($element, $form_state, $error);
           break;
         }
@@ -605,35 +609,65 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       $matches = array();
       if (preg_match('/(.*)\|(.*)/', $text, $matches)) {
         // Trim key and value to avoid unwanted spaces issues.
-        $key = trim($matches[1]);
+        $name = trim($matches[1]);
         $value = trim($matches[2]);
-      }
-      // Otherwise see if we can use the value as the key.
-      elseif (!static::validateCreateFieldValue($text)) {
-        $key = $value = $text;
       }
       else {
         return;
       }
 
-      $values[$key] = $value;
+      $values[$name] = $value;
     }
 
     return $values;
   }
 
   /**
-   * Checks whether a candidate allowed value is valid.
+   * Checks whether a field name is valid.
    *
-   * @param string $option
+   * @param string $name
    *   The option value entered by the user.
    *
    * @return string
    *   The error message if the specified value is invalid, NULL otherwise.
    */
-  protected static function validateCreateFieldValue($option) {
-    if (drupal_strlen($option) > 255) {
-      return t('Each name must be a string at most 255 characters long.');
+  protected static function validateCreateFieldName($name) {
+    // List of supported field names:
+    // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create
+    $create_only_fields = array(
+      'name',
+      'clientId',
+      'userId',
+      'sampleRate',
+      'siteSpeedSampleRate',
+      'alwaysSendReferrer',
+      'allowAnchor',
+      'cookieName',
+      'cookieDomain',
+      'cookieExpires',
+      'legacyCookieDomain',
+    );
+
+    if (!in_array($name, $create_only_fields)) {
+      return t('Field name %name is an unknown field name. Please see <a href="@url">create only fields</a> documentation for supported field names.', array('%name' => $name, '@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create'));
+    }
+  }
+
+  /**
+   * Checks whether a candidate value is valid.
+   *
+   * @param string $value
+   *   The option value entered by the user.
+   *
+   * @return string
+   *   The error message if the specified value is invalid, NULL otherwise.
+   */
+  protected static function validateCreateFieldValue($value) {
+    if (empty($value)) {
+      return t('A value is required.');
+    }
+    if (drupal_strlen($value) > 255) {
+      return t('Each value must be a string at most 255 characters long.');
     }
   }
 
