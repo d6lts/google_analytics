@@ -570,7 +570,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       \Drupal::formBuilder()->setError($element, $form_state, t('The %element-title field contains invalid input.', array('%element-title' => $element['#title'])));
     }
     else {
-      // Check that keys are valid for the field type.
+      // Check that name and value are valid for the field type.
       foreach ($values as $name => $value) {
         if ($error = static::validateCreateFieldName($name)) {
           \Drupal::formBuilder()->setError($element, $form_state, $error);
