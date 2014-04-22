@@ -63,6 +63,11 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
   }
 
   function testGoogleAnalyticsPageVisibility() {
+    // Verify that no tracking code is embedded into the webpage; if there is
+    // only the module installed, but UA code not configured. See #2246991.
+    $this->drupalGet('');
+    $this->assertNoRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed without UA code configured.');
+
     $ua_code = 'UA-123456-1';
     \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
 
