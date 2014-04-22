@@ -84,7 +84,7 @@ function google_analytics_page_alter(&$page) {
   // 2. Track page views based on visibility value.
   // 3. Check if we should track the currently active user's role.
   // 4. Ignore pages visibility filter for 404 or 403 status codes.
-  if (!empty($id) && (_google_analytics_visibility_pages() || in_array($status, $trackable_status_codes)) && _google_analytics_visibility_user($account)) {
+  if (preg_match('/^UA-\d{4,}-\d+$/', $id) && (_google_analytics_visibility_pages() || in_array($status, $trackable_status_codes)) && _google_analytics_visibility_user($account)) {
 
     // Add link tracking.
     $link_settings = array();
