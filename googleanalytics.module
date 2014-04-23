@@ -312,7 +312,7 @@ function googleanalytics_page_alter(&$page) {
     // @TODO: not available yet, comming soon per Google.
     //if (variable_get('googleanalytics_trackadsense', FALSE)) {
       // Custom tracking. Prepend before all other JavaScript.
-      // @TODO: http://support.google.com/adsense/bin/answer.py?answer=98142
+      // @TODO: https://support.google.com/adsense/answer/98142
       // sounds like it could be appended to $script.
       //drupal_add_js($googleanalytics_adsense_script, array('type' => 'inline', 'group' => JS_LIBRARY-1));
     //}

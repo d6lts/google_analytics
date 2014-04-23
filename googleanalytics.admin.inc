@@ -80,7 +80,7 @@ function googleanalytics_admin_settings_form($form_state) {
     '#title' => t('List of top-level domains'),
     '#type' => 'textarea',
     '#default_value' => variable_get('googleanalytics_cross_domains', ''),
-    '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href="@url">Tracking Multiple Domains</a>.', array('@url' => url('http://support.google.com/analytics/bin/answer.py', array('query' => array('answer' => '1034342'))))),
+    '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href="@url">Tracking Multiple Domains</a>.', array('@url' => 'https://support.google.com/analytics/answer/1034342')),
   );
 
   // Page specific visibility configurations.
@@ -239,7 +239,7 @@ function googleanalytics_admin_settings_form($form_state) {
   $form['tracking']['search_and_advertising']['googleanalytics_site_search'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track internal search'),
-    '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">Setting Up Site Search for a Profile</a>.', array('@url' => url('https://support.google.com/analytics/answer/1012264'))) . $site_search_dependencies,
+    '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">Setting Up Site Search for a Profile</a>.', array('@url' => 'https://support.google.com/analytics/answer/1012264')) . $site_search_dependencies,
     '#default_value' => variable_get('googleanalytics_site_search', FALSE),
     '#disabled' => (module_exists('search') ? FALSE : TRUE),
   );
@@ -253,7 +253,7 @@ function googleanalytics_admin_settings_form($form_state) {
   $form['tracking']['search_and_advertising']['googleanalytics_trackdoubleclick'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track display features'),
-    '#description' => t('The display features plugin can be used to enable Display Advertising Features in Google Analytics, such as Remarketing, Demographics and Interest Reporting, and more. <a href="@displayfeatures">Learn more about Display Advertising Features in Google Analytics</a>. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', array('@displayfeatures' => 'https://support.google.com/analytics/answer/3450482', '@privacy' => url('https://support.google.com/analytics/answer/2700409'))),
+    '#description' => t('The display features plugin can be used to enable Display Advertising Features in Google Analytics, such as Remarketing, Demographics and Interest Reporting, and more. <a href="@displayfeatures">Learn more about Display Advertising Features in Google Analytics</a>. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', array('@displayfeatures' => 'https://support.google.com/analytics/answer/3450482', '@privacy' => 'https://support.google.com/analytics/answer/2700409')),
     '#default_value' => variable_get('googleanalytics_trackdoubleclick', FALSE),
   );
 
@@ -381,7 +381,7 @@ function googleanalytics_admin_settings_form($form_state) {
     '#title' => t('Custom JavaScript code'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
-    '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href="@ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="@ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699', '@ga_concepts_overview' => 'https://developers.google.com/analytics/resources/concepts/gaConceptsTrackingOverview', '@ga_js_api' => 'https://developers.google.com/analytics/devguides/collection/gajs/methods/')),
+    '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href="@ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="@ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://drupal.org/node/248699', '@ga_concepts_overview' => 'https://developers.google.com/analytics/resources/concepts/gaConceptsTrackingOverview', '@ga_js_api' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/method-reference')),
   );
   $form['advanced']['codesnippet']['googleanalytics_codesnippet_create'] = array(
     '#type' => 'textarea',
