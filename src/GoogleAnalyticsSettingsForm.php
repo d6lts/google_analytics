@@ -413,7 +413,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     $form['advanced']['codesnippet']['google_analytics_codesnippet_create'] = array(
       '#type' => 'textarea',
       '#title' => t('Create only fields'),
-      '#default_value' => $this->getKeyValuesString($config->get('codesnippet.create')),
+      '#default_value' => $this->getNameValueString($config->get('codesnippet.create')),
       '#rows' => 5,
       '#description' => t("Enter one value per line, in the format name|value. Settings in this textarea will be added to <code>ga('create', 'UA-XXXX-Y', { 'name': 'value' });</code>. For more information, read <a href='@url'>create only fields</a> documentation in the Analytics.js field reference.", array('@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create')),
       '#element_validate' => array(array(get_class($this), 'validateCreateFieldValues')),
@@ -686,7 +686,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
    *    - Values are separated by a carriage return.
    *    - Each value is in the format "name|value" or "value".
    */
-  protected function getKeyValuesString($values) {
+  protected function getNameValueString($values) {
     $lines = array();
     foreach ($values as $name => $value) {
       $lines[] = "$name|$value";
