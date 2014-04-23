@@ -386,7 +386,7 @@ function googleanalytics_admin_settings_form($form_state) {
   $form['advanced']['codesnippet']['googleanalytics_codesnippet_create'] = array(
     '#type' => 'textarea',
     '#title' => t('Create only fields'),
-    '#default_value' => _googleanalytics_get_key_values_string(variable_get('googleanalytics_codesnippet_create', array())),
+    '#default_value' => _googleanalytics_get_name_value_string(variable_get('googleanalytics_codesnippet_create', array())),
     '#rows' => 5,
     '#description' => t("Enter one value per line, in the format name|value. Settings in this textarea will be added to <code>ga('create', 'UA-XXXX-Y', { 'name': 'value' });</code>. For more information, read <a href='@url'>create only fields</a> documentation in the Analytics.js field reference.", array('@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create')),
     '#element_validate' => array('googleanalytics_validate_create_field_values'),
@@ -752,7 +752,7 @@ function _googleanalytics_validate_create_field_value($value) {
  *    - Values are separated by a carriage return.
  *    - Each value is in the format "name|value" or "value".
  */
-function _googleanalytics_get_key_values_string($values) {
+function _googleanalytics_get_name_value_string($values) {
   $lines = array();
   foreach ($values as $name => $value) {
     $lines[] = "$name|$value";
