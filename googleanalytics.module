@@ -181,6 +181,7 @@ function googleanalytics_page_alter(&$page) {
     }
 
     // Add any custom code snippets if specified.
+    $codesnippet_create = variable_get('googleanalytics_codesnippet_create', array());
     $codesnippet_before = variable_get('googleanalytics_codesnippet_before', '');
     $codesnippet_after = variable_get('googleanalytics_codesnippet_after', '');
 
@@ -252,8 +253,8 @@ function googleanalytics_page_alter(&$page) {
     }
     $script .= ',"ga");';
 
-    $codesnippet_create = variable_get('googleanalytics_codesnippet_create', array()) ?: 'auto';
-    $script .= 'ga("create", ' . drupal_json_encode($id) . ', ' . drupal_json_encode($codesnippet_create) .');';
+    $create_only_fields = ($codesnippet_create) ? $codesnippet_create : 'auto';
+    $script .= 'ga("create", ' . drupal_json_encode($id) . ', ' . drupal_json_encode($create_only_fields) .');';
 
     // Add enhanced link attribution after 'create', but before 'pageview' send.
     // @see https://support.google.com/analytics/answer/2558867
