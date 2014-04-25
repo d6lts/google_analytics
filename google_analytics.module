@@ -166,6 +166,7 @@ function google_analytics_page_alter(&$page) {
     }
 
     // Add any custom code snippets if specified.
+    $codesnippet_create = $config->get('codesnippet.create');
     $codesnippet_before = $config->get('codesnippet.before');
     $codesnippet_after = $config->get('codesnippet.after');
 
@@ -238,8 +239,8 @@ function google_analytics_page_alter(&$page) {
     $script .= ',"ga");';
 
     // Create a tracker.
-    $codesnippet_create = $config->get('codesnippet.create') ?: 'auto';
-    $script .= 'ga("create", ' . Json::encode($id) . ', ' . Json::encode($codesnippet_create) .');';
+    $create_only_fields = ($codesnippet_create) ? $codesnippet_create : 'auto';
+    $script .= 'ga("create", ' . Json::encode($id) . ', ' . Json::encode($create_only_fields) .');';
 
     // Add enhanced link attribution after 'create', but before 'pageview' send.
     // @see https://support.google.com/analytics/answer/2558867
