@@ -159,6 +159,16 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->drupalGet('');
     $this->assertNoRaw('ga("require", "linkid", "linkid.js");', '[testGoogleAnalyticsTrackingCode]: Tracking code for Enhanced Link Attribution is not enabled.');
 
+    // Test if tracking of User ID is enabled.
+    variable_set('googleanalytics_trackuserid', 1);
+    $this->drupalGet('');
+    $this->assertRaw(', {"userId":"', '[testGoogleAnalyticsTrackingCode]: Tracking code for User ID is enabled.');
+
+    // Test if tracking of User ID is disabled.
+    variable_set('googleanalytics_trackuserid', 0);
+    $this->drupalGet('');
+    $this->assertNoRaw(', {"userId":"', '[testGoogleAnalyticsTrackingCode]: Tracking code for User ID is disabled.');
+
     // Test if track display features is enabled.
     variable_set('googleanalytics_trackdoubleclick', 1);
     $this->drupalGet('');

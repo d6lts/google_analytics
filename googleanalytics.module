@@ -253,7 +253,20 @@ function googleanalytics_page_alter(&$page) {
     }
     $script .= ',"ga");';
 
-    $create_only_fields = ($codesnippet_create) ? $codesnippet_create : 'auto';
+    // Build the create only fields list.
+    $create_only_fields = array();
+    $create_only_fields = array_merge($create_only_fields, $codesnippet_create);
+
+    // Track logged in users accross all devices.
+    if (variable_get('googleanalytics_trackuserid', 0) && user_is_logged_in()) {
+      // The USER_ID value should be a unique, persistent, and non-personally
+      // identifiable string identifier that represents a user or signed-in
+      // account across devices.
+      $create_only_fields['userId'] = drupal_base64_encode(drupal_get_hash_salt() . $user->uid);
+    }
+
+    // Create a tracker.
+    $create_only_fields = empty($create_only_fields) ? 'auto' : $create_only_fields;
     $script .= 'ga("create", ' . drupal_json_encode($id) . ', ' . drupal_json_encode($create_only_fields) .');';
 
     // Add enhanced link attribution after 'create', but before 'pageview' send.
