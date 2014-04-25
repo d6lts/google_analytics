@@ -19,6 +19,7 @@ source:
     - googleanalytics_trackfiles
     - googleanalytics_trackfiles_extensions
     - googleanalytics_tracklinkid
+    - google_analytics_trackuserid
     - googleanalytics_trackmailto
     - googleanalytics_trackoutbound
     - googleanalytics_translation_set
@@ -43,6 +44,7 @@ process:
   'track:files': googleanalytics_trackfiles
   'track:files_extensions': googleanalytics_trackfiles_extensions
   'track:linkid': googleanalytics_tracklinkid
+  'track:linkid': googleanalytics_trackuserid
   'track:mailto': googleanalytics_trackmailto
   'track:outbound': googleanalytics_trackoutbound
   'translation_set': googleanalytics_translation_set

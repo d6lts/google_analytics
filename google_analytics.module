@@ -238,8 +238,20 @@ function google_analytics_page_alter(&$page) {
     }
     $script .= ',"ga");';
 
+    // Build the create only fields list.
+    $create_only_fields = array();
+    $create_only_fields = array_merge($create_only_fields, $codesnippet_create);
+
+    // Track logged in users accross all devices.
+    if ($config->get('track.userid') && $account->isAuthenticated()) {
+      // The USER_ID value should be a unique, persistent, and non-personally
+      // identifiable string identifier that represents a user or signed-in
+      // account across devices.
+      $create_only_fields['userId'] = Crypt::hashBase64(drupal_get_hash_salt() . $account->id());
+    }
+
     // Create a tracker.
-    $create_only_fields = ($codesnippet_create) ? $codesnippet_create : 'auto';
+    $create_only_fields = empty($create_only_fields) ? 'auto' : $create_only_fields;
     $script .= 'ga("create", ' . Json::encode($id) . ', ' . Json::encode($create_only_fields) .');';
 
     // Add enhanced link attribution after 'create', but before 'pageview' send.

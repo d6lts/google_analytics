@@ -195,6 +195,12 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       ),
       '#default_value' => !empty($visibility_custom) ? $visibility_custom : 0,
     );
+    $form['tracking']['user_vis_settings']['google_analytics_trackuserid'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Track User ID'),
+      '#default_value' => $config->get('track.userid'),
+      '#description' => t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href="@url">Learn more about the benfits of using User ID</a>.', array('@url' => 'https://support.google.com/analytics/answer/3123663')),
+    );
 
     // Link specific configurations.
     $track = $config->get('track');
@@ -529,6 +535,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       ->set('track.files', $form_state['values']['google_analytics_trackfiles'])
       ->set('track.files_extensions', $form_state['values']['google_analytics_trackfiles_extensions'])
       ->set('track.linkid', $form_state['values']['google_analytics_tracklinkid'])
+      ->set('track.userid', $form_state['values']['google_analytics_trackuserid'])
       ->set('track.mailto', $form_state['values']['google_analytics_trackmailto'])
       ->set('track.messages', $form_state['values']['google_analytics_trackmessages'])
       ->set('track.outbound', $form_state['values']['google_analytics_trackmailto'])

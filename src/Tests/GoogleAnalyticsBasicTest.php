@@ -189,6 +189,16 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('');
     $this->assertNoRaw('ga("require", "linkid", "linkid.js");', '[testGoogleAnalyticsTrackingCode]: Tracking code for Enhanced Link Attribution is not enabled.');
 
+    // Test if tracking of User ID is enabled.
+    \Drupal::config('google_analytics.settings')->set('track.userid', 1)->save();
+    $this->drupalGet('');
+    $this->assertRaw(', {"userId":"', '[testGoogleAnalyticsTrackingCode]: Tracking code for User ID is enabled.');
+
+    // Test if tracking of User ID is disabled.
+    \Drupal::config('google_analytics.settings')->set('track.userid', 0)->save();
+    $this->drupalGet('');
+    $this->assertNoRaw(', {"userId":"', '[testGoogleAnalyticsTrackingCode]: Tracking code for User ID is disabled.');
+
     // Test if track display features is enabled.
     \Drupal::config('google_analytics.settings')->set('track.displayfeatures', 1)->save();
     $this->drupalGet('');

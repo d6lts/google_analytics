@@ -51,6 +51,9 @@ google_analytics.settings:
         linkid:
           type: boolean
           label: 'Enable enhanced link attribution'
+        userid:
+          type: boolean
+          label: 'Track User ID'
         messages:
           type: array
           label: 'Track messages of type'
