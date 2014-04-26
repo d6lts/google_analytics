@@ -270,7 +270,7 @@ function google_analytics_page_alter(&$page) {
     $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . Json::encode($id) . ';';
 
     if ($config->get('privacy.anonymizeip')) {
-      $script .= 'ga("set", "anonymizeIp", 1);';
+      $script .= 'ga("set", "anonymizeIp", true);';
     }
 
     // Domain tracking type.
