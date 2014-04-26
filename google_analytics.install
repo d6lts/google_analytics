@@ -69,7 +69,7 @@ function google_analytics_requirements($phase) {
     $config = \Drupal::config('google_analytics.settings');
 
     // Raise warning if Google user account has not been set yet.
-    if (!preg_match('/^UA-\d{4,}-\d+$/', $config->get('account'))) {
+    if (!preg_match('/^UA-\d+-\d+$/', $config->get('account'))) {
       $requirements['google_analytics_account'] = array(
         'title' => t('Google Analytics module'),
         'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/google-analytics'))),
