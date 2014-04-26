@@ -86,8 +86,6 @@ function google_analytics_requirements($phase) {
         'value' => t('Debugging enabled'),
       );
     }
-
-
   }
 
   return $requirements;
