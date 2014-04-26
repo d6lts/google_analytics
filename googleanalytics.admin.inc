@@ -423,6 +423,12 @@ function googleanalytics_admin_settings_form($form_state) {
     '#default_value' => variable_get('googleanalytics_js_scope', 'header'),
     '#disabled' => (variable_get('googleanalytics_domain_mode', 0) == 2) ? TRUE : FALSE,
   );
+  $form['advanced']['googleanalytics_debug'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable debugging'),
+    '#description' => t('If checked, the Google Universal Analytics debugging script will be loaded. You should not enable your production site to use this version of the JavaScript. The analytics_debug.js script is larger than the analytics.js tracking code and it is not typically cached. Using it in your production site will slow down your site for all of your users. Again, this is only for your own testing purposes. Debug messages are printed to the <code>window.console</code> object.'),
+    '#default_value' => variable_get('googleanalytics_debug', 0),
+  );
 
   return system_settings_form($form);
 }

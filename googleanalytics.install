@@ -17,6 +17,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_cross_domains');
   variable_del('googleanalytics_custom');
   variable_del('googleanalytics_custom_var');
+  variable_del('googleanalytics_debug');
   variable_del('googleanalytics_domain_mode');
   variable_del('googleanalytics_js_scope');
   variable_del('googleanalytics_last_cache');
@@ -24,7 +25,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_roles');
   variable_del('googleanalytics_site_search');
   variable_del('googleanalytics_trackadsense'); // @todo
-  variable_del('googleanalytics_trackdoubleclick'); // @todo
+  variable_del('googleanalytics_trackdoubleclick');
   variable_del('googleanalytics_tracker_anonymizeip');
   variable_del('googleanalytics_trackfiles');
   variable_del('googleanalytics_trackfiles_extensions');
@@ -63,13 +64,22 @@ function googleanalytics_requirements($phase) {
   if ($phase == 'runtime') {
     // Raise warning if Google user account has not been set yet.
     if (!preg_match('/^UA-\d{4,}-\d+$/', variable_get('googleanalytics_account', 'UA-'))) {
-      $requirements['googleanalytics'] = array(
+      $requirements['googleanalytics_account'] = array(
         'title' => $t('Google Analytics module'),
         'description' => $t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/googleanalytics'))),
         'severity' => REQUIREMENT_WARNING,
         'value' => $t('Not configured'),
       );
     }
+  }
+  // Raise warning if debugging is enabled.
+  if (variable_get('googleanalytics_debug', 0)) {
+    $requirements['google_analytics_debugging'] = array(
+      'title' => $t('Google Analytics module'),
+      'description' => $t('Google Analytics module has debugging enabled. Please disable debugging setting in production sites from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/googleanalytics'))),
+      'severity' => REQUIREMENT_WARNING,
+      'value' => $t('Debugging enabled'),
+    );
   }
 
   return $requirements;
