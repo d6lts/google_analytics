@@ -98,3 +98,6 @@ google_analytics.settings:
     cache:
       type: boolean
       label: 'Locally cache tracking code file'
+    debug:
+      type: boolean
+      label: 'Load debugging code of Google Universal Analytics'

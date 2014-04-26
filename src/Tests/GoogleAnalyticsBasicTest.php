@@ -66,7 +66,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Verify that no tracking code is embedded into the webpage; if there is
     // only the module installed, but UA code not configured. See #2246991.
     $this->drupalGet('');
-    $this->assertNoRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed without UA code configured.');
+    $this->assertNoRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed without UA code configured.');
 
     $ua_code = 'UA-123456-1';
     \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
@@ -87,7 +87,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin page.');
     $this->drupalGet('admin/config/system/google-analytics');
     // Checking for tracking code URI here, as $ua_code is displayed in the form.
-    $this->assertNoRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin subpage.');
+    $this->assertNoRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin subpage.');
 
     // Test whether tracking code display is properly flipped.
     \Drupal::config('google_analytics.settings')->set('visibility.pages_enabled', 1)->save();
@@ -95,7 +95,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin page.');
     $this->drupalGet('admin/config/system/google-analytics');
     // Checking for tracking code URI here, as $ua_code is displayed in the form.
-    $this->assertRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin subpage.');
+    $this->assertRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is NOT displayed on front page.');
 
@@ -168,7 +168,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Test whether tracking code uses latest JS.
     \Drupal::config('google_analytics.settings')->set('cache', 0)->save();
     $this->drupalGet('');
-    $this->assertRaw('google-analytics.com/analytics.js', '[testGoogleAnalyticsTrackingCode]: Latest tracking code used.');
+    $this->assertRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsTrackingCode]: Latest tracking code used.');
 
     // Test whether anonymize visitors IP address feature has been enabled.
     \Drupal::config('google_analytics.settings')->set('privacy.anonymizeip', 0)->save();
@@ -237,6 +237,21 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw('ga("set", "cookieDomain", "none");', '[testGoogleAnalyticsTrackingCode]: _setDomainName: "none" found. Cross domain tracking is active.');
     $this->assertRaw('ga("set", "allowLinker", true);', '[testGoogleAnalyticsTrackingCode]: _setAllowLinker: true found. Cross domain tracking is active.');
     $this->assertRaw('"trackCrossDomains":["www.example.com","www.example.net"]', '[testGoogleAnalyticsTrackingCode]: Cross domain tracking with www.example.com and www.example.net is active.');
+
+    // Test whether debugging script has been enabled.
+    \Drupal::config('google_analytics.settings')->set('debug', 1)->save();
+    $this->drupalGet('');
+    $this->assertRaw('//www.google-analytics.com/analytics_debug.js', '[testGoogleAnalyticsTrackingCode]: Google debugging script has been enabled.');
+
+    // Check if text and link is shown on 'Status Reports' page.
+    // Requires 'administer site configuration' permission.
+    $this->drupalGet('admin/reports/status');
+    $this->assertRaw(t('Google Analytics module has debugging enabled. Please disable debugging setting in production sites from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/google-analytics'))), '[testGoogleAnalyticsConfiguration]: Debugging enabled is shown on Status Reports page.');
+
+    // Test whether debugging script has been disabled.
+    \Drupal::config('google_analytics.settings')->set('debug', 0)->save();
+    $this->drupalGet('');
+    $this->assertRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsTrackingCode]: Google debugging script has been disabled.');
 
     // Test whether the CREATE and BEFORE and AFTER code is added to the tracker.
     $codesnippet_create = array(

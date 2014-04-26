@@ -450,6 +450,12 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('js_scope'),
       '#disabled' => ($config->get('domain_mode') == 2) ? TRUE : FALSE,
     );
+    $form['advanced']['google_analytics_debug'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enable debugging'),
+      '#description' => t('If checked, the Google Universal Analytics debugging script will be loaded. You should not enable your production site to use this version of the JavaScript. The analytics_debug.js script is larger than the analytics.js tracking code and it is not typically cached. Using it in your production site will slow down your site for all of your users. Again, this is only for your own testing purposes. Debug messages are printed to the <code>window.console</code> object.'),
+      '#default_value' => $config->get('debug'),
+    );
 
     return parent::buildForm($form, $form_state);
   }
@@ -546,6 +552,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       ->set('privacy.donottrack', $form_state['values']['google_analytics_privacy_donottrack'])
       ->set('js_scope', $form_state['values']['google_analytics_js_scope'])
       ->set('cache', $form_state['values']['google_analytics_cache'])
+      ->set('debug', $form_state['values']['google_analytics_debug'])
       ->set('visibility.pages_enabled', $form_state['values']['google_analytics_visibility_pages'])
       ->set('visibility.pages', $form_state['values']['google_analytics_pages'])
       ->set('visibility.roles_enabled', $form_state['values']['google_analytics_visibility_roles'])
