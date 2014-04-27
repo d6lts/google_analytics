@@ -20,6 +20,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $permissions = array(
       'access administration pages',
       'administer google analytics',
+      'administer modules',
       'administer site configuration',
     );
 
@@ -29,6 +30,16 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
   }
 
   function testGoogleAnalyticsConfiguration() {
+    // Check if Configure link is available on 'Extend' page.
+    // Requires 'administer modules' permission.
+    $this->drupalGet('admin/modules');
+    $this->assertRaw('admin/config/system/googleanalytics', '[testGoogleAnalyticsConfiguration]: Configure link from Extend page to Google Analytics Settings page exists.');
+
+    // Check if Configure link is available on 'Status Reports' page. NOTE: Link is only shown without UA code configured.
+    // Requires 'administer site configuration' permission.
+    $this->drupalGet('admin/reports/status');
+    $this->assertRaw('admin/config/system/googleanalytics', '[testGoogleAnalyticsConfiguration]: Configure link from Status Reports page to Google Analytics Settings page exists.');
+
     // Check for setting page's presence.
     $this->drupalGet('admin/config/system/googleanalytics');
     $this->assertRaw(t('Web Property ID'), '[testGoogleAnalyticsConfiguration]: Settings page displayed.');
