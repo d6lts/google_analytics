@@ -698,7 +698,7 @@ function _googleanalytics_extract_create_field_values($string) {
     $values[$name] = $value;
   }
 
-  return $values;
+  return _googleanalytics_convert_form_value_data_types($values);
 }
 
 /**
@@ -742,7 +742,7 @@ function _googleanalytics_validate_create_field_name($name) {
  *   The error message if the specified value is invalid, NULL otherwise.
  */
 function _googleanalytics_validate_create_field_value($value) {
-  if (empty($value)) {
+  if (!is_bool($value) && empty($value)) {
     return t('A value is required.');
   }
   if (drupal_strlen($value) > 255) {
@@ -767,7 +767,56 @@ function _googleanalytics_validate_create_field_value($value) {
 function _googleanalytics_get_name_value_string($values) {
   $lines = array();
   foreach ($values as $name => $value) {
+    // Convert data types.
+    // @todo: #2251377: Json utility class serializes boolean values to incorrect data type
+    if (is_bool($value)) {
+      $value = ($value) ? 'true' : 'false';
+    }
+
     $lines[] = "$name|$value";
   }
   return implode("\n", $lines);
+}
+
+/**
+ * Prepare form data types for Json conversion.
+ *
+ * @param array $values
+ *   Array of name/value pairs.
+ *
+ * @return array
+ *   Array of name/value pairs with casted data types.
+ */
+function _googleanalytics_convert_form_value_data_types($values) {
+
+  foreach ($values as $name => $value) {
+    // Convert data types.
+    // @todo: #2251377: Json utility class serializes boolean values to incorrect data type
+    $match = drupal_strtolower($value);
+    if ($match == 'true') {
+      $value = TRUE;
+    }
+    elseif ($match == 'false') {
+      $value = FALSE;
+    }
+
+    // Convert other known fields.
+    // @todo: #2251343: Json utility class serializes numeric values to incorrect data type
+    switch ($name) {
+      case 'sampleRate':
+        // Float
+        settype($value, 'float');
+        break;
+
+      case 'siteSpeedSampleRate':
+      case 'cookieExpires':
+        // Integer
+        settype($value, 'integer');
+        break;
+    }
+
+    $values[$name] = $value;
+  }
+
+  return $values;
 }
