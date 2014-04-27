@@ -409,6 +409,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       );
     }
 
+    // @todo: Update urls once they are available.
     $form['advanced']['codesnippet'] = array(
       '#type' => 'details',
       '#title' => t('Custom JavaScript code'),
@@ -633,7 +634,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       $values[$name] = $value;
     }
 
-    return $values;
+    return google_analytics_json_prepare($values);
   }
 
   /**
@@ -677,7 +678,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
    *   The error message if the specified value is invalid, NULL otherwise.
    */
   protected static function validateCreateFieldValue($value) {
-    if (empty($value)) {
+    if (!is_bool($value) && empty($value)) {
       return t('A value is required.');
     }
     if (drupal_strlen($value) > 255) {
@@ -702,6 +703,12 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
   protected function getNameValueString($values) {
     $lines = array();
     foreach ($values as $name => $value) {
+      // Convert data types.
+      // @todo: #2251377: Json utility class serializes boolean values to incorrect data type
+      if (is_bool($value)) {
+        $value = ($value) ? 'true' : 'false';
+      }
+
       $lines[] = "$name|$value";
     }
     return implode("\n", $lines);
