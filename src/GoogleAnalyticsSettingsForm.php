@@ -6,6 +6,7 @@
 
 namespace Drupal\google_analytics;
 
+use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\ConfigFormBase;
 
 /**
@@ -634,7 +635,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       $values[$name] = $value;
     }
 
-    return google_analytics_json_prepare($values);
+    return static::convertFormValueDataTypes($values);
   }
 
   /**
@@ -712,6 +713,49 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       $lines[] = "$name|$value";
     }
     return implode("\n", $lines);
+  }
+
+  /**
+   * Prepare form data types for Json conversion.
+   *
+   * @param array $values
+   *   Array .
+   *
+   * @return string
+   *   Value with casted data type.
+   */
+  protected static function convertFormValueDataTypes($values) {
+
+    foreach ($values as $name => $value) {
+      // Convert data types.
+      // @todo: #2251377: Json utility class serializes boolean values to incorrect data type
+      $match = Unicode::strtolower($value);
+      if ($match == 'true') {
+        $value = TRUE;
+      }
+      elseif ($match == 'false') {
+        $value = FALSE;
+      }
+
+      // Convert other known fields.
+      // @todo: #2251343: Json utility class serializes numeric values to incorrect data type
+      switch ($name) {
+        case 'sampleRate':
+          // Float
+          settype($value, 'float');
+          break;
+
+        case 'siteSpeedSampleRate':
+        case 'cookieExpires':
+          // Integer
+          settype($value, 'integer');
+          break;
+      }
+
+      $values[$name] = $value;
+    }
+
+    return $values;
   }
 
 }

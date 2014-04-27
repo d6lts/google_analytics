@@ -257,7 +257,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $codesnippet_create = array(
       'cookieDomain' => 'foo.example.com',
       'cookieName' => 'myNewName',
-      'cookieExpires' => '20000',
+      'cookieExpires' => 20000,
+      'allowAnchor' => TRUE,
+      'sampleRate' => 4.3,
     );
     \Drupal::config('google_analytics.settings')
       ->set('codesnippet.create', $codesnippet_create)
@@ -265,7 +267,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
       ->set('codesnippet.after', 'ga("create", "UA-123456-3", {name: "newTracker"});ga("newTracker.send", "pageview");')
       ->save();
     $this->drupalGet('');
-    $this->assertRaw('ga("create", "' . $ua_code . '", {"cookieDomain":"foo.example.com","cookieName":"myNewName","cookieExpires":"20000"});', '[testGoogleAnalyticsTrackingCode]: Create only fields have been found.');
+    $this->assertRaw('ga("create", "' . $ua_code . '", {"cookieDomain":"foo.example.com","cookieName":"myNewName","cookieExpires":20000,"allowAnchor":true,"sampleRate":4.3});', '[testGoogleAnalyticsTrackingCode]: Create only fields have been found.');
     $this->assertRaw('ga("set", "forceSSL", true);', '[testGoogleAnalyticsTrackingCode]: Before codesnippet will force http pages to also send all beacons using https.');
     $this->assertRaw('ga("create", "UA-123456-3", {name: "newTracker"});', '[testGoogleAnalyticsTrackingCode]: After codesnippet with "newTracker" tracker has been found.');
   }
