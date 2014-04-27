@@ -1,3 +1,5 @@
+(function ($, Drupal, drupalSettings) {
+
 /**
  *  This file is for developers only.
  *
@@ -8,45 +10,107 @@
  *  unit testing integrated.
  */
 
+"use strict";
+
+Drupal.google_analytics.test = {};
+
+Drupal.google_analytics.test.assertSame = function (value1, value2, message) {
+  if (value1 === value2) {
+    console.info(message);
+  }
+  else {
+    console.error(message);
+  }
+}
+
+Drupal.google_analytics.test.assertNotSame = function (value1, value2, message) {
+  if (value1 !== value2) {
+    console.info(message);
+  }
+  else {
+    console.error(message);
+  }
+}
+
+Drupal.google_analytics.test.assertTrue = function (value1, message) {
+  if (value1 === true) {
+    console.info(message);
+  }
+  else {
+    console.error(message);
+  }
+}
+
+Drupal.google_analytics.test.assertFalse = function (value1, message) {
+  if (value1 === false) {
+    console.info(message);
+  }
+  else {
+    console.error(message);
+  }
+}
+
+/**
+ *  Run javascript tests against the GA module.
+ */
+
 // JavaScript debugging
 var base_url = window.location.protocol + '//' + window.location.host; 
+var base_path = window.location.pathname;
 console.dir(Drupal);
 
 console.group("Test 'isDownload':");
-console.log("Check if '/node/8' url is a file download. Expected: false, Result: %s.", Drupal.google_analytics.isDownload(base_url + '/node/8'));
-console.log("Check if '/files/foo1.zip' url is a file download. Expected: true, Result: %s.", Drupal.google_analytics.isDownload(base_url + '/files/foo1.zip'));
-console.log("Check if '/files/foo2.ddd' url is a file download. Expected: false, Result: %s.", Drupal.google_analytics.isDownload(base_url + '/files/foo2.ddd'));
+Drupal.google_analytics.test.assertFalse(Drupal.google_analytics.isDownload(base_url + drupalSettings.path.basePath + 'node/8'), "Verify that '/node/8' url is not detected as file download.");
+Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isDownload(base_url + drupalSettings.path.basePath + 'files/foo1.zip'), "Verify that '/files/foo1.zip' url is detected as a file download.");
+Drupal.google_analytics.test.assertFalse(Drupal.google_analytics.isDownload(base_url + drupalSettings.path.basePath + 'files/foo2.ddd'), "Verify that '/files/foo2.ddd' url is not detected as file download.");
 console.groupEnd();
 
 console.group("Test 'isInternal':");
-console.log("Check if base_url + '/node/1#foo=bar' url is internal. Expected: true, Result: %s.", Drupal.google_analytics.isInternal(base_url + '/node/1#foo=bar'));
-console.log("Check if base_url + '/node/2' url is internal. Expected: true, Result: %s.", Drupal.google_analytics.isInternal(base_url + '/node/2'));
-console.log("Check if base_url + '/go/foo' url is internal. Expected: true, Result: %s.", Drupal.google_analytics.isInternal(base_url + '/go/foo'));
-console.log("Check if 'http://example.com/node/3' url is internal. Expected: false, Result: %s.", Drupal.google_analytics.isInternal('http://example.com/node/3'));
+Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isInternal(base_url + drupalSettings.path.basePath + 'node/1'), "Link '" + base_url + drupalSettings.path.basePath + "node/2' has been detected as internal link.");
+Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isInternal(base_url + drupalSettings.path.basePath + 'node/1#foo'), "Link '" + base_url + drupalSettings.path.basePath + "node/1#foo' has been detected as internal link.");
+Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isInternal(base_url + drupalSettings.path.basePath + 'node/1?foo=bar'), "Link '" + base_url + drupalSettings.path.basePath + "node/1?foo=bar' has been detected as internal link.");
+Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isInternal(base_url + drupalSettings.path.basePath + 'node/1?foo=bar#foo'), "Link '" + base_url + drupalSettings.path.basePath + "node/1?foo=bar#foo' has been detected as internal link.");
+Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isInternal(base_url + drupalSettings.path.basePath + 'go/foo'), "Link '" + base_url + drupalSettings.path.basePath + "go/foo' has been detected as internal link.");
+Drupal.google_analytics.test.assertFalse(Drupal.google_analytics.isInternal('http://example.com/node/3'), "Link 'http://example.com/node/3' has been detected as external link.");
 console.groupEnd();
 
 console.group("Test 'isInternalSpecial':");
-console.log("Check if base_url + '/go/foo' url is internal special. Expected: true, Result: %s.", Drupal.google_analytics.isInternalSpecial(base_url + '/go/foo'));
-console.log("Check if base_url + '/node/1' url is internal special. Expected: false, Result: %s.", Drupal.google_analytics.isInternalSpecial(base_url + '/node/1'));
+Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isInternalSpecial(base_url + drupalSettings.path.basePath + 'go/foo'), "Link '" + base_url + drupalSettings.path.basePath + "go/foo' has been detected as special internal link.");
+Drupal.google_analytics.test.assertFalse(Drupal.google_analytics.isInternalSpecial(base_url + drupalSettings.path.basePath + 'node/1'), "Link '" + base_url + drupalSettings.path.basePath + "node/1' has been detected as special internal link.");
 console.groupEnd();
 
 console.group("Test 'getPageUrl':");
-console.log("Get absolute internal url from full qualified url. Expected: '/node/1', Result: '%s'.", Drupal.google_analytics.getPageUrl(base_url + '/node/1'));
-console.log("Get absolute internal url from absolute url. Expected: '/node/1', Result: '%s'.", Drupal.google_analytics.getPageUrl('/node/1'));
-console.log("Get full qualified external url. Expected: 'http://example.com/node/2', Result: '%s'.", Drupal.google_analytics.getPageUrl('http://example.com/node/2'));
+Drupal.google_analytics.test.assertSame(base_path + 'node/1', Drupal.google_analytics.getPageUrl(base_url + drupalSettings.path.basePath + 'node/1'), "Absolute internal URL '" +  drupalSettings.path.basePath + "node/1' has been extracted from full qualified url '" + base_url + base_path + "node/1'.");
+Drupal.google_analytics.test.assertSame(base_path + 'node/1', Drupal.google_analytics.getPageUrl(drupalSettings.path.basePath + 'node/1'), "Absolute internal URL '" +  drupalSettings.path.basePath + "node/1' has been extracted from absolute url '" +  base_path + "node/1'.");
+Drupal.google_analytics.test.assertSame('http://example.com/node/2', Drupal.google_analytics.getPageUrl('http://example.com/node/2'), "Full qualified external url 'http://example.com/node/2' has been extracted.");
+Drupal.google_analytics.test.assertSame('//example.com/node/2', Drupal.google_analytics.getPageUrl('//example.com/node/2'), "Full qualified external url '//example.com/node/2' has been extracted.");
 console.groupEnd();
 
 console.group("Test 'getDownloadExtension':");
-console.log("Get extension of download filename. Expected: 'zip', Result: '%s'.", Drupal.google_analytics.getDownloadExtension(base_url + '/files/foo1.zip'));
-console.log("Get empty extension if not a download extension. Expected: '', Result: '%s'.", Drupal.google_analytics.getDownloadExtension(base_url + '/files/foo2.dddd'));
+Drupal.google_analytics.test.assertSame('zip', Drupal.google_analytics.getDownloadExtension(base_url + drupalSettings.path.basePath + '/files/foo1.zip'), "Download extension 'zip' has been found in '" + base_url + drupalSettings.path.basePath + "files/foo1.zip'.");
+// #2238129: Download events aren't tracked if there are any URL variables
+Drupal.google_analytics.test.assertSame('zip', Drupal.google_analytics.getDownloadExtension(base_url + drupalSettings.path.basePath + '/files/foo1.zip#foo'), "Download extension 'zip' has been found in '" + base_url + drupalSettings.path.basePath + "files/foo1.zip#foo'.");
+Drupal.google_analytics.test.assertSame('zip', Drupal.google_analytics.getDownloadExtension(base_url + drupalSettings.path.basePath + '/files/foo1.zip?foo=bar'), "Download extension 'zip' has been found in '" + base_url + drupalSettings.path.basePath + "files/foo1.zip?foo=bar'.");
+Drupal.google_analytics.test.assertSame('zip', Drupal.google_analytics.getDownloadExtension(base_url + drupalSettings.path.basePath + '/files/foo1.zip?foo=bar#foo'), "Download extension 'zip' has been found in '" + base_url + drupalSettings.path.basePath + "files/foo1.zip?foo=bar'.");
+Drupal.google_analytics.test.assertSame('', Drupal.google_analytics.getDownloadExtension(base_url + drupalSettings.path.basePath + '/files/foo2.dddd'), "No download extension found in '" + base_url + drupalSettings.path.basePath + "files/foo2.dddd'.");
 console.groupEnd();
 
 // List of top-level domains: example.com, example.net
-console.group("Test 'isCrossDomain' (requires cross domain configuration):");
-console.dir(drupalSettings.google_analytics.trackCrossDomains);
-console.log("Check if url is in cross domain list. Expected: true, Result: %s.", Drupal.google_analytics.isCrossDomain('example.com', drupalSettings.google_analytics.trackCrossDomains));
-console.log("Check if url is in cross domain list. Expected: true, Result: %s.", Drupal.google_analytics.isCrossDomain('example.net', drupalSettings.google_analytics.trackCrossDomains));
-console.log("Check if url is in cross domain list. Expected: false, Result: %s.", Drupal.google_analytics.isCrossDomain('www.example.com', drupalSettings.google_analytics.trackCrossDomains));
-console.log("Check if url is in cross domain list. Expected: false, Result: %s.", Drupal.google_analytics.isCrossDomain('www.example.net', drupalSettings.google_analytics.trackCrossDomains));
+console.group("Test 'isCrossDomain' (requires cross domain configuration with 'example.com' and 'example.net'):");
+if (drupalSettings.google_analytics.trackCrossDomains) {
+  console.dir(drupalSettings.google_analytics.trackCrossDomains);
+  Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isCrossDomain('example.com', drupalSettings.google_analytics.trackCrossDomains), "URL 'example.com' has been found in cross domain list.");
+  Drupal.google_analytics.test.assertTrue(Drupal.google_analytics.isCrossDomain('example.net', drupalSettings.google_analytics.trackCrossDomains), "URL 'example.com' has been found in cross domain list.");
+  Drupal.google_analytics.test.assertFalse(Drupal.google_analytics.isCrossDomain('www.example.com', drupalSettings.google_analytics.trackCrossDomains), "URL 'www.example.com' not found in cross domain list.");
+  Drupal.google_analytics.test.assertFalse(Drupal.google_analytics.isCrossDomain('www.example.net', drupalSettings.google_analytics.trackCrossDomains), "URL 'www.example.com' not found in cross domain list.");
+}
+else {
+  console.warn('Cross domain tracking is not enabled. Tests skipped.');
+}
 console.groupEnd();
+
+
+})(jQuery, Drupal, drupalSettings);
+
+
 
