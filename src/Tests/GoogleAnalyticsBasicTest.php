@@ -177,7 +177,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Enable anonymizing of IP addresses.
     \Drupal::config('google_analytics.settings')->set('privacy.anonymizeip', 1)->save();
     $this->drupalGet('');
-    $this->assertRaw('ga("set", "anonymizeIp", 1);', '[testGoogleAnalyticsTrackingCode]: Anonymize visitors IP address found on frontpage.');
+    $this->assertRaw('ga("set", "anonymizeIp", true);', '[testGoogleAnalyticsTrackingCode]: Anonymize visitors IP address found on frontpage.');
 
     // Test if track Enhanced Link Attribution is enabled.
     \Drupal::config('google_analytics.settings')->set('track.linkid', 1)->save();
