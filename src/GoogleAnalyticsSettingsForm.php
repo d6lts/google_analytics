@@ -410,7 +410,6 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       );
     }
 
-    // @todo: Update urls once they are available.
     $form['advanced']['codesnippet'] = array(
       '#type' => 'details',
       '#title' => t('Custom JavaScript code'),
