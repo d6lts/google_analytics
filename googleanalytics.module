@@ -305,9 +305,9 @@ function googleanalytics_page_alter(&$page) {
       $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = "none";';
     }
 
-    if (!empty($custom_var)) {
+    /*if (!empty($custom_var)) {
       $script .= $custom_var;
-    }
+    }*/
     if (!empty($codesnippet_before)) {
       $script .= $codesnippet_before;
     }
