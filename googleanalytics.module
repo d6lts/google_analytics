@@ -95,7 +95,7 @@ function googleanalytics_page_alter(&$page) {
     '404 Not Found',
   );
 
-  // 1. Check if the GA account number has a value.
+  // 1. Check if the GA account number has a valid value.
   // 2. Track page views based on visibility value.
   // 3. Check if we should track the currently active user's role.
   // 4. Ignore pages visibility filter for 404 or 403 status codes.
