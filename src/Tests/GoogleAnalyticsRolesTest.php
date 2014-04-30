@@ -53,6 +53,7 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     $this->drupalGet('');
     $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is displayed for anonymous users on frontpage with default settings.');
     $this->drupalGet('admin');
+    $this->assertResponse(403);
     $this->assertRaw('/403.html', '[testGoogleAnalyticsRoleVisibility]: 403 Forbidden tracking code is displayed for anonymous users in admin section with default settings.');
 
     $this->drupalLogin($this->admin_user);
@@ -83,6 +84,7 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     $this->drupalGet('');
     $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is added to every role and displayed for anonymous users.');
     $this->drupalGet('admin');
+    $this->assertResponse(403);
     $this->assertRaw('/403.html', '[testGoogleAnalyticsRoleVisibility]: 403 Forbidden tracking code is shown for anonymous users if every role except the selected ones is selected.');
 
     $this->drupalLogin($this->admin_user);

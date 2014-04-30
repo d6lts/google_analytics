@@ -111,10 +111,12 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
     // Test whether 403 forbidden tracking code is shown if user has no access.
     $this->drupalGet('admin');
+    $this->assertResponse(403);
     $this->assertRaw('/403.html', '[testGoogleAnalyticsPageVisibility]: 403 Forbidden tracking code shown if user has no access.');
 
     // Test whether 404 not found tracking code is shown on non-existent pages.
     $this->drupalGet($this->randomName(64));
+    $this->assertResponse(404);
     $this->assertRaw('/404.html', '[testGoogleAnalyticsPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
 
     // DNT Tests:

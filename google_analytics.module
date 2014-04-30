@@ -71,13 +71,16 @@ function google_analytics_page_alter(&$page) {
   $account = \Drupal::currentUser();
   $config = \Drupal::config('google_analytics.settings');
   $id = $config->get('account');
+  $request = \Drupal::request();
 
-  // Get page status code for visibility filtering.
-  // @FIXME: 404 pages are not setting 'Status'!???
-  $status = drupal_get_http_header('Status');
+  // Get page http status code for visibility filtering.
+  $status = NULL;
+  if ($exception = $request->attributes->get('exception')) {
+    $status = $exception->getStatusCode();
+  }
   $trackable_status_codes = array(
-    '403 Forbidden',
-    '404 Not Found',
+    '403', // Forbidden
+    '404', // Not Found
   );
 
   // 1. Check if the GA account number has a value.
@@ -147,7 +150,6 @@ function google_analytics_page_alter(&$page) {
     if (\Drupal::moduleHandler()->moduleExists('content_translation') && $config->get('translation_set')) {
       // Check if we have a node object, it has translation enabled, and its
       // language code does not match its source language code.
-      $request = \Drupal::request();
       if ($request->attributes->has('node')) {
         $node = $request->attributes->get('node');
         if ($node && \Drupal::entityManager()->getTranslationFromContext($node) !== $node->getUntranslated()) {
@@ -157,11 +159,11 @@ function google_analytics_page_alter(&$page) {
     }
 
     // Track access denied (403) and file not found (404) pages.
-    if ($status == '403 Forbidden') {
+    if ($status == '403') {
       // See http://www.google.com/support/analytics/bin/answer.py?answer=86927
       $url_custom = '"/403.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer';
     }
-    elseif ($status == '404 Not Found') {
+    elseif ($status == '404') {
       $url_custom = '"/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer';
     }
 
