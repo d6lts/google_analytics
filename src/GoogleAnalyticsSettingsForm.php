@@ -25,7 +25,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
    * Implements \Drupal\Core\Form\FormInterface::buildForm().
    */
   public function buildForm(array $form, array &$form_state) {
-    $config = $this->configFactory->get('google_analytics.settings');
+    $config = $this->config('google_analytics.settings');
 
     $form['general'] = array(
       '#type' => 'details',
@@ -530,7 +530,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
    * Implements \Drupal\Core\Form\FormInterface::submitForm().
    */
   public function submitForm(array &$form, array &$form_state) {
-    $config = $this->configFactory->get('google_analytics.settings');
+    $config = $this->config('google_analytics.settings');
     $config
       ->set('account', $form_state['values']['google_analytics_account'])
       ->set('cross_domains', $form_state['values']['google_analytics_cross_domains'])
