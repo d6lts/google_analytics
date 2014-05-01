@@ -261,6 +261,23 @@ function googleanalytics_page_alter(&$page) {
     $create_only_fields = array();
     $create_only_fields = array_merge($create_only_fields, $codesnippet_create);
 
+    // Domain tracking type.
+    global $cookie_domain;
+    $domain_mode = variable_get('googleanalytics_domain_mode', 0);
+    $googleanalytics_adsense_script = '';
+
+    // Per RFC 2109, cookie domains must contain at least one dot other than the
+    // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
+    if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
+      $create_only_fields = array_merge($create_only_fields, array('cookieDomain' => $cookie_domain));
+      $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = ' . drupal_json_encode($cookie_domain) . ';';
+    }
+    elseif ($domain_mode == 2) {
+      // Cross Domain tracking. 'autoLinker' need to be enabled in 'create'.
+      $create_only_fields = array_merge($create_only_fields, array('allowLinker' => TRUE));
+      $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = "none";';
+    }
+
     // Track logged in users accross all devices.
     if (variable_get('googleanalytics_trackuserid', 0) && user_is_logged_in()) {
       // The USER_ID value should be a unique, persistent, and non-personally
@@ -272,6 +289,9 @@ function googleanalytics_page_alter(&$page) {
     // Create a tracker.
     $create_only_fields = empty($create_only_fields) ? 'auto' : $create_only_fields;
     $script .= 'ga("create", ' . drupal_json_encode($id) . ', ' . drupal_json_encode($create_only_fields) .');';
+
+    // Prepare Adsense tracking.
+    $googleanalytics_adsense_script .= 'window.google_analytics_uacct = ' . drupal_json_encode($id) . ';';
 
     // Add enhanced link attribution after 'create', but before 'pageview' send.
     // @see https://support.google.com/analytics/answer/2558867
@@ -285,28 +305,16 @@ function googleanalytics_page_alter(&$page) {
       $script .= 'ga("require", "displayfeatures");';
     }
 
-    // Prepare Adsense tracking.
-    $googleanalytics_adsense_script = 'window.google_analytics_uacct = ' . drupal_json_encode($id) . ';';
+    // Domain tracking type.
+    if ($domain_mode == 2) {
+      // Cross Domain tracking
+      // https://developers.google.com/analytics/devguides/collection/upgrade/reference/gajs-analyticsjs#cross-domain
+      $script .= 'ga("require", "linker");';
+      $script .= 'ga("linker:autoLink", drupalSettings.google_analytics.trackCrossDomains);';
+    }
 
     if (variable_get('googleanalytics_tracker_anonymizeip', 1)) {
       $script .= 'ga("set", "anonymizeIp", true);';
-    }
-
-    // Domain tracking type.
-    global $cookie_domain;
-    $domain_mode = variable_get('googleanalytics_domain_mode', 0);
-
-    // Per RFC 2109, cookie domains must contain at least one dot other than the
-    // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
-    if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
-      $script .= 'ga("set", "cookieDomain", ' . drupal_json_encode($cookie_domain) . ');';
-      $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = ' . drupal_json_encode($cookie_domain) . ';';
-    }
-    elseif ($domain_mode == 2) {
-      // @todo: unclear, cookieDomain = "none" is not documented.
-      $script .= 'ga("set", "cookieDomain", "none");';
-      $script .= 'ga("set", "allowLinker", true);';
-      $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = "none";';
     }
 
     /*if (!empty($custom_var)) {
