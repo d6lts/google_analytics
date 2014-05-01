@@ -223,7 +223,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
     // Test whether single domain tracking is active.
     $this->drupalGet('');
-    $this->assertNoRaw('ga("set", "cookieDomain",', '[testGoogleAnalyticsTrackingCode]: Single domain tracking is active.');
+    $this->assertNoRaw('{"cookieDomain" => "', '[testGoogleAnalyticsTrackingCode]: Single domain tracking is active.');
 
     // Enable "One domain with multiple subdomains".
     \Drupal::config('google_analytics.settings')->set('domain_mode', 1)->save();
@@ -250,6 +250,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw('ga("require", "linker");', '[testGoogleAnalyticsTrackingCode]: Require linker has been found. Cross domain tracking is active.');
     $this->assertRaw('ga("linker:autoLink", drupalSettings.google_analytics.trackCrossDomains);', '[testGoogleAnalyticsTrackingCode]: "linker:autoLink" has been found. Cross domain tracking is active.');
     $this->assertRaw('"trackCrossDomains":["www.example.com","www.example.net"]', '[testGoogleAnalyticsTrackingCode]: Cross domain tracking with www.example.com and www.example.net is active.');
+    \Drupal::config('google_analytics.settings')->set('domain_mode', 0)->save();
 
     // Test whether debugging script has been enabled.
     \Drupal::config('google_analytics.settings')->set('debug', 1)->save();
