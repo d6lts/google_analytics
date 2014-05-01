@@ -120,6 +120,7 @@ function google_analytics_page_alter(&$page) {
         'type' => 'setting',
       );
       $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/google_analytics.js';
+      // Add the JS test in development to the page.
       // $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/src/Tests/GoogleAnalyticsJavaScriptTest.js';
     }
 
