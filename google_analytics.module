@@ -149,7 +149,7 @@ function google_analytics_page_alter(&$page) {
     if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && arg(0) == 'search' && $keys = google_analytics_search_get_keys()) {
       // hook_preprocess_search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
-      $url_custom = '(window.googleanalytics_search_results) ? ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => $keys)))) . ' : ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results'))));
+      $url_custom = '(window.google_analytics_search_results) ? ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => $keys)))) . ' : ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results'))));
     }
 
     // If this node is a translation of another node, pass the original
@@ -443,7 +443,7 @@ function google_analytics_preprocess_search_results(&$variables) {
   global $pager_total_items;
 
   $page['#attached']['js'][] = array(
-    'data' => 'window.googleanalytics_search_results = ' . intval($pager_total_items[0]) . ';',
+    'data' => 'window.google_analytics_search_results = ' . intval($pager_total_items[0]) . ';',
     'type' => 'inline',
     'group' => JS_LIBRARY-1,
   );
