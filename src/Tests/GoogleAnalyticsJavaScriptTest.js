@@ -111,6 +111,3 @@ console.groupEnd();
 
 
 })(jQuery, Drupal, drupalSettings);
-
-
-
