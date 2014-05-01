@@ -36,16 +36,8 @@ $(document).ready(function() {
           ga("send", "event", "Mails", "Click", this.href.substring(7));
         }
         else if (drupalSettings.google_analytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
-          if (drupalSettings.google_analytics.trackDomainMode == 2 && Drupal.google_analytics.isCrossDomain(this.hostname, drupalSettings.google_analytics.trackCrossDomains)) {
-            // Top-level cross domain clicked. document.location is handled by _link internally.
-            event.preventDefault();
-            //console.debug("Detected click to cross domain url '%s'.", this.href);
-            // @todo: unknown upgrade path
-            //_gaq.push(["_link", this.href]);
-            //ga("link", this.href); ???
-          }
-          else {
-            // External link clicked.
+          if (drupalSettings.google_analytics.trackDomainMode != 2 && !Drupal.google_analytics.isCrossDomain(this.hostname, drupalSettings.google_analytics.trackCrossDomains)) {
+            // External link clicked / No top-level cross domain clicked.
             ga("send", "event", "Outbound links", "Click", this.href);
           }
         }

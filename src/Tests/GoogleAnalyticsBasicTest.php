@@ -233,11 +233,11 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // TODO: Workaround to run tests successfully. This feature cannot tested reliable.
     global $cookie_domain;
     if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
-      $this->assertRaw('ga("set", "cookieDomain",', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains is active on real host.');
+      $this->assertRaw('{"cookieDomain" => "' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains is active on real host.');
     }
     else {
       // Special cases, Localhost and IP addresses don't show '_setDomainName'.
-      $this->assertNoRaw('ga("set", "cookieDomain",', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains may be active on localhost (test result is not reliable).');
+      $this->assertNoRaw('{"cookieDomain" => "' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains may be active on localhost (test result is not reliable).');
     }
 
     // Enable "Multiple top-level domains" tracking.
@@ -246,8 +246,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
       ->set('cross_domains', "www.example.com\nwww.example.net")
       ->save();
     $this->drupalGet('');
-    $this->assertRaw('ga("set", "cookieDomain", "none");', '[testGoogleAnalyticsTrackingCode]: _setDomainName: "none" found. Cross domain tracking is active.');
-    $this->assertRaw('ga("set", "allowLinker", true);', '[testGoogleAnalyticsTrackingCode]: _setAllowLinker: true found. Cross domain tracking is active.');
+    $this->assertRaw('ga("create", "' . $ua_code . '", {"allowLinker":true', '[testGoogleAnalyticsTrackingCode]: "allowLinker" has been found. Cross domain tracking is active.');
+    $this->assertRaw('ga("require", "linker");', '[testGoogleAnalyticsTrackingCode]: Require linker has been found. Cross domain tracking is active.');
+    $this->assertRaw('ga("linker:autoLink", drupalSettings.google_analytics.trackCrossDomains);', '[testGoogleAnalyticsTrackingCode]: "linker:autoLink" has been found. Cross domain tracking is active.');
     $this->assertRaw('"trackCrossDomains":["www.example.com","www.example.net"]', '[testGoogleAnalyticsTrackingCode]: Cross domain tracking with www.example.com and www.example.net is active.');
 
     // Test whether debugging script has been enabled.
