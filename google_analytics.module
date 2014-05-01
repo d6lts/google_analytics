@@ -458,9 +458,9 @@ function google_analytics_preprocess_search_results(&$variables) {
 function google_analytics_search_get_keys() {
   static $return;
   if (!isset($return)) {
-    // Extract keys as remainder of path
+    // Extract keys as remainder of path^.
     $path = explode('/', current_path(), 3);
-    $keys = \Drupal::request()->attributes->get('keys');
+    $keys = \Drupal::request()->query->get('keys');
     $return = count($path) == 3 ? $path[2] : $keys;
   }
   return $return;
