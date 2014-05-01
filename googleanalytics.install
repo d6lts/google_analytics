@@ -30,6 +30,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_trackfiles');
   variable_del('googleanalytics_trackfiles_extensions');
   variable_del('googleanalytics_tracklinkid');
+  variable_del('googleanalytics_trackurlfragments');
   variable_del('googleanalytics_trackuserid');
   variable_del('googleanalytics_trackmailto');
   variable_del('googleanalytics_trackmessages');

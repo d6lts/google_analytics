@@ -213,6 +213,12 @@ function googleanalytics_admin_settings_form($form_state) {
     '#default_value' => variable_get('googleanalytics_tracklinkid', 0),
     '#description' => t('Enhanced Link Attribution improves the accuracy of your In-Page Analytics report by automatically differentiating between multiple links to the same URL on a single page by using link element IDs. <a href="@url">Enable enhanced link attribution</a> in the Admin UI of your Google Analytics account.', array('@url' => 'https://support.google.com/analytics/answer/2558867')),
   );
+  $form['tracking']['linktracking']['googleanalytics_trackurlfragments'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track changing URL fragments as pageviews'),
+    '#default_value' => variable_get('googleanalytics_trackurlfragments', 0),
+    '#description' => t('By default, the URL reported to Google Analytics will not include the "fragment identifier" (i.e. the portion of the URL beginning with a hash sign), and hash changes by themselves will not cause new pageviews to be reported. Checking this box will cause hash changes to be reported as pageviews (in modern browsers) and all pageview URLs to include the fragment where applicable.'),
+  );
 
   // Message specific configurations.
   $form['tracking']['messagetracking'] = array(

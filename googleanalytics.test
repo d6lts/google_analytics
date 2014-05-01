@@ -181,6 +181,16 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     $this->drupalGet('');
     $this->assertNoRaw(', {"userId":"', '[testGoogleAnalyticsTrackingCode]: Tracking code for User ID is disabled.');
 
+    // Test if tracking of url fragments is enabled.
+    variable_set('googleanalytics_trackurlfragments', 1);
+    $this->drupalGet('');
+    $this->assertRaw('ga("set", "page", location.pathname + location.search + location.hash);', '[testGoogleAnalyticsTrackingCode]: Tracking code for url fragments is enabled.');
+
+    // Test if tracking of url fragments is disabled.
+    variable_set('googleanalytics_trackurlfragments', 0);
+    $this->drupalGet('');
+    $this->assertNoRaw('ga("set", "page", location.pathname + location.search + location.hash);', '[testGoogleAnalyticsTrackingCode]: Tracking code for url fragments is not enabled.');
+
     // Test if track display features is enabled.
     variable_set('googleanalytics_trackdoubleclick', 1);
     $this->drupalGet('');

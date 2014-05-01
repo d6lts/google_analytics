@@ -104,6 +104,7 @@ function googleanalytics_page_alter(&$page) {
     // We allow different scopes. Default to 'header' but allow user to override if they really need to.
     // @todo: footer may no longer suppored
     $scope = variable_get('googleanalytics_js_scope', 'header');
+    $url_custom = '';
 
     // Add link tracking.
     $link_settings = array();
@@ -122,6 +123,10 @@ function googleanalytics_page_alter(&$page) {
     }
     if ($track_cross_domains = variable_get('googleanalytics_cross_domains', '')) {
       $link_settings['trackCrossDomains'] = preg_split('/(\r\n?|\n)/', $track_cross_domains);
+    }
+    if ($track_url_fragments = variable_get('googleanalytics_trackurlfragments', 0)) {
+      $link_settings['trackUrlFragments'] = $track_url_fragments;
+      $url_custom = 'location.pathname + location.search + location.hash';
     }
 
     if (!empty($link_settings)) {
@@ -151,7 +156,6 @@ function googleanalytics_page_alter(&$page) {
     }
 
     // Site search tracking support.
-    $url_custom = '';
     if (module_exists('search') && variable_get('googleanalytics_site_search', FALSE) && arg(0) == 'search' && $keys = googleanalytics_search_get_keys()) {
       // hook_preprocess_search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
