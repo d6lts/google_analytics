@@ -53,6 +53,13 @@ $(document).ready(function() {
     });
   });
 
+  // Track hash changes as unique pageviews, if this option has been enabled.
+  if (Drupal.settings.googleanalytics.trackUrlFragments) {
+    window.onhashchange = function() {
+      ga('send', 'pageview', location.pathname + location.search + location.hash);
+    }
+  }
+
   // Colorbox: This event triggers when the transition has completed and the
   // newly loaded content has been revealed.
   $(document).on("cbox_complete", function () {

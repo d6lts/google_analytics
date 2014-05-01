@@ -51,6 +51,9 @@ google_analytics.settings:
         linkid:
           type: boolean
           label: 'Enable enhanced link attribution'
+        urlfragments:
+          type: boolean
+          label: 'Track changing URL fragments as pageviews'
         userid:
           type: boolean
           label: 'Track User ID'

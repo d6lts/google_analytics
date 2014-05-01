@@ -88,6 +88,8 @@ function google_analytics_page_alter(&$page) {
   // 3. Check if we should track the currently active user's role.
   // 4. Ignore pages visibility filter for 404 or 403 status codes.
   if (preg_match('/^UA-\d+-\d+$/', $id) && (_google_analytics_visibility_pages() || in_array($status, $trackable_status_codes)) && _google_analytics_visibility_user($account)) {
+    // Init variables.
+    $url_custom = '';
 
     // Add link tracking.
     $link_settings = array();
@@ -106,6 +108,10 @@ function google_analytics_page_alter(&$page) {
     }
     if ($track_cross_domains = $config->get('cross_domains')) {
       $link_settings['trackCrossDomains'] = preg_split('/(\r\n?|\n)/', $track_cross_domains);
+    }
+    if ($track_url_fragments = $config->get('track.urlfragments')) {
+      $link_settings['trackUrlFragments'] = $track_url_fragments;
+      $url_custom = 'location.pathname + location.search + location.hash';
     }
 
     if (!empty($link_settings)) {
@@ -138,7 +144,6 @@ function google_analytics_page_alter(&$page) {
     }
 
     // Site search tracking support.
-    $url_custom = '';
     if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && arg(0) == 'search' && $keys = google_analytics_search_get_keys()) {
       // hook_preprocess_search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
