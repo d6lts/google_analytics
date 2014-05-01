@@ -1,5 +1,5 @@
 (function ($) {
-  
+
 /**
  *  This file is for developers only.
  *
