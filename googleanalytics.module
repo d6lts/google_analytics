@@ -312,7 +312,7 @@ function googleanalytics_page_alter(&$page) {
       // Cross Domain tracking
       // https://developers.google.com/analytics/devguides/collection/upgrade/reference/gajs-analyticsjs#cross-domain
       $script .= 'ga("require", "linker");';
-      $script .= 'ga("linker:autoLink", drupalSettings.google_analytics.trackCrossDomains);';
+      $script .= 'ga("linker:autoLink", Drupal.settings.googleanalytics.trackCrossDomains);';
     }
 
     if (variable_get('googleanalytics_tracker_anonymizeip', 1)) {
