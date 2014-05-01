@@ -54,7 +54,7 @@ $(document).ready(function() {
   });
 
   // Track hash changes as unique pageviews, if this option has been enabled.
-  if (Drupal.settings.googleanalytics.trackUrlFragments) {
+  if (drupalSettings.google_analytics.trackUrlFragments) {
     window.onhashchange = function() {
       ga('send', 'pageview', location.pathname + location.search + location.hash);
     }
