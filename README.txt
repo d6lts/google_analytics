@@ -75,3 +75,12 @@ provided for any customisations you include.
 To speed up page loading you may also cache the Analytics ga.js
 file locally. You need to make sure the site file system is in public
 download mode.
+
+Known issues
+============
+
+- Token: The minimum required Drupal 6 version is 6.x-1.14, but for some
+  technical reasons 6.x-6.16 or later is highly recommended. Token module is
+  optional for GA, but if installed you need at minimum this versions or you may
+  experience the issues documented in #1035030.
+- Ubercart: The minimum required Drupal 6 version is 6.x-2.6.
