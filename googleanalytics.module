@@ -132,6 +132,8 @@ function googleanalytics_page_alter(&$page) {
     if (!empty($link_settings)) {
       drupal_add_js(array('googleanalytics' => $link_settings), 'setting');
       drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.js');
+      // Add the JS test in development to the page.
+      //drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.test.js');
     }
 
     // Add messages tracking.
