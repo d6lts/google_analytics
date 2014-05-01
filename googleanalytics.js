@@ -104,7 +104,7 @@ Drupal.googleanalytics.isCrossDomain = function (hostname, crossDomains) {
  * @return boolean
  */
 Drupal.googleanalytics.isDownload = function (url) {
-  var isDownload = new RegExp("\\.(" + Drupal.settings.googleanalytics.trackDownloadExtensions + ")$", "i");
+  var isDownload = new RegExp("\\.(" + Drupal.settings.googleanalytics.trackDownloadExtensions + ")([\?#].*)?$", "i");
   return isDownload.test(url);
 }
 
@@ -165,7 +165,7 @@ Drupal.googleanalytics.getPageUrl = function (url) {
  *   The file extension of the passed url. e.g. "zip", "txt"
  */
 Drupal.googleanalytics.getDownloadExtension = function (url) {
-  var extractDownloadextension = new RegExp("\\.(" + Drupal.settings.googleanalytics.trackDownloadExtensions + ")$", "i");
+  var extractDownloadextension = new RegExp("\\.(" + Drupal.settings.googleanalytics.trackDownloadExtensions + ")([\?#].*)?$", "i");
   var extension = extractDownloadextension.exec(url);
   return (extension === null) ? '' : extension[1];
 }

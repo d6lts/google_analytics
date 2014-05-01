@@ -62,6 +62,9 @@ console.dir(Drupal);
 console.group("Test 'isDownload':");
 Drupal.googleanalytics.test.assertFalse(Drupal.googleanalytics.isDownload(base_url + Drupal.settings.basePath + 'node/8'), "Verify that '/node/8' url is not detected as file download.");
 Drupal.googleanalytics.test.assertTrue(Drupal.googleanalytics.isDownload(base_url + Drupal.settings.basePath + 'files/foo1.zip'), "Verify that '/files/foo1.zip' url is detected as a file download.");
+Drupal.googleanalytics.test.assertTrue(Drupal.googleanalytics.isDownload(base_url + Drupal.settings.basePath + 'files/foo1.zip#foo'), "Verify that '/files/foo1.zip#foo' url is detected as a file download.");
+Drupal.googleanalytics.test.assertTrue(Drupal.googleanalytics.isDownload(base_url + Drupal.settings.basePath + 'files/foo1.zip?foo=bar'), "Verify that '/files/foo1.zip?foo=bar' url is detected as a file download.");
+Drupal.googleanalytics.test.assertTrue(Drupal.googleanalytics.isDownload(base_url + Drupal.settings.basePath + 'files/foo1.zip?foo=bar#foo'), "Verify that '/files/foo1.zip?foo=bar#foo' url is detected as a file download.");
 Drupal.googleanalytics.test.assertFalse(Drupal.googleanalytics.isDownload(base_url + Drupal.settings.basePath + 'files/foo2.ddd'), "Verify that '/files/foo2.ddd' url is not detected as file download.");
 console.groupEnd();
 
@@ -88,7 +91,6 @@ console.groupEnd();
 
 console.group("Test 'getDownloadExtension':");
 Drupal.googleanalytics.test.assertSame('zip', Drupal.googleanalytics.getDownloadExtension(base_url + Drupal.settings.basePath + '/files/foo1.zip'), "Download extension 'zip' has been found in '" + base_url + Drupal.settings.basePath + "files/foo1.zip'.");
-// #2238129: Download events aren't tracked if there are any URL variables
 Drupal.googleanalytics.test.assertSame('zip', Drupal.googleanalytics.getDownloadExtension(base_url + Drupal.settings.basePath + '/files/foo1.zip#foo'), "Download extension 'zip' has been found in '" + base_url + Drupal.settings.basePath + "files/foo1.zip#foo'.");
 Drupal.googleanalytics.test.assertSame('zip', Drupal.googleanalytics.getDownloadExtension(base_url + Drupal.settings.basePath + '/files/foo1.zip?foo=bar'), "Download extension 'zip' has been found in '" + base_url + Drupal.settings.basePath + "files/foo1.zip?foo=bar'.");
 Drupal.googleanalytics.test.assertSame('zip', Drupal.googleanalytics.getDownloadExtension(base_url + Drupal.settings.basePath + '/files/foo1.zip?foo=bar#foo'), "Download extension 'zip' has been found in '" + base_url + Drupal.settings.basePath + "files/foo1.zip?foo=bar'.");
