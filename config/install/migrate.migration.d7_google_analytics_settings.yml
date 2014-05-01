@@ -44,7 +44,7 @@ process:
   'track:files': googleanalytics_trackfiles
   'track:files_extensions': googleanalytics_trackfiles_extensions
   'track:linkid': googleanalytics_tracklinkid
-  'track:linkid': googleanalytics_trackuserid
+  'track:userid': googleanalytics_trackuserid
   'track:mailto': googleanalytics_trackmailto
   'track:outbound': googleanalytics_trackoutbound
   'translation_set': googleanalytics_translation_set
