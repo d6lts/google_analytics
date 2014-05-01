@@ -55,7 +55,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $edit['keys'] = $this->randomName(32);
 
     \Drupal::config('google_analytics.settings')->set('track.site_search', 1)->save();
-    $this->drupalPost('search/node', $edit, t('Search'));
+    $this->drupalPostForm('search/node', $edit, t('Search'));
     $this->assertRaw('ga("set", "page", (window.google_analytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
 
     // Test search results counter.
