@@ -236,7 +236,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
       $this->assertRaw('{"cookieDomain" => "' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains is active on real host.');
     }
     else {
-      // Special cases, Localhost and IP addresses don't show '_setDomainName'.
+      // Special cases, Localhost and IP addresses don't show 'cookieDomain'.
       $this->assertNoRaw('{"cookieDomain" => "' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains may be active on localhost (test result is not reliable).');
     }
 

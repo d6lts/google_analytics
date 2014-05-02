@@ -32,6 +32,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $permissions = array(
       'access administration pages',
       'administer google analytics',
+      'search content',
     );
 
     // User to set up google_analytics.
