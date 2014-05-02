@@ -223,7 +223,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
     // Test whether single domain tracking is active.
     $this->drupalGet('');
-    $this->assertNoRaw('{"cookieDomain" => "', '[testGoogleAnalyticsTrackingCode]: Single domain tracking is active.');
+    $this->assertNoRaw('{"cookieDomain":"', '[testGoogleAnalyticsTrackingCode]: Single domain tracking is active.');
 
     // Enable "One domain with multiple subdomains".
     \Drupal::config('google_analytics.settings')->set('domain_mode', 1)->save();
@@ -233,11 +233,11 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // TODO: Workaround to run tests successfully. This feature cannot tested reliable.
     global $cookie_domain;
     if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
-      $this->assertRaw('{"cookieDomain" => "' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains is active on real host.');
+      $this->assertRaw('{"cookieDomain":"' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains is active on real host.');
     }
     else {
       // Special cases, Localhost and IP addresses don't show 'cookieDomain'.
-      $this->assertNoRaw('{"cookieDomain" => "' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains may be active on localhost (test result is not reliable).');
+      $this->assertNoRaw('{"cookieDomain":"' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains may be active on localhost (test result is not reliable).');
     }
 
     // Enable "Multiple top-level domains" tracking.
