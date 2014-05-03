@@ -460,7 +460,13 @@ function google_analytics_search_get_keys() {
   if (!isset($return)) {
     // Extract keys as remainder of path^.
     $path = explode('/', current_path(), 3);
-    $keys = \Drupal::request()->query->get('keys');
+
+    // Based on Drupal\search\Controller\SearchController::view
+    // Build the form first, because it may redirect during the submit,
+    // and we don't want to build the results based on last time's request.
+    $request = \Drupal::request();
+    $keys = ($request->query->has('keys') ? trim($request->get('keys')) : '');
+
     $return = count($path) == 3 ? $path[2] : $keys;
   }
   return $return;
