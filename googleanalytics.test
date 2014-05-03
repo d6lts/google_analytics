@@ -558,7 +558,7 @@ class GoogleAnalyticsSearchTest extends DrupalWebTestCase {
     $edit = array();
     $edit['keys'] = $this->randomName(32);
 
-    variable_set('googleanalytics_tracksite_search', 1);
+    variable_set('googleanalytics_site_search', 1);
     $this->drupalPost('search/node', $edit, t('Search'));
     $this->assertRaw('ga("set", "page", (window.googleanalytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
 
