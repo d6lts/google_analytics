@@ -560,10 +560,10 @@ class GoogleAnalyticsSearchTest extends DrupalWebTestCase {
 
     variable_set('googleanalytics_tracksite_search', 1);
     $this->drupalPost('search/node', $edit, t('Search'));
-    $this->assertRaw('ga("set", "page", (window.google_analytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
+    $this->assertRaw('ga("set", "page", (window.googleanalytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
 
     // Test search results counter.
-    $this->assertRaw('window.google_analytics_search_results = ', '[testGoogleAnalyticsSearch]: Search results counter is displayed.');
+    $this->assertRaw('window.googleanalytics_search_results = ', '[testGoogleAnalyticsSearch]: Search results counter is displayed.');
   }
 
 }
