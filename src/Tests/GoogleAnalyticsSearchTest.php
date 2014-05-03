@@ -16,7 +16,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('google_analytics', 'search');
+  public static $modules = array('google_analytics', 'search', 'node');
 
   public static function getInfo() {
     return array(
