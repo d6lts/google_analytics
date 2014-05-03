@@ -530,7 +530,7 @@ class GoogleAnalyticsSearchTest extends DrupalWebTestCase {
   }
 
   function setUp() {
-    parent::setUp('google_analytics', 'search', 'node');
+    parent::setUp('googleanalytics', 'search', 'node');
 
     $permissions = array(
       'access administration pages',
