@@ -263,13 +263,12 @@ function googleanalytics_admin_settings_form($form_state) {
     '#default_value' => variable_get('googleanalytics_site_search', FALSE),
     '#disabled' => (module_exists('search') ? FALSE : TRUE),
   );
-  /* @todo: not supported, https://support.google.com/analytics/bin/answer.py?hl=en&hlrm=de&answer=2795983
   $form['tracking']['search_and_advertising']['googleanalytics_trackadsense'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track AdSense ads'),
     '#description' => t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
     '#default_value' => variable_get('googleanalytics_trackadsense', FALSE),
-  );*/
+  );
   $form['tracking']['search_and_advertising']['googleanalytics_trackdoubleclick'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track display features'),
