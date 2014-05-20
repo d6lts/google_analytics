@@ -403,7 +403,6 @@ function googleanalytics_admin_settings_form($form_state) {
     );
   }
 
-  // @todo: Update urls once they are available.
   $form['advanced']['codesnippet'] = array(
     '#type' => 'fieldset',
     '#title' => t('Custom JavaScript code'),
