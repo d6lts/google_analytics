@@ -240,6 +240,15 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('track.files_extensions'),
       '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GOOGLE_ANALYTICS_TRACKFILES_EXTENSIONS)),
       '#maxlength' => 255,
+      '#states' => array(
+        'enabled' => array(
+          ':input[name="google_analytics_trackfiles"]' => array('checked' => TRUE),
+        ),
+        # Note: Form required marker is not visible as title is invisible.
+        'required' => array(
+          ':input[name="google_analytics_trackfiles"]' => array('checked' => TRUE),
+        ),
+      ),
     );
     $form['tracking']['linktracking']['google_analytics_tracklinkid'] = array(
       '#type' => 'checkbox',
@@ -513,6 +522,10 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     // If multiple top-level domains has been selected, a domain names list is required.
     if ($form_state['values']['google_analytics_domain_mode'] == 2 && empty($form_state['values']['google_analytics_cross_domains'])) {
       \Drupal::formBuilder()->setErrorByName('google_analytics_cross_domains', $form_state, t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
+    }
+    // Disallow empty list of download file extensions.
+    if ($form_state['values']['google_analytics_trackfiles'] && empty($form_state['values']['google_analytics_trackfiles_extensions'])) {
+      \Drupal::formBuilder()->setErrorByName('google_analytics_trackfiles_extensions', $form_state, t('List of download file extensions cannot empty.'));
     }
     // Clear obsolete local cache if cache has been disabled.
     if (empty($form_state['values']['google_analytics_cache']) && $form['advanced']['google_analytics_cache']['#default_value']) {
