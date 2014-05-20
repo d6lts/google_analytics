@@ -218,6 +218,7 @@ function googleanalytics_admin_settings_form($form_state) {
       'enabled' => array(
         ':input[name="googleanalytics_trackfiles"]' => array('checked' => TRUE),
       ),
+      # Note: Form required marker is not visible as title is invisible.
       'required' => array(
         ':input[name="googleanalytics_trackfiles"]' => array('checked' => TRUE),
       ),
