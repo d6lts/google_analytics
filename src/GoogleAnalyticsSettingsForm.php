@@ -292,13 +292,12 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('track.site_search'),
       '#disabled' => (\Drupal::moduleHandler()->moduleExists('search') ? FALSE : TRUE),
     );
-    /* @todo: not supported, https://support.google.com/analytics/bin/answer.py?hl=en&hlrm=de&answer=2795983
-     $form['tracking']['search_and_advertising']['google_analytics_trackadsense'] = array(
+    $form['tracking']['search_and_advertising']['google_analytics_trackadsense'] = array(
        '#type' => 'checkbox',
        '#title' => t('Track AdSense ads'),
        '#description' => t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
        '#default_value' => $config->get('track.adsense'),
-    );*/
+    );
     $form['tracking']['search_and_advertising']['google_analytics_trackdisplayfeatures'] = array(
       '#type' => 'checkbox',
       '#title' => t('Track display features'),
@@ -560,7 +559,7 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       ->set('track.messages', $form_state['values']['google_analytics_trackmessages'])
       ->set('track.outbound', $form_state['values']['google_analytics_trackmailto'])
       ->set('track.site_search', $form_state['values']['google_analytics_site_search'])
-      //->set('track.adsense', $form_state['values']['google_analytics_trackadsense'])
+      ->set('track.adsense', $form_state['values']['google_analytics_trackadsense'])
       ->set('track.displayfeatures', $form_state['values']['google_analytics_trackdisplayfeatures'])
       ->set('privacy.anonymizeip', $form_state['values']['google_analytics_tracker_anonymizeip'])
       ->set('privacy.donottrack', $form_state['values']['google_analytics_privacy_donottrack'])

@@ -334,17 +334,16 @@ function google_analytics_page_alter(&$page) {
       $script .= $codesnippet_after;
     }
 
-    // @TODO: not available yet, comming soon per Google.
-    //if ($config->get('track.adsense')) {
+    if ($config->get('track.adsense')) {
       // Custom tracking. Prepend before all other JavaScript.
       // @TODO: https://support.google.com/adsense/answer/98142
       // sounds like it could be appended to $script.
-      //$page['#attached']['js'][] = array(
-      //  'data' => $googleanalytics_adsense_script,
-      //  'group' => JS_LIBRARY-1,
-      //  'type' => 'inline',
-      //);
-    //}
+      $page['#attached']['js'][] = array(
+        'data' => $googleanalytics_adsense_script,
+        'group' => JS_LIBRARY-1,
+        'type' => 'inline',
+      );
+    }
 
     $page['#attached']['js'][] = array(
       'data' => $script,
