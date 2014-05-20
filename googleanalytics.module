@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * @file
  * Drupal Module: GoogleAnalytics
  * Adds the required Javascript to the bottom of all your Drupal pages
@@ -13,6 +13,15 @@ define('GOOGLEANALYTICS_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|
 
 // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
 define('GOOGLEANALYTICS_PAGES', "admin\nadmin/*\nbatch\nnode/add*\nnode/*/*\nuser/*/*");
+
+/**
+ * Advertise the supported google analytics api details.
+ */
+function google_analytics_api() {
+  return array(
+    'api' => 'ga.js',
+  );
+}
 
 /**
  * Implementation of hook_help().
