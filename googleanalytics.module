@@ -22,6 +22,15 @@ define('GOOGLEANALYTICS_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|
 define('GOOGLEANALYTICS_PAGES', "admin\nadmin/*\nbatch\nnode/add*\nnode/*/*\nuser/*/*");
 
 /**
+ * Advertise the supported google analytics api details.
+ */
+function googleanalytics_api() {
+  return array(
+    'api' => 'analytics.js',
+  );
+}
+
+/**
  * Implements hook_help().
  */
 function googleanalytics_help($path, $arg) {
