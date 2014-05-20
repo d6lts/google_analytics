@@ -100,6 +100,14 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#type' => 'textarea',
       '#default_value' => $config->get('cross_domains'),
       '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href="@url">Tracking Multiple Domains</a>.', array('@url' => 'https://support.google.com/analytics/answer/1034342')),
+      '#states' => array(
+        'enabled' => array(
+          ':input[name="google_analytics_domain_mode"]' => array('value' => '2'),
+        ),
+        'required' => array(
+          ':input[name="google_analytics_domain_mode"]' => array('value' => '2'),
+        ),
+      ),
     );
 
     // Page specific visibility configurations.
