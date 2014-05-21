@@ -16,7 +16,7 @@ $(document).ready(function() {
         // Skip 'click' tracking, if custom tracking events are bound.
         if ($(this).is('.colorbox')) {
           // Do nothing here. The custom event will handle all tracking.
-          //console.debug("Detected click on colorbox.");
+          //console.info("Click on .colorbox item has been detected.");
         }
         // Is download tracking activated and the file extension configured for download tracking?
         else if (Drupal.settings.googleanalytics.trackDownload && Drupal.googleanalytics.isDownload(this.href)) {
