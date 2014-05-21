@@ -98,6 +98,7 @@ function google_analytics_page_alter(&$page) {
   // 4. Ignore pages visibility filter for 404 or 403 status codes.
   if (preg_match('/^UA-\d+-\d+$/', $id) && (_google_analytics_visibility_pages() || in_array($status, $trackable_status_codes)) && _google_analytics_visibility_user($account)) {
     // Init variables.
+    $debug = $config->get('debug');
     $url_custom = '';
 
     // Add link tracking.
@@ -128,9 +129,16 @@ function google_analytics_page_alter(&$page) {
         'data' => array('google_analytics' => $link_settings),
         'type' => 'setting',
       );
-      $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/google_analytics.js';
-      // Add the JS test in development to the page.
-      // $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/src/Tests/GoogleAnalyticsJavaScriptTest.js';
+
+      // Add debugging code.
+      if ($debug) {
+        $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/google_analytics.debug.js';
+        // Add the JS test in development to the page.
+        // $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/src/Tests/GoogleAnalyticsJavaScriptTest.js';
+      }
+      else {
+        $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/google_analytics.js';
+      }
     }
 
     // Add messages tracking.
@@ -238,7 +246,7 @@ function google_analytics_page_alter(&$page) {
     $script .= '})(window,document,"script",';
 
     // Which version of the tracking library should be used?
-    $library_tracker_url = '//www.google-analytics.com/' . ($config->get('debug') ? 'analytics_debug.js' : 'analytics.js');
+    $library_tracker_url = '//www.google-analytics.com/' . ($debug ? 'analytics_debug.js' : 'analytics.js');
     $library_cache_url = 'http:' . $library_tracker_url;
 
     // Should a local cached copy of analytics.js be used?
