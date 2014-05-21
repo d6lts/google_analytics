@@ -113,6 +113,7 @@ function googleanalytics_page_alter(&$page) {
     // We allow different scopes. Default to 'header' but allow user to override if they really need to.
     // @todo: footer may no longer suppored
     $scope = variable_get('googleanalytics_js_scope', 'header');
+    $debug = variable_get('googleanalytics_debug', 0);
     $url_custom = '';
 
     // Add link tracking.
@@ -140,9 +141,16 @@ function googleanalytics_page_alter(&$page) {
 
     if (!empty($link_settings)) {
       drupal_add_js(array('googleanalytics' => $link_settings), 'setting');
-      drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.js');
-      // Add the JS test in development to the page.
-      //drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.test.js');
+
+      // Add debugging code.
+      if ($debug) {
+        drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.debug.js');
+        // Add the JS test in development to the page.
+        //drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.test.js');
+      }
+      else {
+        drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.js');
+      }
     }
 
     // Add messages tracking.
@@ -250,7 +258,7 @@ function googleanalytics_page_alter(&$page) {
     $script .= '})(window,document,"script",';
 
     // Which version of the tracking library should be used?
-    $library_tracker_url = '//www.google-analytics.com/' . (variable_get('googleanalytics_debug', 0) ? 'analytics_debug.js' : 'analytics.js');
+    $library_tracker_url = '//www.google-analytics.com/' . ($debug) ? 'analytics_debug.js' : 'analytics.js');
     $library_cache_url = 'http:' . $library_tracker_url;
 
     // Should a local cached copy of analytics.js be used?
