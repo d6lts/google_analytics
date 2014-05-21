@@ -99,7 +99,7 @@ console.groupEnd();
 
 // List of top-level domains: example.com, example.net
 console.group("Test 'isCrossDomain' (requires cross domain configuration with 'example.com' and 'example.net'):");
-if (Drupal.settings.google_analytics.trackCrossDomains) {
+if (Drupal.settings.googleanalytics.trackCrossDomains) {
   console.dir(Drupal.settings.googleanalytics.trackCrossDomains);
   Drupal.googleanalytics.test.assertTrue(Drupal.googleanalytics.isCrossDomain('example.com', Drupal.settings.googleanalytics.trackCrossDomains), "URL 'example.com' has been found in cross domain list.");
   Drupal.googleanalytics.test.assertTrue(Drupal.googleanalytics.isCrossDomain('example.net', Drupal.settings.googleanalytics.trackCrossDomains), "URL 'example.com' has been found in cross domain list.");
