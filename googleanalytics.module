@@ -258,7 +258,7 @@ function googleanalytics_page_alter(&$page) {
     $script .= '})(window,document,"script",';
 
     // Which version of the tracking library should be used?
-    $library_tracker_url = '//www.google-analytics.com/' . ($debug) ? 'analytics_debug.js' : 'analytics.js');
+    $library_tracker_url = '//www.google-analytics.com/' . ($debug ? 'analytics_debug.js' : 'analytics.js');
     $library_cache_url = 'http:' . $library_tracker_url;
 
     // Should a local cached copy of analytics.js be used?
