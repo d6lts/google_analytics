@@ -248,7 +248,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('');
     $this->assertRaw('ga("create", "' . $ua_code . '", {"allowLinker":true', '[testGoogleAnalyticsTrackingCode]: "allowLinker" has been found. Cross domain tracking is active.');
     $this->assertRaw('ga("require", "linker");', '[testGoogleAnalyticsTrackingCode]: Require linker has been found. Cross domain tracking is active.');
-    $this->assertRaw('ga("linker:autoLink", drupalSettings.google_analytics.trackCrossDomains);', '[testGoogleAnalyticsTrackingCode]: "linker:autoLink" has been found. Cross domain tracking is active.');
+    $this->assertRaw('ga("linker:autoLink", ["www.example.com","www.example.net"]);', '[testGoogleAnalyticsTrackingCode]: "linker:autoLink" has been found. Cross domain tracking is active.');
     $this->assertRaw('"trackCrossDomains":["www.example.com","www.example.net"]', '[testGoogleAnalyticsTrackingCode]: Cross domain tracking with www.example.com and www.example.net is active.');
     \Drupal::config('google_analytics.settings')->set('domain_mode', 0)->save();
 
