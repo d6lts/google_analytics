@@ -1,0 +1,5 @@
+google_analytics.settings:
+  title: 'Google Analytics'
+  base_route_name: google_analytics.settings
+  names:
+    - account
