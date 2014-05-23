@@ -19,7 +19,6 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_custom_var');
   variable_del('googleanalytics_debug');
   variable_del('googleanalytics_domain_mode');
-  variable_del('googleanalytics_js_scope');
   variable_del('googleanalytics_last_cache');
   variable_del('googleanalytics_pages');
   variable_del('googleanalytics_roles');
@@ -433,4 +432,13 @@ function googleanalytics_update_7007() {
   variable_del('googleanalytics_trackpageloadtime');
 
   return t('Deleted obsolete googleanalytics_trackpageloadtime variable.');
+}
+
+/**
+* Delete obsolete googleanalytics_js_scope variable.
+*/
+function googleanalytics_update_7200() {
+  variable_del('googleanalytics_js_scope');
+
+  return t('Deleted obsolete JavaScript scope variable.');
 }

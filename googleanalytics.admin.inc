@@ -433,17 +433,6 @@ function googleanalytics_admin_settings_form($form_state) {
     '#description' => t("Code in this textarea will be added <strong>after</strong> <code>ga('send', 'pageview');</code>. This is useful if you'd like to track a site in two accounts."),
   );
 
-  $form['advanced']['googleanalytics_js_scope'] = array(
-    '#type' => 'select',
-    '#title' => t('JavaScript scope'),
-    '#description' => t('Google recommends adding the external JavaScript files to the header for performance reasons. If <em>Multiple top-level domains</em> has been selected, this setting will be forced to header.'),
-    '#options' => array(
-      'footer' => t('Footer'),
-      'header' => t('Header'),
-    ),
-    '#default_value' => variable_get('googleanalytics_js_scope', 'header'),
-    '#disabled' => (variable_get('googleanalytics_domain_mode', 0) == 2) ? TRUE : FALSE,
-  );
   $form['advanced']['googleanalytics_debug'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable debugging'),
@@ -513,11 +502,6 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   }
   if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['googleanalytics_codesnippet_after'])) {
     form_set_error('googleanalytics_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
-  }
-
-  // Header section must be forced for multiple top-level domains.
-  if ($form_state['values']['googleanalytics_domain_mode'] == 2) {
-    $form_state['values']['googleanalytics_js_scope'] = 'header';
   }
 }
 
