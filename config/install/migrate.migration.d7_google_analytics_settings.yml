@@ -8,7 +8,6 @@ source:
     - googleanalytics_codesnippet_after
     - googleanalytics_cross_domains
     - googleanalytics_domain_mode
-    - googleanalytics_js_scope
     - googleanalytics_pages
     - googleanalytics_roles
     - googleanalytics_site_search
@@ -34,7 +33,6 @@ process:
   'codesnippet:after': googleanalytics_codesnippet_after
   cross_domains: googleanalytics_cross_domains
   domain_mode: googleanalytics_domain_mode
-  js_scope: googleanalytics_js_scope
   'visibility:pages': googleanalytics_pages
   'visibility:roles': googleanalytics_roles
   'track:site_search': googleanalytics_site_search

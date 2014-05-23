@@ -355,7 +355,7 @@ function google_analytics_page_alter(&$page) {
 
     $page['#attached']['js'][] = array(
       'data' => $script,
-      'scope' => $config->get('js_scope'),
+      'scope' => 'header',
       'type' => 'inline',
     );
   }

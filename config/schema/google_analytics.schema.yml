@@ -95,9 +95,6 @@ google_analytics.settings:
     translation_set:
       type: boolean
       label: 'Track translation sets as one unit'
-    js_scope:
-      type: string
-      label: 'JavaScript scope'
     cache:
       type: boolean
       label: 'Locally cache tracking code file'

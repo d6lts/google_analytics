@@ -22,7 +22,6 @@ function google_analytics_install() {
     'googleanalytics_cross_domains' => 'cross_domains',
     //'googleanalytics_custom_var' => 'custom_var',
     'googleanalytics_domain_mode' => 'domain_mode',
-    'googleanalytics_js_scope' => 'js_scope',
     'googleanalytics_pages' => 'visibility.pages',
     'googleanalytics_roles' => 'visibility.roles',
     'googleanalytics_site_search' => 'track.site_search',

@@ -461,17 +461,6 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       '#description' => t("Code in this textarea will be added <strong>after</strong> <code>ga('send', 'pageview');</code>. This is useful if you'd like to track a site in two accounts."),
     );
 
-    $form['advanced']['google_analytics_js_scope'] = array(
-      '#type' => 'select',
-      '#title' => t('JavaScript scope'),
-      '#description' => t('Google recommends adding the external JavaScript files to the header for performance reasons. If <em>Multiple top-level domains</em> has been selected, this setting will be forced to header.'),
-      '#options' => array(
-        'footer' => t('Footer'),
-        'header' => t('Header'),
-      ),
-      '#default_value' => $config->get('js_scope'),
-      '#disabled' => ($config->get('domain_mode') == 2) ? TRUE : FALSE,
-    );
     $form['advanced']['google_analytics_debug'] = array(
       '#type' => 'checkbox',
       '#title' => t('Enable debugging'),
@@ -545,11 +534,6 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
     if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['google_analytics_codesnippet_after'])) {
       \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_after', $form_state, t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
-
-    // Header section must be forced for multiple top-level domains.
-    if ($form_state['values']['google_analytics_domain_mode'] == 2) {
-      $form_state['values']['google_analytics_js_scope'] = 'header';
-    }
   }
 
   /**
@@ -576,7 +560,6 @@ class GoogleAnalyticsSettingsForm extends ConfigFormBase {
       ->set('track.displayfeatures', $form_state['values']['google_analytics_trackdisplayfeatures'])
       ->set('privacy.anonymizeip', $form_state['values']['google_analytics_tracker_anonymizeip'])
       ->set('privacy.donottrack', $form_state['values']['google_analytics_privacy_donottrack'])
-      ->set('js_scope', $form_state['values']['google_analytics_js_scope'])
       ->set('cache', $form_state['values']['google_analytics_cache'])
       ->set('debug', $form_state['values']['google_analytics_debug'])
       ->set('visibility.pages_enabled', $form_state['values']['google_analytics_visibility_pages'])
