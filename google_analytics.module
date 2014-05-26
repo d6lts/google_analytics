@@ -652,7 +652,7 @@ function _google_analytics_visibility_pages() {
       if ($visibility < 2) {
         // Compare the lowercase path alias (if any) and internal path.
         $path = current_path();
-        $path_alias = Unicode::strtolower(\Drupal::service('path.alias_manager')->getPathAlias($path));
+        $path_alias = Unicode::strtolower(\Drupal::service('path.alias_manager')->getAliasByPath($path));
         $page_match = drupal_match_path($path_alias, $pages) || (($path != $path_alias) && drupal_match_path($path, $pages));
         // When $visibility has a value of 0, the tracking code is displayed on
         // all pages except those listed in $pages. When set to 1, it
