@@ -4,7 +4,7 @@ description: 'Allows your site to be tracked by Google Analytics by adding a Jav
 package: Statistics
 version: VERSION
 core: 8.x
-configure: google_analytics.settings
+configure: google_analytics.admin
 test_dependencies:
   - token
 

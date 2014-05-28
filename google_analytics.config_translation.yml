@@ -1,5 +1,5 @@
-google_analytics.settings:
+google_analytics.admin:
   title: 'Google Analytics'
-  base_route_name: google_analytics.settings
+  base_route_name: google_analytics.admin
   names:
-    - account
+    - google_analytics.settings
