@@ -15,6 +15,7 @@ use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Session\AccountInterface;
 use Guzzle\Http\Exception\RequestException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @TODO: remove after admin.inc is upgraded.
@@ -34,10 +35,11 @@ function google_analytics_api() {
 /**
  * Implements hook_help().
  */
-function google_analytics_help($path, $arg) {
-  switch ($path) {
-    case 'admin/config/system/google-analytics':
+function google_analytics_help($route_name, Request $request) {
+  switch ($route_name) {
+    case 'google_analytics.settings_form':
       return t('<a href="@ga_url">Google Analytics</a> is a free (registration required) website traffic and marketing effectiveness service.', array('@ga_url' => 'http://www.google.com/analytics/'));
+      break;
   }
 }
 
