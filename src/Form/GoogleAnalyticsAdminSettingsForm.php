@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\google_analytics\GoogleAnalyticsSettingsForm.
+ * Contains \Drupal\google_analytics\Form\GoogleAnalyticsAdminSettingsForm.
  */
 
-namespace Drupal\google_analytics;
+namespace Drupal\google_analytics\Form;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\ConfigFormBase;
@@ -12,7 +12,7 @@ use Drupal\Core\Form\ConfigFormBase;
 /**
  * Configure Google_Analytics settings for this site.
  */
-class GoogleAnalyticsSettingsForm extends ConfigFormBase {
+class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
   /**
    * Implements \Drupal\Core\Form\FormInterface::getFormID().
