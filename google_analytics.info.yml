@@ -7,6 +7,7 @@ core: 8.x
 configure: google_analytics.admin_settings_form
 test_dependencies:
   - token
+  - php
 
 # Information NOT added by Drupal.org packaging script
 project: google_analytics
