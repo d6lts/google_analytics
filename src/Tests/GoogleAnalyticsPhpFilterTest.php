@@ -10,7 +10,7 @@ namespace Drupal\google_analytics\Tests;
 use Drupal\Component\Utility\String;
 use Drupal\simpletest\WebTestBase;
 
-class GoogleAnalyticsPhpFilterTest extends DrupalWebTestCase {
+class GoogleAnalyticsPhpFilterTest extends WebTestBase {
 
   /**
    * Modules to enable.
