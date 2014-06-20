@@ -7,6 +7,7 @@
 
 namespace Drupal\google_analytics\Tests;
 
+use Drupal\Component\Utility\String;
 use Drupal\simpletest\WebTestBase;
 
 class GoogleAnalyticsPhpFilterTest extends DrupalWebTestCase {
@@ -50,50 +51,50 @@ class GoogleAnalyticsPhpFilterTest extends DrupalWebTestCase {
     $this->drupalLogin($this->admin_user);
 
     $edit = array();
-    $edit['googleanalytics_account'] = $ua_code;
-    $edit['googleanalytics_visibility_pages'] = 2;
-    $edit['googleanalytics_pages'] = '<?php return 0; ?>';
-    $this->drupalPost('admin/config/system/google-analytics', $edit, t('Save configuration'));
+    $edit['google_analytics_account'] = $ua_code;
+    $edit['google_analytics_visibility_pages'] = 2;
+    $edit['google_analytics_pages'] = '<?php return 0; ?>';
+    $this->drupalPostForm('admin/config/system/google-analytics', $edit, t('Save configuration'));
 
     // Compare saved setting with posted setting.
-    $googleanalytics_pages = variable_get('googleanalytics_pages', $this->randomName(8));
-    $this->assertEqual('<?php return 0; ?>', $googleanalytics_pages, '[testGoogleAnalyticsPhpFilter]: PHP code snippet is intact.');
+    $google_analytics_pages = \Drupal::config('google_analytics.settings')->get('visibility.pages');
+    $this->assertEqual('<?php return 0; ?>', $google_analytics_pages, '[testGoogleAnalyticsPhpFilter]: PHP code snippet is intact.');
 
     // Check tracking code visibility.
-    variable_set('googleanalytics_pages', '<?php return TRUE; ?>');
+    \Drupal::config('google_analytics.settings')->set('visibility.pages', '<?php return TRUE; ?>');
     $this->drupalGet('');
     $this->assertRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPhpFilter]: Tracking is displayed on frontpage page.');
     $this->drupalGet('admin');
     $this->assertRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPhpFilter]: Tracking is displayed on admin page.');
 
-    variable_set('googleanalytics_pages', '<?php return FALSE; ?>');
+    \Drupal::config('google_analytics.settings')->set('visibility.pages', '<?php return FALSE; ?>');
     $this->drupalGet('');
     $this->assertNoRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPhpFilter]: Tracking is not displayed on frontpage page.');
 
     // Test administration form.
-    variable_set('googleanalytics_pages', '<?php return TRUE; ?>');
+    \Drupal::config('google_analytics.settings')->set('visibility.pages', '<?php return FALSE; ?>');
     $this->drupalGet('admin/config/system/google-analytics');
     $this->assertRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testGoogleAnalyticsPhpFilter]: Permission to administer PHP for tracking visibility.');
-    $this->assertRaw(check_plain('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: PHP code snippted is displayed.');
+    $this->assertRaw(String::checkPlain('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: PHP code snippted is displayed.');
 
     // Login the delegated user and check if fields are visible.
     $this->drupalLogin($this->delegated_admin_user);
     $this->drupalGet('admin/config/system/google-analytics');
     $this->assertNoRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testGoogleAnalyticsPhpFilter]: No permission to administer PHP for tracking visibility.');
-    $this->assertNoRaw(check_plain('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: No permission to view PHP code snippted.');
+    $this->assertNoRaw(String::checkPlain('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: No permission to view PHP code snippted.');
 
     // Set a different value and verify that this is still the same after the post.
-    variable_set('googleanalytics_pages', '<?php return 0; ?>');
+    \Drupal::config('google_analytics.settings')->set('visibility.pages', '<?php return 0; ?>');
 
     $edit = array();
-    $edit['googleanalytics_account'] = $ua_code;
-    $this->drupalPost('admin/config/system/google-analytics', $edit, t('Save configuration'));
+    $edit['google_analytics_account'] = $ua_code;
+    $this->drupalPostForm('admin/config/system/google-analytics', $edit, t('Save configuration'));
 
     // Compare saved setting with posted setting.
-    $googleanalytics_visibility_pages = variable_get('googleanalytics_visibility_pages', 0);
-    $googleanalytics_pages = variable_get('googleanalytics_pages', $this->randomName(8));
-    $this->assertEqual(2, $googleanalytics_visibility_pages, '[testGoogleAnalyticsPhpFilter]: Pages on which this PHP code returns TRUE is selected.');
-    $this->assertEqual('<?php return 0; ?>', $googleanalytics_pages, '[testGoogleAnalyticsPhpFilter]: PHP code snippet is intact.');
+    $google_analytics_visibility_pages = \Drupal::config('google_analytics.settings')->get('visibility.pages_enabled');
+    $google_analytics_pages = \Drupal::config('google_analytics.settings')->get('visibility.pages');
+    $this->assertEqual(2, $google_analytics_visibility_pages, '[testGoogleAnalyticsPhpFilter]: Pages on which this PHP code returns TRUE is selected.');
+    $this->assertEqual('<?php return 0; ?>', $google_analytics_pages, '[testGoogleAnalyticsPhpFilter]: PHP code snippet is intact.');
   }
 
 }
