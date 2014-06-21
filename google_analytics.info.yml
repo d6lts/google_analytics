@@ -6,5 +6,5 @@ version: VERSION
 core: 8.x
 configure: google_analytics.admin_settings_form
 test_dependencies:
-  - token
+#  - token
   - php
