@@ -524,7 +524,7 @@ function _google_analytics_cache($location, $synchronize = FALSE) {
         if ($data_hash_local != $data_hash_remote && file_prepare_directory($path)) {
           // Save updated tracking code file to disk.
           file_unmanaged_save_data($data, $file_destination, FILE_EXISTS_REPLACE);
-          watchdog('google_analytics', 'Locally cached tracking code file has been updated.', array(), WATCHDOG_INFO);
+          \Drupal::logger('google_analytics')->info('Locally cached tracking code file has been updated.');
 
           // Change query-strings on css/js files to enforce reload for all users.
           _drupal_flush_css_js();
@@ -536,7 +536,7 @@ function _google_analytics_cache($location, $synchronize = FALSE) {
           // There is no need to flush JS here as core refreshes JS caches
           // automatically, if new files are added.
           file_unmanaged_save_data($data, $file_destination, FILE_EXISTS_REPLACE);
-          watchdog('google_analytics', 'Locally cached tracking code file has been saved.', array(), WATCHDOG_INFO);
+          \Drupal::logger('google_analytics')->info('Locally cached tracking code file has been saved.');
 
           // Return the local JS file path.
           return file_create_url($file_destination);
@@ -565,7 +565,7 @@ function google_analytics_clear_js_cache() {
     // Change query-strings on css/js files to enforce reload for all users.
     _drupal_flush_css_js();
 
-    watchdog('google_analytics', 'Local cache has been purged.', array(), WATCHDOG_INFO);
+    \Drupal::logger('google_analytics')->info('Local cache has been purged.');
   }
 }
 
