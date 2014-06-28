@@ -17,7 +17,7 @@ define('GOOGLEANALYTICS_PAGES', "admin\nadmin/*\nbatch\nnode/add*\nnode/*/*\nuse
 /**
  * Advertise the supported google analytics api details.
  */
-function google_analytics_api() {
+function googleanalytics_api() {
   return array(
     'api' => 'ga.js',
   );
