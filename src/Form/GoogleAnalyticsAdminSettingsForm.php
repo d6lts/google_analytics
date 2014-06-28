@@ -601,7 +601,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    *   '#type' => 'textfield',
    *   '#title' => t('Some text to token-ize that has a node context.'),
    *   '#default_value' => 'The title of this node is [node:title].',
-   *   '#element_validate' => array('tokenElementValidate'),
+   *   '#element_validate' => array(array(get_class($this), 'tokenElementValidate')),
    * );
    * @endcode
    */
