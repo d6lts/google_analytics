@@ -47,6 +47,23 @@ choice for "Add if the following PHP code returns TRUE." Sample PHP snippets
 that can be used in this textarea can be found on the handbook page
 "Overview-approach to block visibility" at http://drupal.org/node/64135.
 
+Custom dimensions and metrics
+=============================
+One example for custom dimensions tracking is the "User roles" tracking.
+
+1. In the Google Analytics Management Interface you need to setup Dimension #1
+   with name e.g. "User roles". This step is required. Do not miss it, please.
+
+2. Enter the below configuration data into the custom dimensions settings form
+   under admin/config/system/google-analytics. You can also choose another index,
+   but keep it always in sync with the index used in step #1.
+
+   Index: 1
+   Value: [current-user:role-names]
+
+More details about custom dimensions and metrics can be found in the Google API
+documentation at https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets
+
 Advanced Settings
 =================
 You can include additional JavaScript snippets in the custom javascript

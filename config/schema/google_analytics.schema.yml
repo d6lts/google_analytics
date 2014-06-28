@@ -79,6 +79,16 @@ google_analytics.settings:
         donottrack:
           type: boolean
           label: 'Universal web tracking opt-out'
+    custom:
+      type: mapping
+      label: 'Custom variables'
+      mapping:
+        dimension:
+          type: array
+          label: 'Custom dimensions'
+        metric:
+          type: array
+          label: 'Custom metrics'
     codesnippet:
       type: mapping
       label: 'Custom code snippets'

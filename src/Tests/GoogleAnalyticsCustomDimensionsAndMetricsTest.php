@@ -2,14 +2,15 @@
 
 /**
  * @file
- * Contains \Drupal\google_analytics\Tests\GoogleAnalyticsCustomVariablesTest.
+ * Contains \Drupal\google_analytics\Tests\GoogleAnalyticsCustomDimensionsAndMetricsTest.
  */
 
 namespace Drupal\google_analytics\Tests;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\simpletest\WebTestBase;
 
-class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
+class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
 
   /**
    * Modules to enable.
@@ -20,8 +21,8 @@ class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
 
   public static function getInfo() {
     return array(
-      'name' => 'Google Analytics Custom Variables tests',
-      'description' => 'Test custom variables functionality of Google Analytics module.',
+      'name' => 'Google Analytics custom dimensions and metrics tests',
+      'description' => 'Test custom dimensions and metrics functionality of Google Analytics module.',
       'group' => 'Google Analytics',
       'dependencies' => array('token'),
     );
@@ -39,98 +40,135 @@ class GoogleAnalyticsCustomVariablesTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
-  function testGoogleAnalyticsCustomVariables() {
+  function testGoogleAnalyticsCustomDimensions() {
     $ua_code = 'UA-123456-3';
     \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Basic test if the feature works.
-    $custom_vars = array(
-      'slots' => array(
+    $google_analytics_custom_dimension = array(
+      'indexes' => array(
         1 => array(
-          'slot' => 1,
-          'name' => 'Foo 1',
+          'index' => 1,
           'value' => 'Bar 1',
-          'scope' => 3,
         ),
         2 => array(
-          'slot' => 2,
-          'name' => 'Foo 2',
+          'index' => 2,
           'value' => 'Bar 2',
-          'scope' => 2,
         ),
         3 => array(
-          'slot' => 3,
-          'name' => 'Foo 3',
+          'index' => 3,
           'value' => 'Bar 3',
-          'scope' => 3,
         ),
         4 => array(
-          'slot' => 4,
-          'name' => 'Foo 4',
+          'index' => 4,
           'value' => 'Bar 4',
-          'scope' => 2,
         ),
         5 => array(
-          'slot' => 5,
-          'name' => 'Foo 5',
+          'index' => 5,
           'value' => 'Bar 5',
-          'scope' => 1,
         ),
       )
     );
-    \Drupal::config('google_analytics.settings')->set('custom_var', $custom_vars)->save();
+    \Drupal::config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
     $this->drupalGet('');
 
-    foreach ($custom_vars['slots'] as $slot) {
-//      $this->assertRaw("ga('set', 'customvar', " . $slot['slot'] . ", \"" . $slot['name'] . "\", \"" . $slot['value'] . "\", " . $slot['scope'] . ");", '[testGoogleAnalyticsCustomVariables]: _setCustomVar ' . $slot['slot'] . ' is shown.');
+    foreach ($google_analytics_custom_dimension['indexes'] as $dimension) {
+      $this->assertRaw('ga("set", ' . Json::encode('dimension' . $dimension['index']) . ', ' . Json::encode($dimension['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Dimension #' . $dimension['index'] . ' is shown.');
     }
 
-    // Test whether tokens are replaced in custom variable names.
+    // Test whether tokens are replaced in custom dimension values.
     $site_slogan = $this->randomName(16);
     \Drupal::config('system.site')->set('slogan', $site_slogan)->save();
 
-    $custom_vars = array(
-      'slots' => array(
+    $google_analytics_custom_dimension = array(
+      'indexes' => array(
         1 => array(
-          'slot' => 1,
-          'name' => 'Name: [site:slogan]',
+          'index' => 1,
           'value' => 'Value: [site:slogan]',
-          'scope' => 3,
         ),
         2 => array(
-          'slot' => 2,
-          'name' => '',
+          'index' => 2,
           'value' => $this->randomName(16),
-          'scope' => 1,
         ),
         3 => array(
-          'slot' => 3,
-          'name' => $this->randomName(16),
+          'index' => 3,
           'value' => '',
-          'scope' => 2,
-        ),
-        4 => array(
-          'slot' => 4,
-          'name' => '',
-          'value' => '',
-          'scope' => 3,
-        ),
-        5 => array(
-          'slot' => 5,
-          'name' => '',
-          'value' => '',
-          'scope' => 3,
         ),
       )
     );
-    \Drupal::config('google_analytics.settings')->set('custom_var', $custom_vars)->save();
-    $this->verbose('<pre>' . print_r($custom_vars, TRUE) . '</pre>');
+    \Drupal::config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
+    $this->verbose('<pre>' . print_r($google_analytics_custom_dimension, TRUE) . '</pre>');
 
     $this->drupalGet('');
-//    $this->assertRaw("ga('set', 'customvar', 1, \"Name: $site_slogan\", \"Value: $site_slogan\", 3);", '[testGoogleAnalyticsCustomVariables]: Tokens have been replaced in custom variable.');
-//    $this->assertNoRaw("ga('set', 'customvar', 2,", '[testGoogleAnalyticsCustomVariables]: Value with empty name is not shown.');
-//    $this->assertNoRaw("ga('set', 'customvar', 3,", '[testGoogleAnalyticsCustomVariables]: Name with empty value is not shown.');
-//    $this->assertNoRaw("ga('set', 'customvar', 4,", '[testGoogleAnalyticsCustomVariables]: Empty name and value is not shown.');
-//    $this->assertNoRaw("ga('set', 'customvar', 5,", '[testGoogleAnalyticsCustomVariables]: Empty name and value is not shown.');
+    $this->assertRaw('ga("set", ' . Json::encode('dimension1') . ', ' . Json::encode("Value: $site_slogan") . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Tokens have been replaced in dimension value.');
+    $this->assertRaw('ga("set", ' . Json::encode('dimension2') . ', ' . Json::encode($google_analytics_custom_dimension['indexes']['2']['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Random value is shown.');
+    $this->assertNoRaw('ga("set", ' . Json::encode('dimension3') . ', ' . Json::encode('') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Empty value is not shown.');
+  }
+
+  function testGoogleAnalyticsCustomMetrics() {
+    $ua_code = 'UA-123456-3';
+    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
+
+    // Basic test if the feature works.
+    $google_analytics_custom_metric = array(
+      'indexes' => array(
+        1 => array(
+          'index' => 1,
+          'value' => '6',
+          'value_expected' => 6,
+        ),
+        2 => array(
+          'index' => 2,
+          'value' => '8000',
+          'value_expected' => 8000,
+        ),
+        3 => array(
+          'index' => 3,
+          'value' => '7.8654',
+          'value_expected' => 7.8654,
+        ),
+        4 => array(
+          'index' => 4,
+          'value' => '1123.4',
+          'value_expected' => 1123.4,
+        ),
+        5 => array(
+          'index' => 5,
+          'value' => '5,67',
+          'value_expected' => 5,
+        ),
+      )
+    );
+    \Drupal::config('google_analytics.settings')->set('custom.metrics', $google_analytics_custom_metric)->save();
+    $this->drupalGet('');
+
+    foreach ($google_analytics_custom_metric['indexes'] as $metric) {
+      $this->assertRaw('ga("set", ' . Json::encode('metric' . $metric['index']) . ', ' . Json::encode($metric['value_expected']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Metric #' . $metric['index'] . ' is shown.');
+    }
+
+    // Test whether tokens are replaced in custom metric values.
+    $google_analytics_custom_metric = array(
+      'indexes' => array(
+        1 => array(
+          'index' => 1,
+          'value' => '[current-user:roles:count]',
+        ),
+        2 => array(
+          'index' => 2,
+          'value' => mt_rand(),
+        ),
+        3 => array(
+          'index' => 3,
+          'value' => '',
+        ),
+      )
+    );
+    \Drupal::config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
+    $this->verbose('<pre>' . print_r($google_analytics_custom_metric, TRUE) . '</pre>');
+
+    $this->drupalGet('');
+    $this->assertRaw('ga("set", ' . Json::encode('metric1') . ', ', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Tokens have been replaced in metric value.');
+    $this->assertRaw('ga("set", ' . Json::encode('metric2') . ', ' . Json::encode($google_analytics_custom_metrics['indexes']['2']['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Random value is shown.');
+    $this->assertNoRaw('ga("set", ' . Json::encode('metric3') . ', ' . Json::encode('') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Empty value is not shown.');
   }
 }
