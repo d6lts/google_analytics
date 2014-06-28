@@ -16,7 +16,8 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_codesnippet_after');
   variable_del('googleanalytics_cross_domains');
   variable_del('googleanalytics_custom');
-  variable_del('googleanalytics_custom_var');
+  variable_del('googleanalytics_custom_dimension');
+  variable_del('googleanalytics_custom_metric');
   variable_del('googleanalytics_debug');
   variable_del('googleanalytics_domain_mode');
   variable_del('googleanalytics_last_cache');
@@ -441,4 +442,13 @@ function googleanalytics_update_7200() {
   variable_del('googleanalytics_js_scope');
 
   return t('Deleted obsolete JavaScript scope variable.');
+}
+
+/**
+ * Delete obsolete googleanalytics_custom_var variable. Custom variables are now custom dimensions and metrics.
+ */
+function googleanalytics_update_7201() {
+  variable_del('googleanalytics_custom_var');
+
+  return t('Deleted obsolete custom variables. Custom variables are now custom dimensions and metrics and you need to manually configure them!');
 }

@@ -303,80 +303,103 @@ function googleanalytics_admin_settings_form($form_state) {
     '#default_value' => variable_get('googleanalytics_privacy_donottrack', 1),
   );
 
-  // Custom variables.
-  /* @todo: Update to custom dimensions.
-  $form['googleanalytics_custom_var'] = array(
+  // Custom Dimensions.
+  $form['googleanalytics_custom_dimension'] = array(
     '#collapsed' => TRUE,
     '#collapsible' => TRUE,
-    '#description' => t('You can add Google Analytics <a href="@custom_var_documentation">Custom Variables</a> here. These will be added to every page that Google Analytics tracking code appears on. Google Analytics will only accept custom variables if the <em>name</em> and <em>value</em> combined are less than 128 bytes after URL encoding. Keep the names as short as possible and expect long values to get trimmed. You may use tokens in custom variable names and values. Global and user tokens are always available; on node pages, node tokens are also available.', array('@custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables')),
+    '#description' => t('You can set values for Google Analytics <a href="@custom_var_documentation">Custom Dimensions</a> here. You must have already configured your custom dimensions in the <a href="@setup_documentation">Google Analytics Management Interface</a>. You may use tokens. Global and user tokens are always available; on node pages, node tokens are also available.', array('@custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets', '@setup_documentation' => 'https://support.google.com/analytics/answer/2709829')),
     '#theme' => 'googleanalytics_admin_custom_var_table',
-    '#title' => t('Custom variables'),
+    '#title' => t('Custom dimensions'),
     '#tree' => TRUE,
     '#type' => 'fieldset',
   );
 
-  $googleanalytics_custom_vars = variable_get('googleanalytics_custom_var', array());
+  $googleanalytics_custom_dimension = variable_get('googleanalytics_custom_dimension', array());
 
-  // Google Analytics supports up to 5 custom variables.
-  for ($i = 1; $i < 6; $i++) {
-    $form['googleanalytics_custom_var']['slots'][$i]['slot'] = array(
+  // Google Analytics supports up to 20 custom dimensions.
+  for ($i = 1; $i <= 20; $i++) {
+    $form['googleanalytics_custom_dimension']['indexes'][$i]['index'] = array(
       '#default_value' => $i,
-      '#description' => t('Slot number'),
+      '#description' => t('Index number'),
       '#disabled' => TRUE,
       '#size' => 1,
-      '#title' => t('Custom variable slot #@slot', array('@slot' => $i)),
+      '#title' => t('Custom dimension index #@index', array('@index' => $i)),
       '#title_display' => 'invisible',
       '#type' => 'textfield',
     );
-    $form['googleanalytics_custom_var']['slots'][$i]['name'] = array(
-      '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['name']) ? $googleanalytics_custom_vars['slots'][$i]['name'] : '',
-      '#description' => t('The custom variable name.'),
+    $form['googleanalytics_custom_dimension']['indexes'][$i]['value'] = array(
+      '#default_value' => !empty($googleanalytics_custom_dimension['indexes'][$i]['value']) ? $googleanalytics_custom_dimension['indexes'][$i]['value'] : '',
+      '#description' => t('The custom dimension value.'),
       '#maxlength' => 255,
-      '#size' => 20,
-      '#title' => t('Custom variable name #@slot', array('@slot' => $i)),
-      '#title_display' => 'invisible',
-      '#type' => 'textfield',
-      '#element_validate' => array('googleanalytics_token_element_validate'),
-      '#token_types' => array('node'),
-    );
-    $form['googleanalytics_custom_var']['slots'][$i]['value'] = array(
-      '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['value']) ? $googleanalytics_custom_vars['slots'][$i]['value'] : '',
-      '#description' => t('The custom variable value.'),
-      '#maxlength' => 255,
-      '#title' => t('Custom variable value #@slot', array('@slot' => $i)),
+      '#title' => t('Custom dimension value #@index', array('@index' => $i)),
       '#title_display' => 'invisible',
       '#type' => 'textfield',
       '#element_validate' => array('googleanalytics_token_element_validate'),
       '#token_types' => array('node'),
     );
     if (module_exists('token')) {
-      $form['googleanalytics_custom_var']['slots'][$i]['name']['#element_validate'][] = 'token_element_validate';
-      $form['googleanalytics_custom_var']['slots'][$i]['value']['#element_validate'][] = 'token_element_validate';
+      $form['googleanalytics_custom_dimension']['indexes'][$i]['value']['#element_validate'][] = 'token_element_validate';
     }
-    $form['googleanalytics_custom_var']['slots'][$i]['scope'] = array(
-      '#default_value' => !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3,
-      '#description' => t('The scope for the custom variable.'),
-      '#title' => t('Custom variable slot #@slot', array('@slot' => $i)),
-      '#title_display' => 'invisible',
-      '#type' => 'select',
-      '#options' => array(
-        1 => t('Visitor'),
-        2 => t('Session'),
-        3 => t('Page'),
-      ),
-    );
   }
 
-  $form['googleanalytics_custom_var']['googleanalytics_custom_var_description'] = array(
+  $form['googleanalytics_custom_dimension']['googleanalytics_description'] = array(
     '#type' => 'item',
-    '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom variables. Section 7 of the <a href="@ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', array('@ga_tos' => 'http://www.google.com/analytics/terms/gb.html')),
+    '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom dimensions. Section 7 of the <a href="@ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, userid, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', array('@ga_tos' => 'http://www.google.com/analytics/terms/gb.html')),
   );
-  $form['googleanalytics_custom_var']['googleanalytics_custom_var_token_tree'] = array(
+  $form['googleanalytics_custom_dimension']['googleanalytics_token_tree'] = array(
     '#theme' => 'token_tree',
     '#token_types' => array('node'),
     '#dialog' => TRUE,
-  ); */
+  );
 
+  // Custom Metrics.
+  $form['googleanalytics_custom_metric'] = array(
+    '#collapsed' => TRUE,
+    '#collapsible' => TRUE,
+    '#description' => t('You can add Google Analytics <a href="@custom_var_documentation">Custom Metrics</a> here. You must have already configured your custom metrics in the <a href="@setup_documentation">Google Analytics Management Interface</a>. You may use tokens. Global and user tokens are always available; on node pages, node tokens are also available.', array('@custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets', '@setup_documentation' => 'https://support.google.com/analytics/answer/2709829')),
+    '#theme' => 'googleanalytics_admin_custom_var_table',
+    '#title' => t('Custom metrics'),
+    '#tree' => TRUE,
+    '#type' => 'fieldset',
+  );
+
+  $googleanalytics_custom_metric = variable_get('googleanalytics_custom_metric', array());
+
+  // Google Analytics supports up to 20 custom metrics.
+  for ($i = 1; $i <= 20; $i++) {
+    $form['googleanalytics_custom_metric']['indexes'][$i]['index'] = array(
+      '#default_value' => $i,
+      '#description' => t('Index number'),
+      '#disabled' => TRUE,
+      '#size' => 1,
+      '#title' => t('Custom metric index #@index', array('@index' => $i)),
+      '#title_display' => 'invisible',
+      '#type' => 'textfield',
+    );
+    $form['googleanalytics_custom_metric']['indexes'][$i]['value'] = array(
+      '#default_value' => !empty($googleanalytics_custom_metric['indexes'][$i]['value']) ? $googleanalytics_custom_metric['indexes'][$i]['value'] : '',
+      '#description' => t('The custom metric value.'),
+      '#maxlength' => 255,
+      '#title' => t('Custom metric value #@index', array('@index' => $i)),
+      '#title_display' => 'invisible',
+      '#type' => 'textfield',
+      '#element_validate' => array('googleanalytics_token_element_validate'),
+      '#token_types' => array('node'),
+    );
+    if (module_exists('token')) {
+      $form['googleanalytics_custom_metric']['indexes'][$i]['value']['#element_validate'][] = 'token_element_validate';
+    }
+  }
+
+  $form['googleanalytics_custom_metric']['googleanalytics_description'] = array(
+    '#type' => 'item',
+    '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom metrics. Section 7 of the <a href="@ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, userid, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', array('@ga_tos' => 'http://www.google.com/analytics/terms/gb.html')),
+  );
+  $form['googleanalytics_custom_metric']['googleanalytics_token_tree'] = array(
+    '#theme' => 'token_tree',
+    '#token_types' => array('node'),
+    '#dialog' => TRUE,
+  );
 
   // Advanced feature configurations.
   $form['advanced'] = array(
@@ -447,20 +470,13 @@ function googleanalytics_admin_settings_form($form_state) {
  * Implements _form_validate().
  */
 function googleanalytics_admin_settings_form_validate($form, &$form_state) {
-  // Custom variables validation.
-  /* @todo: upgrade to custom dimensions
-  foreach ($form_state['values']['googleanalytics_custom_var']['slots'] as $custom_var) {
-    $form_state['values']['googleanalytics_custom_var']['slots'][$custom_var['slot']]['name'] = trim($custom_var['name']);
-    $form_state['values']['googleanalytics_custom_var']['slots'][$custom_var['slot']]['value'] = trim($custom_var['value']);
-
-    // Validate empty names/values.
-    if (empty($custom_var['name']) && !empty($custom_var['value'])) {
-      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][name", t('The custom variable @slot-number requires a <em>Name</em> if a <em>Value</em> has been provided.', array('@slot-number' =>  $custom_var['slot'])));
-    }
-    elseif (!empty($custom_var['name']) && empty($custom_var['value'])) {
-      form_set_error("googleanalytics_custom_var][slots][" . $custom_var['slot'] . "][value", t('The custom variable @slot-number requires a <em>Value</em> if a <em>Name</em> has been provided.', array('@slot-number' =>  $custom_var['slot'])));
-    }
-  } */
+  // Trim custom dimensions and metrics.
+  foreach ($form_state['values']['googleanalytics_custom_dimension']['indexes'] as $dimension) {
+    $form_state['values']['googleanalytics_custom_dimension']['indexes'][$dimension['index']]['value'] = trim($dimension['value']);
+  }
+  foreach ($form_state['values']['googleanalytics_custom_metric']['indexes'] as $metric) {
+    $form_state['values']['googleanalytics_custom_metric']['indexes'][$metric['index']]['value'] = trim($metric['value']);
+  }
 
   // Trim some text values.
   $form_state['values']['googleanalytics_account'] = trim($form_state['values']['googleanalytics_account']);
@@ -512,27 +528,23 @@ function theme_googleanalytics_admin_custom_var_table($variables) {
   $form = $variables['form'];
 
   $header = array(
-    array('data' => t('Slot')),
-    array('data' => t('Name')),
+    array('data' => t('Index')),
     array('data' => t('Value')),
-    array('data' => t('Scope')),
   );
 
   $rows = array();
-  foreach (element_children($form['slots']) as $key => $id) {
+  foreach (element_children($form['indexes']) as $key => $id) {
     $rows[] = array(
       'data' => array(
-        drupal_render($form['slots'][$id]['slot']),
-        drupal_render($form['slots'][$id]['name']),
-        drupal_render($form['slots'][$id]['value']),
-        drupal_render($form['slots'][$id]['scope']),
+        drupal_render($form['indexes'][$id]['index']),
+        drupal_render($form['indexes'][$id]['value']),
       ),
     );
   }
 
   $output = theme('table', array('header' => $header, 'rows' => $rows));
-  $output .= drupal_render($form['googleanalytics_custom_var_description']);
-  $output .= drupal_render($form['googleanalytics_custom_var_token_tree']);
+  $output .= drupal_render($form['googleanalytics_description']);
+  $output .= drupal_render($form['googleanalytics_token_tree']);
 
   return $output;
 }

@@ -205,47 +205,32 @@ function googleanalytics_page_alter(&$page) {
     $codesnippet_before = variable_get('googleanalytics_codesnippet_before', '');
     $codesnippet_after = variable_get('googleanalytics_codesnippet_after', '');
 
-    // Add custom variables.
-    /* @todo: Needs upgrade to custom dimensions
-    $googleanalytics_custom_vars = variable_get('googleanalytics_custom_var', array());
+    // Add custom dimensions and metrics.
     $custom_var = '';
-    for ($i = 1; $i < 6; $i++) {
-      $custom_var_name = !empty($googleanalytics_custom_vars['slots'][$i]['name']) ? $googleanalytics_custom_vars['slots'][$i]['name'] : '';
-      if (!empty($custom_var_name)) {
-        $custom_var_value = !empty($googleanalytics_custom_vars['slots'][$i]['value']) ? $googleanalytics_custom_vars['slots'][$i]['value'] : '';
-        $custom_var_scope = !empty($googleanalytics_custom_vars['slots'][$i]['scope']) ? $googleanalytics_custom_vars['slots'][$i]['scope'] : 3;
+    foreach (array('dimension', 'metric') as $googleanalytics_custom_type) {
+      $googleanalytics_custom_vars = variable_get('googleanalytics_custom_' . $googleanalytics_custom_type, array());
+      for ($i = 1; $i <= 20; $i++) {
+        $custom_var_value = !empty($googleanalytics_custom_vars['indexes'][$i]['value']) ? $googleanalytics_custom_vars['indexes'][$i]['value'] : '';
+        if (!empty($custom_var_value)) {
+          $types = array();
+          $node = menu_get_object();
+          if (is_object($node)) {
+            $types += array('node' => $node);
+          }
+          $custom_var_value = token_replace($custom_var_value, $types, array('clear' => TRUE));
+          // Suppress empty custom names and/or variables.
+          if (!drupal_strlen(trim($custom_var_value))) {
+            continue;
+          }
 
-        $types = array();
-        $node = menu_get_object();
-        if (is_object($node)) {
-          $types += array('node' => $node);
+          // Cast metric values for json_encode to data type numeric.
+          if ($googleanalytics_custom_type == 'metric') {
+            settype($custom_var_value, 'float');
+          };
+          $custom_var .= 'ga("set", ' . drupal_json_encode($googleanalytics_custom_type . $i) . ', ' . drupal_json_encode($custom_var_value) . ');';
         }
-        $custom_var_name = token_replace($custom_var_name, $types, array('clear' => TRUE));
-        $custom_var_value = token_replace($custom_var_value, $types, array('clear' => TRUE));
-
-        // Suppress empty custom names and/or variables.
-        if (!drupal_strlen(trim($custom_var_name)) || !drupal_strlen(trim($custom_var_value))) {
-          continue;
-        }
-
-        // The length of the string used for the 'name' and the length of the
-        // string used for the 'value' must not exceed 128 bytes after url encoding.
-        $name_length = drupal_strlen(rawurlencode($custom_var_name));
-        $tmp_value = rawurlencode($custom_var_value);
-        $value_length = drupal_strlen($tmp_value);
-        if ($name_length + $value_length > 128) {
-          // Trim value and remove fragments of url encoding.
-          $tmp_value = rtrim(substr($tmp_value, 0, 127 - $name_length), '%0..9A..F');
-          $custom_var_value = urldecode($tmp_value);
-        }
-
-        $custom_var_name = drupal_json_encode($custom_var_name);
-        $custom_var_value = drupal_json_encode($custom_var_value);
-
-        $custom_var .= "ga('set', 'dimension" . $i . "', $custom_var_name);"; // Max 150 bytes
-        $custom_var .= "ga('set', 'metric" . $i . "', $custom_var_value);";
       }
-    } */
+    }
 
     // Build tracker code.
     $script = '(function(i,s,o,g,r,a,m){';
@@ -333,9 +318,9 @@ function googleanalytics_page_alter(&$page) {
       $script .= 'ga("set", "anonymizeIp", true);';
     }
 
-    /*if (!empty($custom_var)) {
+    if (!empty($custom_var)) {
       $script .= $custom_var;
-    }*/
+    }
     if (!empty($codesnippet_before)) {
       $script .= $codesnippet_before;
     }
