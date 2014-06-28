@@ -606,7 +606,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    * @endcode
    */
   public static function tokenElementValidate(&$element, &$form_state) {
-    $token_service = \Drupal::token();
     $value = isset($element['#value']) ? $element['#value'] : $element['#default_value'];
 
     if (!Unicode::strlen($value)) {
@@ -615,7 +614,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       return $element;
     }
 
-    $tokens = $token_service->scan($value);
+    $tokens = \Drupal::token()->scan($value);
     $invalid_tokens = static::getForbiddenTokens($tokens);
     if ($invalid_tokens) {
       \Drupal::formBuilder()->setError($element, $form_state, t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => $element['#title'], '@invalid-tokens' => implode(', ', $invalid_tokens))));
@@ -625,10 +624,8 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
   }
 
   protected static function getForbiddenTokens($value) {
-    $token_service = \Drupal::token();
-
     $invalid_tokens = array();
-    $value_tokens = is_string($value) ? $token_service->scan($value) : $value;
+    $value_tokens = is_string($value) ? \Drupal::token()->scan($value) : $value;
 
     foreach ($value_tokens as $type => $tokens) {
       if (array_filter($tokens, 'static::containsForbiddenToken')) {

@@ -84,7 +84,6 @@ function google_analytics_page_alter(&$page) {
   $config = \Drupal::config('google_analytics.settings');
   $id = $config->get('account');
   $request = \Drupal::request();
-  $token_service = \Drupal::token();
 
   // Get page http status code for visibility filtering.
   $status = NULL;
@@ -214,7 +213,7 @@ function google_analytics_page_alter(&$page) {
               $types += array('node' => $node);
             }
           }
-          $custom_var_value = $token_service->replace($custom_var_value, $types, array('clear' => TRUE));
+          $custom_var_value = \Drupal::token()->replace($custom_var_value, $types, array('clear' => TRUE));
           // Suppress empty values.
           if (!Unicode::strlen(trim($custom_var_value))) {
             continue;
