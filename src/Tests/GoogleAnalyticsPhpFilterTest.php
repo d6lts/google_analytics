@@ -21,8 +21,8 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
 
   public static function getInfo() {
     return array(
-      'name' => 'Google Analytics PhpFilter tests',
-      'description' => 'Test PhpFilter functionality of Google Analytics module.',
+      'name' => 'Google Analytics php filter tests',
+      'description' => 'Test php filter functionality of Google Analytics module.',
       'group' => 'Google Analytics',
       'dependencies' => array('php'),
     );
