@@ -194,11 +194,6 @@ function google_analytics_page_alter(&$page) {
       $url_custom = '"/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer';
     }
 
-    // Add any custom code snippets if specified.
-    $codesnippet_create = $config->get('codesnippet.create');
-    $codesnippet_before = $config->get('codesnippet.before');
-    $codesnippet_after = $config->get('codesnippet.after');
-
     // Add custom dimensions and metrics.
     $custom_var = '';
     foreach (array('dimension', 'metric') as $google_analytics_custom_type) {
@@ -253,6 +248,11 @@ function google_analytics_page_alter(&$page) {
       $script .= '"' . $library_tracker_url . '"';
     }
     $script .= ',"ga");';
+
+    // Add any custom code snippets if specified.
+    $codesnippet_create = $config->get('codesnippet.create');
+    $codesnippet_before = $config->get('codesnippet.before');
+    $codesnippet_after = $config->get('codesnippet.after');
 
     // Build the create only fields list.
     $create_only_fields = array();
