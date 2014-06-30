@@ -427,8 +427,8 @@ function googleanalytics_update_7006() {
 }
 
 /**
-* Delete obsolete googleanalytics_trackpageloadtime variable.
-*/
+ * Delete obsolete googleanalytics_trackpageloadtime variable.
+ */
 function googleanalytics_update_7007() {
   variable_del('googleanalytics_trackpageloadtime');
 
@@ -436,8 +436,8 @@ function googleanalytics_update_7007() {
 }
 
 /**
-* Delete obsolete googleanalytics_js_scope variable.
-*/
+ * Delete obsolete googleanalytics_js_scope variable.
+ */
 function googleanalytics_update_7200() {
   variable_del('googleanalytics_js_scope');
 
