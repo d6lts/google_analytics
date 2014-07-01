@@ -15,7 +15,7 @@ Requirements
 
 Installation
 ============
-* Copy the 'google_analytics' module directory in to your Drupal 'modules'
+Copy the 'google_analytics' module directory in to your Drupal 'modules'
 directory as usual.
 
 
