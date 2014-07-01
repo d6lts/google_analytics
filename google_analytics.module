@@ -14,6 +14,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Guzzle\Http\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ function google_analytics_api() {
 /**
  * Implements hook_help().
  */
-function google_analytics_help($route_name, Request $request) {
+function google_analytics_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'google_analytics.admin_settings_form':
       return t('<a href="@ga_url">Google Analytics</a> is a free (registration required) website traffic and marketing effectiveness service.', array('@ga_url' => 'http://www.google.com/analytics/'));
