@@ -16,6 +16,7 @@ use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Site\Settings;
 use Guzzle\Http\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -281,7 +282,7 @@ function google_analytics_page_alter(&$page) {
       // The USER_ID value should be a unique, persistent, and non-personally
       // identifiable string identifier that represents a user or signed-in
       // account across devices.
-      $create_only_fields['userId'] = Crypt::hashBase64(drupal_get_hash_salt() . $account->id());
+      $create_only_fields['userId'] = Crypt::hashBase64(Settings::getHashSalt() . $account->id());
     }
 
     // Create a tracker.
