@@ -30,7 +30,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
   }
 
   function testGoogleAnalyticsConfiguration() {
-    // Check if Configure link is available on 'Extend' page.
+    // Check if Configure link is available on 'Modules' page.
     // Requires 'administer modules' permission.
     $this->drupalGet('admin/modules');
     $this->assertRaw('admin/config/system/googleanalytics', '[testGoogleAnalyticsConfiguration]: Configure link from Extend page to Google Analytics Settings page exists.');
