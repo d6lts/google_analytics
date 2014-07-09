@@ -184,7 +184,7 @@ function googleanalytics_admin_settings_form($form_state) {
     '#type' => 'checkbox',
     '#title' => t('Track User ID'),
     '#default_value' => variable_get('googleanalytics_trackuserid', 0),
-    '#description' => t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href="@url">Learn more about the benfits of using User ID</a>.', array('@url' => 'https://support.google.com/analytics/answer/3123663')),
+    '#description' => t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href="@url">Learn more about the benefits of using User ID</a>.', array('@url' => 'https://support.google.com/analytics/answer/3123663')),
   );
 
   // Link specific configurations.
