@@ -74,15 +74,16 @@ function googleanalytics_requirements($phase) {
         'value' => $t('Not configured'),
       );
     }
-  }
-  // Raise warning if debugging is enabled.
-  if (variable_get('googleanalytics_debug', 0)) {
-    $requirements['google_analytics_debugging'] = array(
-      'title' => $t('Google Analytics module'),
-      'description' => $t('Google Analytics module has debugging enabled. Please disable debugging setting in production sites from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/googleanalytics'))),
-      'severity' => REQUIREMENT_WARNING,
-      'value' => $t('Debugging enabled'),
-    );
+
+    // Raise warning if debugging is enabled.
+    if (variable_get('googleanalytics_debug', 0)) {
+      $requirements['google_analytics_debugging'] = array(
+        'title' => $t('Google Analytics module'),
+        'description' => $t('Google Analytics module has debugging enabled. Please disable debugging setting in production sites from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/config/system/googleanalytics'))),
+        'severity' => REQUIREMENT_WARNING,
+        'value' => $t('Debugging enabled'),
+      );
+    }
   }
 
   return $requirements;
