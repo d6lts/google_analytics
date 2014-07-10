@@ -255,11 +255,11 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
     );
     variable_set('googleanalytics_codesnippet_create', $codesnippet_create);
     variable_set('googleanalytics_codesnippet_before', 'ga("set", "forceSSL", true);');
-    variable_set('googleanalytics_codesnippet_after', 'ga("create", "UA-123456-3", {name: "newTracker"});ga("newTracker.send", "pageview");');
+    variable_set('googleanalytics_codesnippet_after', 'ga("create", "UA-123456-3", {"name": "newTracker"});ga("newTracker.send", "pageview");');
     $this->drupalGet('');
     $this->assertRaw('ga("create", "' . $ua_code . '", {"cookieDomain":"foo.example.com","cookieName":"myNewName","cookieExpires":20000,"allowAnchor":true,"sampleRate":4.3});', '[testGoogleAnalyticsTrackingCode]: Create only fields have been found.');
     $this->assertRaw('ga("set", "forceSSL", true);', '[testGoogleAnalyticsTrackingCode]: Before codesnippet will force http pages to also send all beacons using https.');
-    $this->assertRaw('ga("create", "UA-123456-3", {name: "newTracker"});', '[testGoogleAnalyticsTrackingCode]: After codesnippet with "newTracker" tracker has been found.');
+    $this->assertRaw('ga("create", "UA-123456-3", {"name": "newTracker"});', '[testGoogleAnalyticsTrackingCode]: After codesnippet with "newTracker" tracker has been found.');
   }
 }
 
