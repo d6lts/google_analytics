@@ -73,7 +73,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
     // Show tracking on "every page except the listed pages".
     \Drupal::config('google_analytics.settings')->set('visibility.pages_enable', 0)->save();
-    // Disable tracking one "admin*" pages only.
+    // Disable tracking on "admin*" pages only.
     \Drupal::config('google_analytics.settings')->set('visibility.pages', "admin\nadmin/*")->save();
     // Enable tracking only for authenticated users only.
     \Drupal::config('google_analytics.settings')->set('visibility.roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
