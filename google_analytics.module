@@ -168,10 +168,11 @@ function google_analytics_page_alter(&$page) {
     }
 
     // Site search tracking support.
-    if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && arg(0) == 'search' && $keys = google_analytics_search_get_keys()) {
+    if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && (strpos(\Drupal::routeMatch()->getRouteName(), 'search.view') === 0) && $keys = google_analytics_search_get_keys()) {
       // hook_item_list__search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
-      $url_custom = '(window.google_analytics_search_results) ? ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => $keys)))) . ' : ' . Json::encode(url('search/' . arg(1), array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results'))));
+      $search_path = \Drupal::routeMatch()->getParameter('entity')->getPath();
+      $url_custom = '(window.google_analytics_search_results) ? ' . Json::encode(url('search/' . $search_path, array('query' => array('search' => $keys)))) . ' : ' . Json::encode(url('search/' . $search_path, array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results'))));
     }
 
     // If this node is a translation of another node, pass the original

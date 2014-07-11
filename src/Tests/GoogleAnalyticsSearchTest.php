@@ -29,10 +29,14 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
   function setUp() {
     parent::setUp();
 
+    $this->drupalCreateContentType(array('type' => 'page', 'name' => 'Basic page'));
+
     $permissions = array(
       'access administration pages',
       'administer google analytics',
       'search content',
+      'create page content',
+      'edit own page content',
     );
 
     // User to set up google_analytics.
@@ -51,16 +55,43 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $this->drupalGet('search/node');
     $this->assertNoRaw('ga("set", "page",', '[testGoogleAnalyticsSearch]: Custom url not set.');
 
-    // Search for random string.
-    $edit = array();
-    $edit['keys'] = $this->randomName(32);
-
+    // Enable site search support.
     \Drupal::config('google_analytics.settings')->set('track.site_search', 1)->save();
-    $this->drupalPostForm('search/node', $edit, t('Search'));
+
+    // Search for random string.
+    $search = array();
+    $search['keys'] = $this->randomName(8);
+
+    // Create a node to search for.
+    // Create a node.
+    $edit = array();
+    $edit['title[0][value]'] = 'This is a test title';
+    $edit['body[0][value]'] = 'This test content contains ' . $search['keys'] . ' string.';
+
+    // Fire a search, it's expected to get 0 results.
+    $this->drupalPostForm('search/node', $search, t('Search'));
     $this->assertRaw('ga("set", "page", (window.google_analytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
+    $this->assertRaw('window.google_analytics_search_results = 0;', '[testGoogleAnalyticsSearch]: Search yielded no results.');
 
-    // Test search results counter.
-    $this->assertRaw('window.google_analytics_search_results = ', '[testGoogleAnalyticsSearch]: Search results counter is displayed.');
+    // Save the node.
+    $this->drupalPostForm('node/add/page', $edit, t('Save'));
+    $this->assertRaw(t('!post %title has been created.', array('!post' => 'Basic page', '%title' => $edit['title[0][value]'])), 'Basic page created.');
 
+    // Index the node or it cannot found.
+    $this->cronRun();
+
+    $this->drupalPostForm('search/node', $search, t('Search'));
+    $this->assertRaw('ga("set", "page", (window.google_analytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
+    $this->assertRaw('window.google_analytics_search_results = 1;', '[testGoogleAnalyticsSearch]: One search result found.');
+
+    $this->drupalPostForm('node/add/page', $edit, t('Save'));
+    $this->assertRaw(t('!post %title has been created.', array('!post' => 'Basic page', '%title' => $edit['title[0][value]'])), 'Basic page created.');
+
+    // Index the node or it cannot found.
+    $this->cronRun();
+
+    $this->drupalPostForm('search/node', $search, t('Search'));
+    $this->assertRaw('ga("set", "page", (window.google_analytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
+    $this->assertRaw('window.google_analytics_search_results = 2;', '[testGoogleAnalyticsSearch]: Two search results found.');
   }
 }
