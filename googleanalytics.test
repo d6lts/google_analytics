@@ -61,7 +61,7 @@ class GoogleAnalyticsBasicTest extends DrupalWebTestCase {
 
     // Show tracking on "every page except the listed pages".
     variable_set('googleanalytics_visibility_pages', 0);
-    // Disable tracking one "admin*" pages only.
+    // Disable tracking on "admin*" pages only.
     variable_set('googleanalytics_pages', "admin\nadmin/*");
     // Enable tracking only for authenticated users only.
     variable_set('googleanalytics_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
