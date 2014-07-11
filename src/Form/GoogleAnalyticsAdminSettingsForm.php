@@ -282,8 +282,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       ),
     );
 
-    // Google already have many translations, if not - they display a note to change the language.
-    global $language;
     $form['tracking']['search_and_advertising'] = array(
       '#type' => 'details',
       '#title' => t('Search and Advertising'),
