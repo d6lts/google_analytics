@@ -254,8 +254,6 @@ function googleanalytics_admin_settings_form($form_state) {
     ),
   );
 
-  // Google already have many translations, if not - they display a note to change the language.
-  global $language;
   $form['tracking']['search_and_advertising'] = array(
     '#type' => 'fieldset',
     '#title' => t('Search and Advertising'),
