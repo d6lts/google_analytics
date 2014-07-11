@@ -205,8 +205,8 @@ function googleanalytics_page_alter(&$page) {
     foreach (array('dimension', 'metric') as $googleanalytics_custom_type) {
       $googleanalytics_custom_vars = variable_get('googleanalytics_custom_' . $googleanalytics_custom_type, array());
       for ($i = 1; $i <= 20; $i++) {
-        $custom_var_value = !empty($googleanalytics_custom_vars['indexes'][$i]['value']) ? $googleanalytics_custom_vars['indexes'][$i]['value'] : '';
-        if (!empty($custom_var_value)) {
+        $custom_var_value = isset($googleanalytics_custom_vars['indexes'][$i]['value']) ? $googleanalytics_custom_vars['indexes'][$i]['value'] : '';
+        if (drupal_strlen($custom_var_value)) {
           $types = array();
           $node = menu_get_object();
           if (is_object($node)) {

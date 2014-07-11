@@ -326,7 +326,7 @@ function googleanalytics_admin_settings_form($form_state) {
       '#type' => 'textfield',
     );
     $form['googleanalytics_custom_dimension']['indexes'][$i]['value'] = array(
-      '#default_value' => !empty($googleanalytics_custom_dimension['indexes'][$i]['value']) ? $googleanalytics_custom_dimension['indexes'][$i]['value'] : '',
+      '#default_value' => isset($googleanalytics_custom_dimension['indexes'][$i]['value']) ? $googleanalytics_custom_dimension['indexes'][$i]['value'] : '',
       '#description' => t('The custom dimension value.'),
       '#maxlength' => 255,
       '#title' => t('Custom dimension value #@index', array('@index' => $i)),
@@ -375,7 +375,7 @@ function googleanalytics_admin_settings_form($form_state) {
       '#type' => 'textfield',
     );
     $form['googleanalytics_custom_metric']['indexes'][$i]['value'] = array(
-      '#default_value' => !empty($googleanalytics_custom_metric['indexes'][$i]['value']) ? $googleanalytics_custom_metric['indexes'][$i]['value'] : '',
+      '#default_value' => isset($googleanalytics_custom_metric['indexes'][$i]['value']) ? $googleanalytics_custom_metric['indexes'][$i]['value'] : '',
       '#description' => t('The custom metric value.'),
       '#maxlength' => 255,
       '#title' => t('Custom metric value #@index', array('@index' => $i)),
