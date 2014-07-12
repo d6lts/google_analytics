@@ -733,7 +733,6 @@ function _googleanalytics_validate_create_field_name($name) {
   // List of supported field names:
   // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create
   $create_only_fields = array(
-    'name',
     'clientId',
     'userId',
     'sampleRate',
@@ -746,11 +745,14 @@ function _googleanalytics_validate_create_field_name($name) {
     'legacyCookieDomain',
   );
 
+  if ($name == 'name') {
+    return t('Create only field name %name is a disallowed field name. Changing the <em>Tracker Name</em> is currently not supported.', array('%name' => $name));
+  }
   if ($name == 'allowLinker') {
-    return t('Field name %name is a disallowed field name. Please select <em>Multiple top-level domains</em> under <em>What are you tracking</em> to enable cross domain tracking.', array('%name' => $name));
+    return t('Create only field name %name is a disallowed field name. Please select <em>Multiple top-level domains</em> under <em>What are you tracking</em> to enable cross domain tracking.', array('%name' => $name));
   }
   if (!in_array($name, $create_only_fields)) {
-    return t('Field name %name is an unknown field name. Please see <a href="@url">create only fields</a> documentation for supported field names.', array('%name' => $name, '@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create'));
+    return t('Create only field name %name is an unknown field name. Field names are case sensitive. Please see <a href="@url">create only fields</a> documentation for supported field names.', array('%name' => $name, '@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create'));
   }
 }
 
@@ -764,11 +766,11 @@ function _googleanalytics_validate_create_field_name($name) {
  *   The error message if the specified value is invalid, NULL otherwise.
  */
 function _googleanalytics_validate_create_field_value($value) {
-  if (!is_bool($value) && empty($value)) {
-    return t('A value is required.');
+  if (!is_bool($value) && !drupal_strlen($value)) {
+    return t('A create only field requires a value.');
   }
   if (drupal_strlen($value) > 255) {
-    return t('Each value must be a string at most 255 characters long.');
+    return t('The value of a create only field must be a string at most 255 characters long.');
   }
 }
 
