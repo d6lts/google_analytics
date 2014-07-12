@@ -807,10 +807,10 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    *   The error message if the specified value is invalid, NULL otherwise.
    */
   protected static function validateCreateFieldValue($value) {
-    if (!is_bool($value) && !drupal_strlen($value)) {
+    if (!is_bool($value) && !Unicode::strlen($value)) {
       return t('A create only field requires a value.');
     }
-    if (drupal_strlen($value) > 255) {
+    if (Unicode::strlen($value) > 255) {
       return t('The value of a create only field must be a string at most 255 characters long.');
     }
   }
