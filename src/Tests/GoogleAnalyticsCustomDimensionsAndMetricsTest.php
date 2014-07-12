@@ -94,6 +94,11 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
           'index' => 3,
           'value' => '',
         ),
+        // #2300701: Custom dimensions and custom metrics not outputed on zero value.
+        4 => array(
+          'index' => 4,
+          'value' => '0',
+        ),
       )
     );
     \Drupal::config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
@@ -103,6 +108,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertRaw('ga("set", ' . Json::encode('dimension1') . ', ' . Json::encode("Value: $site_slogan") . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Tokens have been replaced in dimension value.');
     $this->assertRaw('ga("set", ' . Json::encode('dimension2') . ', ' . Json::encode($google_analytics_custom_dimension['indexes']['2']['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Random value is shown.');
     $this->assertNoRaw('ga("set", ' . Json::encode('dimension3') . ', ' . Json::encode('') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Empty value is not shown.');
+    $this->assertRaw('ga("set", ' . Json::encode('dimension4') . ', ' . Json::encode('0') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Value 0 is shown.');
   }
 
   function testGoogleAnalyticsCustomMetrics() {
@@ -161,6 +167,11 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
           'index' => 3,
           'value' => '',
         ),
+        // #2300701: Custom dimensions and custom metrics not outputed on zero value.
+        4 => array(
+          'index' => 4,
+          'value' => '0',
+        ),
       )
     );
     \Drupal::config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
@@ -170,5 +181,6 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertRaw('ga("set", ' . Json::encode('metric1') . ', ', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Tokens have been replaced in metric value.');
     $this->assertRaw('ga("set", ' . Json::encode('metric2') . ', ' . Json::encode($google_analytics_custom_metric['indexes']['2']['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Random value is shown.');
     $this->assertNoRaw('ga("set", ' . Json::encode('metric3') . ', ' . Json::encode('') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Empty value is not shown.');
+    $this->assertRaw('ga("set", ' . Json::encode('metric4') . ', ' . Json::encode(0) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Value 0 is shown.');
   }
 }

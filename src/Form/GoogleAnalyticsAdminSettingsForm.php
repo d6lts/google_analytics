@@ -354,7 +354,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         '#type' => 'textfield',
       );
       $form['google_analytics_custom_dimension']['indexes'][$i]['value'] = array(
-        '#default_value' => !empty($google_analytics_custom_dimension['indexes'][$i]['value']) ? $google_analytics_custom_dimension['indexes'][$i]['value'] : '',
+        '#default_value' => isset($google_analytics_custom_dimension['indexes'][$i]['value']) ? $google_analytics_custom_dimension['indexes'][$i]['value'] : '',
         '#description' => t('The custom dimension value.'),
         '#maxlength' => 255,
         '#title' => t('Custom dimension value #@index', array('@index' => $i)),
@@ -402,7 +402,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         '#type' => 'textfield',
       );
       $form['google_analytics_custom_metric']['indexes'][$i]['value'] = array(
-        '#default_value' => !empty($google_analytics_custom_metric['indexes'][$i]['value']) ? $google_analytics_custom_metric['indexes'][$i]['value'] : '',
+        '#default_value' => isset($google_analytics_custom_metric['indexes'][$i]['value']) ? $google_analytics_custom_metric['indexes'][$i]['value'] : '',
         '#description' => t('The custom metric value.'),
         '#maxlength' => 255,
         '#title' => t('Custom metric value #@index', array('@index' => $i)),

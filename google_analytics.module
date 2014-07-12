@@ -202,8 +202,8 @@ function google_analytics_page_alter(&$page) {
     foreach (array('dimension', 'metric') as $google_analytics_custom_type) {
       $google_analytics_custom_vars = $config->get('custom.' . $google_analytics_custom_type);
       for ($i = 1; $i <= 20; $i++) {
-        $custom_var_value = !empty($google_analytics_custom_vars['indexes'][$i]['value']) ? $google_analytics_custom_vars['indexes'][$i]['value'] : '';
-        if (!empty($custom_var_value)) {
+        $custom_var_value = isset($google_analytics_custom_vars['indexes'][$i]['value']) ? $google_analytics_custom_vars['indexes'][$i]['value'] : '';
+        if (Unicode::strlen($custom_var_value)) {
           $types = array();
           if ($request->attributes->has('node')) {
             $node = $request->attributes->get('node');
