@@ -23,6 +23,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
    */
   public static $modules = array('google_analytics');
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp() {
     parent::setUp();
 
