@@ -714,7 +714,9 @@ function theme_google_analytics_admin_custom_var_table($variables) {
 
   $output = drupal_render($table);
   $output .= drupal_render($form['google_analytics_description']);
-  $output .= drupal_render($form['google_analytics_token_tree']);
+  if (isset($form['google_analytics_token_tree'])) {
+    $output .= drupal_render($form['google_analytics_token_tree']);
+  }
 
   return $output;
 }
