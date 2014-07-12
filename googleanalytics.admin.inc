@@ -344,11 +344,13 @@ function googleanalytics_admin_settings_form($form_state) {
     '#type' => 'item',
     '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom dimensions. Section 7 of the <a href="@ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, userid, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', array('@ga_tos' => 'http://www.google.com/analytics/terms/gb.html')),
   );
-  $form['googleanalytics_custom_dimension']['googleanalytics_token_tree'] = array(
-    '#theme' => 'token_tree',
-    '#token_types' => array('node'),
-    '#dialog' => TRUE,
-  );
+  if (module_exists('token')) {
+    $form['googleanalytics_custom_dimension']['googleanalytics_token_tree'] = array(
+      '#theme' => 'token_tree',
+      '#token_types' => array('node'),
+      '#dialog' => TRUE,
+    );
+  }
 
   // Custom Metrics.
   $form['googleanalytics_custom_metric'] = array(
@@ -393,11 +395,13 @@ function googleanalytics_admin_settings_form($form_state) {
     '#type' => 'item',
     '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom metrics. Section 7 of the <a href="@ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, userid, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', array('@ga_tos' => 'http://www.google.com/analytics/terms/gb.html')),
   );
-  $form['googleanalytics_custom_metric']['googleanalytics_token_tree'] = array(
-    '#theme' => 'token_tree',
-    '#token_types' => array('node'),
-    '#dialog' => TRUE,
-  );
+  if (module_exists('token')) {
+    $form['googleanalytics_custom_metric']['googleanalytics_token_tree'] = array(
+      '#theme' => 'token_tree',
+      '#token_types' => array('node'),
+      '#dialog' => TRUE,
+    );
+  }
 
   // Advanced feature configurations.
   $form['advanced'] = array(
@@ -542,7 +546,9 @@ function theme_googleanalytics_admin_custom_var_table($variables) {
 
   $output = theme('table', array('header' => $header, 'rows' => $rows));
   $output .= drupal_render($form['googleanalytics_description']);
-  $output .= drupal_render($form['googleanalytics_token_tree']);
+  if (isset($form['googleanalytics_token_tree'])) {
+    $output .= drupal_render($form['googleanalytics_token_tree']);
+  }
 
   return $output;
 }
