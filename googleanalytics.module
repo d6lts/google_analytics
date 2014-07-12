@@ -218,6 +218,14 @@ function googleanalytics_page_alter(&$page) {
             continue;
           }
 
+          // Per documentation the max length of a dimension is 150 bytes.
+          // A metric has no length limitation. It's not documented if this
+          // limit means 150 bytes after url encoding or before.
+          // See https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#customs
+          if ($google_analytics_custom_type == 'dimension' && drupal_strlen($custom_var_value) > 150) {
+            $custom_var_value = substr($custom_var_value, 0, 150);
+          }
+
           // Cast metric values for json_encode to data type numeric.
           if ($googleanalytics_custom_type == 'metric') {
             settype($custom_var_value, 'float');
