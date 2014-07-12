@@ -145,7 +145,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
         ),
       )
     );
-    \Drupal::config('google_analytics.settings')->set('custom.metrics', $google_analytics_custom_metric)->save();
+    \Drupal::config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
     $this->drupalGet('');
 
     foreach ($google_analytics_custom_metric['indexes'] as $metric) {
