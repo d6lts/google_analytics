@@ -747,7 +747,7 @@ function _googleanalytics_validate_create_field_name($name) {
   );
 
   if ($name == 'allowLinker') {
-    return t('Field name %name is a disallowed field name. Please select <em>Multiple top-level domains</em> under <em>What are you tracking</em> to enable cross domain tracking.');
+    return t('Field name %name is a disallowed field name. Please select <em>Multiple top-level domains</em> under <em>What are you tracking</em> to enable cross domain tracking.', array('%name' => $name));
   }
   if (!in_array($name, $create_only_fields)) {
     return t('Field name %name is an unknown field name. Please see <a href="@url">create only fields</a> documentation for supported field names.', array('%name' => $name, '@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create'));
