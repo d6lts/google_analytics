@@ -10,6 +10,12 @@ namespace Drupal\google_analytics\Tests;
 use Drupal\Component\Serialization\Json;
 use Drupal\simpletest\WebTestBase;
 
+/**
+ * Test custom dimensions and metrics functionality of Google Analytics module.
+ *
+ * @group Google Analytics
+ * @requires module token
+ */
 class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
 
   /**
@@ -19,16 +25,10 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
    */
   public static $modules = array('google_analytics', 'token');
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Google Analytics custom dimensions and metrics tests',
-      'description' => 'Test custom dimensions and metrics functionality of Google Analytics module.',
-      'group' => 'Google Analytics',
-      'dependencies' => array('token'),
-    );
-  }
-
-  function setUp() {
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
     parent::setUp();
 
     $permissions = array(

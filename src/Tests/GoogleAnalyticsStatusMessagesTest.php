@@ -9,6 +9,11 @@ namespace Drupal\google_analytics\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
+/**
+ * Test status messages functionality of Google Analytics module.
+ *
+ * @group Google Analytics
+ */
 class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
 
   /**
@@ -18,15 +23,10 @@ class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
    */
   public static $modules = array('google_analytics');
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Google Analytics status messages tests',
-      'description' => 'Test status messages functionality of Google Analytics module.',
-      'group' => 'Google Analytics',
-    );
-  }
-
-  function setUp() {
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
     parent::setUp();
 
     $permissions = array(

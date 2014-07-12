@@ -9,6 +9,11 @@ namespace Drupal\google_analytics\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
+/**
+ * Test uninstall functionality of Google Analytics module.
+ *
+ * @group Google Analytics
+ */
 class GoogleAnalyticsUninstallTest extends WebTestBase {
 
   /**
@@ -18,15 +23,10 @@ class GoogleAnalyticsUninstallTest extends WebTestBase {
    */
   public static $modules = array('google_analytics');
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Google Analytics uninstall tests',
-      'description' => 'Test uninstall functionality of Google Analytics module.',
-      'group' => 'Google Analytics',
-    );
-  }
-
-  function setUp() {
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
     parent::setUp();
 
     $permissions = array(

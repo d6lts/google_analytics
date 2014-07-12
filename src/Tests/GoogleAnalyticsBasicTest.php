@@ -9,6 +9,11 @@ namespace Drupal\google_analytics\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
+/**
+ * Test basic functionality of Google Analytics module.
+ *
+ * @group Google Analytics
+ */
 class GoogleAnalyticsBasicTest extends WebTestBase {
 
   /**
@@ -18,15 +23,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
    */
   public static $modules = array('google_analytics');
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Google Analytics basic tests',
-      'description' => 'Test basic functionality of Google Analytics module.',
-      'group' => 'Google Analytics',
-    );
-  }
-
-  function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     $permissions = array(

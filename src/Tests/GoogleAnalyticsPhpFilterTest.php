@@ -10,6 +10,12 @@ namespace Drupal\google_analytics\Tests;
 use Drupal\Component\Utility\String;
 use Drupal\simpletest\WebTestBase;
 
+/**
+ * Test php filter functionality of Google Analytics module.
+ *
+ * @group Google Analytics
+ * @requires module php
+ */
 class GoogleAnalyticsPhpFilterTest extends WebTestBase {
 
   /**
@@ -19,16 +25,10 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
    */
   public static $modules = array('google_analytics', 'php');
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Google Analytics php filter tests',
-      'description' => 'Test php filter functionality of Google Analytics module.',
-      'group' => 'Google Analytics',
-      'dependencies' => array('php'),
-    );
-  }
-
-  function setUp() {
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
     parent::setUp();
 
     // Administrator with all permissions.
