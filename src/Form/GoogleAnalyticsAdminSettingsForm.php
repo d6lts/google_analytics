@@ -507,6 +507,11 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     foreach ($form_state['values']['google_analytics_custom_metric']['indexes'] as $metric) {
       $form_state['values']['google_analytics_custom_metric']['indexes'][$metric['index']]['value'] = trim($metric['value']);
     }
+    // Remove form fields that are not configuration.
+    unset($form_state['values']['google_analytics_custom_dimension']['google_analytics_description']);
+    unset($form_state['values']['google_analytics_custom_dimension']['google_analytics_token_tree']);
+    unset($form_state['values']['google_analytics_custom_metric']['google_analytics_description']);
+    unset($form_state['values']['google_analytics_custom_metric']['google_analytics_token_tree']);
 
     // Trim some text values.
     $form_state['values']['google_analytics_account'] = trim($form_state['values']['google_analytics_account']);
