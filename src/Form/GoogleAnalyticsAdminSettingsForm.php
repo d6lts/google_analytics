@@ -6,7 +6,6 @@
 
 namespace Drupal\google_analytics\Form;
 
-use Drupal\Component\Utility\String;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\ConfigFormBase;
 
