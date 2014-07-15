@@ -23,8 +23,10 @@ privacy:
   anonymizeip: '1'
   donottrack: '1'
 custom:
-  dimension: {  }
-  metric: {  }
+  dimension:
+    indexes: {  }
+  metric:
+    indexes: {  }
 codesnippet:
   create: {  }
   before: ''

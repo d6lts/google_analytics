@@ -201,9 +201,11 @@ function google_analytics_page_alter(&$page) {
     $custom_var = '';
     foreach (array('dimension', 'metric') as $google_analytics_custom_type) {
       $google_analytics_custom_vars = $config->get('custom.' . $google_analytics_custom_type);
-      for ($i = 1; $i <= 20; $i++) {
-        $custom_var_value = isset($google_analytics_custom_vars['indexes'][$i]['value']) ? $google_analytics_custom_vars['indexes'][$i]['value'] : '';
-        if (Unicode::strlen($custom_var_value)) {
+      // Are there dimensions or metrics configured?
+      if (!empty($google_analytics_custom_vars['indexes'])) {
+        // Add all the configured variables to the content.
+        foreach ($google_analytics_custom_vars['indexes'] as $google_analytics_custom_var) {
+          // Replace tokens in values.
           $types = array();
           if ($request->attributes->has('node')) {
             $node = $request->attributes->get('node');
@@ -211,9 +213,10 @@ function google_analytics_page_alter(&$page) {
               $types += array('node' => $node);
             }
           }
-          $custom_var_value = \Drupal::token()->replace($custom_var_value, $types, array('clear' => TRUE));
+          $google_analytics_custom_var['value'] = \Drupal::token()->replace($google_analytics_custom_var['value'], $types, array('clear' => TRUE));
+
           // Suppress empty values.
-          if (!Unicode::strlen(trim($custom_var_value))) {
+          if (!Unicode::strlen(trim($google_analytics_custom_var['value']))) {
             continue;
           }
 
@@ -221,15 +224,17 @@ function google_analytics_page_alter(&$page) {
           // A metric has no length limitation. It's not documented if this
           // limit means 150 bytes after url encoding or before.
           // See https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#customs
-          if ($google_analytics_custom_type == 'dimension' && Unicode::strlen($custom_var_value) > 150) {
-            $custom_var_value = substr($custom_var_value, 0, 150);
+          if ($google_analytics_custom_type == 'dimension' && Unicode::strlen($google_analytics_custom_var['value']) > 150) {
+            $google_analytics_custom_var['value'] = substr($google_analytics_custom_var['value'], 0, 150);
           }
 
           // Cast metric values for json_encode to data type numeric.
           if ($google_analytics_custom_type == 'metric') {
-            settype($custom_var_value, 'float');
+            settype($google_analytics_custom_var['value'], 'float');
           };
-          $custom_var .= 'ga("set", ' . Json::encode($google_analytics_custom_type . $i) . ', ' . Json::encode($custom_var_value) . ');';
+
+          // Add variables to tracker.
+          $custom_var .= 'ga("set", ' . Json::encode($google_analytics_custom_type . $google_analytics_custom_var['index']) . ', ' . Json::encode($google_analytics_custom_var['value']) . ');';
         }
       }
     }

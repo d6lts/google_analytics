@@ -84,11 +84,19 @@ google_analytics.settings:
       label: 'Custom variables'
       mapping:
         dimension:
-          type: array
+          type: mapping
           label: 'Custom dimensions'
+          mapping:
+            indexes:
+              type: array
+              label: 'Array of dimensions'
         metric:
           type: array
           label: 'Custom metrics'
+          mapping:
+            indexes:
+              type: array
+              label: 'Array of metrics'
     codesnippet:
       type: mapping
       label: 'Custom code snippets'
