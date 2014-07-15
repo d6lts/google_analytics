@@ -475,9 +475,17 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   // Trim custom dimensions and metrics.
   foreach ($form_state['values']['googleanalytics_custom_dimension']['indexes'] as $dimension) {
     $form_state['values']['googleanalytics_custom_dimension']['indexes'][$dimension['index']]['value'] = trim($dimension['value']);
+    // Remove empty values from the array.
+    if (!drupal_strlen($form_state['values']['googleanalytics_custom_dimension']['indexes'][$dimension['index']]['value'])) {
+      unset($form_state['values']['googleanalytics_custom_dimension']['indexes'][$dimension['index']]);
+    }
   }
   foreach ($form_state['values']['googleanalytics_custom_metric']['indexes'] as $metric) {
     $form_state['values']['googleanalytics_custom_metric']['indexes'][$metric['index']]['value'] = trim($metric['value']);
+    // Remove empty values from the array.
+    if (!drupal_strlen($form_state['values']['googleanalytics_custom_metric']['indexes'][$metric['index']]['value'])) {
+      unset($form_state['values']['googleanalytics_custom_metric']['indexes'][$metric['index']]);
+    }
   }
 
   // Trim some text values.

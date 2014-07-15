@@ -204,17 +204,20 @@ function googleanalytics_page_alter(&$page) {
     $custom_var = '';
     foreach (array('dimension', 'metric') as $googleanalytics_custom_type) {
       $googleanalytics_custom_vars = variable_get('googleanalytics_custom_' . $googleanalytics_custom_type, array());
-      for ($i = 1; $i <= 20; $i++) {
-        $custom_var_value = isset($googleanalytics_custom_vars['indexes'][$i]['value']) ? $googleanalytics_custom_vars['indexes'][$i]['value'] : '';
-        if (drupal_strlen($custom_var_value)) {
+      // Are there dimensions or metrics configured?
+      if (!empty($googleanalytics_custom_vars['indexes'])) {
+        // Add all the configured variables to the content.
+        foreach ($googleanalytics_custom_vars['indexes'] as $googleanalytics_custom_var) {
+          // Replace tokens in values.
           $types = array();
           $node = menu_get_object();
           if (is_object($node)) {
             $types += array('node' => $node);
           }
-          $custom_var_value = token_replace($custom_var_value, $types, array('clear' => TRUE));
-          // Suppress empty custom names and/or variables.
-          if (!drupal_strlen(trim($custom_var_value))) {
+          $googleanalytics_custom_var['value'] = token_replace($googleanalytics_custom_var['value'], $types, array('clear' => TRUE));
+
+          // Suppress empty values.
+          if (!drupal_strlen(trim($googleanalytics_custom_var['value']))) {
             continue;
           }
 
@@ -222,15 +225,17 @@ function googleanalytics_page_alter(&$page) {
           // A metric has no length limitation. It's not documented if this
           // limit means 150 bytes after url encoding or before.
           // See https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#customs
-          if ($googleanalytics_custom_type == 'dimension' && drupal_strlen($custom_var_value) > 150) {
-            $custom_var_value = substr($custom_var_value, 0, 150);
+          if ($googleanalytics_custom_type == 'dimension' && drupal_strlen($googleanalytics_custom_var['value']) > 150) {
+            $googleanalytics_custom_var['value'] = substr($googleanalytics_custom_var['value'], 0, 150);
           }
 
           // Cast metric values for json_encode to data type numeric.
           if ($googleanalytics_custom_type == 'metric') {
-            settype($custom_var_value, 'float');
+            settype($googleanalytics_custom_var['value'], 'float');
           };
-          $custom_var .= 'ga("set", ' . drupal_json_encode($googleanalytics_custom_type . $i) . ', ' . drupal_json_encode($custom_var_value) . ');';
+
+          // Add variables to tracker.
+          $custom_var .= 'ga("set", ' . drupal_json_encode($googleanalytics_custom_type . $googleanalytics_custom_var['index']) . ', ' . drupal_json_encode($googleanalytics_custom_var['value']) . ');';
         }
       }
     }
