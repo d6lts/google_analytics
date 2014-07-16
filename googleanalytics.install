@@ -482,3 +482,19 @@ function googleanalytics_update_7202() {
 
   return t('Removed obsolete JavaScript scope variable.');
 }
+
+/**
+ * Flatten the metrics and dimensions arrays.
+ */
+function googleanalytics_update_7203() {
+  $googleanalytics_custom_dimension = variable_get('googleanalytics_custom_dimension', array());
+  if (!empty($googleanalytics_custom_dimension)) {
+    variable_set('googleanalytics_custom_dimension', $googleanalytics_custom_dimension['indexes']);
+  }
+  $googleanalytics_custom_metric = variable_get('googleanalytics_custom_metric', array());
+  if (!empty($googleanalytics_custom_metric)) {
+    variable_set('googleanalytics_custom_metric', $googleanalytics_custom_metric['indexes']);
+  }
+
+  return t('Saved custom dimensions and metrics.');
+}
