@@ -202,9 +202,9 @@ function google_analytics_page_alter(&$page) {
     foreach (array('dimension', 'metric') as $google_analytics_custom_type) {
       $google_analytics_custom_vars = $config->get('custom.' . $google_analytics_custom_type);
       // Are there dimensions or metrics configured?
-      if (!empty($google_analytics_custom_vars['indexes'])) {
+      if (!empty($google_analytics_custom_vars)) {
         // Add all the configured variables to the content.
-        foreach ($google_analytics_custom_vars['indexes'] as $google_analytics_custom_var) {
+        foreach ($google_analytics_custom_vars as $google_analytics_custom_var) {
           // Replace tokens in values.
           $types = array();
           if ($request->attributes->has('node')) {

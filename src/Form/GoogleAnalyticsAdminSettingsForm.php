@@ -354,7 +354,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         '#type' => 'textfield',
       );
       $form['google_analytics_custom_dimension']['indexes'][$i]['value'] = array(
-        '#default_value' => isset($google_analytics_custom_dimension['indexes'][$i]['value']) ? $google_analytics_custom_dimension['indexes'][$i]['value'] : '',
+        '#default_value' => isset($google_analytics_custom_dimension[$i]['value']) ? $google_analytics_custom_dimension[$i]['value'] : '',
         '#description' => t('The custom dimension value.'),
         '#maxlength' => 255,
         '#title' => t('Custom dimension value #@index', array('@index' => $i)),
@@ -404,7 +404,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         '#type' => 'textfield',
       );
       $form['google_analytics_custom_metric']['indexes'][$i]['value'] = array(
-        '#default_value' => isset($google_analytics_custom_metric['indexes'][$i]['value']) ? $google_analytics_custom_metric['indexes'][$i]['value'] : '',
+        '#default_value' => isset($google_analytics_custom_metric[$i]['value']) ? $google_analytics_custom_metric[$i]['value'] : '',
         '#description' => t('The custom metric value.'),
         '#maxlength' => 255,
         '#title' => t('Custom metric value #@index', array('@index' => $i)),
@@ -508,6 +508,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         unset($form_state['values']['google_analytics_custom_dimension']['indexes'][$dimension['index']]);
       }
     }
+    $form_state['values']['google_analytics_custom_dimension'] = $form_state['values']['google_analytics_custom_dimension']['indexes'];
     foreach ($form_state['values']['google_analytics_custom_metric']['indexes'] as $metric) {
       $form_state['values']['google_analytics_custom_metric']['indexes'][$metric['index']]['value'] = trim($metric['value']);
       // Remove empty values from the array.
@@ -515,6 +516,8 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         unset($form_state['values']['google_analytics_custom_metric']['indexes'][$metric['index']]);
       }
     }
+    $form_state['values']['google_analytics_custom_metric'] = $form_state['values']['google_analytics_custom_metric']['indexes'];
+
     // Remove form fields that are not configuration.
     unset($form_state['values']['google_analytics_custom_dimension']['google_analytics_description']);
     unset($form_state['values']['google_analytics_custom_dimension']['google_analytics_token_tree']);
