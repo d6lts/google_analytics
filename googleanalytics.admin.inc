@@ -309,11 +309,11 @@ function googleanalytics_admin_settings_form(&$form_state) {
     // TODO: '#default_value' is currently broken, see http://drupal.org/node/410926.
     $form['googleanalytics_custom_dimension']['indexes'][$i]['index'] = array(
       //'#default_value' => $i,
-      '#value' => $i,
       '#description' => t('Index number'),
       '#disabled' => TRUE,
       '#size' => 1,
       '#type' => 'textfield',
+      '#value' => $i,
     );
     $form['googleanalytics_custom_dimension']['indexes'][$i]['value'] = array(
       '#default_value' => isset($googleanalytics_custom_dimension[$i]['value']) ? $googleanalytics_custom_dimension[$i]['value'] : '',
@@ -358,11 +358,11 @@ function googleanalytics_admin_settings_form(&$form_state) {
     // TODO: '#default_value' is currently broken, see http://drupal.org/node/410926.
     $form['googleanalytics_custom_metric']['indexes'][$i]['index'] = array(
       //'#default_value' => $i,
-      '#value' => $i,
       '#description' => t('Index number'),
       '#disabled' => TRUE,
       '#size' => 1,
       '#type' => 'textfield',
+      '#value' => $i,
     );
     $form['googleanalytics_custom_metric']['indexes'][$i]['value'] = array(
       '#default_value' => isset($googleanalytics_custom_metric[$i]['value']) ? $googleanalytics_custom_metric[$i]['value'] : '',
