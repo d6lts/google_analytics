@@ -606,7 +606,7 @@ class GoogleAnalyticsSearchTest extends DrupalWebTestCase {
     $this->drupalPost('search/node', $search, t('Search'));
     $this->assertRaw('ga("set", "page", (window.googleanalytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
     // D6 special! D7 and D8 will show it with value 0.
-    $this->assertNoRaw('window.googleanalytics_search_results = 0;', '[testGoogleAnalyticsSearch]: Search results counter is not displayed.');
+    $this->assertNoRaw('window.googleanalytics_search_results = 0;', '[testGoogleAnalyticsSearch]: Search yielded no results.');
 
     // Save the node.
     $this->drupalPost('node/add/page', $edit, t('Save'));
@@ -617,7 +617,7 @@ class GoogleAnalyticsSearchTest extends DrupalWebTestCase {
 
     $this->drupalPost('search/node', $search, t('Search'));
     $this->assertRaw('ga("set", "page", (window.googleanalytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
-    $this->assertRaw('window.googleanalytics_search_results = 1;', '[testGoogleAnalyticsSearch]: One search results counted');
+    $this->assertRaw('window.googleanalytics_search_results = 1;', '[testGoogleAnalyticsSearch]: One search result found.');
 
     $this->drupalPost('node/add/page', $edit, t('Save'));
     $this->assertRaw(t('@type %title has been created.', array('@type' => 'Page', '%title' => $edit['title'])), t('Node was created.'));
@@ -627,7 +627,7 @@ class GoogleAnalyticsSearchTest extends DrupalWebTestCase {
 
     $this->drupalPost('search/node', $search, t('Search'));
     $this->assertRaw('ga("set", "page", (window.googleanalytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
-    $this->assertRaw('window.googleanalytics_search_results = 2;', '[testGoogleAnalyticsSearch]: Two search results counted.');
+    $this->assertRaw('window.googleanalytics_search_results = 2;', '[testGoogleAnalyticsSearch]: Two search results found.');
   }
 
   /**
