@@ -306,8 +306,9 @@ function googleanalytics_admin_settings_form(&$form_state) {
 
   // Google Analytics supports up to 20 custom dimensions.
   for ($i = 1; $i <= 20; $i++) {
+    // TODO: '#default_value' is currently broken, see http://drupal.org/node/410926.
     $form['googleanalytics_custom_dimension']['indexes'][$i]['index'] = array(
-      '#default_value' => $i,
+      //'#default_value' => $i,
       '#value' => $i,
       '#description' => t('Index number'),
       '#disabled' => TRUE,
@@ -318,7 +319,6 @@ function googleanalytics_admin_settings_form(&$form_state) {
       '#default_value' => isset($googleanalytics_custom_dimension[$i]['value']) ? $googleanalytics_custom_dimension[$i]['value'] : '',
       '#description' => t('The custom dimension value.'),
       '#maxlength' => 255,
-      '#title_display' => 'invisible',
       '#type' => 'textfield',
     );
     if (module_exists('token')) {
@@ -355,8 +355,9 @@ function googleanalytics_admin_settings_form(&$form_state) {
 
   // Google Analytics supports up to 20 custom metrics.
   for ($i = 1; $i <= 20; $i++) {
+    // TODO: '#default_value' is currently broken, see http://drupal.org/node/410926.
     $form['googleanalytics_custom_metric']['indexes'][$i]['index'] = array(
-      '#default_value' => $i,
+      //'#default_value' => $i,
       '#value' => $i,
       '#description' => t('Index number'),
       '#disabled' => TRUE,
@@ -367,7 +368,6 @@ function googleanalytics_admin_settings_form(&$form_state) {
       '#default_value' => isset($googleanalytics_custom_metric[$i]['value']) ? $googleanalytics_custom_metric[$i]['value'] : '',
       '#description' => t('The custom metric value.'),
       '#maxlength' => 255,
-      '#title_display' => 'invisible',
       '#type' => 'textfield',
     );
     if (module_exists('token')) {
