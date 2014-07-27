@@ -486,10 +486,24 @@ function googleanalytics_update_7202() {
 function googleanalytics_update_7203() {
   $googleanalytics_custom_dimension = variable_get('googleanalytics_custom_dimension', array());
   if (isset($googleanalytics_custom_dimension['indexes'])) {
+    foreach ($googleanalytics_custom_dimension['indexes'] as $dimension) {
+      $googleanalytics_custom_dimension['indexes'][$dimension['index']]['value'] = trim($dimension['value']);
+      // Remove empty values from the array.
+      if (!drupal_strlen($googleanalytics_custom_dimension['indexes'][$dimension['index']]['value'])) {
+        unset($googleanalytics_custom_dimension['indexes'][$dimension['index']]);
+      }
+    }
     variable_set('googleanalytics_custom_dimension', $googleanalytics_custom_dimension['indexes']);
   }
   $googleanalytics_custom_metric = variable_get('googleanalytics_custom_metric', array());
   if (isset($googleanalytics_custom_metric['indexes'])) {
+    foreach ($googleanalytics_custom_metric['indexes'] as $dimension) {
+      $googleanalytics_custom_metric['indexes'][$dimension['index']]['value'] = trim($dimension['value']);
+      // Remove empty values from the array.
+      if (!drupal_strlen($googleanalytics_custom_metric['indexes'][$dimension['index']]['value'])) {
+        unset($googleanalytics_custom_metric['indexes'][$dimension['index']]);
+      }
+    }
     variable_set('googleanalytics_custom_metric', $googleanalytics_custom_metric['indexes']);
   }
 
