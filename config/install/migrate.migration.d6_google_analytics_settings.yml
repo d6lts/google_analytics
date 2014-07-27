@@ -4,9 +4,12 @@ source:
   variables:
     - googleanalytics_account
     - googleanalytics_cache
+    - googleanalytics_codesnippet_create
     - googleanalytics_codesnippet_before
     - googleanalytics_codesnippet_after
     - googleanalytics_cross_domains
+    - googleanalytics_custom_dimension
+    - googleanalytics_custom_metric
     - googleanalytics_domain_mode
     - googleanalytics_pages
     - googleanalytics_roles
@@ -18,6 +21,8 @@ source:
     - googleanalytics_trackfiles
     - googleanalytics_trackfiles_extensions
     - googleanalytics_tracklinkid
+    - googleanalytics_trackurlfragments
+    - google_analytics_trackuserid
     - googleanalytics_trackmailto
     - googleanalytics_trackoutgoing
     - googleanalytics_translation_set
@@ -27,9 +32,12 @@ source:
 process:
   account: googleanalytics_account
   cache: googleanalytics_cache
+  'codesnippet:create': googleanalytics_codesnippet_create
   'codesnippet:before': googleanalytics_codesnippet_before
   'codesnippet:after': googleanalytics_codesnippet_after
   cross_domains: googleanalytics_cross_domains
+  'custom:dimension': googleanalytics_custom_dimension
+  'custom:metric': googleanalytics_custom_metric
   domain_mode: googleanalytics_domain_mode
   'visibility:pages': googleanalytics_pages
   'visibility:roles': googleanalytics_roles
@@ -41,6 +49,8 @@ process:
   'track:files': googleanalytics_trackfiles
   'track:files_extensions': googleanalytics_trackfiles_extensions
   'track:linkid': googleanalytics_tracklinkid
+  'track:urlfragments': googleanalytics_trackurlfragments
+  'track:userid': googleanalytics_trackuserid
   'track:mailto': googleanalytics_trackmailto
   'track:outbound': googleanalytics_trackoutgoing
   'translation_set': googleanalytics_translation_set
