@@ -739,7 +739,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         }
       }
 
-      $form_state->setValue($element, $values);
+      \Drupal::formBuilder()->setValue($element, $values, $form_state);
     }
   }
 
