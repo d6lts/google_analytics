@@ -57,7 +57,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw(t('Web Property ID'), '[testGoogleAnalyticsConfiguration]: Settings page displayed.');
 
     // Check for account code validation.
-    $edit['google_analytics_account'] = $this->randomName(2);
+    $edit['google_analytics_account'] = $this->randomMachineName(2);
     $this->drupalPostForm('admin/config/system/google-analytics', $edit, t('Save configuration'));
     $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'), '[testGoogleAnalyticsConfiguration]: Invalid Web Property ID number validated.');
   }
@@ -115,7 +115,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw('/403.html', '[testGoogleAnalyticsPageVisibility]: 403 Forbidden tracking code shown if user has no access.');
 
     // Test whether 404 not found tracking code is shown on non-existent pages.
-    $this->drupalGet($this->randomName(64));
+    $this->drupalGet($this->randomMachineName(64));
     $this->assertResponse(404);
     $this->assertRaw('/404.html', '[testGoogleAnalyticsPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
 
