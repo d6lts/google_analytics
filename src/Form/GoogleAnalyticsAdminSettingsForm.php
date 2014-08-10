@@ -8,6 +8,7 @@ namespace Drupal\google_analytics\Form;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Configure Google_Analytics settings for this site.
@@ -22,9 +23,9 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
   }
 
   /**
-   * Implements \Drupal\Core\Form\FormInterface::buildForm().
+   * {@inheritdoc}
    */
-  public function buildForm(array $form, array &$form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('google_analytics.settings');
 
     $form['general'] = array(
@@ -495,9 +496,9 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
   }
 
   /**
-   * Implements \Drupal\Core\Form\FormInterface::validateForm().
+   * {@inheritdoc}
    */
-  public function validateForm(array &$form, array &$form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
 
     // Trim custom dimensions and metrics.
@@ -532,16 +533,16 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $form_state['values']['google_analytics_account'] = str_replace(array('–', '—', '−'), '-', $form_state['values']['google_analytics_account']);
 
     if (!preg_match('/^UA-\d+-\d+$/', $form_state['values']['google_analytics_account'])) {
-      \Drupal::formBuilder()->setErrorByName('google_analytics_account', $form_state, t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'));
+      $form_state->setErrorByName('google_analytics_account', t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'));
     }
 
     // If multiple top-level domains has been selected, a domain names list is required.
     if ($form_state['values']['google_analytics_domain_mode'] == 2 && empty($form_state['values']['google_analytics_cross_domains'])) {
-      \Drupal::formBuilder()->setErrorByName('google_analytics_cross_domains', $form_state, t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
+      $form_state->setErrorByName('google_analytics_cross_domains', t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
     }
     // Disallow empty list of download file extensions.
     if ($form_state['values']['google_analytics_trackfiles'] && empty($form_state['values']['google_analytics_trackfiles_extensions'])) {
-      \Drupal::formBuilder()->setErrorByName('google_analytics_trackfiles_extensions', $form_state, t('List of download file extensions cannot empty.'));
+      $form_state->setErrorByName('google_analytics_trackfiles_extensions', t('List of download file extensions cannot empty.'));
     }
     // Clear obsolete local cache if cache has been disabled.
     if (empty($form_state['values']['google_analytics_cache']) && $form['advanced']['google_analytics_cache']['#default_value']) {
@@ -550,23 +551,23 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
     // This is for the Newbie's who cannot read a text area description.
     if (stristr($form_state['values']['google_analytics_codesnippet_before'], 'google-analytics.com/analytics.js')) {
-      \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_before', $form_state, t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
+      $form_state->setErrorByName('google_analytics_codesnippet_before', t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
     }
     if (stristr($form_state['values']['google_analytics_codesnippet_after'], 'google-analytics.com/analytics.js')) {
-      \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_after', $form_state, t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
+      $form_state->setErrorByName('google_analytics_codesnippet_after', t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
     }
     if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['google_analytics_codesnippet_before'])) {
-      \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_before', $form_state, t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+      $form_state->setErrorByName('google_analytics_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
     if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['google_analytics_codesnippet_after'])) {
-      \Drupal::formBuilder()->setErrorByName('google_analytics_codesnippet_after', $form_state, t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+      $form_state->setErrorByName('google_analytics_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
   }
 
   /**
-   * Implements \Drupal\Core\Form\FormInterface::submitForm().
+   * {@inheritdoc}
    */
-  public function submitForm(array &$form, array &$form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('google_analytics.settings');
     $config
       ->set('account', $form_state['values']['google_analytics_account'])
@@ -618,7 +619,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    * );
    * @endcode
    */
-  public static function tokenElementValidate(&$element, &$form_state) {
+  public static function tokenElementValidate(&$element, FormStateInterface $form_state) {
     $value = isset($element['#value']) ? $element['#value'] : $element['#default_value'];
 
     if (!Unicode::strlen($value)) {
@@ -630,7 +631,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $tokens = \Drupal::token()->scan($value);
     $invalid_tokens = static::getForbiddenTokens($tokens);
     if ($invalid_tokens) {
-      \Drupal::formBuilder()->setError($element, $form_state, t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => $element['#title'], '@invalid-tokens' => implode(', ', $invalid_tokens))));
+      $form_state->setError($element, t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => $element['#title'], '@invalid-tokens' => implode(', ', $invalid_tokens))));
     }
 
     return $element;
@@ -719,24 +720,26 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    *
    * @see form_process_pattern()
    */
-  public static function validateCreateFieldValues($element, &$form_state) {
+  public static function validateCreateFieldValues($element, FormStateInterface $form_state) {
     $values = static::extractCreateFieldValues($element['#value']);
 
     if (!is_array($values)) {
-      \Drupal::formBuilder()->setErrorByName($element, $form_state, t('The %element-title field contains invalid input.', array('%element-title' => $element['#title'])));
+      $form_state->setError($element, t('The %element-title field contains invalid input.', array('%element-title' => $element['#title'])));
     }
     else {
       // Check that name and value are valid for the field type.
       foreach ($values as $name => $value) {
         if ($error = static::validateCreateFieldName($name)) {
-          \Drupal::formBuilder()->setErrorByName($element, $form_state, $error);
+          $form_state->setError($element, $error);
+          break;
         }
         if ($error = static::validateCreateFieldValue($value)) {
-          \Drupal::formBuilder()->setErrorByName($element, $form_state, $error);
+          $form_state->setError($element, $error);
+          break;
         }
       }
 
-      \Drupal::formBuilder()->setValue($element, $values, $form_state);
+      $form_state->setValue($element, $values);
     }
   }
 
