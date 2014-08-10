@@ -137,12 +137,12 @@ function google_analytics_page_alter(&$page) {
 
       // Add debugging code.
       if ($debug) {
-        $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/google_analytics.debug.js';
+        $page['#attached']['library'][] = 'google_analytics/google_analytics_debug';
         // Add the JS test in development to the page.
         // $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/src/Tests/GoogleAnalyticsJavaScriptTest.js';
       }
       else {
-        $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/google_analytics.js';
+        $page['#attached']['library'][] = 'google_analytics/google_analytics';
       }
     }
 
