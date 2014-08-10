@@ -60,7 +60,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
 
     // Search for random string.
     $search = array();
-    $search['keys'] = $this->randomName(8);
+    $search['keys'] = $this->randomMachineName(8);
 
     // Create a node to search for.
     // Create a node.

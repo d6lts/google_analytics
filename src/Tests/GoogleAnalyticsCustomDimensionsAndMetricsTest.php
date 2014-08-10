@@ -75,7 +75,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     }
 
     // Test whether tokens are replaced in custom dimension values.
-    $site_slogan = $this->randomName(16);
+    $site_slogan = $this->randomMachineName(16);
     \Drupal::config('system.site')->set('slogan', $site_slogan)->save();
 
     $google_analytics_custom_dimension = array(
@@ -85,7 +85,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
       ),
       2 => array(
         'index' => 2,
-        'value' => $this->randomName(16),
+        'value' => $this->randomMachineName(16),
       ),
       3 => array(
         'index' => 3,
