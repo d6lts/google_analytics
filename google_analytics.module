@@ -17,7 +17,7 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
-use Guzzle\Http\Exception\RequestException;
+use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
