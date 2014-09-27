@@ -21,7 +21,7 @@
     else {
       console.error(message);
     }
-  }
+  };
 
   Drupal.google_analytics.test.assertNotSame = function (value1, value2, message) {
     if (value1 !== value2) {
@@ -30,7 +30,7 @@
     else {
       console.error(message);
     }
-  }
+  };
 
   Drupal.google_analytics.test.assertTrue = function (value1, message) {
     if (value1 === true) {
@@ -39,7 +39,7 @@
     else {
       console.error(message);
     }
-  }
+  };
 
   Drupal.google_analytics.test.assertFalse = function (value1, message) {
     if (value1 === false) {
@@ -48,7 +48,7 @@
     else {
       console.error(message);
     }
-  }
+  };
 
   /**
    *  Run javascript tests against the GA module.

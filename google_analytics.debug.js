@@ -93,7 +93,7 @@
    */
   Drupal.google_analytics.isCrossDomain = function (hostname, crossDomains) {
     return $.inArray(hostname, crossDomains) > -1 ? true : false;
-  }
+  };
 
   /**
    * Check whether this is a download URL or not.
@@ -106,7 +106,7 @@
   Drupal.google_analytics.isDownload = function (url) {
     var isDownload = new RegExp("\\.(" + drupalSettings.google_analytics.trackDownloadExtensions + ")([\?#].*)?$", "i");
     return isDownload.test(url);
-  }
+  };
 
   /**
    * Check whether this is an absolute internal URL or not.
@@ -119,7 +119,7 @@
   Drupal.google_analytics.isInternal = function (url) {
     var isInternal = new RegExp("^(https?):\/\/" + window.location.host, "i");
     return isInternal.test(url);
-  }
+  };
 
   /**
    * Check whether this is a special URL or not.
@@ -135,7 +135,7 @@
   Drupal.google_analytics.isInternalSpecial = function (url) {
     var isInternalSpecial = new RegExp("(\/go\/.*)$", "i");
     return isInternalSpecial.test(url);
-  }
+  };
 
   /**
    * Extract the relative internal URL from an absolute internal URL.
@@ -153,7 +153,7 @@
   Drupal.google_analytics.getPageUrl = function (url) {
     var extractInternalUrl = new RegExp("^(https?):\/\/" + window.location.host, "i");
     return url.replace(extractInternalUrl, '');
-  }
+  };
 
   /**
    * Extract the download file extension from the URL.
@@ -168,6 +168,6 @@
     var extractDownloadextension = new RegExp("\\.(" + drupalSettings.google_analytics.trackDownloadExtensions + ")([\?#].*)?$", "i");
     var extension = extractDownloadextension.exec(url);
     return (extension === null) ? '' : extension[1];
-  }
+  };
 
 })(jQuery, Drupal, drupalSettings);
