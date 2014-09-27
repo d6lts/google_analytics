@@ -385,7 +385,6 @@ function google_analytics_field_extra_fields() {
  */
 function google_analytics_form_user_profile_form_alter(&$form, &$form_state) {
   $config = \Drupal::config('google_analytics.settings');
-  // @todo ?: $account = \Drupal::currentUser();
   $account = $form_state->getFormObject()->getEntity($form_state);
 
   if ($account->hasPermission('opt-in or out of tracking') && ($custom = $config->get('visibility.custom')) != 0 && _google_analytics_visibility_roles($account)) {
