@@ -502,64 +502,64 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     parent::validateForm($form, $form_state);
 
     // Trim custom dimensions and metrics.
-    foreach ($form_state['values']['google_analytics_custom_dimension']['indexes'] as $dimension) {
-      $form_state['values']['google_analytics_custom_dimension']['indexes'][$dimension['index']]['value'] = trim($dimension['value']);
+    foreach ($form_state->getValue(array('google_analytics_custom_dimension', 'indexes')) as $dimension) {
+      $form_state->setValue(array('google_analytics_custom_dimension', 'indexes', $dimension['index'], 'value'), trim($dimension['value']));
       // Remove empty values from the array.
-      if (!Unicode::strlen($form_state['values']['google_analytics_custom_dimension']['indexes'][$dimension['index']]['value'])) {
-        unset($form_state['values']['google_analytics_custom_dimension']['indexes'][$dimension['index']]);
+      if (!Unicode::strlen($form_state->getValue(array('google_analytics_custom_dimension', 'indexes', $dimension['index'], 'value')))) {
+        $form_state->unsetValue(array('google_analytics_custom_dimension', 'indexes', $dimension['index']));
       }
     }
-    $form_state['values']['google_analytics_custom_dimension'] = $form_state['values']['google_analytics_custom_dimension']['indexes'];
+    $form_state->setValue('google_analytics_custom_dimension', $form_state->getValue(array('google_analytics_custom_dimension', 'indexes')));
 
-    foreach ($form_state['values']['google_analytics_custom_metric']['indexes'] as $metric) {
-      $form_state['values']['google_analytics_custom_metric']['indexes'][$metric['index']]['value'] = trim($metric['value']);
+    foreach ($form_state->getValue(array('google_analytics_custom_dimension', 'indexes')) as $metric) {
+      $form_state->setValue(array('google_analytics_custom_dimension', 'indexes', $metric['index'], 'value'), trim($metric['value']));
       // Remove empty values from the array.
-      if (!Unicode::strlen($form_state['values']['google_analytics_custom_metric']['indexes'][$metric['index']]['value'])) {
-        unset($form_state['values']['google_analytics_custom_metric']['indexes'][$metric['index']]);
+      if (!Unicode::strlen($form_state->getValue(array('google_analytics_custom_metric', 'indexes', $metric['index'], 'value')))) {
+        $form_state->unsetValue(array('google_analytics_custom_dimension', 'indexes', $metric['index']));
       }
     }
-    $form_state['values']['google_analytics_custom_metric'] = $form_state['values']['google_analytics_custom_metric']['indexes'];
+    $form_state->setValue('google_analytics_custom_metric', $form_state->getValue(array('google_analytics_custom_metric', 'indexes')));
 
     // Trim some text values.
-    $form_state['values']['google_analytics_account'] = trim($form_state['values']['google_analytics_account']);
-    $form_state['values']['google_analytics_pages'] = trim($form_state['values']['google_analytics_pages']);
-    $form_state['values']['google_analytics_cross_domains'] = trim($form_state['values']['google_analytics_cross_domains']);
-    $form_state['values']['google_analytics_codesnippet_before'] = trim($form_state['values']['google_analytics_codesnippet_before']);
-    $form_state['values']['google_analytics_codesnippet_after'] = trim($form_state['values']['google_analytics_codesnippet_after']);
-    $form_state['values']['google_analytics_roles'] = array_filter($form_state['values']['google_analytics_roles']);
-    $form_state['values']['google_analytics_trackmessages'] = array_filter($form_state['values']['google_analytics_trackmessages']);
+    $form_state->setValue('google_analytics_account', trim($form_state->getValue('google_analytics_account')));
+    $form_state->setValue('google_analytics_pages', trim($form_state->getValue('google_analytics_pages')));
+    $form_state->setValue('google_analytics_cross_domains', trim($form_state->getValue('google_analytics_cross_domains')));
+    $form_state->setValue('google_analytics_codesnippet_before', trim($form_state->getValue('google_analytics_codesnippet_before')));
+    $form_state->setValue('google_analytics_codesnippet_after', trim($form_state->getValue('google_analytics_codesnippet_after')));
+    $form_state->setValue('google_analytics_roles', array_filter($form_state->getValue('google_analytics_roles')));
+    $form_state->setValue('google_analytics_trackmessages', array_filter($form_state->getValue('google_analytics_trackmessages')));
 
     // Replace all type of dashes (n-dash, m-dash, minus) with the normal dashes.
-    $form_state['values']['google_analytics_account'] = str_replace(array('–', '—', '−'), '-', $form_state['values']['google_analytics_account']);
+    $form_state->setValue('google_analytics_account', str_replace(array('–', '—', '−'), '-', $form_state->getValue('google_analytics_account')));
 
-    if (!preg_match('/^UA-\d+-\d+$/', $form_state['values']['google_analytics_account'])) {
+    if (!preg_match('/^UA-\d+-\d+$/', $form_state->getValue('google_analytics_account'))) {
       $form_state->setErrorByName('google_analytics_account', t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'));
     }
 
     // If multiple top-level domains has been selected, a domain names list is required.
-    if ($form_state['values']['google_analytics_domain_mode'] == 2 && empty($form_state['values']['google_analytics_cross_domains'])) {
+    if ($form_state->getValue('google_analytics_domain_mode') == 2 && $form_state->isValueEmpty('google_analytics_cross_domains')) {
       $form_state->setErrorByName('google_analytics_cross_domains', t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
     }
     // Disallow empty list of download file extensions.
-    if ($form_state['values']['google_analytics_trackfiles'] && empty($form_state['values']['google_analytics_trackfiles_extensions'])) {
+    if ($form_state->getValue('google_analytics_trackfiles') && $form_state->isValueEmpty('google_analytics_trackfiles_extensions')) {
       $form_state->setErrorByName('google_analytics_trackfiles_extensions', t('List of download file extensions cannot empty.'));
     }
     // Clear obsolete local cache if cache has been disabled.
-    if (empty($form_state['values']['google_analytics_cache']) && $form['advanced']['google_analytics_cache']['#default_value']) {
+    if ($form_state->isValueEmpty('google_analytics_cache') && $form['advanced']['google_analytics_cache']['#default_value']) {
       google_analytics_clear_js_cache();
     }
 
     // This is for the Newbie's who cannot read a text area description.
-    if (stristr($form_state['values']['google_analytics_codesnippet_before'], 'google-analytics.com/analytics.js')) {
+    if (stristr($form_state->getValue('google_analytics_codesnippet_before'), 'google-analytics.com/analytics.js')) {
       $form_state->setErrorByName('google_analytics_codesnippet_before', t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
     }
-    if (stristr($form_state['values']['google_analytics_codesnippet_after'], 'google-analytics.com/analytics.js')) {
+    if (stristr($form_state->getValue('google_analytics_codesnippet_after'), 'google-analytics.com/analytics.js')) {
       $form_state->setErrorByName('google_analytics_codesnippet_after', t('Do not add the tracker code provided by Google into the javascript code snippets! This module already builds the tracker code based on your Google Analytics account number and settings.'));
     }
-    if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['google_analytics_codesnippet_before'])) {
+    if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state->getValue('google_analytics_codesnippet_before'))) {
       $form_state->setErrorByName('google_analytics_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
-    if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['google_analytics_codesnippet_after'])) {
+    if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state->getValue('google_analytics_codesnippet_after'))) {
       $form_state->setErrorByName('google_analytics_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
   }
@@ -570,37 +570,37 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('google_analytics.settings');
     $config
-      ->set('account', $form_state['values']['google_analytics_account'])
-      ->set('cross_domains', $form_state['values']['google_analytics_cross_domains'])
-      ->set('codesnippet.create', $form_state['values']['google_analytics_codesnippet_create'])
-      ->set('codesnippet.before', $form_state['values']['google_analytics_codesnippet_before'])
-      ->set('codesnippet.after', $form_state['values']['google_analytics_codesnippet_after'])
-      ->set('custom.dimension', $form_state['values']['google_analytics_custom_dimension'])
-      ->set('custom.metric', $form_state['values']['google_analytics_custom_metric'])
-      ->set('domain_mode', $form_state['values']['google_analytics_domain_mode'])
-      ->set('track.files', $form_state['values']['google_analytics_trackfiles'])
-      ->set('track.files_extensions', $form_state['values']['google_analytics_trackfiles_extensions'])
-      ->set('track.linkid', $form_state['values']['google_analytics_tracklinkid'])
-      ->set('track.userid', $form_state['values']['google_analytics_trackuserid'])
-      ->set('track.mailto', $form_state['values']['google_analytics_trackmailto'])
-      ->set('track.messages', $form_state['values']['google_analytics_trackmessages'])
-      ->set('track.outbound', $form_state['values']['google_analytics_trackmailto'])
-      ->set('track.site_search', $form_state['values']['google_analytics_site_search'])
-      ->set('track.adsense', $form_state['values']['google_analytics_trackadsense'])
-      ->set('track.displayfeatures', $form_state['values']['google_analytics_trackdisplayfeatures'])
-      ->set('privacy.anonymizeip', $form_state['values']['google_analytics_tracker_anonymizeip'])
-      ->set('privacy.donottrack', $form_state['values']['google_analytics_privacy_donottrack'])
-      ->set('cache', $form_state['values']['google_analytics_cache'])
-      ->set('debug', $form_state['values']['google_analytics_debug'])
-      ->set('visibility.pages_enabled', $form_state['values']['google_analytics_visibility_pages'])
-      ->set('visibility.pages', $form_state['values']['google_analytics_pages'])
-      ->set('visibility.roles_enabled', $form_state['values']['google_analytics_visibility_roles'])
-      ->set('visibility.roles', $form_state['values']['google_analytics_roles'])
-      ->set('visibility.custom', $form_state['values']['google_analytics_custom'])
+      ->set('account', $form_state->getValue('google_analytics_account'))
+      ->set('cross_domains', $form_state->getValue('google_analytics_cross_domains'))
+      ->set('codesnippet.create', $form_state->getValue('google_analytics_codesnippet_create'))
+      ->set('codesnippet.before', $form_state->getValue('google_analytics_codesnippet_before'))
+      ->set('codesnippet.after', $form_state->getValue('google_analytics_codesnippet_after'))
+      ->set('custom.dimension', $form_state->getValue('google_analytics_custom_dimension'))
+      ->set('custom.metric', $form_state->getValue('google_analytics_custom_metric'))
+      ->set('domain_mode', $form_state->getValue('google_analytics_domain_mode'))
+      ->set('track.files', $form_state->getValue('google_analytics_trackfiles'))
+      ->set('track.files_extensions', $form_state->getValue('google_analytics_trackfiles_extensions'))
+      ->set('track.linkid', $form_state->getValue('google_analytics_tracklinkid'))
+      ->set('track.userid', $form_state->getValue('google_analytics_trackuserid'))
+      ->set('track.mailto', $form_state->getValue('google_analytics_trackmailto'))
+      ->set('track.messages', $form_state->getValue('google_analytics_trackmessages'))
+      ->set('track.outbound', $form_state->getValue('google_analytics_trackmailto'))
+      ->set('track.site_search', $form_state->getValue('google_analytics_site_search'))
+      ->set('track.adsense', $form_state->getValue('google_analytics_trackadsense'))
+      ->set('track.displayfeatures', $form_state->getValue('google_analytics_trackdisplayfeatures'))
+      ->set('privacy.anonymizeip', $form_state->getValue('google_analytics_tracker_anonymizeip'))
+      ->set('privacy.donottrack', $form_state->getValue('google_analytics_privacy_donottrack'))
+      ->set('cache', $form_state->getValue('google_analytics_cache'))
+      ->set('debug', $form_state->getValue('google_analytics_debug'))
+      ->set('visibility.pages_enabled', $form_state->getValue('google_analytics_visibility_pages'))
+      ->set('visibility.pages', $form_state->getValue('google_analytics_pages'))
+      ->set('visibility.roles_enabled', $form_state->getValue('google_analytics_visibility_roles'))
+      ->set('visibility.roles', $form_state->getValue('google_analytics_roles'))
+      ->set('visibility.custom', $form_state->getValue('google_analytics_custom'))
       ->save();
 
-    if (isset($form_state['values']['google_analytics_translation_set'])) {
-      $config->set('translation_set', $form_state['values']['google_analytics_translation_set'])->save();
+    if ($form_state->hasValue('google_analytics_translation_set')) {
+      $config->set('translation_set', $form_state->getValue('google_analytics_translation_set'))->save();
     }
 
     parent::submitForm($form, $form_state);
