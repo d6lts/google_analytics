@@ -21,7 +21,7 @@ Drupal.googleanalytics.test.assertSame = function (value1, value2, message) {
   else {
     console.error(message);
   }
-}
+};
 
 Drupal.googleanalytics.test.assertNotSame = function (value1, value2, message) {
   if (value1 !== value2) {
@@ -30,7 +30,7 @@ Drupal.googleanalytics.test.assertNotSame = function (value1, value2, message) {
   else {
     console.error(message);
   }
-}
+};
 
 Drupal.googleanalytics.test.assertTrue = function (value1, message) {
   if (value1 === true) {
@@ -39,7 +39,7 @@ Drupal.googleanalytics.test.assertTrue = function (value1, message) {
   else {
     console.error(message);
   }
-}
+};
 
 Drupal.googleanalytics.test.assertFalse = function (value1, message) {
   if (value1 === false) {
@@ -48,7 +48,7 @@ Drupal.googleanalytics.test.assertFalse = function (value1, message) {
   else {
     console.error(message);
   }
-}
+};
 
 // Run after the documented is ready or Drupal.settings is undefined.
 $(document).ready(function() {
