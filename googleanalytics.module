@@ -286,7 +286,7 @@ function googleanalytics_add_js(&$vars, $hook) {
       $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = "none";';
     }
 
-    // Track logged in users accross all devices.
+    // Track logged in users across all devices.
     if (variable_get('googleanalytics_trackuserid', 0) && user_is_logged_in()) {
       // The USER_ID value should be a unique, persistent, and non-personally
       // identifiable string identifier that represents a user or signed-in
