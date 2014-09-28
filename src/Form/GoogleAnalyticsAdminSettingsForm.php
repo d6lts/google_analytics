@@ -511,11 +511,11 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     }
     $form_state->setValue('google_analytics_custom_dimension', $form_state->getValue(array('google_analytics_custom_dimension', 'indexes')));
 
-    foreach ($form_state->getValue(array('google_analytics_custom_dimension', 'indexes')) as $metric) {
-      $form_state->setValue(array('google_analytics_custom_dimension', 'indexes', $metric['index'], 'value'), trim($metric['value']));
+    foreach ($form_state->getValue(array('google_analytics_custom_metric', 'indexes')) as $metric) {
+      $form_state->setValue(array('google_analytics_custom_metric', 'indexes', $metric['index'], 'value'), trim($metric['value']));
       // Remove empty values from the array.
       if (!Unicode::strlen($form_state->getValue(array('google_analytics_custom_metric', 'indexes', $metric['index'], 'value')))) {
-        $form_state->unsetValue(array('google_analytics_custom_dimension', 'indexes', $metric['index']));
+        $form_state->unsetValue(array('google_analytics_custom_metric', 'indexes', $metric['index']));
       }
     }
     $form_state->setValue('google_analytics_custom_metric', $form_state->getValue(array('google_analytics_custom_metric', 'indexes')));
