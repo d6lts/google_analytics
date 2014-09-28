@@ -271,7 +271,7 @@ function google_analytics_page_alter(&$page) {
       $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = "none";';
     }
 
-    // Track logged in users accross all devices.
+    // Track logged in users across all devices.
     if ($config->get('track.userid') && $account->isAuthenticated()) {
       // The USER_ID value should be a unique, persistent, and non-personally
       // identifiable string identifier that represents a user or signed-in
