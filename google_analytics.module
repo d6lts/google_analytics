@@ -251,7 +251,7 @@ function google_analytics_page_alter(&$page) {
     $codesnippet_after = $config->get('codesnippet.after');
 
     // Build the create only fields list.
-    $create_only_fields = array();
+    $create_only_fields = array('cookieDomain' => 'auto');
     $create_only_fields = array_merge($create_only_fields, $codesnippet_create);
 
     // Domain tracking type.
@@ -280,7 +280,6 @@ function google_analytics_page_alter(&$page) {
     }
 
     // Create a tracker.
-    $create_only_fields = empty($create_only_fields) ? 'auto' : $create_only_fields;
     $script .= 'ga("create", ' . Json::encode($id) . ', ' . Json::encode($create_only_fields) .');';
 
     // Prepare Adsense tracking.
