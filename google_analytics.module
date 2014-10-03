@@ -117,7 +117,7 @@ function google_analytics_page_alter(&$page) {
 
       // Add debugging code.
       if ($debug) {
-        $page['#attached']['library'][] = 'google_analytics/google_analytics_debug';
+        $page['#attached']['library'][] = 'google_analytics/google_analytics.debug';
         // Add the JS test in development to the page.
         // $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/src/Tests/GoogleAnalyticsJavaScriptTest.js';
       }

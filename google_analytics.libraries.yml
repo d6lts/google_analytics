@@ -7,10 +7,10 @@ google_analytics:
     - core/drupal
     - core/drupalSettings
 
-google_analytics_debug:
+google_analytics.debug:
   version: VERSION
   js:
-    google_analytics_debug.js: {}
+    google_analytics.debug.js: {}
   dependencies:
     - core/jquery
     - core/drupal
