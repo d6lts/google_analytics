@@ -223,7 +223,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
 
     // Test whether single domain tracking is active.
     $this->drupalGet('');
-    $this->assertNoRaw('{"cookieDomain":"', '[testGoogleAnalyticsTrackingCode]: Single domain tracking is active.');
+    $this->assertRaw('{"cookieDomain":"auto"}', '[testGoogleAnalyticsTrackingCode]: Single domain tracking is active.');
 
     // Enable "One domain with multiple subdomains".
     \Drupal::config('google_analytics.settings')->set('domain_mode', 1)->save();
