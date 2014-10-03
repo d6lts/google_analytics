@@ -44,7 +44,7 @@ $(document).ready(function() {
           ga("send", "event", "Mails", "Click", this.href.substring(7));
         }
         else if (Drupal.settings.googleanalytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
-          if (Drupal.settings.googleanalytics.trackDomainMode != 2 && !Drupal.googleanalytics.isCrossDomain(this.hostname, Drupal.settings.googleanalytics.trackCrossDomains)) {
+          if (Drupal.settings.googleanalytics.trackDomainMode != 2 || (Drupal.settings.googleanalytics.trackDomainMode == 2 && !Drupal.googleanalytics.isCrossDomain(this.hostname, Drupal.settings.googleanalytics.trackCrossDomains))) {
             // External link clicked / No top-level cross domain clicked.
             console.info("Outbound link '%s' has been tracked.", this.href);
             ga("send", "event", "Outbound links", "Click", this.href);
