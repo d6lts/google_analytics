@@ -206,7 +206,7 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#title' => t('List of download file extensions'),
     '#default_value' => variable_get('googleanalytics_trackfiles_extensions', GOOGLEANALYTICS_TRACKFILES_EXTENSIONS),
     '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GOOGLEANALYTICS_TRACKFILES_EXTENSIONS)),
-    '#maxlength' => 255,
+    '#maxlength' => 500,
   );
   $form['linktracking']['googleanalytics_tracklinkid'] = array(
     '#type' => 'checkbox',
