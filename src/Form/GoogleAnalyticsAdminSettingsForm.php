@@ -540,6 +540,11 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     if ($form_state->getValue('google_analytics_domain_mode') == 2 && $form_state->isValueEmpty('google_analytics_cross_domains')) {
       $form_state->setErrorByName('google_analytics_cross_domains', t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
     }
+    // Clear the domain list if cross domains are disabled.
+    if ($form_state->getValue('google_analytics_domain_mode') != 2) {
+      $form_state->setValue('google_analytics_cross_domains', '');
+    }
+
     // Disallow empty list of download file extensions.
     if ($form_state->getValue('google_analytics_trackfiles') && $form_state->isValueEmpty('google_analytics_trackfiles_extensions')) {
       $form_state->setErrorByName('google_analytics_trackfiles_extensions', t('List of download file extensions cannot empty.'));
