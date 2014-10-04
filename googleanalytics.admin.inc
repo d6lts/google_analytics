@@ -521,11 +521,11 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   if ($form_state['values']['googleanalytics_domain_mode'] != 2) {
     $form_state['values']['googleanalytics_cross_domains'] = '';
   }
+
   // Disallow empty list of download file extensions.
   if ($form_state['values']['googleanalytics_trackfiles'] && empty($form_state['values']['googleanalytics_trackfiles_extensions'])) {
     form_set_error('googleanalytics_trackfiles_extensions', t('List of download file extensions cannot empty.'));
   }
-
   // Clear obsolete local cache if cache has been disabled.
   if (empty($form_state['values']['googleanalytics_cache']) && $form['advanced']['googleanalytics_cache']['#default_value']) {
     googleanalytics_clear_js_cache();
