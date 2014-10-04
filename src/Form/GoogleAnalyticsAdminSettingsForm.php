@@ -240,7 +240,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#default_value' => $config->get('track.files_extensions'),
       '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => GOOGLE_ANALYTICS_TRACKFILES_EXTENSIONS)),
-      '#maxlength' => 255,
+      '#maxlength' => 500,
       '#states' => array(
         'enabled' => array(
           ':input[name="google_analytics_trackfiles"]' => array('checked' => TRUE),
