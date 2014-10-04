@@ -517,6 +517,10 @@ function googleanalytics_admin_settings_form_validate($form, &$form_state) {
   if ($form_state['values']['googleanalytics_domain_mode'] == 2 && empty($form_state['values']['googleanalytics_cross_domains'])) {
     form_set_error('googleanalytics_cross_domains', t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
   }
+  // Clear the domain list if cross domains are disabled.
+  if ($form_state['values']['googleanalytics_domain_mode'] != 2) {
+    $form_state['values']['googleanalytics_cross_domains'] = '';
+  }
   // Disallow empty list of download file extensions.
   if ($form_state['values']['googleanalytics_trackfiles'] && empty($form_state['values']['googleanalytics_trackfiles_extensions'])) {
     form_set_error('googleanalytics_trackfiles_extensions', t('List of download file extensions cannot empty.'));
