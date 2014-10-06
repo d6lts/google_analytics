@@ -439,6 +439,8 @@ function google_analytics_cron() {
  */
 //function google_analytics_item_list__search_results(&$variables) {
 function google_analytics_preprocess_item_list(&$variables) {
+  $config = \Drupal::config('google_analytics.settings');
+
   // Only run on search results list.
   if ($config->get('track.site_search') && $variables['theme_hook_original'] == 'item_list__search_results') {
     // There is no search result $variable available that hold the number of items
