@@ -18,6 +18,7 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -151,8 +152,8 @@ function google_analytics_page_alter(&$page) {
     if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && (strpos(\Drupal::routeMatch()->getRouteName(), 'search.view') === 0) && $keys = google_analytics_search_get_keys()) {
       // hook_item_list__search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
-      $search_path = \Drupal::routeMatch()->getParameter('entity')->getPath();
-      $url_custom = '(window.google_analytics_search_results) ? ' . Json::encode(url('search/' . $search_path, array('query' => array('search' => $keys)))) . ' : ' . Json::encode(url('search/' . $search_path, array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results'))));
+      $entity_id = \Drupal::routeMatch()->getParameter('entity')->id();
+      $url_custom = '(window.google_analytics_search_results) ? ' . Json::encode(Url::fromRoute('search.view_' . $entity_id, array(), array('query' => array('search' => $keys)))->toString()) . ' : ' . Json::encode(Url::fromRoute('search.view_' . $entity_id, array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results')))->toString());
     }
 
     // If this node is a translation of another node, pass the original
@@ -163,7 +164,7 @@ function google_analytics_page_alter(&$page) {
       if ($request->attributes->has('node')) {
         $node = $request->attributes->get('node');
         if ($node && \Drupal::entityManager()->getTranslationFromContext($node) !== $node->getUntranslated()) {
-          $url_custom = Json::encode(url('node/' . $node->id(), array('language' => $node->getUntranslated()->language())));
+          $url_custom = Json::encode(Url::fromRoute('entity.node.canonical', array('node' => $node->id()), array('language' => $node->getUntranslated()->language()))->toString());
         }
       }
     }
