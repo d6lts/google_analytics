@@ -8,20 +8,20 @@ visibility:
   roles: {  }
   custom: '0'
 track:
-  outbound: '1'
-  mailto: '1'
-  files: '1'
+  outbound: true
+  mailto: true
+  files: true
   files_extensions: '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip'
-  linkid: '0'
-  urlfragments: '0'
-  userid: '0'
+  linkid: false
+  urlfragments: false
+  userid: false
   messages: {  }
-  site_search: '0'
-  adsense: '0'
-  displayfeatures: '0'
+  site_search: false
+  adsense: false
+  displayfeatures: false
 privacy:
-  anonymizeip: '1'
-  donottrack: '1'
+  anonymizeip: true
+  donottrack: true
 custom:
   dimension: {  }
   metric: {  }
@@ -29,6 +29,6 @@ codesnippet:
   create: {  }
   before: ''
   after: ''
-translation_set: '0'
-cache: '0'
-debug: '0'
+translation_set: false
+cache: false
+debug: false
