@@ -22,7 +22,7 @@ source:
     - googleanalytics_trackfiles_extensions
     - googleanalytics_tracklinkid
     - googleanalytics_trackurlfragments
-    - google_analytics_trackuserid
+    - googleanalytics_trackuserid
     - googleanalytics_trackmailto
     - googleanalytics_trackoutgoing
     - googleanalytics_translation_set
