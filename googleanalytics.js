@@ -24,7 +24,7 @@ $(document).ready(function() {
         }
         else if (Drupal.googleanalytics.isInternalSpecial(this.href)) {
           // Keep the internal URL for Google Analytics website overlay intact.
-          ga("send", "pageview", { page: Drupal.googleanalytics.getPageUrl(this.href) });
+          ga("send", "pageview", { "page": Drupal.googleanalytics.getPageUrl(this.href) });
         }
       }
       else {
@@ -54,7 +54,7 @@ $(document).ready(function() {
   $(document).bind("cbox_complete", function () {
     var href = $.colorbox.element().attr("href");
     if (href) {
-      ga("send", "pageview", { page: Drupal.googleanalytics.getPageUrl(href) });
+      ga("send", "pageview", { "page": Drupal.googleanalytics.getPageUrl(href) });
     }
   });
 
