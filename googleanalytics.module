@@ -110,6 +110,7 @@ function googleanalytics_page_alter(&$page) {
   // 4. Ignore pages visibility filter for 404 or 403 status codes.
   if (preg_match('/^UA-\d+-\d+$/', $id) && (_googleanalytics_visibility_pages() || in_array($status, $trackable_status_codes)) && _googleanalytics_visibility_user($user)) {
 
+    $context_exists = module_exists('context');
     $debug = variable_get('googleanalytics_debug', 0);
     $url_custom = '';
 
@@ -148,6 +149,11 @@ function googleanalytics_page_alter(&$page) {
       else {
         drupal_add_js(drupal_get_path('module', 'googleanalytics') . '/googleanalytics.js');
       }
+    }
+
+    // Add experiments to the head.
+    if ($context_exists && $plugin = context_get_plugin('reaction', 'googleanalytics_reaction_content_experiment')) {
+      $plugin->execute($variables);
     }
 
     // Add messages tracking.
@@ -330,10 +336,38 @@ function googleanalytics_page_alter(&$page) {
       $script .= 'ga("set", "anonymizeIp", true);';
     }
 
+    // Add context dependend content groups.
+    if ($context_exists && $plugin = context_get_plugin('reaction', 'googleanalytics_reaction_content_group')) {
+      $plugin->execute($googleanalytics_context_content_groups);
+      if (!empty($googleanalytics_context_content_groups)) {
+        foreach ($googleanalytics_context_content_groups as $googleanalytics_context_content_group_id => $googleanalytics_context_content_group_name) {
+          $script .= 'ga("set", "contentGroup' . $googleanalytics_context_content_group_id . '", '. drupal_json_encode($googleanalytics_context_content_group_name) . ');';
+        }
+      }
+    }
+    // Add context depended code snippet.
+    if ($context_exists && $plugin = context_get_plugin('reaction', 'googleanalytics_reaction_code_snippet')) {
+      $plugin->execute($googleanalytics_context_codesnippets);
+    }
+    // Add context depended event tracking.
+    if ($context_exists && $plugin = context_get_plugin('reaction', 'googleanalytics_reaction_event')) {
+      $plugin->execute($googleanalytics_context_events);
+      if (!empty($googleanalytics_context_events['events'])) {
+        foreach ($googleanalytics_context_events['events'] as $googleanalytics_context_event) {
+          $message_events .= 'ga("send", ' . json_encode($googleanalytics_context_event) . ');';
+        }
+      }
+    }
+
     if (!empty($custom_var)) {
       $script .= $custom_var;
     }
-    if (!empty($codesnippet_before)) {
+    if (!empty($codesnippet_before) || !empty($googleanalytics_context_codesnippets['before'])) {
+      if (!empty($googleanalytics_context_codesnippets['before'])) {
+        foreach ($googleanalytics_context_codesnippets['before'] as $googleanalytics_context_codesnippet_before) {
+          $script .= $googleanalytics_context_codesnippet_before;
+        }
+      }
       $script .= $codesnippet_before;
     }
     if (!empty($url_custom)) {
@@ -344,7 +378,12 @@ function googleanalytics_page_alter(&$page) {
     if (!empty($message_events)) {
       $script .= $message_events;
     }
-    if (!empty($codesnippet_after)) {
+    if (!empty($codesnippet_after) || !empty($googleanalytics_context_codesnippets['after'])) {
+      if (!empty($googleanalytics_context_codesnippets['after'])) {
+        foreach ($googleanalytics_context_codesnippets['after'] as $googleanalytics_context_codesnippet_after) {
+          $script .= $googleanalytics_context_codesnippet_after;
+        }
+      }
       $script .= $codesnippet_after;
     }
 
@@ -667,4 +706,74 @@ function _googleanalytics_visibility_header($account) {
   }
 
   return TRUE;
+}
+
+/**
+ * Implements hook_context_plugins().
+ */
+function googleanalytics_context_plugins() {
+  return array(
+    'googleanalytics_reaction_content_experiment' => array(
+      'handler' => array(
+        'path' => drupal_get_path('module', 'googleanalytics'),
+        'file' => 'googleanalytics.context.inc',
+        'class' => 'GoogleAnalyticsReactionContentExperiment',
+        'parent' => 'context_reaction',
+      ),
+    ),
+    'googleanalytics_reaction_content_group' => array(
+      'handler' => array(
+        'path' => drupal_get_path('module', 'googleanalytics'),
+        'file' => 'googleanalytics.context.inc',
+        'class' => 'GoogleAnalyticsReactionContentGroup',
+        'parent' => 'context_reaction',
+      ),
+    ),
+    'googleanalytics_reaction_code_snippet' => array(
+      'handler' => array(
+        'path' => drupal_get_path('module', 'googleanalytics'),
+        'file' => 'googleanalytics.context.inc',
+        'class' => 'GoogleAnalyticsReactionCodeSnippet',
+        'parent' => 'context_reaction',
+      ),
+    ),
+    'googleanalytics_reaction_event' => array(
+      'handler' => array(
+        'path' => drupal_get_path('module', 'googleanalytics'),
+        'file' => 'googleanalytics.context.inc',
+        'class' => 'GoogleAnalyticsReactionEvent',
+        'parent' => 'context_reaction',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_context_registry().
+ */
+function googleanalytics_context_registry() {
+  return array(
+    'reactions' => array(
+      'googleanalytics_reaction_content_experiment' => array(
+        'title' => t('Google Analytics Content Experiment'),
+        'description' => t('Control page experiments in Google Analytics.'),
+        'plugin' => 'googleanalytics_reaction_content_experiment',
+      ),
+      'googleanalytics_reaction_content_group' => array(
+        'title' => t('Google Analytics Content Group'),
+        'description' => t('Control content groups in Google Analytics.'),
+        'plugin' => 'googleanalytics_reaction_content_group',
+      ),
+      'googleanalytics_reaction_code_snippet' => array(
+        'title' => t('Google Analytics Code Snippet'),
+        'description' => t('Control code snippets added to the Google Analytics tracking code.'),
+        'plugin' => 'googleanalytics_reaction_code_snippet',
+      ),
+      'googleanalytics_reaction_event' => array(
+        'title' => t('Google Analytics Event Tracking'),
+        'description' => t('Control events added to the Google Analytics tracking code.'),
+        'plugin' => 'googleanalytics_reaction_event',
+      ),
+    ),
+  );
 }
