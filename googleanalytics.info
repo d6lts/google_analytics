@@ -5,3 +5,5 @@ package = Statistics
 configure = admin/config/system/googleanalytics
 files[] = googleanalytics.test
 test_dependencies[] = token
+test_dependencies[] = ctools
+test_dependencies[] = context
