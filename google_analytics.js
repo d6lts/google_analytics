@@ -28,7 +28,7 @@
           }
           else if (Drupal.google_analytics.isInternalSpecial(this.href)) {
             // Keep the internal URL for Google Analytics website overlay intact.
-            ga("send", "pageview", { page: Drupal.google_analytics.getPageUrl(this.href) });
+            ga("send", "pageview", { "page": Drupal.google_analytics.getPageUrl(this.href) });
           }
         }
         else {
@@ -58,7 +58,7 @@
     $(document).on("cbox_complete", function () {
       var href = $.colorbox.element().attr("href");
       if (href) {
-        ga("send", "pageview", { page: Drupal.google_analytics.getPageUrl(href) });
+        ga("send", "pageview", { "page": Drupal.google_analytics.getPageUrl(href) });
       }
     });
 
