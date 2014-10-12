@@ -30,7 +30,7 @@ $(document).ready(function() {
         else if (Drupal.googleanalytics.isInternalSpecial(this.href)) {
           // Keep the internal URL for Google Analytics website overlay intact.
           console.info("Click on internal special link '%s' has been tracked.", Drupal.googleanalytics.getPageUrl(this.href));
-          ga("send", "pageview", { page: Drupal.googleanalytics.getPageUrl(this.href) });
+          ga("send", "pageview", { "page": Drupal.googleanalytics.getPageUrl(this.href) });
         }
         else {
           // e.g. anchor in same page or other internal page link
@@ -73,7 +73,7 @@ $(document).ready(function() {
     var href = $.colorbox.element().attr("href");
     if (href) {
       console.info("Colorbox transition to url '%s' has been tracked.", Drupal.googleanalytics.getPageUrl(href));
-      ga("send", "pageview", { page: Drupal.googleanalytics.getPageUrl(href) });
+      ga("send", "pageview", { "page": Drupal.googleanalytics.getPageUrl(href) });
     }
   });
 
