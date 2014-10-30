@@ -60,9 +60,9 @@ function google_analytics_theme() {
 }
 
 /**
- * Implements hook_page_alter() to insert JavaScript to the appropriate scope/region of the page.
+ * Implements hook_page_attachments() to insert JavaScript to the appropriate scope/region of the page.
  */
-function google_analytics_page_alter(&$page) {
+function google_analytics_page_attachments(array &$page) {
   $account = \Drupal::currentUser();
   $config = \Drupal::config('google_analytics.settings');
   $id = $config->get('account');
