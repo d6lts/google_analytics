@@ -49,17 +49,6 @@ function google_analytics_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_theme().
- */
-function google_analytics_theme() {
-  return array(
-    'google_analytics_admin_custom_var_table' => array(
-      'render element' => 'form',
-    ),
-  );
-}
-
-/**
  * Implements hook_page_attachments() to insert JavaScript to the appropriate scope/region of the page.
  */
 function google_analytics_page_attachments(array &$page) {
@@ -675,42 +664,4 @@ function _google_analytics_visibility_header($account) {
   }
 
   return TRUE;
-}
-
-/**
- * Layout for the custom variables table in the admin settings form.
- */
-function theme_google_analytics_admin_custom_var_table($variables) {
-  $form = $variables['form'];
-  $table = array(
-    '#type' => 'table',
-  );
-
-  $header = array(
-    array('data' => t('Index')),
-    array('data' => t('Value')),
-  );
-
-  $rows = array();
-  foreach (Element::children($form['indexes']) as $key => $id) {
-    $rows[] = array(
-      'data' => array(
-        drupal_render($form['indexes'][$id]['index']),
-        drupal_render($form['indexes'][$id]['value']),
-      ),
-    );
-  }
-
-  $table += array(
-    '#header' => $header,
-    '#rows' => $rows,
-  );
-
-  $output = drupal_render($table);
-  $output .= drupal_render($form['google_analytics_description']);
-  if (isset($form['google_analytics_token_tree'])) {
-    $output .= drupal_render($form['google_analytics_token_tree']);
-  }
-
-  return $output;
 }

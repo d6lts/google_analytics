@@ -342,6 +342,14 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'details',
     );
 
+    $form['google_analytics_custom_dimension']['indexes'] = array(
+      '#type' => 'table',
+      '#header' => array(
+        array('data' => t('Index')),
+        array('data' => t('Value')),
+      ),
+    );
+
     $google_analytics_custom_dimension = $config->get('custom.dimension');
 
     // Google Analytics supports up to 20 custom dimensions.
@@ -390,6 +398,14 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#title' => t('Custom metrics'),
       '#tree' => TRUE,
       '#type' => 'details',
+    );
+
+    $form['google_analytics_custom_metric']['indexes'] = array(
+      '#type' => 'table',
+      '#header' => array(
+        array('data' => t('Index')),
+        array('data' => t('Value')),
+      ),
     );
 
     $google_analytics_custom_metric = $config->get('custom.metric');
