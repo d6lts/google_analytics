@@ -291,7 +291,7 @@ function googleanalytics_add_js(&$vars, $hook) {
       // The USER_ID value should be a unique, persistent, and non-personally
       // identifiable string identifier that represents a user or signed-in
       // account across devices.
-      $create_only_fields['userId'] = drupal_base64_encode(_googleanalytics_get_hash_salt() . $user->uid);
+      $create_only_fields['userId'] = _googleanalytics_hmac_base64($user->uid, drupal_get_private_key() . _googleanalytics_get_hash_salt());
     }
 
     // Create a tracker.
@@ -631,10 +631,25 @@ function _googleanalytics_visibility_header($account) {
  * Gets a salt useful for hardening against SQL injection.
  */
 function _googleanalytics_get_hash_salt() {
-  global $drupal_hash_salt, $databases;
+  global $drupal_hash_salt, $db_url;
   // If the $drupal_hash_salt variable is empty, a hash of the serialized
   // database credentials is used as a fallback salt.
-  return empty($drupal_hash_salt) ? hash('sha256', serialize($databases)) : $drupal_hash_salt;
+  return empty($drupal_hash_salt) ? hash('sha256', $db_url) : $drupal_hash_salt;
+}
+
+/**
+ * Backport of https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/drupal_hmac_base64/7
+ *
+ * Calculates a base-64 encoded, URL-safe sha-256 hmac.
+ */
+function _googleanalytics_hmac_base64($data, $key) {
+  // Casting $data and $key to strings here is necessary to avoid empty string
+  // results of the hash function if they are not scalar values. As this
+  // function is used in security-critical contexts like token validation it is
+  // important that it never returns an empty string.
+  $hmac = base64_encode(hash_hmac('sha256', (string) $data, (string) $key, TRUE));
+  // Modify the hmac so it's safe to use in URLs.
+  return strtr($hmac, array('+' => '-', '/' => '_', '=' => ''));
 }
 
 /**
