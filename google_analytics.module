@@ -266,7 +266,7 @@ function google_analytics_page_attachments(array &$page) {
       // The USER_ID value should be a unique, persistent, and non-personally
       // identifiable string identifier that represents a user or signed-in
       // account across devices.
-      $create_only_fields['userId'] = Crypt::hashBase64(Settings::getHashSalt() . $account->id());
+      $create_only_fields['userId'] = Crypt::hmacBase64($account->id(), \Drupal::service('private_key')->get() . Settings::getHashSalt());
     }
 
     // Create a tracker.
