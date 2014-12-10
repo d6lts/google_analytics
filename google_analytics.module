@@ -100,10 +100,7 @@ function google_analytics_page_attachments(array &$page) {
     }
 
     if (!empty($link_settings)) {
-      $page['#attached']['js'][] = array(
-        'data' => array('google_analytics' => $link_settings),
-        'type' => 'setting',
-      );
+      $page['#attached']['drupalSettings'][] = array('google_analytics' => $link_settings);
 
       // Add debugging code.
       if ($debug) {
