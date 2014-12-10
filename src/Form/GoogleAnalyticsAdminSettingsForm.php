@@ -55,7 +55,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
           'google_analytics/google_analytics.admin',
         ),
       ),
-      //'#tree' => TRUE,
     );
 
     $form['tracking']['domain_tracking'] = array(
