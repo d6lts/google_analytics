@@ -336,7 +336,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     // Custom Dimensions.
     $form['google_analytics_custom_dimension'] = array(
       '#description' => t('You can set values for Google Analytics <a href="@custom_var_documentation">Custom Dimensions</a> here. You must have already configured your custom dimensions in the <a href="@setup_documentation">Google Analytics Management Interface</a>. You may use tokens. Global and user tokens are always available; on node pages, node tokens are also available. A dimension <em>value</em> is allowed to have a maximum lenght of 150 bytes. Expect longer values to get trimmed.', array('@custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets', '@setup_documentation' => 'https://support.google.com/analytics/answer/2709829')),
-      '#theme' => 'google_analytics_admin_custom_var_table',
       '#title' => t('Custom dimensions'),
       '#tree' => TRUE,
       '#type' => 'details',
@@ -394,7 +393,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     // Custom Metrics.
     $form['google_analytics_custom_metric'] = array(
       '#description' => t('You can add Google Analytics <a href="@custom_var_documentation">Custom Metrics</a> here. You must have already configured your custom metrics in the <a href="@setup_documentation">Google Analytics Management Interface</a>. You may use tokens. Global and user tokens are always available; on node pages, node tokens are also available.', array('@custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets', '@setup_documentation' => 'https://support.google.com/analytics/answer/2709829')),
-      '#theme' => 'google_analytics_admin_custom_var_table',
       '#title' => t('Custom metrics'),
       '#tree' => TRUE,
       '#type' => 'details',
