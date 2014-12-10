@@ -455,8 +455,8 @@ function google_analytics_preprocess_item_list(&$variables) {
 function google_analytics_search_get_keys() {
   static $return;
   if (!isset($return)) {
-    // Extract keys as remainder of path^.
-    $path = explode('/', current_path(), 3);
+    // Extract keys as remainder of path.
+    $path = explode('/', Url::fromRoute('<current>')->toString(), 3);
 
     // Based on Drupal\search\Controller\SearchController::view
     // Build the form first, because it may redirect during the submit,
@@ -627,7 +627,7 @@ function _google_analytics_visibility_pages() {
       $pages = Unicode::strtolower($setting_pages);
       if ($visibility < 2) {
         // Compare the lowercase path alias (if any) and internal path.
-        $path = current_path();
+        $path = Url::fromRoute('<current>')->toString();
         $path_alias = Unicode::strtolower(\Drupal::service('path.alias_manager')->getAliasByPath($path));
         $page_match = \Drupal::service('path.matcher')->matchPath($path_alias, $pages) || (($path != $path_alias) && \Drupal::service('path.matcher')->matchPath($path, $pages));
         // When $visibility has a value of 0, the tracking code is displayed on
