@@ -51,7 +51,9 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'vertical_tabs',
       '#title' => t('Tracking scope'),
       '#attached' => array(
-        'js' => array(drupal_get_path('module', 'google_analytics') . '/google_analytics.admin.js'),
+        'library' => array(
+          'google_analytics/google_analytics.admin',
+        ),
       ),
       //'#tree' => TRUE,
     );
