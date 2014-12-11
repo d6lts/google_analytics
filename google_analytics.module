@@ -106,7 +106,7 @@ function google_analytics_page_attachments(array &$page) {
       if ($debug) {
         $page['#attached']['library'][] = 'google_analytics/google_analytics.debug';
         // Add the JS test in development to the page.
-        // $page['#attached']['js'][] = drupal_get_path('module', 'google_analytics') . '/src/Tests/GoogleAnalyticsJavaScriptTest.js';
+        // $page['#attached']['library'][] = 'google_analytics/google_analytics.test';
       }
       else {
         $page['#attached']['library'][] = 'google_analytics/google_analytics';
