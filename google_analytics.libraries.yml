@@ -32,4 +32,3 @@ google_analytics.test:
     - core/jquery
     - core/drupal
     - core/drupalSettings
-    
