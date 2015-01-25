@@ -17,7 +17,7 @@ use Drupal\Core\Url;
 class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
   /**
-   * Implements \Drupal\Core\Form\FormInterface::getFormID().
+   * {@inheritdoc}
    */
   public function getFormID() {
     return 'google_analytics_admin_settings';
