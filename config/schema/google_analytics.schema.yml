@@ -27,8 +27,11 @@ google_analytics.settings:
           type: integer
           label: 'Add tracking for specific roles'
         roles:
-          type: array
+          type: sequence
           label: 'Roles'
+          sequence:
+            type: string
+            label: 'Role'
         custom:
           type: integer
           label: 'Allow users to customize tracking on their account page'
@@ -58,8 +61,11 @@ google_analytics.settings:
           type: boolean
           label: 'Track User ID'
         messages:
-          type: array
+          type: sequence
           label: 'Track messages of type'
+          sequence:
+            type: string
+            label: 'Message type'
         site_search:
           type: boolean
           label: 'Track internal search'
@@ -84,18 +90,27 @@ google_analytics.settings:
       label: 'Custom variables'
       mapping:
         dimension:
-          type: array
+          type: sequence
           label: 'Custom dimensions'
+          sequence:
+            type: string
+            label: 'Dimension'
         metric:
-          type: array
+          type: sequence
           label: 'Custom metrics'
+          sequence:
+            type: string
+            label: 'Metric'
     codesnippet:
       type: mapping
       label: 'Custom code snippets'
       mapping:
         create:
-          type: array
+          type: sequence
           label: 'Create only fields'
+          sequence:
+            type: string
+            label: 'Create field'
         before:
           type: string
           label: 'Code snippet (before)'
