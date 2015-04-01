@@ -63,3 +63,7 @@ process:
 destination:
   plugin: config
   config_name: google_analytics.settings
+dependencies:
+  module:
+    - google_analytics
+    - migrate_drupal
