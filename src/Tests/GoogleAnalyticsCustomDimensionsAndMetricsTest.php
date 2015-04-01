@@ -42,7 +42,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
 
   function testGoogleAnalyticsCustomDimensions() {
     $ua_code = 'UA-123456-3';
-    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
+    $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Basic test if the feature works.
     $google_analytics_custom_dimension = array(
@@ -67,7 +67,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
         'value' => 'Bar 5',
       ),
     );
-    \Drupal::config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
+    $this->config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
     $this->drupalGet('');
 
     foreach ($google_analytics_custom_dimension as $dimension) {
@@ -76,7 +76,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
 
     // Test whether tokens are replaced in custom dimension values.
     $site_slogan = $this->randomMachineName(16);
-    \Drupal::config('system.site')->set('slogan', $site_slogan)->save();
+    $this->config('system.site')->set('slogan', $site_slogan)->save();
 
     $google_analytics_custom_dimension = array(
       1 => array(
@@ -97,7 +97,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
         'value' => '0',
       ),
     );
-    \Drupal::config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
+    $this->config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
     $this->verbose('<pre>' . print_r($google_analytics_custom_dimension, TRUE) . '</pre>');
 
     $this->drupalGet('');
@@ -109,7 +109,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
 
   function testGoogleAnalyticsCustomMetrics() {
     $ua_code = 'UA-123456-3';
-    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
+    $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Basic test if the feature works.
     $google_analytics_custom_metric = array(
@@ -139,7 +139,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
         'value_expected' => 5,
       ),
     );
-    \Drupal::config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
+    $this->config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
     $this->drupalGet('');
 
     foreach ($google_analytics_custom_metric as $metric) {
@@ -166,7 +166,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
         'value' => '0',
       ),
     );
-    \Drupal::config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
+    $this->config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
     $this->verbose('<pre>' . print_r($google_analytics_custom_metric, TRUE) . '</pre>');
 
     $this->drupalGet('');

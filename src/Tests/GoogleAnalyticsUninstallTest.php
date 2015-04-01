@@ -45,10 +45,10 @@ class GoogleAnalyticsUninstallTest extends WebTestBase {
     $ua_code = 'UA-123456-1';
 
     // Show tracker in pages.
-    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
+    $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Enable local caching of analytics.js
-    \Drupal::config('google_analytics.settings')->set('cache', 1)->save();
+    $this->config('google_analytics.settings')->set('cache', 1)->save();
 
     // Load page to get the analytics.js downloaded into local cache.
     $this->drupalGet('');

@@ -46,7 +46,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
 
   function testGoogleAnalyticsSearchTracking() {
     $ua_code = 'UA-123456-1';
-    \Drupal::config('google_analytics.settings')->set('account', $ua_code)->save();
+    $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -56,7 +56,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $this->assertNoRaw('ga("set", "page",', '[testGoogleAnalyticsSearch]: Custom url not set.');
 
     // Enable site search support.
-    \Drupal::config('google_analytics.settings')->set('track.site_search', 1)->save();
+    $this->config('google_analytics.settings')->set('track.site_search', 1)->save();
 
     // Search for random string.
     $search = array();
