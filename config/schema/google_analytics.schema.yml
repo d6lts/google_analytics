@@ -113,7 +113,7 @@ google_analytics.settings:
                 type: integer
                 label: Index
               value:
-                type: float
+                type: string
                 label: Value
     codesnippet:
       type: mapping
