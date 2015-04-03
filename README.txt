@@ -77,3 +77,23 @@ provided for any customisations you include.
 
 To speed up page loading you may also cache the Google Analytics "analytics.js"
 file locally.
+
+Manual JS debugging
+===================
+For manual debugging of the JS code you are able to create a test node. This
+is the example HTML code for this test node. You need to enable debugging mode
+in your Drupal configuration of Google Analytics settings to see verbose
+messages in your browsers JS console.
+
+Title: Google Analytics test page
+
+Body:
+<ul>
+  <li><a href="mailto:foo@example.com">Mailto</a></li>
+  <li><a href="/files/test.txt">Download file</a></li>
+  <li><a class="colorbox" href="#">Open colorbox</a></li>
+  <li><a href="http://example.com/">External link</a></li>
+  <li><a href="/go/test">Go link</a></li>
+</ul>
+
+Text format: Full HTML
