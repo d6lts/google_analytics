@@ -87,3 +87,23 @@ Known issues
   optional for GA, but if installed you need at minimum this versions or you may
   experience the issues documented in #1035030.
 - Ubercart: The minimum required Drupal 6 version is 6.x-2.6.
+
+Manual JS debugging
+===================
+For manual debugging of the JS code you are able to create a test node. This
+is the example HTML code for this test node. You need to enable debugging mode
+in your Drupal configuration of Google Analytics settings to see verbose
+messages in your browsers JS console.
+
+Title: Google Analytics test page
+
+Body:
+<ul>
+  <li><a href="mailto:foo@example.com">Mailto</a></li>
+  <li><a href="/files/test.txt">Download file</a></li>
+  <li><a class="colorbox" href="#">Open colorbox</a></li>
+  <li><a href="http://example.com/">External link</a></li>
+  <li><a href="/go/test">Go link</a></li>
+</ul>
+
+Text format: Full HTML
