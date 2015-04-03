@@ -93,14 +93,28 @@ google_analytics.settings:
           type: sequence
           label: 'Custom dimensions'
           sequence:
-            type: string
+            type: mapping
             label: 'Dimension'
+            mapping:
+              index:
+                type: integer
+                label: Index
+              value:
+                type: string
+                label: Value
         metric:
           type: sequence
           label: 'Custom metrics'
           sequence:
-            type: string
+            type: mapping
             label: 'Metric'
+            mapping:
+              index:
+                type: integer
+                label: Index
+              value:
+                type: string
+                label: Value
     codesnippet:
       type: mapping
       label: 'Custom code snippets'

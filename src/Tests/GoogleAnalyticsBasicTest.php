@@ -7,6 +7,7 @@
 
 namespace Drupal\google_analytics\Tests;
 
+use Drupal\Core\Session\AccountInterface;
 use Drupal\simpletest\WebTestBase;
 
 /**
@@ -76,7 +77,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Disable tracking on "admin*" pages only.
     $this->config('google_analytics.settings')->set('visibility.pages', "admin\nadmin/*")->save();
     // Enable tracking only for authenticated users only.
-    $this->config('google_analytics.settings')->set('visibility.roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
+    $this->config('google_analytics.settings')->set('visibility.roles', array(AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE))->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');

@@ -14,7 +14,7 @@ use Drupal\simpletest\WebTestBase;
  * Test custom dimensions and metrics functionality of Google Analytics module.
  *
  * @group Google Analytics
- * @requires module token
+ * @dependencies token
  */
 class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
 

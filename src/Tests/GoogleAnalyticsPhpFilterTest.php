@@ -14,7 +14,7 @@ use Drupal\simpletest\WebTestBase;
  * Test php filter functionality of Google Analytics module.
  *
  * @group Google Analytics
- * @requires module php
+ * @dependencies php
  */
 class GoogleAnalyticsPhpFilterTest extends WebTestBase {
 
