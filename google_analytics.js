@@ -24,22 +24,22 @@
           // for download tracking?
           else if (drupalSettings.google_analytics.trackDownload && Drupal.google_analytics.isDownload(this.href)) {
             // Download link clicked.
-            ga("send", "event", "Downloads", Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase(), Drupal.google_analytics.getPageUrl(this.href));
+            ga("send", "event", "Downloads", Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase(), { "page": Drupal.google_analytics.getPageUrl(this.href), "useBeacon": true });
           }
           else if (Drupal.google_analytics.isInternalSpecial(this.href)) {
             // Keep the internal URL for Google Analytics website overlay intact.
-            ga("send", "pageview", { "page": Drupal.google_analytics.getPageUrl(this.href) });
+            ga("send", "pageview", { "page": Drupal.google_analytics.getPageUrl(this.href), "useBeacon": true });
           }
         }
         else {
           if (drupalSettings.google_analytics.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
             // Mailto link clicked.
-            ga("send", "event", "Mails", "Click", this.href.substring(7));
+            ga("send", "event", "Mails", "Click", { "page": this.href.substring(7), "useBeacon": true });
           }
           else if (drupalSettings.google_analytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
             if (drupalSettings.google_analytics.trackDomainMode != 2 || (drupalSettings.google_analytics.trackDomainMode == 2 && !Drupal.google_analytics.isCrossDomain(this.hostname, drupalSettings.google_analytics.trackCrossDomains))) {
               // External link clicked / No top-level cross domain clicked.
-              ga("send", "event", "Outbound links", "Click", this.href);
+              ga("send", "event", "Outbound links", "Click", { "page": this.href, "useBeacon": true });
             }
           }
         }
