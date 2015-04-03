@@ -7,11 +7,11 @@ $(document).ready(function() {
   // clicks on all elements.
   $(document.body).bind("mousedown keyup touchstart", function(event) {
     console.group("Running Google Analytics for Drupal.");
-    console.info(event);
+    console.info("Event '%s' has been detected.", event.type);
 
     // Catch only the first parent link of a clicked element.
     $(event.target).parents("a:first,area:first").andSelf().filter("a,area").each(function() {
-      console.info("Element '%o' has been detected. Link '%s' found.", this, this.href);
+      console.info("Closest element '%o' has been found. URL '%s' extracted.", this, this.href);
 
       // Is the clicked URL internal?
       if (Drupal.googleanalytics.isInternal(this.href)) {
