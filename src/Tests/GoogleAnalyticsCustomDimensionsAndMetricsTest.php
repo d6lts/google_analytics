@@ -116,34 +116,30 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
       1 => array(
         'index' => 1,
         'value' => '6',
-        'value_expected' => 6,
       ),
       2 => array(
         'index' => 2,
         'value' => '8000',
-        'value_expected' => 8000,
       ),
       3 => array(
         'index' => 3,
         'value' => '7.8654',
-        'value_expected' => 7.8654,
       ),
       4 => array(
         'index' => 4,
         'value' => '1123.4',
-        'value_expected' => 1123.4,
       ),
       5 => array(
         'index' => 5,
         'value' => '5,67',
-        'value_expected' => 5,
       ),
     );
+
     $this->config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
     $this->drupalGet('');
 
     foreach ($google_analytics_custom_metric as $metric) {
-      $this->assertRaw('ga("set", ' . Json::encode('metric' . $metric['index']) . ', ' . Json::encode($metric['value_expected']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Metric #' . $metric['index'] . ' is shown.');
+      $this->assertRaw('ga("set", ' . Json::encode('metric' . $metric['index']) . ', ' . Json::encode((float) $metric['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Metric #' . $metric['index'] . ' is shown.');
     }
 
     // Test whether tokens are replaced in custom metric values.
