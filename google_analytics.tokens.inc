@@ -5,7 +5,7 @@
  * Builds placeholder replacement tokens for user-related data.
  */
 
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\SafeMarkup;
 
 /**
  * Implements hook_token_info().
@@ -42,12 +42,12 @@ function google_analytics_tokens($type, $tokens, array $data = array(), array $o
         // Basic user account information.
         case 'role-names':
           $names = implode(',', $account->getRoles());
-          $replacements[$original] = $sanitize ? String::checkPlain($names) : $names;
+          $replacements[$original] = $sanitize ? SafeMarkup::checkPlain($names) : $names;
           break;
 
         case 'role-ids':
           $ids = implode(',', array_keys($account->getRoles()));
-          $replacements[$original] = $sanitize ? String::checkPlain($ids) : $ids;
+          $replacements[$original] = $sanitize ? SafeMarkup::checkPlain($ids) : $ids;
           break;
       }
     }

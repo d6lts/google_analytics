@@ -186,7 +186,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       ),
       '#default_value' => $config->get('visibility.roles_enabled'), // @FIXME rename variable
     );
-    $role_options = array_map(array('\Drupal\Component\Utility\String', 'checkPlain'), user_role_names());
+    $role_options = array_map(array('\Drupal\Component\Utility\SafeMarkup', 'checkPlain'), user_role_names());
     $form['tracking']['role_vis_settings']['google_analytics_roles'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Roles'),
