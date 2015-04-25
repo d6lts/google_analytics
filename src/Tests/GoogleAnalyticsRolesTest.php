@@ -7,6 +7,7 @@
 
 namespace Drupal\google_analytics\Tests;
 
+use Drupal\Core\Session\AccountInterface;
 use Drupal\simpletest\WebTestBase;
 
 /**
@@ -66,7 +67,7 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     // Test if the non-default settings are working as expected.
 
     // Enable tracking only for authenticated users.
-    $this->config('google_analytics.settings')->set('visibility.roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
+    $this->config('google_analytics.settings')->set('visibility.roles', array(AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE))->save();
 
     $this->drupalGet('');
     $this->assertRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is displayed for authenticated users only on frontpage.');
@@ -95,7 +96,7 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is added to every role and NOT displayed in admin section for authenticated users.');
 
     // Disable tracking for authenticated users.
-    $this->config('google_analytics.settings')->set('visibility.roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID))->save();
+    $this->config('google_analytics.settings')->set('visibility.roles', array(AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE))->save();
 
     $this->drupalGet('');
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is NOT displayed on frontpage for excluded authenticated users.');
