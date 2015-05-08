@@ -21,7 +21,7 @@ class GoogleAnalyticsUninstallTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('google_analytics');
+  public static $modules = ['google_analytics'];
 
   /**
    * {@inheritdoc}
@@ -29,11 +29,11 @@ class GoogleAnalyticsUninstallTest extends WebTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer google analytics',
       'administer modules',
-    );
+    ];
 
     // User to set up google_analytics.
     $this->admin_user = $this->drupalCreateUser($permissions);
@@ -58,7 +58,7 @@ class GoogleAnalyticsUninstallTest extends WebTestBase {
     $this->assertTrue(file_exists($cache_path . '/analytics.js'), 'Cached analytics.js tracking file has been found.');
 
     // Uninstall the module.
-    $edit = array();
+    $edit = [];
     $edit['uninstall[google_analytics]'] = TRUE;
     $this->drupalPostForm('admin/modules/uninstall', $edit, t('Uninstall'));
     $this->assertNoText(\Drupal::translation()->translate('Configuration deletions'), 'No configuration deletions listed on the module install confirmation page.');

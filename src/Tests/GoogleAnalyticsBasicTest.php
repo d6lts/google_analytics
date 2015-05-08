@@ -22,7 +22,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('google_analytics');
+  public static $modules = ['google_analytics'];
 
   /**
    * {@inheritdoc}
@@ -30,12 +30,12 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer google analytics',
       'administer modules',
       'administer site configuration',
-    );
+    ];
 
     // User to set up google_analytics.
     $this->admin_user = $this->drupalCreateUser($permissions);
@@ -77,7 +77,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Disable tracking on "admin*" pages only.
     $this->config('google_analytics.settings')->set('visibility.pages', "admin\nadmin/*")->save();
     // Enable tracking only for authenticated users only.
-    $this->config('google_analytics.settings')->set('visibility.roles', array(AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE))->save();
+    $this->config('google_analytics.settings')->set('visibility.roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -108,7 +108,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Switch back to every page except the listed pages.
     $this->config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
     // Enable tracking code for all user roles.
-    $this->config('google_analytics.settings')->set('visibility.roles', array())->save();
+    $this->config('google_analytics.settings')->set('visibility.roles', [])->save();
 
     // Test whether 403 forbidden tracking code is shown if user has no access.
     $this->drupalGet('admin');
@@ -127,7 +127,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
       ->set('cache.page.max_age', 3600)
       ->save();
     // Test whether DNT headers will fail to disable embedding of tracking code.
-    $this->drupalGet('', array(), array('DNT: 1'));
+    $this->drupalGet('', [], ['DNT: 1']);
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: DNT header send from client, but page caching is enabled and tracker cannot removed.');
     // DNT works only with system internal page cache disabled.
     $this->config('system.performance')
@@ -137,11 +137,11 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('');
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: Tracking is enabled without DNT header.');
     // Test whether DNT header is able to remove the tracking code.
-    $this->drupalGet('', array(), array('DNT: 1'));
+    $this->drupalGet('', [], ['DNT: 1']);
     $this->assertNoRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: DNT header received from client. Tracking has been disabled by browser.');
     // Disable DNT feature and see if tracker is still embedded.
     $this->config('google_analytics.settings')->set('privacy.donottrack', 0)->save();
-    $this->drupalGet('', array(), array('DNT: 1'));
+    $this->drupalGet('', [], ['DNT: 1']);
     $this->assertRaw('ga("send", "pageview");', '[testGoogleAnalyticsDNTVisibility]: DNT feature is disabled, DNT header from browser has been ignored.');
   }
 
@@ -152,7 +152,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Show tracking code on every page except the listed pages.
     $this->config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
     // Enable tracking code for all user roles.
-    $this->config('google_analytics.settings')->set('visibility.roles', array())->save();
+    $this->config('google_analytics.settings')->set('visibility.roles', [])->save();
 
     /* Sample JS code as added to page:
     <script type="text/javascript" src="/sites/all/modules/google_analytics/google_analytics.js?w"></script>
@@ -261,7 +261,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Check if text and link is shown on 'Status Reports' page.
     // Requires 'administer site configuration' permission.
     $this->drupalGet('admin/reports/status');
-    $this->assertRaw(t('Google Analytics module has debugging enabled. Please disable debugging setting in production sites from the <a href="@url">Google Analytics settings page</a>.', array('@url' => \Drupal::url('google_analytics.admin_settings_form'))), '[testGoogleAnalyticsConfiguration]: Debugging enabled is shown on Status Reports page.');
+    $this->assertRaw(t('Google Analytics module has debugging enabled. Please disable debugging setting in production sites from the <a href="@url">Google Analytics settings page</a>.', ['@url' => \Drupal::url('google_analytics.admin_settings_form')]), '[testGoogleAnalyticsConfiguration]: Debugging enabled is shown on Status Reports page.');
 
     // Test whether debugging script has been disabled.
     $this->config('google_analytics.settings')->set('debug', 0)->save();
@@ -269,13 +269,13 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsTrackingCode]: Google debugging script has been disabled.');
 
     // Test whether the CREATE and BEFORE and AFTER code is added to the tracker.
-    $codesnippet_create = array(
+    $codesnippet_create = [
       'cookieDomain' => 'foo.example.com',
       'cookieName' => 'myNewName',
       'cookieExpires' => 20000,
       'allowAnchor' => TRUE,
       'sampleRate' => 4.3,
-    );
+    ];
     $this->config('google_analytics.settings')
       ->set('codesnippet.create', $codesnippet_create)
       ->set('codesnippet.before', 'ga("set", "forceSSL", true);')

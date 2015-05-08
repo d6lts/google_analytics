@@ -23,7 +23,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('google_analytics', 'token');
+  public static $modules = ['google_analytics', 'token'];
 
   /**
    * {@inheritdoc}
@@ -31,10 +31,10 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer google analytics',
-    );
+    ];
 
     // User to set up google_analytics.
     $this->admin_user = $this->drupalCreateUser($permissions);
@@ -45,28 +45,28 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Basic test if the feature works.
-    $google_analytics_custom_dimension = array(
-      1 => array(
+    $google_analytics_custom_dimension = [
+      1 => [
         'index' => 1,
         'value' => 'Bar 1',
-      ),
-      2 => array(
+      ],
+      2 => [
         'index' => 2,
         'value' => 'Bar 2',
-      ),
-      3 => array(
+      ],
+      3 => [
         'index' => 3,
         'value' => 'Bar 3',
-      ),
-      4 => array(
+      ],
+      4 => [
         'index' => 4,
         'value' => 'Bar 4',
-      ),
-      5 => array(
+      ],
+      5 => [
         'index' => 5,
         'value' => 'Bar 5',
-      ),
-    );
+      ],
+    ];
     $this->config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
     $this->drupalGet('');
 
@@ -78,25 +78,25 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $site_slogan = $this->randomMachineName(16);
     $this->config('system.site')->set('slogan', $site_slogan)->save();
 
-    $google_analytics_custom_dimension = array(
-      1 => array(
+    $google_analytics_custom_dimension = [
+      1 => [
         'index' => 1,
         'value' => 'Value: [site:slogan]',
-      ),
-      2 => array(
+      ],
+      2 => [
         'index' => 2,
         'value' => $this->randomMachineName(16),
-      ),
-      3 => array(
+      ],
+      3 => [
         'index' => 3,
         'value' => '',
-      ),
+      ],
       // #2300701: Custom dimensions and custom metrics not outputed on zero value.
-      4 => array(
+      4 => [
         'index' => 4,
         'value' => '0',
-      ),
-    );
+      ],
+    ];
     $this->config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
     $this->verbose('<pre>' . print_r($google_analytics_custom_dimension, TRUE) . '</pre>');
 
@@ -112,28 +112,28 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Basic test if the feature works.
-    $google_analytics_custom_metric = array(
-      1 => array(
+    $google_analytics_custom_metric = [
+      1 => [
         'index' => 1,
         'value' => '6',
-      ),
-      2 => array(
+      ],
+      2 => [
         'index' => 2,
         'value' => '8000',
-      ),
-      3 => array(
+      ],
+      3 => [
         'index' => 3,
         'value' => '7.8654',
-      ),
-      4 => array(
+      ],
+      4 => [
         'index' => 4,
         'value' => '1123.4',
-      ),
-      5 => array(
+      ],
+      5 => [
         'index' => 5,
         'value' => '5,67',
-      ),
-    );
+      ],
+    ];
 
     $this->config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
     $this->drupalGet('');
@@ -143,25 +143,25 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     }
 
     // Test whether tokens are replaced in custom metric values.
-    $google_analytics_custom_metric = array(
-      1 => array(
+    $google_analytics_custom_metric = [
+      1 => [
         'index' => 1,
         'value' => '[current-user:roles:count]',
-      ),
-      2 => array(
+      ],
+      2 => [
         'index' => 2,
         'value' => mt_rand(),
-      ),
-      3 => array(
+      ],
+      3 => [
         'index' => 3,
         'value' => '',
-      ),
+      ],
       // #2300701: Custom dimensions and custom metrics not outputed on zero value.
-      4 => array(
+      4 => [
         'index' => 4,
         'value' => '0',
-      ),
-    );
+      ],
+    ];
     $this->config('google_analytics.settings')->set('custom.metric', $google_analytics_custom_metric)->save();
     $this->verbose('<pre>' . print_r($google_analytics_custom_metric, TRUE) . '</pre>');
 

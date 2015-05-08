@@ -32,9 +32,9 @@ define('GOOGLE_ANALYTICS_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin
  * Advertise the supported google analytics api details.
  */
 function google_analytics_api() {
-  return array(
+  return [
     'api' => 'analytics.js',
-  );
+  ];
 }
 
 /**
@@ -43,7 +43,7 @@ function google_analytics_api() {
 function google_analytics_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'google_analytics.admin_settings_form':
-      return t('<a href="@ga_url">Google Analytics</a> is a free (registration required) website traffic and marketing effectiveness service.', array('@ga_url' => 'http://www.google.com/analytics/'));
+      return t('<a href="@ga_url">Google Analytics</a> is a free (registration required) website traffic and marketing effectiveness service.', ['@ga_url' => 'http://www.google.com/analytics/']);
       break;
   }
 }
@@ -62,10 +62,10 @@ function google_analytics_page_attachments(array &$page) {
   if ($exception = $request->attributes->get('exception')) {
     $status = $exception->getStatusCode();
   }
-  $trackable_status_codes = array(
+  $trackable_status_codes = [
     '403', // Forbidden
     '404', // Not Found
-  );
+  ];
 
   // 1. Check if the GA account number has a valid value.
   // 2. Track page views based on visibility value.
@@ -77,7 +77,7 @@ function google_analytics_page_attachments(array &$page) {
     $url_custom = '';
 
     // Add link tracking.
-    $link_settings = array();
+    $link_settings = [];
     if ($track_outbound = $config->get('track.outbound')) {
       $link_settings['trackOutbound'] = $track_outbound;
     }
@@ -117,11 +117,11 @@ function google_analytics_page_attachments(array &$page) {
     $message_events = '';
     if ($message_types = $config->get('track.messages')) {
       $message_types = array_values(array_filter($message_types));
-      $status_heading = array(
+      $status_heading = [
         'status' => t('Status message'),
         'warning' => t('Warning message'),
         'error' => t('Error message'),
-      );
+      ];
 
       foreach (drupal_get_messages(NULL, FALSE) as $type => $messages) {
         // Track only the selected message types.
@@ -139,7 +139,7 @@ function google_analytics_page_attachments(array &$page) {
       // hook_item_list__search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
       $entity_id = \Drupal::routeMatch()->getParameter('entity')->id();
-      $url_custom = '(window.google_analytics_search_results) ? ' . Json::encode(Url::fromRoute('search.view_' . $entity_id, array(), array('query' => array('search' => $keys)))->toString()) . ' : ' . Json::encode(Url::fromRoute('search.view_' . $entity_id, array('query' => array('search' => 'no-results:' . $keys, 'cat' => 'no-results')))->toString());
+      $url_custom = '(window.google_analytics_search_results) ? ' . Json::encode(Url::fromRoute('search.view_' . $entity_id, [], ['query' => ['search' => $keys]])->toString()) . ' : ' . Json::encode(Url::fromRoute('search.view_' . $entity_id, ['query' => ['search' => 'no-results:' . $keys, 'cat' => 'no-results']])->toString());
     }
 
     // If this node is a translation of another node, pass the original
@@ -150,7 +150,7 @@ function google_analytics_page_attachments(array &$page) {
       if ($request->attributes->has('node')) {
         $node = $request->attributes->get('node');
         if ($node instanceof NodeInterface && \Drupal::entityManager()->getTranslationFromContext($node) !== $node->getUntranslated()) {
-          $url_custom = Json::encode(Url::fromRoute('entity.node.canonical', array('node' => $node->id()), array('language' => $node->getUntranslated()->language()))->toString());
+          $url_custom = Json::encode(Url::fromRoute('entity.node.canonical', ['node' => $node->id()], ['language' => $node->getUntranslated()->language()])->toString());
         }
       }
     }
@@ -166,21 +166,21 @@ function google_analytics_page_attachments(array &$page) {
 
     // Add custom dimensions and metrics.
     $custom_var = '';
-    foreach (array('dimension', 'metric') as $google_analytics_custom_type) {
+    foreach (['dimension', 'metric'] as $google_analytics_custom_type) {
       $google_analytics_custom_vars = $config->get('custom.' . $google_analytics_custom_type);
       // Are there dimensions or metrics configured?
       if (!empty($google_analytics_custom_vars)) {
         // Add all the configured variables to the content.
         foreach ($google_analytics_custom_vars as $google_analytics_custom_var) {
           // Replace tokens in values.
-          $types = array();
+          $types = [];
           if ($request->attributes->has('node')) {
             $node = $request->attributes->get('node');
             if ($node instanceof NodeInterface) {
-              $types += array('node' => $node);
+              $types += ['node' => $node];
             }
           }
-          $google_analytics_custom_var['value'] = \Drupal::token()->replace($google_analytics_custom_var['value'], $types, array('clear' => TRUE));
+          $google_analytics_custom_var['value'] = \Drupal::token()->replace($google_analytics_custom_var['value'], $types, ['clear' => TRUE]);
 
           // Suppress empty values.
           if (!Unicode::strlen(trim($google_analytics_custom_var['value']))) {
@@ -238,7 +238,7 @@ function google_analytics_page_attachments(array &$page) {
     $codesnippet_after = $config->get('codesnippet.after');
 
     // Build the create only fields list.
-    $create_only_fields = array('cookieDomain' => 'auto');
+    $create_only_fields = ['cookieDomain' => 'auto'];
     $create_only_fields = array_merge($create_only_fields, $codesnippet_create);
 
     // Domain tracking type.
@@ -249,12 +249,12 @@ function google_analytics_page_attachments(array &$page) {
     // Per RFC 2109, cookie domains must contain at least one dot other than the
     // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
     if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
-      $create_only_fields = array_merge($create_only_fields, array('cookieDomain' => $cookie_domain));
+      $create_only_fields = array_merge($create_only_fields, ['cookieDomain' => $cookie_domain]);
       $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = ' . Json::encode($cookie_domain) . ';';
     }
     elseif ($domain_mode == 2) {
       // Cross Domain tracking. 'autoLinker' need to be enabled in 'create'.
-      $create_only_fields = array_merge($create_only_fields, array('allowLinker' => TRUE));
+      $create_only_fields = array_merge($create_only_fields, ['allowLinker' => TRUE]);
       $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = "none";';
     }
 
@@ -318,18 +318,18 @@ function google_analytics_page_attachments(array &$page) {
       // Custom tracking. Prepend before all other JavaScript.
       // @TODO: https://support.google.com/adsense/answer/98142
       // sounds like it could be appended to $script.
-      $page['#attached']['js'][] = array(
+      $page['#attached']['js'][] = [
         'data' => $googleanalytics_adsense_script,
         'group' => JS_LIBRARY-1,
         'type' => 'inline',
-      );
+      ];
     }
 
-    $page['#attached']['js'][] = array(
+    $page['#attached']['js'][] = [
       'data' => $script,
       'scope' => 'header',
       'type' => 'inline',
-    );
+    ];
   }
 }
 
@@ -337,11 +337,11 @@ function google_analytics_page_attachments(array &$page) {
  * Implements hook_field_extra_fields().
  */
 function google_analytics_field_extra_fields() {
-  $extra['user']['user']['form']['google_analytics'] = array(
+  $extra['user']['user']['form']['google_analytics'] = [
     'label' => t('Google Analytics configuration'),
     'description' => t('Google Analytics module form element.'),
     'weight' => 3,
-  );
+  ];
 
   return $extra;
 }
@@ -356,13 +356,13 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
   if ($account->hasPermission('opt-in or out of tracking') && ($custom = $config->get('visibility.custom')) != 0 && _google_analytics_visibility_roles($account)) {
     $account_data_google_analytics = \Drupal::service('user.data')->get('google_analytics', $account->id());
 
-    $form['google_analytics'] = array(
+    $form['google_analytics'] = [
       '#type' => 'details',
       '#title' => t('Google Analytics settings'),
       '#weight' => 3,
       '#open' => TRUE,
       '#tree' => TRUE
-    );
+    ];
 
     switch ($custom) {
       case 1:
@@ -387,13 +387,13 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
       $description .= '</span>';
     }
 
-    $form['google_analytics']['custom'] = array(
+    $form['google_analytics']['custom'] = [
       '#type' => 'checkbox',
       '#title' => t('Enable user tracking'),
       '#description' => $description,
       '#default_value' => isset($account_data_google_analytics['custom']) ? $account_data_google_analytics['custom'] : ($custom == 1),
       '#disabled' => $disabled,
-    );
+    ];
   }
 }
 
@@ -435,11 +435,11 @@ function google_analytics_preprocess_item_list(&$variables) {
     // But the pager item mumber can tell the number of search results.
     global $pager_total_items;
 
-    $page['#attached']['js'][] = array(
+    $page['#attached']['js'][] = [
       'data' => 'window.google_analytics_search_results = ' . intval($pager_total_items[0]) . ';',
       'type' => 'inline',
       'group' => JS_LIBRARY-1,
-    );
+    ];
     drupal_render($page);
   }
 }
@@ -530,7 +530,7 @@ function _google_analytics_cache($location, $synchronize = FALSE) {
 function google_analytics_clear_js_cache() {
   $path = 'public://google_analytics';
   if (file_prepare_directory($path)) {
-    file_scan_directory($path, '/.*/', array('callback' => 'file_unmanaged_delete'));
+    file_scan_directory($path, '/.*/', ['callback' => 'file_unmanaged_delete']);
     drupal_rmdir($path);
 
     // Change query-strings on css/js files to enforce reload for all users.

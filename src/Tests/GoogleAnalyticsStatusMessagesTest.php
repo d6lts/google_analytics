@@ -21,7 +21,7 @@ class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('google_analytics');
+  public static $modules = ['google_analytics'];
 
   /**
    * {@inheritdoc}
@@ -29,10 +29,10 @@ class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer google analytics',
-    );
+    ];
 
     // User to set up google_analytics.
     $this->admin_user = $this->drupalCreateUser($permissions);
@@ -43,9 +43,9 @@ class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Enable logging of errors only.
-    $this->config('google_analytics.settings')->set('track.messages', array('error' => 'error'))->save();
+    $this->config('google_analytics.settings')->set('track.messages', ['error' => 'error'])->save();
 
-    $this->drupalPostForm('user/login', array(), t('Log in'));
+    $this->drupalPostForm('user/login', [], t('Log in'));
     $this->assertRaw('ga("send", "event", "Messages", "Error message", "Username field is required.");', '[testGoogleAnalyticsStatusMessages]: Event message "Username field is required." is shown.');
     $this->assertRaw('ga("send", "event", "Messages", "Error message", "Password field is required.");', '[testGoogleAnalyticsStatusMessages]: Event message "Password field is required." is shown.');
 

@@ -23,7 +23,7 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('google_analytics', 'php');
+  public static $modules = ['google_analytics', 'php'];
 
   /**
    * {@inheritdoc}
@@ -32,18 +32,18 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
     parent::setUp();
 
     // Administrator with all permissions.
-    $permissions_admin_user = array(
+    $permissions_admin_user = [
       'access administration pages',
       'administer google analytics',
       'use PHP for tracking visibility',
-    );
+    ];
     $this->admin_user = $this->drupalCreateUser($permissions_admin_user);
 
     // Administrator who cannot configure tracking visibility with PHP.
-    $permissions_delegated_admin_user = array(
+    $permissions_delegated_admin_user = [
       'access administration pages',
       'administer google analytics',
-    );
+    ];
     $this->delegated_admin_user = $this->drupalCreateUser($permissions_delegated_admin_user);
   }
 
@@ -51,7 +51,7 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
     $ua_code = 'UA-123456-1';
     $this->drupalLogin($this->admin_user);
 
-    $edit = array();
+    $edit = [];
     $edit['google_analytics_account'] = $ua_code;
     $edit['google_analytics_visibility_pages'] = 2;
     $edit['google_analytics_pages'] = '<?php return 0; ?>';
@@ -87,7 +87,7 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
     // Set a different value and verify that this is still the same after the post.
     $this->config('google_analytics.settings')->set('visibility.pages', '<?php return 0; ?>')->save();
 
-    $edit = array();
+    $edit = [];
     $edit['google_analytics_account'] = $ua_code;
     $this->drupalPostForm('admin/config/system/google-analytics', $edit, t('Save configuration'));
 

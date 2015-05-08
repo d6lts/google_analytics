@@ -11,28 +11,28 @@ use Drupal\Component\Utility\SafeMarkup;
  * Implements hook_token_info().
  */
 function google_analytics_token_info() {
-  $user['role-names'] = array(
+  $user['role-names'] = [
     'name' => t('User role names'),
     'description' => t('The role names the user account is a member of as comma separated list.'),
     'needs-data' => 'user',
-  );
-  $user['role-ids'] = array(
+  ];
+  $user['role-ids'] = [
     'name' => t('User role ids'),
     'description' => t('The role ids the user account is a member of as comma separated list.'),
     'needs-data' => 'user',
-  );
+  ];
 
-  return array(
-    'tokens' => array('user' => $user),
-  );
+  return [
+    'tokens' => ['user' => $user],
+  ];
 }
 
 /**
  * Implements hook_tokens().
  */
-function google_analytics_tokens($type, $tokens, array $data = array(), array $options = array()) {
+function google_analytics_tokens($type, $tokens, array $data = [], array $options = []) {
   $sanitize = !empty($options['sanitize']);
-  $replacements = array();
+  $replacements = [];
 
   if ($type == 'user' && !empty($data['user'])) {
     $account = $data['user'];

@@ -21,7 +21,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('google_analytics', 'search', 'node');
+  public static $modules = ['google_analytics', 'search', 'node'];
 
   /**
    * {@inheritdoc}
@@ -29,15 +29,15 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $this->drupalCreateContentType(array('type' => 'page', 'name' => 'Basic page'));
+    $this->drupalCreateContentType(['type' => 'page', 'name' => 'Basic page']);
 
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer google analytics',
       'search content',
       'create page content',
       'edit own page content',
-    );
+    ];
 
     // User to set up google_analytics.
     $this->admin_user = $this->drupalCreateUser($permissions);
@@ -59,12 +59,12 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('track.site_search', 1)->save();
 
     // Search for random string.
-    $search = array();
+    $search = [];
     $search['keys'] = $this->randomMachineName(8);
 
     // Create a node to search for.
     // Create a node.
-    $edit = array();
+    $edit = [];
     $edit['title[0][value]'] = 'This is a test title';
     $edit['body[0][value]'] = 'This test content contains ' . $search['keys'] . ' string.';
 
@@ -75,7 +75,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
 
     // Save the node.
     $this->drupalPostForm('node/add/page', $edit, t('Save'));
-    $this->assertRaw(t('!post %title has been created.', array('!post' => 'Basic page', '%title' => $edit['title[0][value]'])), 'Basic page created.');
+    $this->assertRaw(t('!post %title has been created.', ['!post' => 'Basic page', '%title' => $edit['title[0][value]']]), 'Basic page created.');
 
     // Index the node or it cannot found.
     $this->cronRun();
@@ -85,7 +85,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $this->assertRaw('window.google_analytics_search_results = 1;', '[testGoogleAnalyticsSearch]: One search result found.');
 
     $this->drupalPostForm('node/add/page', $edit, t('Save'));
-    $this->assertRaw(t('!post %title has been created.', array('!post' => 'Basic page', '%title' => $edit['title[0][value]'])), 'Basic page created.');
+    $this->assertRaw(t('!post %title has been created.', ['!post' => 'Basic page', '%title' => $edit['title[0][value]']]), 'Basic page created.');
 
     // Index the node or it cannot found.
     $this->cronRun();
