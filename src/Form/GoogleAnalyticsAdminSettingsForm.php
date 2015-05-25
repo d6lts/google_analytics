@@ -19,7 +19,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormID() {
+  public function getFormId() {
     return 'google_analytics_admin_settings';
   }
 
