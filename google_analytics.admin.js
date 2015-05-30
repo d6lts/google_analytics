@@ -1,7 +1,7 @@
 (function ($, window) {
 
   "use strict";
-    
+
   /**
    * Provide the summary information for the tracking settings vertical tabs.
    */
@@ -11,7 +11,7 @@
       if (typeof jQuery.fn.drupalSetSummary === 'undefined') {
         return;
       }
-  
+
       $('#edit-page-vis-settings').drupalSetSummary(function (context) {
         var $radio = $('input[name="google_analytics_visibility_pages"]:checked', context);
         if ($radio.val() === 0) {
@@ -26,7 +26,7 @@
           return Drupal.t('Restricted to certain pages');
         }
       });
-  
+
       $('#edit-role-vis-settings').drupalSetSummary(function (context) {
         var vals = [];
         $('input[type="checkbox"]:checked', context).each(function () {
@@ -42,7 +42,7 @@
           return vals.join(', ');
         }
       });
-  
+
       $('#edit-user-vis-settings').drupalSetSummary(function (context) {
         var $radio = $('input[name="google_analytics_custom"]:checked', context);
         if ($radio.val() === 0) {
@@ -55,7 +55,7 @@
           return Drupal.t('Off by default with opt in');
         }
       });
-  
+
       $('#edit-linktracking').drupalSetSummary(function (context) {
         var vals = [];
         if ($('input#edit-google-analytics-trackoutbound', context).is(':checked')) {
@@ -72,7 +72,7 @@
         }
         return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
       });
-  
+
       $('#edit-messagetracking').drupalSetSummary(function (context) {
         var vals = [];
         $('input[type="checkbox"]:checked', context).each(function () {
@@ -83,7 +83,7 @@
         }
         return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
       });
-  
+
       $('#edit-search-and-advertising').drupalSetSummary(function (context) {
         var vals = [];
         if ($('input#edit-google-analytics-site-search', context).is(':checked')) {
@@ -100,7 +100,7 @@
         }
         return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
       });
-  
+
       $('#edit-domain-tracking').drupalSetSummary(function (context) {
         var $radio = $('input[name="google_analytics_domain_mode"]:checked', context);
         if ($radio.val() === 0) {
@@ -113,7 +113,7 @@
           return Drupal.t('Multiple top-level domains');
         }
       });
-  
+
       $('#edit-privacy').drupalSetSummary(function (context) {
         var vals = [];
         if ($('input#edit-google-analytics-tracker-anonymizeip', context).is(':checked')) {
