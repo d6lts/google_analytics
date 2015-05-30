@@ -60,7 +60,7 @@
 
       console.groupEnd();
     });
-  
+
     // Track hash changes as unique pageviews, if this option has been enabled.
     if (drupalSettings.google_analytics.trackUrlFragments) {
       window.onhashchange = function () {
