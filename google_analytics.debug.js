@@ -33,7 +33,7 @@
               "eventAction": Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase(),
               "eventLabel": Drupal.google_analytics.getPageUrl(this.href),
               "transport": "beacon"
-            });            
+            });
           }
           else if (Drupal.google_analytics.isInternalSpecial(this.href)) {
             // Keep the internal URL for Google Analytics website overlay intact.
@@ -59,7 +59,7 @@
               "eventAction": "Click",
               "eventLabel": this.href.substring(7),
               "transport": "beacon"
-            });            
+            });
           }
           else if (drupalSettings.google_analytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
             if (drupalSettings.google_analytics.trackDomainMode !== 2 || (drupalSettings.google_analytics.trackDomainMode === 2 && !Drupal.google_analytics.isCrossDomain(this.hostname, drupalSettings.google_analytics.trackCrossDomains))) {
@@ -71,7 +71,7 @@
                 "eventAction": "Click",
                 "eventLabel": this.href,
                 "transport": "beacon"
-              });            
+              });
             }
             else {
               console.info("Internal link '%s' clicked, not tracked.", this.href);
