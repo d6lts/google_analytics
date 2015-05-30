@@ -37,7 +37,7 @@
             ga("send", "event", "Mails", "Click", { "page": this.href.substring(7), "transport": "beacon" });
           }
           else if (drupalSettings.google_analytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
-            if (drupalSettings.google_analytics.trackDomainMode != 2 || (drupalSettings.google_analytics.trackDomainMode == 2 && !Drupal.google_analytics.isCrossDomain(this.hostname, drupalSettings.google_analytics.trackCrossDomains))) {
+            if (drupalSettings.google_analytics.trackDomainMode !== 2 || (drupalSettings.google_analytics.trackDomainMode === 2 && !Drupal.google_analytics.isCrossDomain(this.hostname, drupalSettings.google_analytics.trackCrossDomains))) {
               // External link clicked / No top-level cross domain clicked.
               ga("send", "event", "Outbound links", "Click", { "page": this.href, "transport": "beacon" });
             }
@@ -50,7 +50,7 @@
     if (drupalSettings.google_analytics.trackUrlFragments) {
       window.onhashchange = function () {
         ga('send', 'pageview', location.pathname + location.search + location.hash);
-      }
+      };
     }
 
     // Colorbox: This event triggers when the transition has completed and the
