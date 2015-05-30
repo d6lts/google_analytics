@@ -27,12 +27,12 @@
           else if (drupalSettings.google_analytics.trackDownload && Drupal.google_analytics.isDownload(this.href)) {
             // Download link clicked.
             console.info("Download url '%s' has been found. Tracked download as extension '%s'.", Drupal.google_analytics.getPageUrl(this.href), Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase());
-            ga("send", "event", "Downloads", Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase(), { "page": Drupal.google_analytics.getPageUrl(this.href), "useBeacon": true });
+            ga("send", "event", "Downloads", Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase(), {"page": Drupal.google_analytics.getPageUrl(this.href), "transport": "beacon"});
           }
           else if (Drupal.google_analytics.isInternalSpecial(this.href)) {
             // Keep the internal URL for Google Analytics website overlay intact.
             console.info("Click on internal special link '%s' has been tracked.", Drupal.google_analytics.getPageUrl(this.href));
-            ga("send", "pageview", { "page": Drupal.google_analytics.getPageUrl(this.href), "useBeacon": true });
+            ga("send", "pageview", {"page": Drupal.google_analytics.getPageUrl(this.href), "transport": "beacon"});
           }
           else {
             // e.g. anchor in same page or other internal page link
@@ -43,13 +43,13 @@
           if (drupalSettings.google_analytics.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
             // Mailto link clicked.
             console.info("Click on e-mail '%s' has been tracked.", this.href.substring(7));
-            ga("send", "event", "Mails", "Click", { "page": this.href.substring(7), "useBeacon": true });
+            ga("send", "event", "Mails", "Click", {"page": this.href.substring(7), "transport": "beacon"});
           }
           else if (drupalSettings.google_analytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
             if (drupalSettings.google_analytics.trackDomainMode !== 2 || (drupalSettings.google_analytics.trackDomainMode === 2 && !Drupal.google_analytics.isCrossDomain(this.hostname, drupalSettings.google_analytics.trackCrossDomains))) {
               // External link clicked / No top-level cross domain clicked.
               console.info("Outbound link '%s' has been tracked.", this.href);
-              ga("send", "event", "Outbound links", "Click", { "page": this.href, "useBeacon": true });
+              ga("send", "event", "Outbound links", "Click", {"page": this.href, "transport": "beacon"});
             }
             else {
               console.info("Internal link '%s' clicked, not tracked.", this.href);
@@ -75,7 +75,7 @@
       var href = $.colorbox.element().attr("href");
       if (href) {
         console.info("Colorbox transition to url '%s' has been tracked.", Drupal.google_analytics.getPageUrl(href));
-        ga("send", "pageview", { "page": Drupal.google_analytics.getPageUrl(href) });
+        ga("send", "pageview", {"page": Drupal.google_analytics.getPageUrl(href)});
       }
     });
 
