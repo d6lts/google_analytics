@@ -36,7 +36,7 @@
           return Drupal.t('Not restricted');
         }
         else if ($('input[name="google_analytics_visibility_roles"]:checked', context).val() === 1) {
-          return Drupal.t('Excepted: @roles', {'@roles' : vals.join(', ')});
+          return Drupal.t('Excepted: @roles', {'@roles': vals.join(', ')});
         }
         else {
           return vals.join(', ');
@@ -70,7 +70,7 @@
         if (!vals.length) {
           return Drupal.t('Not tracked');
         }
-        return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
+        return Drupal.t('@items enabled', {'@items': vals.join(', ')});
       });
 
       $('#edit-messagetracking').drupalSetSummary(function (context) {
@@ -81,7 +81,7 @@
         if (!vals.length) {
           return Drupal.t('Not tracked');
         }
-        return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
+        return Drupal.t('@items enabled', {'@items': vals.join(', ')});
       });
 
       $('#edit-search-and-advertising').drupalSetSummary(function (context) {
@@ -98,7 +98,7 @@
         if (!vals.length) {
           return Drupal.t('Not tracked');
         }
-        return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
+        return Drupal.t('@items enabled', {'@items': vals.join(', ')});
       });
 
       $('#edit-domain-tracking').drupalSetSummary(function (context) {
@@ -125,7 +125,7 @@
         if (!vals.length) {
           return Drupal.t('No privacy');
         }
-        return Drupal.t('@items enabled', {'@items' : vals.join(', ')});
+        return Drupal.t('@items enabled', {'@items': vals.join(', ')});
       });
     }
   };
