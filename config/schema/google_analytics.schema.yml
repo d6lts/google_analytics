@@ -123,7 +123,7 @@ google_analytics.settings:
           type: sequence
           label: 'Create only fields'
           sequence:
-            class: '\Drupal\Core\Config\Schema\Ignore'
+            type: ignore
             label: 'Create field'
         before:
           type: string
