@@ -1,5 +1,7 @@
 (function ($, Drupal, drupalSettings) {
 
+  /*eslint no-console:0*/
+
   "use strict";
 
   Drupal.google_analytics = {};
@@ -29,7 +31,7 @@
             console.info("Download url '%s' has been found. Tracked download as extension '%s'.", Drupal.google_analytics.getPageUrl(this.href), Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase());
             ga("send", {
               "hitType": "event",
-              "eventCategory": "Downloads"
+              "eventCategory": "Downloads",
               "eventAction": Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase(),
               "eventLabel": Drupal.google_analytics.getPageUrl(this.href),
               "transport": "beacon"
@@ -55,7 +57,7 @@
             console.info("Click on e-mail '%s' has been tracked.", this.href.substring(7));
             ga("send", {
               "hitType": "event",
-              "eventCategory": "Mails"
+              "eventCategory": "Mails",
               "eventAction": "Click",
               "eventLabel": this.href.substring(7),
               "transport": "beacon"
@@ -67,7 +69,7 @@
               console.info("Outbound link '%s' has been tracked.", this.href);
               ga("send", {
                 "hitType": "event",
-                "eventCategory": "Outbound links"
+                "eventCategory": "Outbound links",
                 "eventAction": "Click",
                 "eventLabel": this.href,
                 "transport": "beacon"
@@ -89,7 +91,7 @@
         console.info("Track URL '%s' as pageview. Hash '%s' has changed.", location.pathname + location.search + location.hash, location.hash);
         ga("send", {
           "hitType": "pageview",
-          "page": location.pathname + location.search + location.hash,
+          "page": location.pathname + location.search + location.hash
         });
       };
     }
@@ -102,7 +104,7 @@
         console.info("Colorbox transition to url '%s' has been tracked.", Drupal.google_analytics.getPageUrl(href));
         ga("send", {
           "hitType": "pageview",
-          "page": Drupal.google_analytics.getPageUrl(href),
+          "page": Drupal.google_analytics.getPageUrl(href)
         });
       }
     });

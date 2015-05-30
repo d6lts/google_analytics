@@ -18,7 +18,7 @@
           // Skip 'click' tracking, if custom tracking events are bound.
           if ($(this).is('.colorbox')) {
             // Do nothing here. The custom event will handle all tracking.
-            //console.info("Click on .colorbox item has been detected.");
+            // console.info("Click on .colorbox item has been detected.");
           }
           // Is download tracking activated and the file extension configured
           // for download tracking?
@@ -26,7 +26,7 @@
             // Download link clicked.
             ga("send", {
               "hitType": "event",
-              "eventCategory": "Downloads"
+              "eventCategory": "Downloads",
               "eventAction": Drupal.google_analytics.getDownloadExtension(this.href).toUpperCase(),
               "eventLabel": Drupal.google_analytics.getPageUrl(this.href),
               "transport": "beacon"
@@ -46,7 +46,7 @@
             // Mailto link clicked.
             ga("send", {
               "hitType": "event",
-              "eventCategory": "Mails"
+              "eventCategory": "Mails",
               "eventAction": "Click",
               "eventLabel": this.href.substring(7),
               "transport": "beacon"
@@ -57,7 +57,7 @@
               // External link clicked / No top-level cross domain clicked.
               ga("send", {
                 "hitType": "event",
-                "eventCategory": "Outbound links"
+                "eventCategory": "Outbound links",
                 "eventAction": "Click",
                 "eventLabel": this.href,
                 "transport": "beacon"
@@ -73,7 +73,7 @@
       window.onhashchange = function () {
         ga("send", {
           "hitType": "pageview",
-          "page": location.pathname + location.search + location.hash,
+          "page": location.pathname + location.search + location.hash
         });
       };
     }
@@ -85,7 +85,7 @@
       if (href) {
         ga("send", {
           "hitType": "pageview",
-          "page": Drupal.google_analytics.getPageUrl(href),
+          "page": Drupal.google_analytics.getPageUrl(href)
         });
       }
     });
