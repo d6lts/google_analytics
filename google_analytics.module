@@ -57,6 +57,9 @@ function google_analytics_page_attachments(array &$page) {
   $id = $config->get('account');
   $request = \Drupal::request();
 
+  // Add module cache tags.
+  $page['#cache']['tags'] = Cache::mergeTags(isset($page['#cache']['tags']) ? $page['#cache']['tags'] : [], $config->getCacheTags());
+
   // Get page http status code for visibility filtering.
   $status = NULL;
   if ($exception = $request->attributes->get('exception')) {
