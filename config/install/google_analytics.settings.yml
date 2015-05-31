@@ -1,12 +1,12 @@
 account: ''
-domain_mode: '0'
+domain_mode: 0
 cross_domains: ''
 visibility:
-  pages_enabled: '0'
+  pages_enabled: 0
   pages: "admin\nadmin/*\nbatch\nnode/add*\nnode/*/*\nuser/*/*"
-  roles_enabled: '0'
+  roles_enabled: 0
   roles: {  }
-  custom: '0'
+  custom: 0
 track:
   outbound: true
   mailto: true
