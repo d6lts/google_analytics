@@ -658,7 +658,9 @@ function _google_analytics_visibility_pages() {
 function _google_analytics_visibility_header($account) {
   $config = \Drupal::config('google_analytics.settings');
 
-  if (($account->id() || \Drupal::config('system.performance')->get('cache.page.use_internal') == 0) && $config->get('privacy.donottrack') && !empty($_SERVER['HTTP_DNT'])) {
+  // @FIXME: This is not reliable method to check if page cache is enabled. Look
+  //   for different solution.
+  if (($account->id() || !\Drupal::moduleHandler()->moduleExists('page_cache')) && $config->get('privacy.donottrack') && !empty($_SERVER['HTTP_DNT'])) {
     // Disable tracking if caching is disabled or a visitors is logged in and
     // have opted out from tracking via DNT (Do-Not-Track) header.
     return FALSE;
