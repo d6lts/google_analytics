@@ -17,11 +17,10 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
 use GuzzleHttp\Exception\RequestException;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @TODO: remove after admin.inc is upgraded.
