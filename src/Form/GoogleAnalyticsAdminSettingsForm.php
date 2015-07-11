@@ -6,6 +6,7 @@
 
 namespace Drupal\google_analytics\Form;
 
+use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -99,9 +100,9 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'radios',
       '#title' => t('What are you tracking?'),
       '#options' => [
-        0 => t('A single domain (default)') . '<div class="description">' . t('Domain: @domain', ['@domain' => $_SERVER['HTTP_HOST']]) . '</div>',
-        1 => t('One domain with multiple subdomains') . '<div class="description">' . t('Examples: @domains', ['@domains' => implode(', ', $multiple_sub_domains)]) . '</div>',
-        2 => t('Multiple top-level domains') . '<div class="description">' . t('Examples: @domains', ['@domains' => implode(', ', $multiple_toplevel_domains)]) . '</div>',
+        0 => Safemarkup::format(t('A single domain (default)') . '<div class="description">' . t('Domain: @domain', ['@domain' => $_SERVER['HTTP_HOST']]) . '</div>'),
+        1 => Safemarkup::format(t('One domain with multiple subdomains') . '<div class="description">' . t('Examples: @domains', ['@domains' => implode(', ', $multiple_sub_domains)]) . '</div>'),
+        2 => Safemarkup::format(t('Multiple top-level domains') . '<div class="description">' . t('Examples: @domains', ['@domains' => implode(', ', $multiple_toplevel_domains)]) . '</div>'),
       ],
       '#default_value' => $config->get('domain_mode'),
     ];
