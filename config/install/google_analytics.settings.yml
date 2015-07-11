@@ -3,7 +3,7 @@ domain_mode: 0
 cross_domains: ''
 visibility:
   pages_enabled: 0
-  pages: "admin\nadmin/*\nbatch\nnode/add*\nnode/*/*\nuser/*/*"
+  pages: "/admin\n/admin/*\n/batch\n/node/add*\n/node/*/*\n/user/*/*"
   roles_enabled: 0
   roles: {  }
   custom: 0

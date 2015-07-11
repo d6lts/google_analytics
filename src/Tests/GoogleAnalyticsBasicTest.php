@@ -75,7 +75,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // Show tracking on "every page except the listed pages".
     $this->config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
     // Disable tracking on "admin*" pages only.
-    $this->config('google_analytics.settings')->set('visibility.pages', "admin\nadmin/*")->save();
+    $this->config('google_analytics.settings')->set('visibility.pages', "/admin\n/admin/*")->save();
     // Enable tracking only for authenticated users only.
     $this->config('google_analytics.settings')->set('visibility.roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 

@@ -142,7 +142,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         t('Every page except the listed pages'),
         t('The listed pages only'),
       ];
-      $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", ['%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>']);
+      $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", ['%blog' => '/blog', '%blog-wildcard' => '/blog/*', '%front' => '<front>']);
 
       if (\Drupal::moduleHandler()->moduleExists('php') && $php_access) {
         $options[] = t('Pages on which this PHP code returns <code>TRUE</code> (experts only)');
