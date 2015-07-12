@@ -578,6 +578,16 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       $form_state->setValue('google_analytics_cross_domains', '');
     }
 
+    // Verify that every path is prefixed with a slash.
+    $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('google_analytics_pages'));
+    foreach ($pages as $page) {
+      if (strpos($page, '/') !== 0) {
+        $form_state->setErrorByName('google_analytics_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
+        // Drupal forms only show one error.
+        break;
+      }
+    }
+
     // Disallow empty list of download file extensions.
     if ($form_state->getValue('google_analytics_trackfiles') && $form_state->isValueEmpty('google_analytics_trackfiles_extensions')) {
       $form_state->setErrorByName('google_analytics_trackfiles_extensions', t('List of download file extensions cannot empty.'));
