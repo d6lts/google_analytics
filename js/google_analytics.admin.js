@@ -67,6 +67,12 @@
         if ($('input#edit-google-analytics-trackfiles', context).is(':checked')) {
           vals.push(Drupal.t('Downloads'));
         }
+        if ($('input#edit-google-analytics-tracklinkid', context).is(':checked')) {
+          vals.push(Drupal.t('Link attribution'));
+        }
+        if ($('input#edit-google-analytics-trackurlfragments', context).is(':checked')) {
+          vals.push(Drupal.t('URL fragments'));
+        }
         if (!vals.length) {
           return Drupal.t('Not tracked');
         }
