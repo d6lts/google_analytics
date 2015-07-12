@@ -583,7 +583,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     foreach ($pages as $page) {
       if (strpos($page, '/') !== 0 && $page !== '<front>') {
         $form_state->setErrorByName('google_analytics_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
-        // Drupal forms only show one error.
+        // Drupal forms show one error only.
         break;
       }
     }
