@@ -65,6 +65,12 @@ Drupal.behaviors.trackingSettingsSummary = {
       if ($('input#edit-googleanalytics-trackfiles', context).is(':checked')) {
         vals.push(Drupal.t('Downloads'));
       }
+      if ($('input#edit-googleanalytics-tracklinkid', context).is(':checked')) {
+        vals.push(Drupal.t('Link attribution'));
+      }
+      if ($('input#edit-googleanalytics-trackurlfragments', context).is(':checked')) {
+        vals.push(Drupal.t('URL fragments'));
+      }
       if (!vals.length) {
         return Drupal.t('Not tracked');
       }
