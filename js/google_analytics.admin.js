@@ -14,7 +14,7 @@
 
       $('#edit-page-vis-settings').drupalSetSummary(function (context) {
         var $radio = $('input[name="google_analytics_visibility_pages"]:checked', context);
-        if ($radio.val() === 0) {
+        if ($radio.val() === '0') {
           if (!$('textarea[name="google_analytics_pages"]', context).val()) {
             return Drupal.t('Not restricted');
           }
@@ -35,7 +35,7 @@
         if (!vals.length) {
           return Drupal.t('Not restricted');
         }
-        else if ($('input[name="google_analytics_visibility_roles"]:checked', context).val() === 1) {
+        else if ($('input[name="google_analytics_visibility_roles"]:checked', context).val() === '1') {
           return Drupal.t('Excepted: @roles', {'@roles': vals.join(', ')});
         }
         else {
@@ -45,10 +45,10 @@
 
       $('#edit-user-vis-settings').drupalSetSummary(function (context) {
         var $radio = $('input[name="google_analytics_custom"]:checked', context);
-        if ($radio.val() === 0) {
+        if ($radio.val() === '0') {
           return Drupal.t('Not customizable');
         }
-        else if ($radio.val() === 1) {
+        else if ($radio.val() === '1') {
           return Drupal.t('On by default with opt out');
         }
         else {
@@ -109,10 +109,10 @@
 
       $('#edit-domain-tracking').drupalSetSummary(function (context) {
         var $radio = $('input[name="google_analytics_domain_mode"]:checked', context);
-        if ($radio.val() === 0) {
+        if ($radio.val() === '0') {
           return Drupal.t('A single domain');
         }
-        else if ($radio.val() === 1) {
+        else if ($radio.val() === '1') {
           return Drupal.t('One domain with multiple subdomains');
         }
         else {
