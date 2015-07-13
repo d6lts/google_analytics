@@ -32,12 +32,12 @@ Page specific tracking
 The default is set to "Add to every page except the listed pages". By
 default the following pages are listed for exclusion:
 
-admin
-admin/*
-batch
-node/add*
-node/*/*
-user/*/*
+/admin
+/admin/*
+/batch
+/node/add*
+/node/*/*
+/user/*/*
 
 These defaults are changeable by the website administrator or any other
 user with 'administer google analytics' permission.
