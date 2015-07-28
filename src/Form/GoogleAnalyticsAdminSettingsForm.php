@@ -232,7 +232,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     ];
 
     // Link specific configurations.
-    $track = $config->get('track');
     $form['tracking']['linktracking'] = [
       '#type' => 'details',
       '#title' => t('Links and downloads'),
@@ -689,7 +688,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $invalid_tokens = [];
     $value_tokens = is_string($value) ? \Drupal::token()->scan($value) : $value;
 
-    foreach ($value_tokens as $type => $tokens) {
+    foreach ($value_tokens as $tokens) {
       if (array_filter($tokens, 'static::containsForbiddenToken')) {
         $invalid_tokens = array_merge($invalid_tokens, array_values($tokens));
       }
@@ -809,7 +808,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $list = array_map('trim', $list);
     $list = array_filter($list, 'strlen');
 
-    foreach ($list as $position => $text) {
+    foreach ($list as $text) {
       // Check for an explicit key.
       $matches = [];
       if (preg_match('/(.*)\|(.*)/', $text, $matches)) {
