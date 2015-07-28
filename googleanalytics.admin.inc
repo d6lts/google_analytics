@@ -557,7 +557,7 @@ function theme_googleanalytics_admin_custom_var_table($form) {
   );
 
   $rows = array();
-  foreach (element_children($form['indexes']) as $key => $id) {
+  foreach (element_children($form['indexes']) as $id) {
     $rows[] = array(
       'data' => array(
         drupal_render($form['indexes'][$id]['index']),
@@ -721,7 +721,7 @@ function _googleanalytics_extract_create_field_values($string) {
   $list = array_map('trim', $list);
   $list = array_filter($list, 'strlen');
 
-  foreach ($list as $position => $text) {
+  foreach ($list as $text) {
     // Check for an explicit key.
     $matches = array();
     if (preg_match('/(.*)\|(.*)/', $text, $matches)) {
