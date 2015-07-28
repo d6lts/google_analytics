@@ -135,8 +135,8 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertText($node->getTitle());
     $this->assertRaw('ga("set", ' . Json::encode('dimension5') . ', ' . Json::encode('article') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Node tokens are shown.');
 
-    $this->assertRaw('ga("set", ' . Json::encode('dimension6') . ', ' . Json::encode(implode(',', $account->getRoles())) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: List of roles shown.');
-    $this->assertRaw('ga("set", ' . Json::encode('dimension7') . ', ' . Json::encode(implode(',', array_keys($account->getRoles()))) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: List of role IDs shown.');
+    $this->assertRaw('ga("set", ' . Json::encode('dimension6') . ', ' . Json::encode(implode(',', \Drupal::currentUser()->getRoles())) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: List of roles shown.');
+    $this->assertRaw('ga("set", ' . Json::encode('dimension7') . ', ' . Json::encode(implode(',', array_keys(\Drupal::currentUser()->getRoles()))) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: List of role IDs shown.');
   }
 
   function testGoogleAnalyticsCustomMetrics() {
