@@ -124,19 +124,20 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
     $this->verbose('<pre>' . print_r($google_analytics_custom_dimension, TRUE) . '</pre>');
 
+    // Test on frontpage
     $this->drupalGet('');
     $this->assertRaw('ga("set", ' . Json::encode('dimension1') . ', ' . Json::encode("Value: $site_slogan") . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Tokens have been replaced in dimension value.');
     $this->assertRaw('ga("set", ' . Json::encode('dimension2') . ', ' . Json::encode($google_analytics_custom_dimension['2']['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Random value is shown.');
     $this->assertNoRaw('ga("set", ' . Json::encode('dimension3') . ', ' . Json::encode('') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Empty value is not shown.');
     $this->assertRaw('ga("set", ' . Json::encode('dimension4') . ', ' . Json::encode('0') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Value 0 is shown.');
     $this->assertNoRaw('ga("set", ' . Json::encode('dimension5') . ', ' . Json::encode('article') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Node tokens are shown.');
+    $this->assertRaw('ga("set", ' . Json::encode('dimension6') . ', ' . Json::encode(implode(',', \Drupal::currentUser()->getRoles())) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: List of roles shown.');
+    $this->assertRaw('ga("set", ' . Json::encode('dimension7') . ', ' . Json::encode(implode(',', array_keys(\Drupal::currentUser()->getRoles()))) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: List of role IDs shown.');
 
+    // Test on a node.
     $this->drupalGet('node/' . $node->id());
     $this->assertText($node->getTitle());
     $this->assertRaw('ga("set", ' . Json::encode('dimension5') . ', ' . Json::encode('article') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Node tokens are shown.');
-
-    $this->assertRaw('ga("set", ' . Json::encode('dimension6') . ', ' . Json::encode(implode(',', \Drupal::currentUser()->getRoles())) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: List of roles shown.');
-    $this->assertRaw('ga("set", ' . Json::encode('dimension7') . ', ' . Json::encode(implode(',', array_keys(\Drupal::currentUser()->getRoles()))) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: List of role IDs shown.');
   }
 
   function testGoogleAnalyticsCustomMetrics() {
