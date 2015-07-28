@@ -23,7 +23,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['google_analytics', 'token'];
+  public static $modules = ['google_analytics', 'token', 'node'];
 
   /**
    * {@inheritdoc}
@@ -34,7 +34,15 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $permissions = [
       'access administration pages',
       'administer google analytics',
+      'administer nodes',
+      'create article content',
     ];
+
+    // Create node type.
+    $this->drupalCreateContentType(array(
+      'type' => 'article',
+      'name' => 'Article',
+    ));
 
     // User to set up google_analytics.
     $this->admin_user = $this->drupalCreateUser($permissions);
@@ -43,6 +51,9 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
   function testGoogleAnalyticsCustomDimensions() {
     $ua_code = 'UA-123456-3';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
+    $node = $this->drupalCreateNode([
+      'type' => 'article',
+    ]);
 
     // Basic test if the feature works.
     $google_analytics_custom_dimension = [
@@ -96,6 +107,10 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
         'index' => 4,
         'value' => '0',
       ],
+      5 => [
+        'index' => 5,
+        'value' => '[node:type]',
+      ],
     ];
     $this->config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
     $this->verbose('<pre>' . print_r($google_analytics_custom_dimension, TRUE) . '</pre>');
@@ -105,6 +120,11 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertRaw('ga("set", ' . Json::encode('dimension2') . ', ' . Json::encode($google_analytics_custom_dimension['2']['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Random value is shown.');
     $this->assertNoRaw('ga("set", ' . Json::encode('dimension3') . ', ' . Json::encode('') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Empty value is not shown.');
     $this->assertRaw('ga("set", ' . Json::encode('dimension4') . ', ' . Json::encode('0') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Value 0 is shown.');
+    $this->assertNoRaw('ga("set", ' . Json::encode('dimension5') . ', ' . Json::encode('article') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Node tokens are shown.');
+
+    $this->drupalGet('node/' . $node->id());
+    $this->assertText($node->getTitle());
+    $this->assertRaw('ga("set", ' . Json::encode('dimension5') . ', ' . Json::encode('article') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Node tokens are shown.');
   }
 
   function testGoogleAnalyticsCustomMetrics() {
