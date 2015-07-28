@@ -6,6 +6,7 @@
  */
 
 use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Core\Render\BubbleableMetadata;
 
 /**
  * Implements hook_token_info().
@@ -30,7 +31,7 @@ function google_analytics_token_info() {
 /**
  * Implements hook_tokens().
  */
-function google_analytics_tokens($type, $tokens, array $data = [], array $options = []) {
+function google_analytics_tokens($type, $tokens, array $data = [], array $options = [], BubbleableMetadata $bubbleable_metadata) {
   $sanitize = !empty($options['sanitize']);
   $replacements = [];
 
@@ -41,11 +42,13 @@ function google_analytics_tokens($type, $tokens, array $data = [], array $option
       switch ($name) {
         // Basic user account information.
         case 'role-names':
+          $bubbleable_metadata->addCacheableDependency($account);
           $names = implode(',', $account->getRoles());
           $replacements[$original] = $sanitize ? SafeMarkup::checkPlain($names) : $names;
           break;
 
         case 'role-ids':
+          $bubbleable_metadata->addCacheableDependency($account);
           $ids = implode(',', array_keys($account->getRoles()));
           $replacements[$original] = $sanitize ? SafeMarkup::checkPlain($ids) : $ids;
           break;
