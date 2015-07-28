@@ -551,7 +551,7 @@ function theme_googleanalytics_admin_custom_var_table($variables) {
   );
 
   $rows = array();
-  foreach (element_children($form['indexes']) as $key => $id) {
+  foreach (element_children($form['indexes']) as $id) {
     $rows[] = array(
       'data' => array(
         drupal_render($form['indexes'][$id]['index']),
@@ -604,7 +604,7 @@ function _googleanalytics_get_forbidden_tokens($value) {
   $invalid_tokens = array();
   $value_tokens = is_string($value) ? token_scan($value) : $value;
 
-  foreach ($value_tokens as $type => $tokens) {
+  foreach ($value_tokens as $tokens) {
     if (array_filter($tokens, '_googleanalytics_contains_forbidden_token')) {
       $invalid_tokens = array_merge($invalid_tokens, array_values($tokens));
     }
@@ -724,7 +724,7 @@ function _googleanalytics_extract_create_field_values($string) {
   $list = array_map('trim', $list);
   $list = array_filter($list, 'strlen');
 
-  foreach ($list as $position => $text) {
+  foreach ($list as $text) {
     // Check for an explicit key.
     $matches = array();
     if (preg_match('/(.*)\|(.*)/', $text, $matches)) {
