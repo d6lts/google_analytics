@@ -578,12 +578,14 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     }
 
     // Verify that every path is prefixed with a slash.
-    $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('google_analytics_pages'));
-    foreach ($pages as $page) {
-      if (strpos($page, '/') !== 0 && $page !== '<front>') {
-        $form_state->setErrorByName('google_analytics_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
-        // Drupal forms show one error only.
-        break;
+    if ($form_state->getValue('google_analytics_visibility_pages') !== 2) {
+      $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('google_analytics_pages'));
+      foreach ($pages as $page) {
+        if (strpos($page, '/') !== 0 && $page !== '<front>') {
+          $form_state->setErrorByName('google_analytics_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
+          // Drupal forms show one error only.
+          break;
+        }
       }
     }
 
