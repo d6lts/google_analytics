@@ -42,15 +42,15 @@ function google_analytics_tokens($type, $tokens, array $data = [], array $option
       switch ($name) {
         // Basic user account information.
         case 'role-names':
-          $bubbleable_metadata->addCacheableDependency($account);
           $names = implode(',', $account->getRoles());
           $replacements[$original] = $sanitize ? SafeMarkup::checkPlain($names) : $names;
+          $bubbleable_metadata->addCacheableDependency($account);
           break;
 
         case 'role-ids':
-          $bubbleable_metadata->addCacheableDependency($account);
           $ids = implode(',', array_keys($account->getRoles()));
           $replacements[$original] = $sanitize ? SafeMarkup::checkPlain($ids) : $ids;
+          $bubbleable_metadata->addCacheableDependency($account);
           break;
       }
     }
