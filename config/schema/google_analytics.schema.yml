@@ -1,7 +1,7 @@
 # Schema for the configuration files of the google_analytics module.
 
 google_analytics.settings:
-  type: mapping
+  type: config_object
   label: 'Google Analytics settings'
   mapping:
     account:
