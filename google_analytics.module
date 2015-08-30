@@ -91,6 +91,9 @@ function google_analytics_page_attachments(array &$page) {
       $link_settings['trackDownload'] = $track_download;
       $link_settings['trackDownloadExtensions'] = $trackfiles_extensions;
     }
+    if ((\Drupal::moduleHandler()->moduleExists('colorbox')) && $track_colorbox = $config->get('track.colorbox')) {
+      $link_settings['trackColorbox'] = $track_colorbox;
+    }
     if ($track_domain_mode = $config->get('domain_mode')) {
       $link_settings['trackDomainMode'] = $track_domain_mode;
     }

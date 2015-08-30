@@ -16,7 +16,7 @@
         // Is the clicked URL internal?
         if (Drupal.google_analytics.isInternal(this.href)) {
           // Skip 'click' tracking, if custom tracking events are bound.
-          if ($(this).is('.colorbox')) {
+          if ($(this).is('.colorbox') && (drupalSettings.google_analytics.trackColorbox)) {
             // Do nothing here. The custom event will handle all tracking.
             // console.info("Click on .colorbox item has been detected.");
           }
@@ -80,15 +80,17 @@
 
     // Colorbox: This event triggers when the transition has completed and the
     // newly loaded content has been revealed.
-    $(document).on("cbox_complete", function () {
-      var href = $.colorbox.element().attr("href");
-      if (href) {
-        ga("send", {
-          "hitType": "pageview",
-          "page": Drupal.google_analytics.getPageUrl(href)
-        });
-      }
-    });
+    if (drupalSettings.google_analytics.trackColorbox) {
+      $(document).on("cbox_complete", function () {
+        var href = $.colorbox.element().attr("href");
+        if (href) {
+          ga("send", {
+            "hitType": "pageview",
+            "page": Drupal.google_analytics.getPageUrl(href)
+          });
+        }
+      });
+    }
 
   });
 

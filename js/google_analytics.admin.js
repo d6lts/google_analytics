@@ -67,6 +67,9 @@
         if ($('input#edit-google-analytics-trackfiles', context).is(':checked')) {
           vals.push(Drupal.t('Downloads'));
         }
+        if ($('input#edit-google-analytics-trackcolorbox', context).is(':checked')) {
+          vals.push(Drupal.t('Colorbox'));
+        }
         if ($('input#edit-google-analytics-tracklinkid', context).is(':checked')) {
           vals.push(Drupal.t('Link attribution'));
         }

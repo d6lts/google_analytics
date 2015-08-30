@@ -51,6 +51,9 @@ google_analytics.settings:
         files_extensions:
           type: string
           label: 'File extension list'
+        colorbox:
+          type: boolean
+          label: 'Track content in colorbox modal dialogs'
         linkid:
           type: boolean
           label: 'Enable enhanced link attribution'
