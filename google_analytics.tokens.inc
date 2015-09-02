@@ -5,7 +5,7 @@
  * Builds placeholder replacement tokens for user-related data.
  */
 
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\BubbleableMetadata;
 
 /**
@@ -43,13 +43,13 @@ function google_analytics_tokens($type, $tokens, array $data = [], array $option
         // Basic user account information.
         case 'role-names':
           $names = implode(',', $account->getRoles());
-          $replacements[$original] = $sanitize ? SafeMarkup::checkPlain($names) : $names;
+          $replacements[$original] = $sanitize ? Html::escape($names) : $names;
           $bubbleable_metadata->addCacheableDependency($account);
           break;
 
         case 'role-ids':
           $ids = implode(',', array_keys($account->getRoles()));
-          $replacements[$original] = $sanitize ? SafeMarkup::checkPlain($ids) : $ids;
+          $replacements[$original] = $sanitize ? Html::escape($ids) : $ids;
           $bubbleable_metadata->addCacheableDependency($account);
           break;
       }

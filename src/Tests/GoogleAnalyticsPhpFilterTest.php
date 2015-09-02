@@ -7,7 +7,7 @@
 
 namespace Drupal\google_analytics\Tests;
 
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\simpletest\WebTestBase;
 
 /**
@@ -76,13 +76,13 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('visibility.pages', '<?php return TRUE; ?>')->save();
     $this->drupalGet('admin/config/system/google-analytics');
     $this->assertRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testGoogleAnalyticsPhpFilter]: Permission to administer PHP for tracking visibility.');
-    $this->assertRaw(SafeMarkup::checkPlain('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: PHP code snippted is displayed.');
+    $this->assertRaw(Html::escape('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: PHP code snippted is displayed.');
 
     // Login the delegated user and check if fields are visible.
     $this->drupalLogin($this->delegated_admin_user);
     $this->drupalGet('admin/config/system/google-analytics');
     $this->assertNoRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testGoogleAnalyticsPhpFilter]: No permission to administer PHP for tracking visibility.');
-    $this->assertNoRaw(SafeMarkup::checkPlain('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: No permission to view PHP code snippted.');
+    $this->assertNoRaw(Html::escape('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: No permission to view PHP code snippted.');
 
     // Set a different value and verify that this is still the same after the post.
     $this->config('google_analytics.settings')->set('visibility.pages', '<?php return 0; ?>')->save();

@@ -6,7 +6,6 @@
 
 namespace Drupal\google_analytics\Form;
 
-use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -196,7 +195,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       ],
       '#default_value' => $config->get('visibility.roles_enabled'), // @FIXME rename variable
     ];
-    $role_options = array_map(['\Drupal\Component\Utility\SafeMarkup', 'checkPlain'], user_role_names());
+    $role_options = array_map(['\Drupal\Component\Utility\Html', 'escape'], user_role_names());
     $form['tracking']['role_vis_settings']['google_analytics_roles'] = [
       '#type' => 'checkboxes',
       '#title' => t('Roles'),
