@@ -438,14 +438,14 @@ function google_analytics_preprocess_item_list__search_results(&$variables) {
     // But the pager item mumber can tell the number of search results.
     global $pager_total_items;
 
-    $page['#attached']['html_head'][] = [
+    $variables['#attached']['html_head'][] = [
       [
         '#tag' => 'script',
         '#value' => 'window.google_analytics_search_results = ' . intval($pager_total_items[0]) . ';',
+        '#weight' => JS_LIBRARY-1,
       ],
       'googleanalytics_search_script'
     ];
-    drupal_process_attached($page);
   }
 }
 
