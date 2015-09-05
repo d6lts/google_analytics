@@ -588,7 +588,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       $form_state->setValue('google_analytics_cross_domains', '');
     }
 
-    // Verify that every path is prefixed with a slash.
+    // Verify that every path is prefixed with a slash, but don't check PHP code snippets.
     if ($form_state->getValue('google_analytics_visibility_pages') != 2) {
       $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('google_analytics_pages'));
       foreach ($pages as $page) {
