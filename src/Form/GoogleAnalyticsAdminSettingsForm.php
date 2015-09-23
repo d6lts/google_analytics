@@ -44,7 +44,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
     $form['general']['google_analytics_account'] = [
       '#default_value' => $config->get('account'),
-      '#description' => t('This ID is unique to each site you want to track separately, and is in the form of UA-xxxxxxx-yy. To get a Web Property ID, <a href="@analytics">register your site with Google Analytics</a>, or if you already have registered your site, go to your Google Analytics Settings page to see the ID next to every site profile. <a href="@webpropertyid">Find more information in the documentation</a>.', ['@analytics' => 'http://www.google.com/analytics/', '@webpropertyid' => Url::fromUri('https://developers.google.com/analytics/resources/concepts/gaConceptsAccounts', ['fragment' => 'webProperty'])->toString()]),
+      '#description' => t('This ID is unique to each site you want to track separately, and is in the form of UA-xxxxxxx-yy. To get a Web Property ID, <a href=":analytics">register your site with Google Analytics</a>, or if you already have registered your site, go to your Google Analytics Settings page to see the ID next to every site profile. <a href=":webpropertyid">Find more information in the documentation</a>.', [':analytics' => 'http://www.google.com/analytics/', ':webpropertyid' => Url::fromUri('https://developers.google.com/analytics/resources/concepts/gaConceptsAccounts', ['fragment' => 'webProperty'])->toString()]),
       '#maxlength' => 20,
       '#placeholder' => 'UA-',
       '#required' => TRUE,
@@ -118,7 +118,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#title' => t('List of top-level domains'),
       '#type' => 'textarea',
       '#default_value' => $config->get('cross_domains'),
-      '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href="@url">Tracking Multiple Domains</a>.', ['@url' => 'https://support.google.com/analytics/answer/1034342']),
+      '#description' => t('If you selected "Multiple top-level domains" above, enter all related top-level domains. Add one domain per line. By default, the data in your reports only includes the path and name of the page, and not the domain name. For more information see section <em>Show separate domain names</em> in <a href=":url">Tracking Multiple Domains</a>.', [':url' => 'https://support.google.com/analytics/answer/1034342']),
       '#states' => [
         'enabled' => [
           ':input[name="google_analytics_domain_mode"]' => ['value' => '2'],
@@ -226,7 +226,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => t('Track User ID'),
       '#default_value' => $config->get('track.userid'),
-      '#description' => t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href="@url">Learn more about the benefits of using User ID</a>.', ['@url' => 'https://support.google.com/analytics/answer/3123663']),
+      '#description' => t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href=":url">Learn more about the benefits of using User ID</a>.', [':url' => 'https://support.google.com/analytics/answer/3123663']),
     ];
 
     // Link specific configurations.
@@ -284,7 +284,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => t('Track enhanced link attribution'),
       '#default_value' => $config->get('track.linkid'),
-      '#description' => t('Enhanced Link Attribution improves the accuracy of your In-Page Analytics report by automatically differentiating between multiple links to the same URL on a single page by using link element IDs. <a href="@url">Enable enhanced link attribution</a> in the Admin UI of your Google Analytics account.', ['@url' => 'https://support.google.com/analytics/answer/2558867']),
+      '#description' => t('Enhanced Link Attribution improves the accuracy of your In-Page Analytics report by automatically differentiating between multiple links to the same URL on a single page by using link element IDs. <a href=":url">Enable enhanced link attribution</a> in the Admin UI of your Google Analytics account.', [':url' => 'https://support.google.com/analytics/answer/2558867']),
     ];
     $form['tracking']['linktracking']['google_analytics_trackurlfragments'] = [
       '#type' => 'checkbox',
@@ -325,7 +325,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $form['tracking']['search_and_advertising']['google_analytics_site_search'] = [
       '#type' => 'checkbox',
       '#title' => t('Track internal search'),
-      '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href="@url">Setting Up Site Search for a Profile</a>.', ['@url' => 'https://support.google.com/analytics/answer/1012264']) . $site_search_dependencies,
+      '#description' => t('If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <strong>search</strong>. For more information see <a href=":url">Setting Up Site Search for a Profile</a>.', [':url' => 'https://support.google.com/analytics/answer/1012264']) . $site_search_dependencies,
       '#default_value' => $config->get('track.site_search'),
       '#disabled' => (\Drupal::moduleHandler()->moduleExists('search') ? FALSE : TRUE),
     ];
@@ -338,7 +338,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $form['tracking']['search_and_advertising']['google_analytics_trackdisplayfeatures'] = [
       '#type' => 'checkbox',
       '#title' => t('Track display features'),
-      '#description' => t('The display features plugin can be used to enable Display Advertising Features in Google Analytics, such as Remarketing, Demographics and Interest Reporting, and more. <a href="@displayfeatures">Learn more about Display Advertising Features in Google Analytics</a>. If you choose this option you will need to <a href="@privacy">update your privacy policy</a>.', ['@displayfeatures' => 'https://support.google.com/analytics/answer/3450482', '@privacy' => 'https://support.google.com/analytics/answer/2700409']),
+      '#description' => t('The display features plugin can be used to enable Display Advertising Features in Google Analytics, such as Remarketing, Demographics and Interest Reporting, and more. <a href=":displayfeatures">Learn more about Display Advertising Features in Google Analytics</a>. If you choose this option you will need to <a href=":privacy">update your privacy policy</a>.', [':displayfeatures' => 'https://support.google.com/analytics/answer/3450482', ':privacy' => 'https://support.google.com/analytics/answer/2700409']),
       '#default_value' => $config->get('track.displayfeatures'),
     ];
 
@@ -357,13 +357,13 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $form['tracking']['privacy']['google_analytics_privacy_donottrack'] = [
       '#type' => 'checkbox',
       '#title' => t('Universal web tracking opt-out'),
-      '#description' => t('If enabled and your server receives the <a href="@donottrack">Do-Not-Track</a> header from the client browser, the Google Analytics module will not embed any tracking code into your site. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision. This feature is currently limited to logged in users and disabled page caching.', ['@donottrack' => 'http://donottrack.us/']),
+      '#description' => t('If enabled and your server receives the <a href=":donottrack">Do-Not-Track</a> header from the client browser, the Google Analytics module will not embed any tracking code into your site. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision. This feature is currently limited to logged in users and disabled page caching.', [':donottrack' => 'http://donottrack.us/']),
       '#default_value' => $config->get('privacy.donottrack'),
     ];
 
     // Custom Dimensions.
     $form['google_analytics_custom_dimension'] = [
-      '#description' => t('You can set values for Google Analytics <a href="@custom_var_documentation">Custom Dimensions</a> here. You must have already configured your custom dimensions in the <a href="@setup_documentation">Google Analytics Management Interface</a>. You may use tokens. Global and user tokens are always available; on node pages, node tokens are also available. A dimension <em>value</em> is allowed to have a maximum length of 150 bytes. Expect longer values to get trimmed.', ['@custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets', '@setup_documentation' => 'https://support.google.com/analytics/answer/2709829']),
+      '#description' => t('You can set values for Google Analytics <a href=":custom_var_documentation">Custom Dimensions</a> here. You must have already configured your custom dimensions in the <a href=":setup_documentation">Google Analytics Management Interface</a>. You may use tokens. Global and user tokens are always available; on node pages, node tokens are also available. A dimension <em>value</em> is allowed to have a maximum length of 150 bytes. Expect longer values to get trimmed.', [':custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets', ':setup_documentation' => 'https://support.google.com/analytics/answer/2709829']),
       '#title' => t('Custom dimensions'),
       '#tree' => TRUE,
       '#type' => 'details',
@@ -408,7 +408,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
     $form['google_analytics_custom_dimension']['google_analytics_description'] = [
       '#type' => 'item',
-      '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom dimensions. Section 7 of the <a href="@ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, userid, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', ['@ga_tos' => 'http://www.google.com/analytics/terms/gb.html']),
+      '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom dimensions. Section 7 of the <a href=":ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, userid, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', [':ga_tos' => 'http://www.google.com/analytics/terms/gb.html']),
     ];
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['google_analytics_custom_dimension']['google_analytics_token_tree'] = [
@@ -420,7 +420,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
     // Custom Metrics.
     $form['google_analytics_custom_metric'] = [
-      '#description' => t('You can add Google Analytics <a href="@custom_var_documentation">Custom Metrics</a> here. You must have already configured your custom metrics in the <a href="@setup_documentation">Google Analytics Management Interface</a>. You may use tokens. Global and user tokens are always available; on node pages, node tokens are also available.', ['@custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets', '@setup_documentation' => 'https://support.google.com/analytics/answer/2709829']),
+      '#description' => t('You can add Google Analytics <a href=":custom_var_documentation">Custom Metrics</a> here. You must have already configured your custom metrics in the <a href=":setup_documentation">Google Analytics Management Interface</a>. You may use tokens. Global and user tokens are always available; on node pages, node tokens are also available.', [':custom_var_documentation' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets', ':setup_documentation' => 'https://support.google.com/analytics/answer/2709829']),
       '#title' => t('Custom metrics'),
       '#tree' => TRUE,
       '#type' => 'details',
@@ -465,7 +465,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
     $form['google_analytics_custom_metric']['google_analytics_description'] = [
       '#type' => 'item',
-      '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom metrics. Section 7 of the <a href="@ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, userid, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', ['@ga_tos' => 'http://www.google.com/analytics/terms/gb.html']),
+      '#description' => t('You can supplement Google Analytics\' basic IP address tracking of visitors by segmenting users based on custom metrics. Section 7 of the <a href=":ga_tos">Google Analytics terms of service</a> requires that You will not (and will not allow any third party to) use the Service to track, collect or upload any data that personally identifies an individual (such as a name, userid, email address or billing information), or other data which can be reasonably linked to such information by Google. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws and regulations relating to the collection of information from Visitors. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies that are used to collect traffic data, and You must not circumvent any privacy features (e.g., an opt-out) that are part of the Service.', [':ga_tos' => 'http://www.google.com/analytics/terms/gb.html']),
     ];
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['google_analytics_custom_metric']['google_analytics_token_tree'] = [
@@ -503,14 +503,14 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'details',
       '#title' => t('Custom JavaScript code'),
       '#open' => TRUE,
-      '#description' => t('You can add custom Google Analytics <a href="@snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href="@ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href="@ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', ['@snippets' => 'http://drupal.org/node/248699', '@ga_concepts_overview' => 'https://developers.google.com/analytics/resources/concepts/gaConceptsTrackingOverview', '@ga_js_api' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/method-reference']),
+      '#description' => t('You can add custom Google Analytics <a href=":snippets">code snippets</a> here. These will be added every time tracking is in effect. Before you add your custom code, you should read the <a href=":ga_concepts_overview">Google Analytics Tracking Code - Functional Overview</a> and the <a href=":ga_js_api">Google Analytics Tracking API</a> documentation. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'http://drupal.org/node/248699', ':ga_concepts_overview' => 'https://developers.google.com/analytics/resources/concepts/gaConceptsTrackingOverview', ':ga_js_api' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/method-reference']),
     ];
     $form['advanced']['codesnippet']['google_analytics_codesnippet_create'] = [
       '#type' => 'textarea',
       '#title' => t('Create only fields'),
       '#default_value' => $this->getNameValueString($config->get('codesnippet.create')),
       '#rows' => 5,
-      '#description' => t('Enter one value per line, in the format name|value. Settings in this textarea will be added to <code>ga("create", "UA-XXXX-Y", {"name":"value"});</code>. For more information, read <a href="@url">create only fields</a> documentation in the Analytics.js field reference.', ['@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create']),
+      '#description' => t('Enter one value per line, in the format name|value. Settings in this textarea will be added to <code>ga("create", "UA-XXXX-Y", {"name":"value"});</code>. For more information, read <a href=":url">create only fields</a> documentation in the Analytics.js field reference.', [':url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create']),
       '#element_validate' => [[get_class($this), 'validateCreateFieldValues']],
     ];
     $form['advanced']['codesnippet']['google_analytics_codesnippet_before'] = [
@@ -872,7 +872,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       return t('Create only field name %name is a disallowed field name. Please select <em>Multiple top-level domains</em> under <em>What are you tracking</em> to enable cross domain tracking.', ['%name' => $name]);
     }
     if (!in_array($name, $create_only_fields)) {
-      return t('Create only field name %name is an unknown field name. Field names are case sensitive. Please see <a href="@url">create only fields</a> documentation for supported field names.', ['%name' => $name, '@url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create']);
+      return t('Create only field name %name is an unknown field name. Field names are case sensitive. Please see <a href=":url">create only fields</a> documentation for supported field names.', ['%name' => $name, ':url' => 'https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create']);
     }
   }
 

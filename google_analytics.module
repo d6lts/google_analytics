@@ -43,7 +43,7 @@ function google_analytics_api() {
 function google_analytics_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'google_analytics.admin_settings_form':
-      return t('<a href="@ga_url">Google Analytics</a> is a free (registration required) website traffic and marketing effectiveness service.', ['@ga_url' => 'http://www.google.com/analytics/']);
+      return t('<a href=":ga_url">Google Analytics</a> is a free (registration required) website traffic and marketing effectiveness service.', [':ga_url' => 'http://www.google.com/analytics/']);
       break;
   }
 }
