@@ -352,10 +352,10 @@ function googleanalytics_page_alter(&$page) {
       // Custom tracking. Prepend before all other JavaScript.
       // @TODO: https://support.google.com/adsense/answer/98142
       // sounds like it could be appended to $script.
-      drupal_add_js($googleanalytics_adsense_script, array('type' => 'inline', 'group' => JS_LIBRARY-1));
+      drupal_add_js($googleanalytics_adsense_script, array('type' => 'inline', 'group' => JS_LIBRARY-1, 'requires_jquery' => FALSE));
     }
 
-    drupal_add_js($script, array('scope' => 'header', 'type' => 'inline'));
+    drupal_add_js($script, array('scope' => 'header', 'type' => 'inline', 'requires_jquery' => FALSE));
   }
 }
 
@@ -456,7 +456,7 @@ function googleanalytics_preprocess_search_results(&$variables) {
     // found. But the pager item mumber can tell the number of search results.
     global $pager_total_items;
 
-    drupal_add_js('window.googleanalytics_search_results = ' . intval($pager_total_items[0]) . ';', array('type' => 'inline', 'group' => JS_LIBRARY-1));
+    drupal_add_js('window.googleanalytics_search_results = ' . intval($pager_total_items[0]) . ';', array('type' => 'inline', 'group' => JS_LIBRARY-1, 'requires_jquery' => FALSE));
   }
 }
 
