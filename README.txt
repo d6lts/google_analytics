@@ -40,7 +40,7 @@ default the following pages are listed for exclusion:
 /user/*/*
 
 These defaults are changeable by the website administrator or any other
-user with 'administer google analytics' permission.
+user with 'Administer Google Analytics' permission.
 
 Like the blocks visibility settings in Drupal core, there is a choice for
 "Add if the following PHP code returns TRUE." Sample PHP snippets that can be
