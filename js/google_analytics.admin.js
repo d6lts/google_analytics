@@ -44,7 +44,7 @@
       });
 
       $('#edit-user-vis-settings').drupalSetSummary(function (context) {
-        var $radio = $('input[name="google_analytics_custom"]:checked', context);
+        var $radio = $('input[name="google_analytics_users"]:checked', context);
         if ($radio.val() === '0') {
           return Drupal.t('Not customizable');
         }

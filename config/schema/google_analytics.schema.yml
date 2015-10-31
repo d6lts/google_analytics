@@ -32,7 +32,7 @@ google_analytics.settings:
           sequence:
             type: string
             label: 'Role'
-        custom:
+        users:
           type: integer
           label: 'Allow users to customize tracking on their account page'
     track:

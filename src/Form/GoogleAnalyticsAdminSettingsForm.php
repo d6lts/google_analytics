@@ -204,7 +204,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     ];
 
     // Standard tracking configurations.
-    $visibility_custom = $config->get('visibility.custom');
+    $visibility_users = $config->get('visibility.users');
 
     $form['tracking']['user_vis_settings'] = [
       '#type' => 'details',
@@ -212,7 +212,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#group' => 'tracking_scope',
     ];
     $t_permission = ['%permission' => t('opt-in or out of tracking')];
-    $form['tracking']['user_vis_settings']['google_analytics_custom'] = [
+    $form['tracking']['user_vis_settings']['google_analytics_users'] = [
       '#type' => 'radios',
       '#title' => t('Allow users to customize tracking on their account page'),
       '#options' => [
@@ -220,7 +220,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         t('Tracking on by default, users with %permission permission can opt out', $t_permission),
         t('Tracking off by default, users with %permission permission can opt in', $t_permission),
       ],
-      '#default_value' => !empty($visibility_custom) ? $visibility_custom : 0,
+      '#default_value' => !empty($visibility_users) ? $visibility_users : 0,
     ];
     $form['tracking']['user_vis_settings']['google_analytics_trackuserid'] = [
       '#type' => 'checkbox',
@@ -657,7 +657,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       ->set('visibility.pages', $form_state->getValue('google_analytics_pages'))
       ->set('visibility.roles_enabled', $form_state->getValue('google_analytics_visibility_roles'))
       ->set('visibility.roles', $form_state->getValue('google_analytics_roles'))
-      ->set('visibility.custom', $form_state->getValue('google_analytics_custom'))
+      ->set('visibility.users', $form_state->getValue('google_analytics_users'))
       ->save();
 
     if ($form_state->hasValue('google_analytics_translation_set')) {

@@ -11,6 +11,7 @@ source:
     - googleanalytics_codesnippet_before
     - googleanalytics_codesnippet_create
     - googleanalytics_cross_domains
+    - googleanalytics_custom
     - googleanalytics_custom_dimension
     - googleanalytics_custom_metric
     - googleanalytics_domain_mode
@@ -56,6 +57,7 @@ process:
   'track/userid': googleanalytics_trackuserid
   'track/outbound': googleanalytics_trackoutgoing
   'translation_set': googleanalytics_translation_set
+  'visibility/users': googleanalytics_custom
   'visibility/pages': googleanalytics_pages
   'visibility/pages_enabled': googleanalytics_visibility
   'visibility/roles': googleanalytics_roles

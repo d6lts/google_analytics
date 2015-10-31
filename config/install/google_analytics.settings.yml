@@ -6,7 +6,7 @@ visibility:
   pages: "/admin\n/admin/*\n/batch\n/node/add*\n/node/*/*\n/user/*/*"
   roles_enabled: 0
   roles: {  }
-  custom: 0
+  users: 0
 track:
   outbound: true
   mailto: true
