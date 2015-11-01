@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\google_analytics\Tests\GoogleAnalyticsBasicTest.
+ * Contains \Drupal\google_analytics\Tests\GoogleAnalyticsSearchTest.
  */
 
 namespace Drupal\google_analytics\Tests;
