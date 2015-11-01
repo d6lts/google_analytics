@@ -474,10 +474,11 @@ function google_analytics_search_get_keys() {
 /**
  * Download/Synchronize/Cache tracking code file locally.
  *
- * @param $location
+ * @param string $location
  *   The full URL to the external javascript file.
- * @param $synchronize
+ * @param bool $synchronize
  *   Synchronize to local cache if remote file has changed.
+ *
  * @return mixed
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
