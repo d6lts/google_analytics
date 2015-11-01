@@ -406,7 +406,7 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
  */
 function google_analytics_user_update($account) {
   if (isset($account->google_analytics['custom'])) {
-    \Drupal::service('user.data')->set('google_analytics', $account->id(), 'custom', (int) $account->google_analytics['custom']);
+    \Drupal::service('user.data')->set('google_analytics', $account->id(), 'users', (int) $account->google_analytics['users']);
   }
 }
 
