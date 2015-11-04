@@ -53,8 +53,8 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
 
     $edit = [];
     $edit['google_analytics_account'] = $ua_code;
-    $edit['google_analytics_visibility_pages'] = 2;
-    $edit['google_analytics_pages'] = '<?php return 0; ?>';
+    $edit['google_analytics_visibility_request_path_mode'] = 2;
+    $edit['google_analytics_visibility_request_path_pages'] = '<?php return 0; ?>';
     $this->drupalPostForm('admin/config/system/google-analytics', $edit, t('Save configuration'));
 
     // Compare saved setting with posted setting.
