@@ -84,6 +84,16 @@ Known issues
   optional for GA, but if installed you need at minimum this versions or you may
   experience the issues documented in #1035030.
 - Ubercart: The minimum required Drupal 6 version is 6.x-2.6.
+- Chameleon theme fails to add JS code to page. This only works for PHP themes.
+  A workaround is to edit your chameleon.theme file and add
+  googleanalytics_add_js() to chameleon_page() function as below:
+  
+  ...
+  $output .= drupal_get_css();
+  googleanalytics_add_js(); // Execute theme preprocess functions manually.
+  $output .= drupal_get_js();
+  ...  
+
 
 Manual JS debugging
 ===================
