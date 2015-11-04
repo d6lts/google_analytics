@@ -2,11 +2,11 @@ account: ''
 domain_mode: 0
 cross_domains: ''
 visibility:
-  pages_enabled: 0
-  pages: "/admin\n/admin/*\n/batch\n/node/add*\n/node/*/*\n/user/*/*"
-  roles_enabled: 0
-  roles: {  }
-  users: 0
+  request_path_mode: 0
+  request_path_pages: "/admin\n/admin/*\n/batch\n/node/add*\n/node/*/*\n/user/*/*"
+  user_role_mode: 0
+  user_role_roles: {  }
+  user_account_mode: 0
 track:
   outbound: true
   mailto: true

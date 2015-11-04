@@ -73,11 +73,11 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Show tracking on "every page except the listed pages".
-    $this->config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
+    $this->config('google_analytics.settings')->set('visibility.request_path_mode', 0)->save();
     // Disable tracking on "admin*" pages only.
-    $this->config('google_analytics.settings')->set('visibility.pages', "/admin\n/admin/*")->save();
+    $this->config('google_analytics.settings')->set('visibility.request_path_pages', "/admin\n/admin/*")->save();
     // Enable tracking only for authenticated users only.
-    $this->config('google_analytics.settings')->set('visibility.roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
+    $this->config('google_analytics.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -91,7 +91,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertNoRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin subpage.');
 
     // Test whether tracking code display is properly flipped.
-    $this->config('google_analytics.settings')->set('visibility.pages_enabled', 1)->save();
+    $this->config('google_analytics.settings')->set('visibility.request_path_mode', 1)->save();
     $this->drupalGet('admin');
     $this->assertRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin page.');
     $this->drupalGet('admin/config/system/google-analytics');
@@ -106,9 +106,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is NOT displayed for anonymous.');
 
     // Switch back to every page except the listed pages.
-    $this->config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
+    $this->config('google_analytics.settings')->set('visibility.request_path_mode', 0)->save();
     // Enable tracking code for all user roles.
-    $this->config('google_analytics.settings')->set('visibility.roles', [])->save();
+    $this->config('google_analytics.settings')->set('visibility.user_role_roles', [])->save();
 
     // Test whether 403 forbidden tracking code is shown if user has no access.
     $this->drupalGet('admin');
@@ -144,9 +144,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Show tracking code on every page except the listed pages.
-    $this->config('google_analytics.settings')->set('visibility.pages_enabled', 0)->save();
+    $this->config('google_analytics.settings')->set('visibility.request_path_mode', 0)->save();
     // Enable tracking code for all user roles.
-    $this->config('google_analytics.settings')->set('visibility.roles', [])->save();
+    $this->config('google_analytics.settings')->set('visibility.user_role_roles', [])->save();
 
     /* Sample JS code as added to page:
     <script type="text/javascript" src="/sites/all/modules/google_analytics/google_analytics.js?w"></script>

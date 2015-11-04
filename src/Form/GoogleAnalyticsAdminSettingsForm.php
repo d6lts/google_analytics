@@ -132,18 +132,18 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     // Page specific visibility configurations.
     $account = \Drupal::currentUser();
     $php_access = $account->hasPermission('use PHP for tracking visibility');
-    $visibility_pages = $config->get('visibility.pages');
+    $visibility_request_path_pages = $config->get('visibility.request_path_pages');
 
-    $form['tracking']['page_vis_settings'] = [
+    $form['tracking']['page_visibility_settings'] = [
       '#type' => 'details',
       '#title' => t('Pages'),
       '#group' => 'tracking_scope',
     ];
 
-    if ($config->get('visibility.pages_enabled') == 2 && !$php_access) {
-      $form['tracking']['page_vis_settings'] = [];
-      $form['tracking']['page_vis_settings']['google_analytics_visibility_pages'] = ['#type' => 'value', '#value' => 2];
-      $form['tracking']['page_vis_settings']['google_analytics_pages'] = ['#type' => 'value', '#value' => $visibility_pages];
+    if ($config->get('visibility.request_path_mode') == 2 && !$php_access) {
+      $form['tracking']['page_visibility_settings'] = [];
+      $form['tracking']['page_visibility_settings']['google_analytics_visibility_request_path_mode'] = ['#type' => 'value', '#value' => 2];
+      $form['tracking']['page_visibility_settings']['google_analytics_visibility_request_path_pages'] = ['#type' => 'value', '#value' => $visibility_request_path_pages];
     }
     else {
       // @TODO: see BlockBase.php for upgrade
@@ -161,58 +161,58 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       else {
         $title = t('Pages');
       }
-      $form['tracking']['page_vis_settings']['google_analytics_visibility_pages'] = [
+      $form['tracking']['page_visibility_settings']['google_analytics_visibility_request_path_mode'] = [
         '#type' => 'radios',
         '#title' => t('Add tracking to specific pages'),
         '#options' => $options,
-        '#default_value' => $config->get('visibility.pages_enabled'),
+        '#default_value' => $config->get('visibility.request_path_mode'),
       ];
-      $form['tracking']['page_vis_settings']['google_analytics_pages'] = [
+      $form['tracking']['page_visibility_settings']['google_analytics_visibility_request_path_pages'] = [
         '#type' => 'textarea',
         '#title' => $title,
         '#title_display' => 'invisible',
-        '#default_value' => !empty($visibility_pages) ? $visibility_pages : '',
+        '#default_value' => !empty($visibility_request_path_pages) ? $visibility_request_path_pages : '',
         '#description' => $description,
         '#rows' => 10,
       ];
     }
 
     // Render the role overview.
-    $visibility_roles = $config->get('visibility.roles');
+    $visibility_user_role_roles = $config->get('visibility.user_role_roles');
 
-    $form['tracking']['role_vis_settings'] = [
+    $form['tracking']['role_visibility_settings'] = [
       '#type' => 'details',
       '#title' => t('Roles'),
       '#group' => 'tracking_scope',
     ];
 
-    $form['tracking']['role_vis_settings']['google_analytics_visibility_roles'] = [
+    $form['tracking']['role_visibility_settings']['google_analytics_visibility_user_role_mode'] = [
       '#type' => 'radios',
       '#title' => t('Add tracking for specific roles'),
       '#options' => [
         t('Add to the selected roles only'),
         t('Add to every role except the selected ones'),
       ],
-      '#default_value' => $config->get('visibility.roles_enabled'), // @FIXME rename variable
+      '#default_value' => $config->get('visibility.user_role_mode'), // @FIXME rename variable
     ];
-    $form['tracking']['role_vis_settings']['google_analytics_roles'] = [
+    $form['tracking']['role_visibility_settings']['google_analytics_visibility_user_role_roles'] = [
       '#type' => 'checkboxes',
       '#title' => t('Roles'),
-      '#default_value' => !empty($visibility_roles) ? $visibility_roles : [],
+      '#default_value' => !empty($visibility_user_role_roles) ? $visibility_user_role_roles : [],
       '#options' => array_map('\Drupal\Component\Utility\Html::escape', user_role_names()),
       '#description' => t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
     ];
 
     // Standard tracking configurations.
-    $visibility_users = $config->get('visibility.users');
+    $visibility_user_account_mode = $config->get('visibility.user_account_mode');
 
-    $form['tracking']['user_vis_settings'] = [
+    $form['tracking']['user_visibility_settings'] = [
       '#type' => 'details',
       '#title' => t('Users'),
       '#group' => 'tracking_scope',
     ];
     $t_permission = ['%permission' => t('opt-in or out of tracking')];
-    $form['tracking']['user_vis_settings']['google_analytics_users'] = [
+    $form['tracking']['user_visibility_settings']['google_analytics_visibility_user_account_mode'] = [
       '#type' => 'radios',
       '#title' => t('Allow users to customize tracking on their account page'),
       '#options' => [
@@ -220,9 +220,9 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         t('Tracking on by default, users with %permission permission can opt out', $t_permission),
         t('Tracking off by default, users with %permission permission can opt in', $t_permission),
       ],
-      '#default_value' => !empty($visibility_users) ? $visibility_users : 0,
+      '#default_value' => !empty($visibility_user_account_mode) ? $visibility_user_account_mode : 0,
     ];
-    $form['tracking']['user_vis_settings']['google_analytics_trackuserid'] = [
+    $form['tracking']['user_visibility_settings']['google_analytics_trackuserid'] = [
       '#type' => 'checkbox',
       '#title' => t('Track User ID'),
       '#default_value' => $config->get('track.userid'),
@@ -565,11 +565,11 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
     // Trim some text values.
     $form_state->setValue('google_analytics_account', trim($form_state->getValue('google_analytics_account')));
-    $form_state->setValue('google_analytics_pages', trim($form_state->getValue('google_analytics_pages')));
+    $form_state->setValue('google_analytics_visibility_request_path_pages', trim($form_state->getValue('google_analytics_visibility_request_path_pages')));
     $form_state->setValue('google_analytics_cross_domains', trim($form_state->getValue('google_analytics_cross_domains')));
     $form_state->setValue('google_analytics_codesnippet_before', trim($form_state->getValue('google_analytics_codesnippet_before')));
     $form_state->setValue('google_analytics_codesnippet_after', trim($form_state->getValue('google_analytics_codesnippet_after')));
-    $form_state->setValue('google_analytics_roles', array_filter($form_state->getValue('google_analytics_roles')));
+    $form_state->setValue('google_analytics_visibility_user_role_roles', array_filter($form_state->getValue('google_analytics_visibility_user_role_roles')));
     $form_state->setValue('google_analytics_trackmessages', array_filter($form_state->getValue('google_analytics_trackmessages')));
 
     // Replace all type of dashes (n-dash, m-dash, minus) with the normal dashes.
@@ -589,11 +589,11 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     }
 
     // Verify that every path is prefixed with a slash, but don't check PHP code snippets.
-    if ($form_state->getValue('google_analytics_visibility_pages') != 2) {
-      $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('google_analytics_pages'));
+    if ($form_state->getValue('google_analytics_visibility_request_path_mode') != 2) {
+      $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('google_analytics_visibility_request_path_pages'));
       foreach ($pages as $page) {
         if (strpos($page, '/') !== 0 && $page !== '<front>') {
-          $form_state->setErrorByName('google_analytics_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
+          $form_state->setErrorByName('google_analytics_visibility_request_path_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
           // Drupal forms show one error only.
           break;
         }
@@ -653,11 +653,11 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       ->set('privacy.donottrack', $form_state->getValue('google_analytics_privacy_donottrack'))
       ->set('cache', $form_state->getValue('google_analytics_cache'))
       ->set('debug', $form_state->getValue('google_analytics_debug'))
-      ->set('visibility.pages_enabled', $form_state->getValue('google_analytics_visibility_pages'))
-      ->set('visibility.pages', $form_state->getValue('google_analytics_pages'))
-      ->set('visibility.roles_enabled', $form_state->getValue('google_analytics_visibility_roles'))
-      ->set('visibility.roles', $form_state->getValue('google_analytics_roles'))
-      ->set('visibility.users', $form_state->getValue('google_analytics_users'))
+      ->set('visibility.request_path_mode', $form_state->getValue('google_analytics_visibility_request_path_mode'))
+      ->set('visibility.request_path_pages', $form_state->getValue('google_analytics_visibility_request_path_pages'))
+      ->set('visibility.user_role_mode', $form_state->getValue('google_analytics_visibility_user_role_mode'))
+      ->set('visibility.user_role_roles', $form_state->getValue('google_analytics_visibility_user_role_roles'))
+      ->set('visibility.user_account_mode', $form_state->getValue('google_analytics_visibility_user_account_mode'))
       ->save();
 
     if ($form_state->hasValue('google_analytics_translation_set')) {

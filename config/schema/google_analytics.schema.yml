@@ -17,22 +17,22 @@ google_analytics.settings:
       type: mapping
       label: 'Visibility'
       mapping:
-        pages_enabled:
+        request_path_mode:
           type: integer
           label: 'Add tracking to specific pages'
-        pages:
+        request_path_pages:
           type: string
           label: 'Pages by their paths'
-        roles_enabled:
+        user_role_mode:
           type: integer
           label: 'Add tracking for specific roles'
-        roles:
+        user_role_roles:
           type: sequence
           label: 'Roles'
           sequence:
             type: string
             label: 'Role'
-        users:
+        user_account_mode:
           type: integer
           label: 'Allow users to customize tracking on their account page'
     track:

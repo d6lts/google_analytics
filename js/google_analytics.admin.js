@@ -12,10 +12,10 @@
         return;
       }
 
-      $('#edit-page-vis-settings').drupalSetSummary(function (context) {
-        var $radio = $('input[name="google_analytics_visibility_pages"]:checked', context);
+      $('#edit-page-visibility-settings').drupalSetSummary(function (context) {
+        var $radio = $('input[name="google_analytics_visibility_request_path_mode"]:checked', context);
         if ($radio.val() === '0') {
-          if (!$('textarea[name="google_analytics_pages"]', context).val()) {
+          if (!$('textarea[name="google_analytics_visibility_request_path_pages"]', context).val()) {
             return Drupal.t('Not restricted');
           }
           else {
@@ -27,7 +27,7 @@
         }
       });
 
-      $('#edit-role-vis-settings').drupalSetSummary(function (context) {
+      $('#edit-role-visibility-settings').drupalSetSummary(function (context) {
         var vals = [];
         $('input[type="checkbox"]:checked', context).each(function () {
           vals.push($.trim($(this).next('label').text()));
@@ -35,7 +35,7 @@
         if (!vals.length) {
           return Drupal.t('Not restricted');
         }
-        else if ($('input[name="google_analytics_visibility_roles"]:checked', context).val() === '1') {
+        else if ($('input[name="google_analytics_visibility_user_role_mode"]:checked', context).val() === '1') {
           return Drupal.t('Excepted: @roles', {'@roles': vals.join(', ')});
         }
         else {
@@ -43,8 +43,8 @@
         }
       });
 
-      $('#edit-user-vis-settings').drupalSetSummary(function (context) {
-        var $radio = $('input[name="google_analytics_users"]:checked', context);
+      $('#edit-user-visibility-settings').drupalSetSummary(function (context) {
+        var $radio = $('input[name="google_analytics_visibility_user_account_mode"]:checked', context);
         if ($radio.val() === '0') {
           return Drupal.t('Not customizable');
         }

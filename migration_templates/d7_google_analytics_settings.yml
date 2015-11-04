@@ -57,11 +57,11 @@ process:
   'track/userid': googleanalytics_trackuserid
   'track/outbound': googleanalytics_trackoutbound
   'translation_set': googleanalytics_translation_set
-  'visibility/users': googleanalytics_custom
-  'visibility/pages': googleanalytics_pages
-  'visibility/pages_enabled': googleanalytics_visibility_pages
-  'visibility/roles': googleanalytics_roles
-  'visibility/roles_enabled': googleanalytics_visibility_roles
+  'visibility/user_account_mode': googleanalytics_custom
+  'visibility/request_path_pages': googleanalytics_pages
+  'visibility/request_path_mode': googleanalytics_visibility_pages
+  'visibility/user_role_roles': googleanalytics_roles
+  'visibility/user_role_mode': googleanalytics_visibility_roles
 destination:
   plugin: config
   config_name: google_analytics.settings
