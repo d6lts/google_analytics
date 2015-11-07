@@ -22,7 +22,6 @@ track:
   displayfeatures: false
 privacy:
   anonymizeip: true
-  donottrack: true
 custom:
   dimension: {  }
   metric: {  }

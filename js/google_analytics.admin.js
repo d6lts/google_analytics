@@ -128,9 +128,6 @@
         if ($('input#edit-google-analytics-tracker-anonymizeip', context).is(':checked')) {
           vals.push(Drupal.t('Anonymize IP'));
         }
-        if ($('input#edit-google-analytics-privacy-donottrack', context).is(':checked')) {
-          vals.push(Drupal.t('Universal web tracking opt-out'));
-        }
         if (!vals.length) {
           return Drupal.t('No privacy');
         }

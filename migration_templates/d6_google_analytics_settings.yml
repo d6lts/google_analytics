@@ -16,7 +16,6 @@ source:
     - googleanalytics_custom_metric
     - googleanalytics_domain_mode
     - googleanalytics_pages
-    - googleanalytics_privacy_donottrack
     - googleanalytics_roles
     - googleanalytics_site_search
     - googleanalytics_trackadsense
@@ -44,7 +43,6 @@ process:
   'custom/metric': googleanalytics_custom_metric
   domain_mode: googleanalytics_domain_mode
   'privacy/anonymizeip': googleanalytics_tracker_anonymizeip
-  'privacy/donottrack': googleanalytics_privacy_donottrack
   'track/adsense': googleanalytics_trackadsense
   'track/displayfeatures': googleanalytics_trackdoubleclick
   'track/files': googleanalytics_trackfiles

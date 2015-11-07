@@ -378,25 +378,11 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
         break;
     }
 
-    // Disable tracking for visitors who have opted out from tracking via DNT (Do-Not-Track) header.
-    $disabled = FALSE;
-    if ($config->get('privacy.donottrack') && !empty($_SERVER['HTTP_DNT'])) {
-      $disabled = TRUE;
-
-      // Override settings value.
-      $account_data_google_analytics['users'] = FALSE;
-
-      $description .= '<span class="admin-missing">';
-      $description .= ' ' . t('You have opted out from tracking via browser privacy settings.');
-      $description .= '</span>';
-    }
-
     $form['google_analytics']['users'] = [
       '#type' => 'checkbox',
       '#title' => t('Enable user tracking'),
       '#description' => $description,
       '#default_value' => isset($account_data_google_analytics['users']) ? $account_data_google_analytics['users'] : ($visibility_user_account_mode == 1),
-      '#disabled' => $disabled,
     ];
   }
 }
@@ -559,7 +545,7 @@ function _google_analytics_visibility_user($account) {
   $enabled = FALSE;
 
   // Is current user a member of a role that should be tracked?
-  if (_google_analytics_visibility_header($account) && _google_analytics_visibility_roles($account)) {
+  if (_google_analytics_visibility_roles($account)) {
 
     // Use the user's block visibility setting, if necessary.
     if (($visibility_user_account_mode = $config->get('visibility.user_account_mode')) != 0) {
@@ -651,22 +637,4 @@ function _google_analytics_visibility_pages() {
 
   }
   return $page_match;
-}
-
-/**
- * Based on headers send by clients this function returns TRUE if GA code should
- * be added to the current page and otherwise FALSE.
- */
-function _google_analytics_visibility_header($account) {
-  $config = \Drupal::config('google_analytics.settings');
-
-  // @FIXME: This is not reliable method to check if page cache is enabled. Look
-  //   for different solution.
-  if (($account->id() || !\Drupal::moduleHandler()->moduleExists('page_cache')) && $config->get('privacy.donottrack') && !empty($_SERVER['HTTP_DNT'])) {
-    // Disable tracking if caching is disabled or a visitors is logged in and
-    // have opted out from tracking via DNT (Do-Not-Track) header.
-    return FALSE;
-  }
-
-  return TRUE;
 }

@@ -85,9 +85,6 @@ google_analytics.settings:
         anonymizeip:
           type: boolean
           label: 'Anonymize visitors IP address'
-        donottrack:
-          type: boolean
-          label: 'Universal web tracking opt-out'
     custom:
       type: mapping
       label: 'Custom variables'

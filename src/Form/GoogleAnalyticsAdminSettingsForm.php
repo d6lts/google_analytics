@@ -354,12 +354,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#description' => t('Tell Google Analytics to anonymize the information sent by the tracker objects by removing the last octet of the IP address prior to its storage. Note that this will slightly reduce the accuracy of geographic reporting. In some countries it is not allowed to collect personally identifying information for privacy reasons and this setting may help you to comply with the local laws.'),
       '#default_value' => $config->get('privacy.anonymizeip'),
     ];
-    $form['tracking']['privacy']['google_analytics_privacy_donottrack'] = [
-      '#type' => 'checkbox',
-      '#title' => t('Universal web tracking opt-out'),
-      '#description' => t('If enabled and your server receives the <a href=":donottrack">Do-Not-Track</a> header from the client browser, the Google Analytics module will not embed any tracking code into your site. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision. This feature is currently limited to logged in users and disabled page caching.', [':donottrack' => 'http://donottrack.us/']),
-      '#default_value' => $config->get('privacy.donottrack'),
-    ];
 
     // Custom Dimensions.
     $form['google_analytics_custom_dimension'] = [
@@ -650,7 +644,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       ->set('track.adsense', $form_state->getValue('google_analytics_trackadsense'))
       ->set('track.displayfeatures', $form_state->getValue('google_analytics_trackdisplayfeatures'))
       ->set('privacy.anonymizeip', $form_state->getValue('google_analytics_tracker_anonymizeip'))
-      ->set('privacy.donottrack', $form_state->getValue('google_analytics_privacy_donottrack'))
       ->set('cache', $form_state->getValue('google_analytics_cache'))
       ->set('debug', $form_state->getValue('google_analytics_debug'))
       ->set('visibility.request_path_mode', $form_state->getValue('google_analytics_visibility_request_path_mode'))
