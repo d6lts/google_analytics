@@ -378,11 +378,11 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
         break;
     }
 
-    $form['google_analytics']['users'] = [
+    $form['google_analytics']['user_account_users'] = [
       '#type' => 'checkbox',
       '#title' => t('Enable user tracking'),
       '#description' => $description,
-      '#default_value' => isset($account_data_google_analytics['users']) ? $account_data_google_analytics['users'] : ($visibility_user_account_mode == 1),
+      '#default_value' => isset($account_data_google_analytics['user_account_users']) ? $account_data_google_analytics['user_account_users'] : ($visibility_user_account_mode == 1),
     ];
   }
 }
@@ -391,8 +391,8 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
  * Implements hook_user_update().
  */
 function google_analytics_user_update($account) {
-  if (isset($account->google_analytics['users'])) {
-    \Drupal::service('user.data')->set('google_analytics', $account->id(), 'users', (int) $account->google_analytics['users']);
+  if (isset($account->google_analytics['user_account_users'])) {
+    \Drupal::service('user.data')->set('google_analytics', $account->id(), 'user_account_users', (int) $account->google_analytics['user_account_users']);
   }
 }
 
