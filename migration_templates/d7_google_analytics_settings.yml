@@ -56,6 +56,7 @@ process:
   'track/outbound': googleanalytics_trackoutbound
   'translation_set': googleanalytics_translation_set
   'visibility/user_account_mode': googleanalytics_custom
+  'visibility/request_path_mode': googleanalytics_visibility_pages
   'visibility/request_path_pages':
     plugin: google_analytics_visibility_pages
     source:
@@ -64,12 +65,11 @@ process:
     # If Google Analytics uses PHP visibility, don't migrate it unless the PHP
     # module is enabled.
     skip_php: true
-  'visibility/request_path_mode': googleanalytics_visibility_pages
+  'visibility/user_role_mode': googleanalytics_visibility_roles
   'visibility/user_role_roles':
     plugin: google_analytics_visibility_roles
     source:
       - googleanalytics_roles
-  'visibility/user_role_mode': googleanalytics_visibility_roles
 destination:
   plugin: config
   config_name: google_analytics.settings
