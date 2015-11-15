@@ -552,8 +552,8 @@ function _google_analytics_visibility_user($account) {
     // Use the user's block visibility setting, if necessary.
     if (($visibility_user_account_mode = $config->get('visibility.user_account_mode')) != 0) {
       $user_data_google_analytics = \Drupal::service('user.data')->get('google_analytics', $account->id());
-      if ($account->id() && isset($user_data_google_analytics['users'])) {
-        $enabled = $user_data_google_analytics['users'];
+      if ($account->id() && isset($user_data_google_analytics['user_account_users'])) {
+        $enabled = $user_data_google_analytics['user_account_users'];
       }
       else {
         $enabled = ($visibility_user_account_mode == 1);
