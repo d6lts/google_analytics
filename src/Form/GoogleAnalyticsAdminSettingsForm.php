@@ -710,7 +710,8 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    *
    * @param $token_string
    *   A string with one or more tokens to be validated.
-   * @return boolean
+   *
+   * @return bool
    *   TRUE if blacklisted token has been found, otherwise FALSE.
    */
   protected static function containsForbiddenToken($token_string) {
@@ -839,7 +840,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    * @param string $name
    *   The option value entered by the user.
    *
-   * @return string
+   * @return string|null
    *   The error message if the specified value is invalid, NULL otherwise.
    */
   protected static function validateCreateFieldName($name) {
@@ -875,7 +876,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    * @param string $value
    *   The option value entered by the user.
    *
-   * @return string
+   * @return string|null
    *   The error message if the specified value is invalid, NULL otherwise.
    */
   protected static function validateCreateFieldValue($value) {

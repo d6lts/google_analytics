@@ -537,8 +537,10 @@ function google_analytics_clear_js_cache() {
  *
  * @param $account
  *   A user object containing an array of roles to check.
- * @return boolean
- *   A decision on if the current user is being tracked by Google Analytics.
+ *
+ * @return bool
+ *   TRUE if the current user is being tracked by Google Analytics,
+ *   otherwise FALSE.
  */
 function _google_analytics_visibility_user($account) {
   $config = \Drupal::config('google_analytics.settings');
@@ -569,6 +571,12 @@ function _google_analytics_visibility_user($account) {
 /**
  * Based on visibility setting this function returns TRUE if GA code should
  * be added for the current role and otherwise FALSE.
+ *
+ * @param $account
+ *   A user object containing an array of roles to check.
+ *
+ * @return bool
+ *   TRUE if GA code should be added for the current role and otherwise FALSE.
  */
 function _google_analytics_visibility_roles($account) {
   $config = \Drupal::config('google_analytics.settings');
