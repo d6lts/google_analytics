@@ -1,7 +1,7 @@
 administer google analytics:
   title: 'Administer Google Analytics'
   description: 'Perform maintenance tasks for Google Analytics.'
-opt-in or out of tracking':
+opt-in or out of tracking:
   title: 'Opt-in or out of tracking'
   description: 'Allow users to decide if tracking code will be added to pages or not.'
 use PHP for tracking visibility:
