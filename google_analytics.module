@@ -365,7 +365,6 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
       '#title' => t('Google Analytics settings'),
       '#weight' => 3,
       '#open' => TRUE,
-      '#tree' => TRUE
     ];
 
     switch ($visibility_user_account_mode) {
@@ -384,15 +383,19 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
       '#description' => $description,
       '#default_value' => isset($account_data_google_analytics['user_account_users']) ? $account_data_google_analytics['user_account_users'] : ($visibility_user_account_mode == 1),
     ];
+
+    // hook_user_update() is missing in D8, add custom submit handler.
+    $form['actions']['submit']['#submit'][] = 'google_analytics_user_profile_form_submit';
   }
 }
 
 /**
- * Implements hook_user_update().
+ * Submit callback for user profile form to save the Google Analytics setting.
  */
-function google_analytics_user_update($account) {
-  if (isset($account->google_analytics['user_account_users'])) {
-    \Drupal::service('user.data')->set('google_analytics', $account->id(), 'user_account_users', (int) $account->google_analytics['user_account_users']);
+function google_analytics_user_profile_form_submit($form, FormStateInterface $form_state) {
+  $account = $form_state->getFormObject()->getEntity();
+  if ($account->id() && $form_state->hasValue('user_account_users')) {
+    \Drupal::service('user.data')->set('google_analytics', $account->id(), 'user_account_users', (int) $form_state->getValue('user_account_users'));
   }
 }
 
