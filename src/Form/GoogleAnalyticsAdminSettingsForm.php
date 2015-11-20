@@ -146,7 +146,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       $form['tracking']['page_visibility_settings']['google_analytics_visibility_request_path_pages'] = ['#type' => 'value', '#value' => $visibility_request_path_pages];
     }
     else {
-      // @TODO: see BlockBase.php for upgrade
       $options = [
         t('Every page except the listed pages'),
         t('The listed pages only'),
