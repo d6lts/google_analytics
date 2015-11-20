@@ -572,14 +572,14 @@ function _google_analytics_visibility_user($account) {
 }
 
 /**
- * Based on visibility setting this function returns TRUE if GA code should
+ * Based on visibility setting this function returns TRUE if JS code should
  * be added for the current role and otherwise FALSE.
  *
  * @param $account
  *   A user object containing an array of roles to check.
  *
  * @return bool
- *   TRUE if GA code should be added for the current role and otherwise FALSE.
+ *   TRUE if JS code should be added for the current role and otherwise FALSE.
  */
 function _google_analytics_visibility_roles($account) {
   $config = \Drupal::config('google_analytics.settings');
@@ -606,7 +606,7 @@ function _google_analytics_visibility_roles($account) {
 }
 
 /**
- * Based on visibility setting this function returns TRUE if GA code should
+ * Based on visibility setting this function returns TRUE if JS code should
  * be added to the current page and otherwise FALSE.
  *
  * @FIXME see BlockBase.php::access for upgrade
