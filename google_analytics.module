@@ -607,8 +607,6 @@ function _google_analytics_visibility_roles($account) {
 /**
  * Based on visibility setting this function returns TRUE if JS code should
  * be added to the current page and otherwise FALSE.
- *
- * @FIXME see BlockBase.php::access for upgrade
  */
 function _google_analytics_visibility_pages() {
   static $page_match;

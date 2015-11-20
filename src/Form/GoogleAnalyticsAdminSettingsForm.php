@@ -192,7 +192,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         t('Add to the selected roles only'),
         t('Add to every role except the selected ones'),
       ],
-      '#default_value' => $config->get('visibility.user_role_mode'), // @FIXME rename variable
+      '#default_value' => $config->get('visibility.user_role_mode'),
     ];
     $form['tracking']['role_visibility_settings']['google_analytics_visibility_user_role_roles'] = [
       '#type' => 'checkboxes',
@@ -394,7 +394,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         '#token_types' => ['node'],
       ];
       if (\Drupal::moduleHandler()->moduleExists('token')) {
-        // @ FIXME: token module is not available, cannot implement/test validation.
         $form['google_analytics_custom_dimension']['indexes'][$i]['value']['#element_validate'][] = 'token_element_validate';
       }
     }
@@ -451,7 +450,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         '#token_types' => ['node'],
       ];
       if (\Drupal::moduleHandler()->moduleExists('token')) {
-        // @ FIXME: token module is not available, cannot implement/test validation.
         $form['google_analytics_custom_metric']['indexes'][$i]['value']['#element_validate'][] = 'token_element_validate';
       }
     }
