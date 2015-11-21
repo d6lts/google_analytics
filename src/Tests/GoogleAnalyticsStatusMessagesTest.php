@@ -38,7 +38,7 @@ class GoogleAnalyticsStatusMessagesTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
-  function testGoogleAnalyticsStatusMessages() {
+  public function testGoogleAnalyticsStatusMessages() {
     $ua_code = 'UA-123456-4';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 

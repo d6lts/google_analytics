@@ -44,7 +44,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
-  function testGoogleAnalyticsSearchTracking() {
+  public function testGoogleAnalyticsSearchTracking() {
     $ua_code = 'UA-123456-1';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 

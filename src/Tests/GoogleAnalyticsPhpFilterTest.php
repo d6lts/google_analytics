@@ -47,7 +47,7 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
     $this->delegated_admin_user = $this->drupalCreateUser($permissions_delegated_admin_user);
   }
 
-  function testGoogleAnalyticsPhpFilter() {
+  public function testGoogleAnalyticsPhpFilter() {
     $ua_code = 'UA-123456-1';
     $this->drupalLogin($this->admin_user);
 

@@ -48,7 +48,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
-  function testGoogleAnalyticsCustomDimensions() {
+  public function testGoogleAnalyticsCustomDimensions() {
     $ua_code = 'UA-123456-3';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
     $node = $this->drupalCreateNode([
@@ -140,7 +140,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertRaw('ga("set", ' . Json::encode('dimension5') . ', ' . Json::encode('article') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Node tokens are shown.');
   }
 
-  function testGoogleAnalyticsCustomMetrics() {
+  public function testGoogleAnalyticsCustomMetrics() {
     $ua_code = 'UA-123456-3';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 

@@ -42,7 +42,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
-  function testGoogleAnalyticsConfiguration() {
+  public function testGoogleAnalyticsConfiguration() {
     // Check if Configure link is available on 'Extend' page.
     // Requires 'administer modules' permission.
     $this->drupalGet('admin/modules');
@@ -63,7 +63,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'), '[testGoogleAnalyticsConfiguration]: Invalid Web Property ID number validated.');
   }
 
-  function testGoogleAnalyticsPageVisibility() {
+  public function testGoogleAnalyticsPageVisibility() {
     // Verify that no tracking code is embedded into the webpage; if there is
     // only the module installed, but UA code not configured. See #2246991.
     $this->drupalGet('');
@@ -121,7 +121,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw('/404.html', '[testGoogleAnalyticsPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
   }
 
-  function testGoogleAnalyticsTrackingCode() {
+  public function testGoogleAnalyticsTrackingCode() {
     $ua_code = 'UA-123456-2';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
