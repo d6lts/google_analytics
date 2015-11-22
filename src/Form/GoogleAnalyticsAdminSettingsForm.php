@@ -89,7 +89,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       if (count(explode('.', $host)) > 2 && !is_numeric(str_replace('.', '', $host))) {
         $multiple_toplevel_domains[] = $domain . $tldomain;
       }
-      // IP addresses or localhost
+      // IP addresses or localhost.
       else {
         $multiple_toplevel_domains[] = 'www.example' . $tldomain;
       }
@@ -563,14 +563,15 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $form_state->setValue('google_analytics_visibility_user_role_roles', array_filter($form_state->getValue('google_analytics_visibility_user_role_roles')));
     $form_state->setValue('google_analytics_trackmessages', array_filter($form_state->getValue('google_analytics_trackmessages')));
 
-    // Replace all type of dashes (n-dash, m-dash, minus) with the normal dashes.
+    // Replace all type of dashes (n-dash, m-dash, minus) with normal dashes.
     $form_state->setValue('google_analytics_account', str_replace(['–', '—', '−'], '-', $form_state->getValue('google_analytics_account')));
 
     if (!preg_match('/^UA-\d+-\d+$/', $form_state->getValue('google_analytics_account'))) {
       $form_state->setErrorByName('google_analytics_account', t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'));
     }
 
-    // If multiple top-level domains has been selected, a domain names list is required.
+    // If multiple top-level domains has been selected, a domain names list is
+    // required.
     if ($form_state->getValue('google_analytics_domain_mode') == 2 && $form_state->isValueEmpty('google_analytics_cross_domains')) {
       $form_state->setErrorByName('google_analytics_cross_domains', t('A list of top-level domains is required if <em>Multiple top-level domains</em> has been selected.'));
     }
@@ -579,7 +580,8 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       $form_state->setValue('google_analytics_cross_domains', '');
     }
 
-    // Verify that every path is prefixed with a slash, but don't check PHP code snippets.
+    // Verify that every path is prefixed with a slash, but don't check PHP
+    // code snippets.
     if ($form_state->getValue('google_analytics_visibility_request_path_mode') != 2) {
       $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('google_analytics_visibility_request_path_pages'));
       foreach ($pages as $page) {
@@ -689,6 +691,8 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
   }
 
   /**
+   * Get an array of all forbidden tokens.
+   *
    * @param array $value
    *   An array of token values.
    *
@@ -769,12 +773,12 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
   }
 
   /**
-   * #element_validate callback for create only fields.
+   * The #element_validate callback for create only fields.
    *
-   * @param $element
+   * @param array $element
    *   An associative array containing the properties and children of the
    *   generic form element.
-   * @param $form_state
+   * @param object $form_state
    *   The $form_state array for the form this element belongs to.
    *
    * @see form_process_pattern()
@@ -906,7 +910,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    *    - Values are separated by a carriage return.
    *    - Each value is in the format "name|value" or "value".
    */
-  protected function getNameValueString($values) {
+  protected function getNameValueString(array $values) {
     $lines = [];
     foreach ($values as $name => $value) {
       // Convert data types.
@@ -924,16 +928,15 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    * Prepare form data types for Json conversion.
    *
    * @param array $values
-   *   Array .
+   *   Array of values.
    *
    * @return string
    *   Value with casted data type.
    */
-  protected static function convertFormValueDataTypes($values) {
+  protected static function convertFormValueDataTypes(array $values) {
 
     foreach ($values as $name => $value) {
       // Convert data types.
-      // @todo: #2251377: Json utility class serializes boolean values to incorrect data type
       $match = Unicode::strtolower($value);
       if ($match == 'true') {
         $value = TRUE;
@@ -943,7 +946,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       }
 
       // Convert other known fields.
-      // @todo: #2251343: Json utility class serializes numeric values to incorrect data type
       switch ($name) {
         case 'sampleRate':
           // Float

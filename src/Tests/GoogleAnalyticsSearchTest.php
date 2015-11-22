@@ -44,6 +44,9 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
+  /**
+   * Tests if search tracking is properly added to the page.
+   */
   public function testGoogleAnalyticsSearchTracking() {
     $ua_code = 'UA-123456-1';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
@@ -94,4 +97,5 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $this->assertRaw('ga("set", "page", (window.google_analytics_search_results) ?', '[testGoogleAnalyticsSearch]: Search results tracker is displayed.');
     $this->assertRaw('window.google_analytics_search_results = 2;', '[testGoogleAnalyticsSearch]: Two search results found.');
   }
+
 }

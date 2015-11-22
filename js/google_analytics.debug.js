@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Attaches several event listener to a web page (debugging version).
+ */
+
 (function ($, Drupal, drupalSettings) {
 
   /*eslint no-console:0*/
@@ -47,7 +52,7 @@
             });
           }
           else {
-            // e.g. anchor in same page or other internal page link
+            // e.g. anchor in same page or other internal page link.
             console.info("Click on internal link '%s' detected, but not tracked by click.", this.href);
           }
         }
@@ -180,7 +185,7 @@
    *   The web url to check.
    *
    * @return string
-   *   Internal website URL
+   *   Internal website URL.
    */
   Drupal.google_analytics.getPageUrl = function (url) {
     var extractInternalUrl = new RegExp("^(https?):\/\/" + window.location.host, "i");

@@ -14,6 +14,7 @@ use Drupal\simpletest\WebTestBase;
  * Test custom dimensions and metrics functionality of Google Analytics module.
  *
  * @group Google Analytics
+ *
  * @dependencies token
  */
 class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
@@ -48,6 +49,9 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
+  /**
+   * Tests if custom dimensions are properly added to the page.
+   */
   public function testGoogleAnalyticsCustomDimensions() {
     $ua_code = 'UA-123456-3';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
@@ -102,7 +106,8 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
         'index' => 3,
         'value' => '',
       ],
-      // #2300701: Custom dimensions and custom metrics not outputed on zero value.
+      // #2300701: Custom dimensions and custom metrics not outputed on zero
+      // value.
       4 => [
         'index' => 4,
         'value' => '0',
@@ -124,7 +129,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->config('google_analytics.settings')->set('custom.dimension', $google_analytics_custom_dimension)->save();
     $this->verbose('<pre>' . print_r($google_analytics_custom_dimension, TRUE) . '</pre>');
 
-    // Test on frontpage
+    // Test on frontpage.
     $this->drupalGet('');
     $this->assertRaw('ga("set", ' . Json::encode('dimension1') . ', ' . Json::encode("Value: $site_slogan") . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Tokens have been replaced in dimension value.');
     $this->assertRaw('ga("set", ' . Json::encode('dimension2') . ', ' . Json::encode($google_analytics_custom_dimension['2']['value']) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Random value is shown.');
@@ -140,6 +145,9 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertRaw('ga("set", ' . Json::encode('dimension5') . ', ' . Json::encode('article') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Node tokens are shown.');
   }
 
+  /**
+   * Tests if custom metrics are properly added to the page.
+   */
   public function testGoogleAnalyticsCustomMetrics() {
     $ua_code = 'UA-123456-3';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
@@ -189,7 +197,8 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
         'index' => 3,
         'value' => '',
       ],
-      // #2300701: Custom dimensions and custom metrics not outputed on zero value.
+      // #2300701: Custom dimensions and custom metrics not outputed on zero
+      // value.
       4 => [
         'index' => 4,
         'value' => '0',
@@ -204,4 +213,5 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertNoRaw('ga("set", ' . Json::encode('metric3') . ', ' . Json::encode('') . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Empty value is not shown.');
     $this->assertRaw('ga("set", ' . Json::encode('metric4') . ', ' . Json::encode(0) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Value 0 is shown.');
   }
+
 }

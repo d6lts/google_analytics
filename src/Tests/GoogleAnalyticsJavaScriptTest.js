@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Google Analytics javascript tests.
+ */
+
 (function ($, Drupal, drupalSettings) {
 
   /*eslint no-console:0*/
@@ -5,13 +10,13 @@
   "use strict";
 
   /**
-   *  This file is for developers only.
+   * This file is for developers only.
    *
-   *  This tests are made for the javascript functions used in GA module.
-   *  These tests verify if the return values are properly working.
+   * This tests are made for the javascript functions used in GA module.
+   * These tests verify if the return values are properly working.
    *
-   *  Hopefully this can be added somewhere else once Drupal core has JavaScript
-   *  unit testing integrated.
+   * Hopefully this can be added somewhere else once Drupal core has JavaScript
+   * unit testing integrated.
    */
 
   Drupal.google_analytics.test = {};
@@ -56,7 +61,7 @@
    *  Run javascript tests against the GA module.
    */
 
-  // JavaScript debugging
+  // JavaScript debugging.
   var base_url = window.location.protocol + '//' + window.location.host;
   var base_path = window.location.pathname;
   console.dir(Drupal);

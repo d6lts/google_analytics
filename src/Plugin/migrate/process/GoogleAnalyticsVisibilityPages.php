@@ -18,6 +18,8 @@ use Drupal\migrate\Row;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
+ * Prefixes paths with a slash.
+ *
  * @MigrateProcessPlugin(
  *   id = "google_analytics_visibility_pages"
  * )

@@ -40,6 +40,9 @@ class GoogleAnalyticsUninstallTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
+  /**
+   * Tests if the module cleans up the disk on uninstall.
+   */
   public function testGoogleAnalyticsUninstall() {
     $cache_path = 'public://google_analytics';
     $ua_code = 'UA-123456-1';

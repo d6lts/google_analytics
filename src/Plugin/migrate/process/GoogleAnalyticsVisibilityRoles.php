@@ -18,6 +18,8 @@ use Drupal\migrate\Row;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
+ * Converts D7 role ids to D8 role names.
+ *
  * @MigrateProcessPlugin(
  *   id = "google_analytics_visibility_roles"
  * )

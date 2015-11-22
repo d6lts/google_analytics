@@ -14,6 +14,7 @@ use Drupal\simpletest\WebTestBase;
  * Test php filter functionality of Google Analytics module.
  *
  * @group Google Analytics
+ *
  * @dependencies php
  */
 class GoogleAnalyticsPhpFilterTest extends WebTestBase {
@@ -47,6 +48,9 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
     $this->delegated_admin_user = $this->drupalCreateUser($permissions_delegated_admin_user);
   }
 
+  /**
+   * Tests if PHP module integration works.
+   */
   public function testGoogleAnalyticsPhpFilter() {
     $ua_code = 'UA-123456-1';
     $this->drupalLogin($this->admin_user);
@@ -84,7 +88,8 @@ class GoogleAnalyticsPhpFilterTest extends WebTestBase {
     $this->assertNoRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testGoogleAnalyticsPhpFilter]: No permission to administer PHP for tracking visibility.');
     $this->assertNoRaw(Html::escape('<?php return TRUE; ?>'), '[testGoogleAnalyticsPhpFilter]: No permission to view PHP code snippted.');
 
-    // Set a different value and verify that this is still the same after the post.
+    // Set a different value and verify that this is still the same after the
+    // post.
     $this->config('google_analytics.settings')->set('visibility.request_path_pages', '<?php return 0; ?>')->save();
 
     $edit = [];

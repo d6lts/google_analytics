@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Attaches several event listener to a web page.
+ */
+
 (function ($, Drupal, drupalSettings) {
 
   "use strict";
@@ -161,7 +166,7 @@
    *   The web url to check.
    *
    * @return string
-   *   Internal website URL
+   *   Internal website URL.
    */
   Drupal.google_analytics.getPageUrl = function (url) {
     var extractInternalUrl = new RegExp("^(https?):\/\/" + window.location.host, "i");

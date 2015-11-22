@@ -42,13 +42,17 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
+  /**
+   * Tests if configuration is possible.
+   */
   public function testGoogleAnalyticsConfiguration() {
     // Check if Configure link is available on 'Extend' page.
     // Requires 'administer modules' permission.
     $this->drupalGet('admin/modules');
     $this->assertRaw('admin/config/system/google-analytics', '[testGoogleAnalyticsConfiguration]: Configure link from Extend page to Google Analytics Settings page exists.');
 
-    // Check if Configure link is available on 'Status Reports' page. NOTE: Link is only shown without UA code configured.
+    // Check if Configure link is available on 'Status Reports' page.
+    // NOTE: Link is only shown without UA code configured.
     // Requires 'administer site configuration' permission.
     $this->drupalGet('admin/reports/status');
     $this->assertRaw('admin/config/system/google-analytics', '[testGoogleAnalyticsConfiguration]: Configure link from Status Reports page to Google Analytics Settings page exists.');
@@ -63,6 +67,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'), '[testGoogleAnalyticsConfiguration]: Invalid Web Property ID number validated.');
   }
 
+  /**
+   * Tests if page visibility works.
+   */
   public function testGoogleAnalyticsPageVisibility() {
     // Verify that no tracking code is embedded into the webpage; if there is
     // only the module installed, but UA code not configured. See #2246991.
@@ -87,7 +94,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('admin');
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin page.');
     $this->drupalGet('admin/config/system/google-analytics');
-    // Checking for tracking code URI here, as $ua_code is displayed in the form.
+    // Checking for tracking URI here, as $ua_code is displayed in the form.
     $this->assertNoRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is not displayed on admin subpage.');
 
     // Test whether tracking code display is properly flipped.
@@ -95,7 +102,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('admin');
     $this->assertRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin page.');
     $this->drupalGet('admin/config/system/google-analytics');
-    // Checking for tracking code URI here, as $ua_code is displayed in the form.
+    // Checking for tracking URI here, as $ua_code is displayed in the form.
     $this->assertRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsPageVisibility]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsPageVisibility]: Tracking code is NOT displayed on front page.');
@@ -121,6 +128,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw('/404.html', '[testGoogleAnalyticsPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
   }
 
+  /**
+   * Tests if tracking code is properly added to the page.
+   */
   public function testGoogleAnalyticsTrackingCode() {
     $ua_code = 'UA-123456-2';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
@@ -207,7 +217,8 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('');
 
     // Test may run on localhost, an ipaddress or real domain name.
-    // TODO: Workaround to run tests successfully. This feature cannot tested reliable.
+    // TODO: Workaround to run tests successfully. This feature cannot tested
+    // reliable.
     global $cookie_domain;
     if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
       $this->assertRaw('{"cookieDomain":"' . $cookie_domain . '"}', '[testGoogleAnalyticsTrackingCode]: One domain with multiple subdomains is active on real host.');
@@ -244,7 +255,8 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->drupalGet('');
     $this->assertRaw('//www.google-analytics.com/analytics.js', '[testGoogleAnalyticsTrackingCode]: Google debugging script has been disabled.');
 
-    // Test whether the CREATE and BEFORE and AFTER code is added to the tracker.
+    // Test whether the CREATE and BEFORE and AFTER code is added to the
+    // tracking code.
     $codesnippet_create = [
       'cookieDomain' => 'foo.example.com',
       'cookieName' => 'myNewName',
@@ -262,4 +274,5 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $this->assertRaw('ga("set", "forceSSL", true);', '[testGoogleAnalyticsTrackingCode]: Before codesnippet will force http pages to also send all beacons using https.');
     $this->assertRaw('ga("create", "UA-123456-3", {"name": "newTracker"});', '[testGoogleAnalyticsTrackingCode]: After codesnippet with "newTracker" tracker has been found.');
   }
+
 }

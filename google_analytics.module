@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Drupal Module: Google Analytics
+ * Drupal Module: Google Analytics.
  *
  * Adds the required Javascript to all your Drupal pages to allow tracking by
  * the Google Analytics statistics package.
@@ -47,7 +47,9 @@ function google_analytics_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_page_attachments() to insert JavaScript to the appropriate scope/region of the page.
+ * Implements hook_page_attachments().
+ *
+ * Insert JavaScript to the appropriate scope/region of the page.
  */
 function google_analytics_page_attachments(array &$page) {
   $account = \Drupal::currentUser();
@@ -251,7 +253,8 @@ function google_analytics_page_attachments(array &$page) {
     $googleanalytics_adsense_script = '';
 
     // Per RFC 2109, cookie domains must contain at least one dot other than the
-    // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
+    // first. For hosts such as 'localhost' or IP Addresses we don't set a
+    // cookie domain.
     if ($domain_mode == 1 && count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
       $create_only_fields = array_merge($create_only_fields, ['cookieDomain' => $cookie_domain]);
       $googleanalytics_adsense_script .= 'window.google_analytics_domain_name = ' . Json::encode($cookie_domain) . ';';
@@ -271,7 +274,7 @@ function google_analytics_page_attachments(array &$page) {
     }
 
     // Create a tracker.
-    $script .= 'ga("create", ' . Json::encode($id) . ', ' . Json::encode($create_only_fields) .');';
+    $script .= 'ga("create", ' . Json::encode($id) . ', ' . Json::encode($create_only_fields) . ');';
 
     // Prepare Adsense tracking.
     $googleanalytics_adsense_script .= 'window.google_analytics_uacct = ' . Json::encode($id) . ';';
@@ -420,16 +423,16 @@ function google_analytics_preprocess_item_list__search_results(&$variables) {
 
   // Only run on search results list.
   if ($config->get('track.site_search')) {
-    // There is no search result $variable available that hold the number of items
-    // found. The variable $variables['items'] has the current page items only.
-    // But the pager item mumber can tell the number of search results.
+    // There is no search result $variable available that hold the number of
+    // items found. The variable $variables['items'] has the current page items
+    // only. But the pager item mumber can tell the number of search results.
     global $pager_total_items;
 
     $variables['#attached']['html_head'][] = [
       [
         '#tag' => 'script',
         '#value' => 'window.google_analytics_search_results = ' . intval($pager_total_items[0]) . ';',
-        '#weight' => JS_LIBRARY-1,
+        '#weight' => JS_LIBRARY - 1,
       ],
       'google_analytics_search_script'
     ];
@@ -490,7 +493,8 @@ function _google_analytics_cache($location, $synchronize = FALSE) {
           file_unmanaged_save_data($data, $file_destination, FILE_EXISTS_REPLACE);
           \Drupal::logger('google_analytics')->info('Locally cached tracking code file has been updated.');
 
-          // Change query-strings on css/js files to enforce reload for all users.
+          // Change query-strings on css/js files to enforce reload for all
+          // users.
           _drupal_flush_css_js();
         }
       }
@@ -536,7 +540,7 @@ function google_analytics_clear_js_cache() {
 /**
  * Tracking visibility check for an user object.
  *
- * @param $account
+ * @param object $account
  *   A user object containing an array of roles to check.
  *
  * @return bool
@@ -570,10 +574,12 @@ function _google_analytics_visibility_user($account) {
 }
 
 /**
+ * Tracking visibility check for user roles.
+ *
  * Based on visibility setting this function returns TRUE if JS code should
  * be added for the current role and otherwise FALSE.
  *
- * @param $account
+ * @param object $account
  *   A user object containing an array of roles to check.
  *
  * @return bool
@@ -604,6 +610,8 @@ function _google_analytics_visibility_roles($account) {
 }
 
 /**
+ * Tracking visibility check for pages.
+ *
  * Based on visibility setting this function returns TRUE if JS code should
  * be added to the current page and otherwise FALSE.
  */

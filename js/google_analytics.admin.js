@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Google Analytics admin behaviors.
+ */
+
 (function ($, window) {
 
   "use strict";

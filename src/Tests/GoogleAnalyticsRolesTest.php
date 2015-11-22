@@ -39,12 +39,14 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
+  /**
+   * Tests if roles based tracking works.
+   */
   public function testGoogleAnalyticsRolesTracking() {
     $ua_code = 'UA-123456-4';
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
     // Test if the default settings are working as expected.
-
     // Add to the selected roles only.
     $this->config('google_analytics.settings')->set('visibility.user_role_mode', 0)->save();
     // Enable tracking for all users.
@@ -65,7 +67,6 @@ class GoogleAnalyticsRolesTest extends WebTestBase {
     $this->assertNoRaw($ua_code, '[testGoogleAnalyticsRoleVisibility]: Tracking code is NOT displayed for authenticated users in admin section with default settings.');
 
     // Test if the non-default settings are working as expected.
-
     // Enable tracking only for authenticated users.
     $this->config('google_analytics.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
