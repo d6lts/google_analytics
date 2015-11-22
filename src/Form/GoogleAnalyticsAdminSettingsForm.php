@@ -699,7 +699,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    * @return array
    *   A unique array of invalid tokens.
    */
-  protected static function getForbiddenTokens($value) {
+  protected static function getForbiddenTokens(array $value) {
     $invalid_tokens = [];
     $value_tokens = is_string($value) ? \Drupal::token()->scan($value) : $value;
 
@@ -723,15 +723,16 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    *   TRUE if blacklisted token has been found, otherwise FALSE.
    */
   protected static function containsForbiddenToken($token_string) {
-    // List of strings in tokens with personal identifying information not allowed
-    // for privacy reasons. See section 8.1 of the Google Analytics terms of use
-    // for more detailed information.
+    // List of strings in tokens with personal identifying information not
+    // allowed for privacy reasons. See section 8.1 of the Google Analytics
+    // terms of use for more detailed information.
     //
     // This list can never ever be complete. For this reason it tries to use a
     // regex and may kill a few other valid tokens, but it's the only way to
     // protect users as much as possible from admins with illegal ideas.
     //
-    // User tokens are not prefixed with colon to catch 'current-user' and 'user'.
+    // User tokens are not prefixed with colon to catch 'current-user' and
+    // 'user'.
     //
     // TODO: If someone have better ideas, share them, please!
     $token_blacklist = [
@@ -778,12 +779,12 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
    * @param array $element
    *   An associative array containing the properties and children of the
    *   generic form element.
-   * @param object $form_state
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The $form_state array for the form this element belongs to.
    *
    * @see form_process_pattern()
    */
-  public static function validateCreateFieldValues($element, FormStateInterface $form_state) {
+  public static function validateCreateFieldValues(array $element, FormStateInterface $form_state) {
     $values = static::extractCreateFieldValues($element['#value']);
 
     if (!is_array($values)) {
@@ -914,7 +915,6 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     $lines = [];
     foreach ($values as $name => $value) {
       // Convert data types.
-      // @todo: #2251377: Json utility class serializes boolean values to incorrect data type
       if (is_bool($value)) {
         $value = ($value) ? 'true' : 'false';
       }
@@ -948,13 +948,13 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       // Convert other known fields.
       switch ($name) {
         case 'sampleRate':
-          // Float
+          // Float types.
           settype($value, 'float');
           break;
 
         case 'siteSpeedSampleRate':
         case 'cookieExpires':
-          // Integer
+          // Integer types.
           settype($value, 'integer');
           break;
       }

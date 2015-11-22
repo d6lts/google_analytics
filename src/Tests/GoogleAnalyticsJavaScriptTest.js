@@ -58,7 +58,7 @@
   };
 
   /**
-   *  Run javascript tests against the GA module.
+   * Run javascript tests against the GA module.
    */
 
   // JavaScript debugging.
