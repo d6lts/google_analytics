@@ -404,9 +404,8 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     ];
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['google_analytics_custom_dimension']['google_analytics_token_tree'] = [
-        '#theme' => 'token_tree',
+        '#theme' => 'token_tree_link',
         '#token_types' => ['node'],
-        '#dialog' => TRUE,
       ];
     }
 
@@ -460,9 +459,8 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
     ];
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['google_analytics_custom_metric']['google_analytics_token_tree'] = [
-        '#theme' => 'token_tree',
+        '#theme' => 'token_tree_link',
         '#token_types' => ['node'],
-        '#dialog' => TRUE,
       ];
     }
 
