@@ -9,7 +9,7 @@ namespace Drupal\google_analytics\Plugin\migrate\process;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\migrate\Entity\MigrationInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrateProcessInterface;
 use Drupal\migrate\ProcessPluginBase;
