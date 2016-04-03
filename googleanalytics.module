@@ -125,6 +125,9 @@ function googleanalytics_page_alter(&$page) {
       $link_settings['trackDownload'] = $track_download;
       $link_settings['trackDownloadExtensions'] = $trackfiles_extensions;
     }
+    if (module_exists('colorbox') && ($track_colorbox = variable_get('googleanalytics_trackcolorbox', 1))) {
+      $link_settings['trackColorbox'] = $track_colorbox;
+    }
     if ($track_domain_mode = variable_get('googleanalytics_domain_mode', 0)) {
       $link_settings['trackDomainMode'] = $track_domain_mode;
     }
