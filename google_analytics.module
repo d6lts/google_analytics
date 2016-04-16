@@ -267,10 +267,7 @@ function google_analytics_page_attachments(array &$page) {
 
     // Track logged in users across all devices.
     if ($config->get('track.userid') && $account->isAuthenticated()) {
-      // The USER_ID value should be a unique, persistent, and non-personally
-      // identifiable string identifier that represents a user or signed-in
-      // account across devices.
-      $create_only_fields['userId'] = Crypt::hmacBase64($account->id(), \Drupal::service('private_key')->get() . Settings::getHashSalt());
+      $create_only_fields['userId'] = google_analytics_user_id_hash($account->id());
     }
 
     // Create a tracker.
@@ -336,6 +333,23 @@ function google_analytics_page_attachments(array &$page) {
       'google_analytics_tracking_script'
     ];
   }
+}
+
+/**
+ * Generate user id hash to implement USER_ID.
+ *
+ * The USER_ID value should be a unique, persistent, and non-personally
+ * identifiable string identifier that represents a user or signed-in
+ * account across devices.
+ *
+ * @param int $uid
+ *   User id.
+ *
+ * @return string
+ *   User id hash.
+ */
+function google_analytics_user_id_hash($uid) {
+  return Crypt::hmacBase64($uid, \Drupal::service('private_key')->get() . Settings::getHashSalt());
 }
 
 /**
