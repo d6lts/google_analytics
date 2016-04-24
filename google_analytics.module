@@ -155,7 +155,7 @@ function google_analytics_page_attachments(array &$page) {
       // language code does not match its source language code.
       if ($request->attributes->has('node')) {
         $node = $request->attributes->get('node');
-        if ($node instanceof NodeInterface && \Drupal::entityManager()->getTranslationFromContext($node) !== $node->getUntranslated()) {
+        if ($node instanceof NodeInterface && \Drupal::entityTypeManager()->getTranslationFromContext($node) !== $node->getUntranslated()) {
           $url_custom = Json::encode(Url::fromRoute('entity.node.canonical', ['node' => $node->id()], ['language' => $node->getUntranslated()->language()])->toString());
         }
       }
