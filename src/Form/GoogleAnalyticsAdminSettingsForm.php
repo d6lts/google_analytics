@@ -636,7 +636,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       ->set('track.userid', $form_state->getValue('google_analytics_trackuserid'))
       ->set('track.mailto', $form_state->getValue('google_analytics_trackmailto'))
       ->set('track.messages', $form_state->getValue('google_analytics_trackmessages'))
-      ->set('track.outbound', $form_state->getValue('google_analytics_trackmailto'))
+      ->set('track.outbound', $form_state->getValue('google_analytics_trackoutbound'))
       ->set('track.site_search', $form_state->getValue('google_analytics_site_search'))
       ->set('track.adsense', $form_state->getValue('google_analytics_trackadsense'))
       ->set('track.displayfeatures', $form_state->getValue('google_analytics_trackdisplayfeatures'))
