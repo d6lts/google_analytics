@@ -352,11 +352,11 @@ function google_analytics_user_id_hash($uid) {
 }
 
 /**
- * Implements hook_field_extra_fields().
+ * Implements hook_entity_extra_field_info().
  */
-function google_analytics_field_extra_fields() {
+function google_analytics_entity_extra_field_info() {
   $extra['user']['user']['form']['google_analytics'] = [
-    'label' => t('Google Analytics configuration'),
+    'label' => t('Google Analytics settings'),
     'description' => t('Google Analytics module form element.'),
     'weight' => 3,
   ];
