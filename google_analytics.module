@@ -371,7 +371,7 @@ function google_analytics_form_user_form_alter(&$form, FormStateInterface $form_
   $config = \Drupal::config('google_analytics.settings');
   $account = $form_state->getFormObject()->getEntity();
 
-  if ($account->hasPermission('opt-in or out of tracking') && ($visibility_user_account_mode = $config->get('visibility.user_account_mode')) != 0 && _google_analytics_visibility_roles($account)) {
+  if ($account->hasPermission('opt-in or out of google analytics tracking') && ($visibility_user_account_mode = $config->get('visibility.user_account_mode')) != 0 && _google_analytics_visibility_roles($account)) {
     $account_data_google_analytics = \Drupal::service('user.data')->get('google_analytics', $account->id());
 
     $form['google_analytics'] = [

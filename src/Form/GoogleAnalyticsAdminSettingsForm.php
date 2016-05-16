@@ -131,7 +131,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
 
     // Page specific visibility configurations.
     $account = \Drupal::currentUser();
-    $php_access = $account->hasPermission('use PHP for tracking visibility');
+    $php_access = $account->hasPermission('use PHP for google analytics tracking visibility');
     $visibility_request_path_pages = $config->get('visibility.request_path_pages');
 
     $form['tracking']['page_visibility_settings'] = [

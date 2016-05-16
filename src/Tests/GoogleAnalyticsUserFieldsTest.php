@@ -33,7 +33,7 @@ class GoogleAnalyticsUserFieldsTest extends WebTestBase {
     $permissions = [
       'access administration pages',
       'administer user form display',
-      'opt-in or out of tracking',
+      'opt-in or out of google analytics tracking',
     ];
 
     // User to set up google_analytics.
