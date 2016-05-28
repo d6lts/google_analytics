@@ -329,7 +329,7 @@ function google_analytics_page_attachments(array &$page) {
         '#tag' => 'script',
         '#value' => $script,
       ],
-      'google_analytics_tracking_script'
+      'google_analytics_tracking_script',
     ];
   }
 }
@@ -447,7 +447,7 @@ function google_analytics_preprocess_item_list__search_results(&$variables) {
         '#value' => 'window.google_analytics_search_results = ' . intval($pager_total_items[0]) . ';',
         '#weight' => JS_LIBRARY - 1,
       ],
-      'google_analytics_search_script'
+      'google_analytics_search_script',
     ];
   }
 }

@@ -325,10 +325,10 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#disabled' => (\Drupal::moduleHandler()->moduleExists('search') ? FALSE : TRUE),
     ];
     $form['tracking']['search_and_advertising']['google_analytics_trackadsense'] = [
-       '#type' => 'checkbox',
-       '#title' => $this->t('Track AdSense ads'),
-       '#description' => $this->t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
-       '#default_value' => $config->get('track.adsense'),
+      '#type' => 'checkbox',
+      '#title' => $this->t('Track AdSense ads'),
+      '#description' => $this->t('If checked, your AdSense ads will be tracked in your Google Analytics account.'),
+      '#default_value' => $config->get('track.adsense'),
     ];
     $form['tracking']['search_and_advertising']['google_analytics_trackdisplayfeatures'] = [
       '#type' => 'checkbox',
@@ -830,7 +830,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
         $value = trim($matches[2]);
       }
       else {
-        return;
+        return NULL;
       }
 
       $values[$name] = $value;

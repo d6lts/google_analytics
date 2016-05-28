@@ -45,7 +45,7 @@ class GoogleAnalyticsUninstallTest extends WebTestBase {
     // Show tracker in pages.
     $this->config('google_analytics.settings')->set('account', $ua_code)->save();
 
-    // Enable local caching of analytics.js
+    // Enable local caching of analytics.js.
     $this->config('google_analytics.settings')->set('cache', 1)->save();
 
     // Load page to get the analytics.js downloaded into local cache.
