@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\google_analytics\Form\GoogleAnalyticsAdminSettingsForm.
- */
 
 namespace Drupal\google_analytics\Form;
 

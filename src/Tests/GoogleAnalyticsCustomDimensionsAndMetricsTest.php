@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\google_analytics\Tests\GoogleAnalyticsCustomDimensionsAndMetricsTest.
- */
-
 namespace Drupal\google_analytics\Tests;
 
 use Drupal\Component\Serialization\Json;

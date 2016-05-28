@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\google_analytics\Tests\GoogleAnalyticsUserFieldsTest.
- */
-
 namespace Drupal\google_analytics\Tests;
 
 use Drupal\Core\Session\AccountInterface;

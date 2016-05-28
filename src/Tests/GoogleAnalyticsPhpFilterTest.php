@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\google_analytics\Tests\GoogleAnalyticsPhpFilterTest.
- */
-
 namespace Drupal\google_analytics\Tests;
 
 use Drupal\Component\Utility\Html;
