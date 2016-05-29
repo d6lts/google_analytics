@@ -18,7 +18,10 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['google_analytics'];
+  public static $modules = [
+    'google_analytics',
+    'help',
+  ];
 
   /**
    * {@inheritdoc}
@@ -67,6 +70,7 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
    * Tests if help sections are shown.
    */
   public function testGoogleAnalyticsHelp() {
+    // Requires help.module.
     $this->drupalGet('admin/config/system/google-analytics');
     $this->assertText('Google Analytics is a free (registration required) website traffic and marketing effectiveness service.', '[testGoogleAnalyticsHelp]: Google Analytics help text shown on module settings page.');
 
