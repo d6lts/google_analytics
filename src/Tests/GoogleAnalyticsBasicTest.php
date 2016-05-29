@@ -64,6 +64,17 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
   }
 
   /**
+   * Tests if help sections are shown.
+   */
+  public function testGoogleAnalyticsHelp() {
+    $this->drupalGet('admin/config/system/google-analytics');
+    $this->assertText('Google Analytics is a free (registration required) website traffic and marketing effectiveness service.', '[testGoogleAnalyticsHelp]: Google Analytics help text shown on module settings page.');
+
+    $this->drupalGet('admin/help/google_analytics');
+    $this->assertText('Google Analytics adds a web statistics tracking system to your website.', '[testGoogleAnalyticsHelp]: Google Analytics help text shown in help section.');
+  }
+
+  /**
    * Tests if page visibility works.
    */
   public function testGoogleAnalyticsPageVisibility() {
