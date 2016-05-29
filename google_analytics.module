@@ -41,7 +41,7 @@ function google_analytics_api() {
 function google_analytics_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.google_analytics':
-      $output .= '<h3>' . t('About') . '</h3>';
+      $output = '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Google Analytics adds a web statistics tracking system to your website. This system incorporates numerous statistical features. For an extensive listing of these features see the <a href=":project">Google Analytics</a> project site. Beyond that, additional information can be found at the <a href=":documentation">Drupal - Google Analytics documentation</a>.', [':documentation' => 'https://www.drupal.org/node/37694', ':project' => 'https://www.drupal.org/project/google_analytics']) . '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
       $output .= '<dt>' . t('Configuring Google Analytics') . '</dt>';
