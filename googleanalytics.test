@@ -426,12 +426,12 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends DrupalWebTestCase {
     $ua_code = 'UA-123456-1';
 
     // Check form validation.
-    $edit['google_analytics_account'] = $ua_code;
-    $edit['google_analytics_custom_dimension[indexes][1][value]'] = '[current-user:name]';
-    $edit['google_analytics_custom_dimension[indexes][2][value]'] = '[current-user:edit-url]';
-    $edit['google_analytics_custom_dimension[indexes][3][value]'] = '[user:name]';
-    $edit['google_analytics_custom_dimension[indexes][4][value]'] = '[term:name]';
-    $edit['google_analytics_custom_dimension[indexes][5][value]'] = '[term:tid]';
+    $edit['googleanalytics_account'] = $ua_code;
+    $edit['googleanalytics_custom_dimension[indexes][1][value]'] = '[current-user:name]';
+    $edit['googleanalytics_custom_dimension[indexes][2][value]'] = '[current-user:edit-url]';
+    $edit['googleanalytics_custom_dimension[indexes][3][value]'] = '[user:name]';
+    $edit['googleanalytics_custom_dimension[indexes][4][value]'] = '[term:name]';
+    $edit['googleanalytics_custom_dimension[indexes][5][value]'] = '[term:tid]';
 
     $this->drupalPost('admin/config/system/googleanalytics', $edit, t('Save configuration'));
 
