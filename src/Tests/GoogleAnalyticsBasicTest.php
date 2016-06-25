@@ -19,8 +19,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
    * @var array
    */
   public static $modules = [
-    'help',
+    'block',
     'google_analytics',
+    'help',
   ];
 
   /**
@@ -39,6 +40,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     // User to set up google_analytics.
     $this->admin_user = $this->drupalCreateUser($permissions);
     $this->drupalLogin($this->admin_user);
+
+    // Place the block or the help is not shown.
+    $this->drupalPlaceBlock('help_block', array('region' => 'help'));
   }
 
   /**
@@ -70,10 +74,9 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
    * Tests if help sections are shown.
    */
   public function testGoogleAnalyticsHelp() {
-    // Requires help.module.
-    // @fixme: help is not shown in side the test for unknown reason.
-    //$this->drupalGet('admin/config/system/google-analytics');
-    //$this->assertText('Google Analytics is a free (registration required) website traffic and marketing effectiveness service.', '[testGoogleAnalyticsHelp]: Google Analytics help text shown on module settings page.');
+    // Requires help and block module and help block placement.
+    $this->drupalGet('admin/config/system/google-analytics');
+    $this->assertText('Google Analytics is a free (registration required) website traffic and marketing effectiveness service.', '[testGoogleAnalyticsHelp]: Google Analytics help text shown on module settings page.');
 
     // Requires help.module.
     $this->drupalGet('admin/help/google_analytics');
