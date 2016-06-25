@@ -42,6 +42,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
 
     // User to set up google_analytics.
     $this->admin_user = $this->drupalCreateUser($permissions);
+    $this->drupalLogin($this->admin_user);
   }
 
   /**
