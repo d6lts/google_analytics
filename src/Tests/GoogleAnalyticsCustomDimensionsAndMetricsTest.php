@@ -209,4 +209,28 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertRaw('ga("set", ' . Json::encode('metric4') . ', ' . Json::encode(0) . ');', '[testGoogleAnalyticsCustomDimensionsAndMetrics]: Value 0 is shown.');
   }
 
+  /**
+   * Tests if Custom Dimensions token form validation works.
+   */
+  public function testGoogleAnalyticsCustomDimensionsTokenFormValidation() {
+    $ua_code = 'UA-123456-1';
+
+    // Check form validation.
+    $edit['google_analytics_account'] = $ua_code;
+    $edit['google_analytics_custom_dimension[indexes][1][value]'] = '[current-user:name]';
+    $edit['google_analytics_custom_dimension[indexes][2][value]'] = '[current-user:edit-url]';
+    $edit['google_analytics_custom_dimension[indexes][3][value]'] = '[user:name]';
+    $edit['google_analytics_custom_dimension[indexes][4][value]'] = '[term:name]';
+    $edit['google_analytics_custom_dimension[indexes][5][value]'] = '[term:tid]';
+
+    $this->drupalPostForm('admin/config/system/google-analytics', $edit, t('Save configuration'));
+
+    $this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 1]), '@invalid-tokens' => implode(', ', array('[current-user:name]'))]));
+    $this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 2]), '@invalid-tokens' => implode(', ', array('[current-user:edit-url]'))]));
+    $this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 3]), '@invalid-tokens' => implode(', ', array('[user:name]'))]));
+    // BUG #2037595
+    //$this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 4]), '@invalid-tokens' => implode(', ', array('[term:name]'))]));
+    //$this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 5]), '@invalid-tokens' => implode(', ', array('[term:tid]'))]));
+  }
+
 }
