@@ -229,8 +229,8 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends WebTestBase {
     $this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 2]), '@invalid-tokens' => implode(', ', array('[current-user:edit-url]'))]));
     $this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 3]), '@invalid-tokens' => implode(', ', array('[user:name]'))]));
     // BUG #2037595
-    //$this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 4]), '@invalid-tokens' => implode(', ', array('[term:name]'))]));
-    //$this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 5]), '@invalid-tokens' => implode(', ', array('[term:tid]'))]));
+    //$this->assertNoRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 4]), '@invalid-tokens' => implode(', ', array('[term:name]'))]));
+    //$this->assertNoRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', ['%element-title' => t('Custom dimension value #@index', ['@index' => 5]), '@invalid-tokens' => implode(', ', array('[term:tid]'))]));
   }
 
 }
