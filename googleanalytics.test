@@ -433,7 +433,7 @@ class GoogleAnalyticsCustomDimensionsAndMetricsTest extends DrupalWebTestCase {
     $edit['google_analytics_custom_dimension[indexes][4][value]'] = '[term:name]';
     $edit['google_analytics_custom_dimension[indexes][5][value]'] = '[term:tid]';
 
-    $this->drupalPostForm('admin/config/system/googleanalytics', $edit, t('Save configuration'));
+    $this->drupalPost('admin/config/system/googleanalytics', $edit, t('Save configuration'));
 
     $this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => t('Custom dimension value #@index', array('@index' => 1)), '@invalid-tokens' => implode(', ', array('[current-user:name]')))));
     $this->assertRaw(t('The %element-title is using the following forbidden tokens with personal identifying information: @invalid-tokens.', array('%element-title' => t('Custom dimension value #@index', array('@index' => 2)), '@invalid-tokens' => implode(', ', array('[current-user:edit-url]')))));
