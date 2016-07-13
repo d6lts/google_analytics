@@ -299,7 +299,7 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'checkboxes',
       '#title' => $this->t('Track messages of type'),
       '#default_value' => !empty($track_messages) ? $track_messages : [],
-      '#description' => $this->t('This will track the selected message types shown to users. Tracking of form validation errors may help you identifying usability issues in your site. For each visit (user session), a maximum of approximately 500 combined GATC requests (both events and page views) can be tracked. Every message is tracked as one individual event. Note that - as the number of events in a session approaches the limit - additional events might not be tracked. Messages from excluded pages cannot tracked.'),
+      '#description' => $this->t('This will track the selected message types shown to users. Tracking of form validation errors may help you identifying usability issues in your site. For each visit (user session), a maximum of approximately 500 combined GATC requests (both events and page views) can be tracked. Every message is tracked as one individual event. Note that - as the number of events in a session approaches the limit - additional events might not be tracked. Messages from excluded pages cannot be tracked.'),
       '#options' => [
         'status' => $this->t('Status message'),
         'warning' => $this->t('Warning message'),
