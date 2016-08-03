@@ -163,6 +163,8 @@ function googleanalytics_admin_settings_form(&$form_state) {
   );
 
   // Advanced feature configurations.
+  $user_access_add_js_snippets = user_access('add JS snippets for google analytics') ? FALSE : TRUE;
+  $user_access_add_js_snippets_permission_warning = $user_access_add_js_snippets ? ' <em>' . t('This field has been disabled because you do not have sufficient permissions to edit it.') . '</em>' : '';
   $form['advanced'] = array(
     '#type' => 'fieldset',
     '#title' => t('Advanced settings'),
@@ -223,17 +225,19 @@ function googleanalytics_admin_settings_form(&$form_state) {
     '#type' => 'textarea',
     '#title' => t('Code snippet (before)'),
     '#default_value' => variable_get('googleanalytics_codesnippet_before', ''),
+    '#disabled' => $user_access_add_js_snippets,
     '#rows' => 5,
     '#wysiwyg' => FALSE,
-    '#description' => t('Code in this textarea will be added <strong>before</strong> pageTracker._trackPageview().')
+    '#description' => t('Code in this textarea will be added <strong>before</strong> pageTracker._trackPageview().') . $user_access_add_js_snippets_permission_warning,
   );
   $form['advanced']['codesnippet']['googleanalytics_codesnippet_after'] = array(
     '#type' => 'textarea',
     '#title' => t('Code snippet (after)'),
     '#default_value' => variable_get('googleanalytics_codesnippet_after', ''),
+    '#disabled' => $user_access_add_js_snippets,
     '#rows' => 5,
     '#wysiwyg' => FALSE,
-    '#description' => t("Code in this textarea will be added <strong>after</strong> pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts.")
+    '#description' => t("Code in this textarea will be added <strong>after</strong> pageTracker._trackPageview(). This is useful if you'd like to track a site in two accounts.") . $user_access_add_js_snippets_permission_warning,
   );
 
   $form['advanced']['googleanalytics_js_scope'] = array(
