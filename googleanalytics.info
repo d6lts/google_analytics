@@ -2,9 +2,3 @@ name = Google Analytics
 description = Adds Google Analytics javascript tracking code to all your site's pages.
 core = 6.x
 package = Statistics
-
-; Information added by Drupal 6 LTS vendors on 2016-08-03
-version = "6.x-3.7"
-core = "6.x"
-project = "google_analytics"
-datestamp = "1470230662"
