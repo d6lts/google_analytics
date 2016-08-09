@@ -484,6 +484,8 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       ];
     }
 
+    $user_access_add_js_snippets = !$this->currentUser()->hasPermission('add JS snippets for google analytics');
+    $user_access_add_js_snippets_permission_warning = $user_access_add_js_snippets ? ' <em>' . $this->t('This field has been disabled because you do not have sufficient permissions to edit it.') . '</em>' : '';
     $form['advanced']['codesnippet'] = [
       '#type' => 'details',
       '#title' => $this->t('Custom JavaScript code'),
@@ -502,15 +504,17 @@ class GoogleAnalyticsAdminSettingsForm extends ConfigFormBase {
       '#type' => 'textarea',
       '#title' => $this->t('Code snippet (before)'),
       '#default_value' => $config->get('codesnippet.before'),
+      '#disabled' => $user_access_add_js_snippets,
       '#rows' => 5,
-      '#description' => $this->t('Code in this textarea will be added <strong>before</strong> <code>ga("send", "pageview");</code>.'),
+      '#description' => $this->t('Code in this textarea will be added <strong>before</strong> <code>ga("send", "pageview");</code>.') . $user_access_add_js_snippets_permission_warning,
     ];
     $form['advanced']['codesnippet']['google_analytics_codesnippet_after'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Code snippet (after)'),
       '#default_value' => $config->get('codesnippet.after'),
+      '#disabled' => $user_access_add_js_snippets,
       '#rows' => 5,
-      '#description' => $this->t('Code in this textarea will be added <strong>after</strong> <code>ga("send", "pageview");</code>. This is useful if you\'d like to track a site in two accounts.'),
+      '#description' => $this->t('Code in this textarea will be added <strong>after</strong> <code>ga("send", "pageview");</code>. This is useful if you\'d like to track a site in two accounts.') . $user_access_add_js_snippets_permission_warning,
     ];
 
     $form['advanced']['google_analytics_debug'] = [

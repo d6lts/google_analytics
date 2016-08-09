@@ -14,6 +14,13 @@ use Drupal\simpletest\WebTestBase;
 class GoogleAnalyticsBasicTest extends WebTestBase {
 
   /**
+   * User without permissions to use snippets.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $noSnippetUser;
+
+  /**
    * Modules to enable.
    *
    * @var array
@@ -38,6 +45,8 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     ];
 
     // User to set up google_analytics.
+    $this->noSnippetUser = $this->drupalCreateUser($permissions);
+    $permissions[] = 'add JS snippets for google analytics';
     $this->admin_user = $this->drupalCreateUser($permissions);
     $this->drupalLogin($this->admin_user);
 
@@ -68,6 +77,26 @@ class GoogleAnalyticsBasicTest extends WebTestBase {
     $edit['google_analytics_account'] = $this->randomMachineName(2);
     $this->drupalPostForm('admin/config/system/google-analytics', $edit, t('Save configuration'));
     $this->assertRaw(t('A valid Google Analytics Web Property ID is case sensitive and formatted like UA-xxxxxxx-yy.'), '[testGoogleAnalyticsConfiguration]: Invalid Web Property ID number validated.');
+
+    // User should have access to code snippets.
+    $this->assertFieldByName('google_analytics_codesnippet_create');
+    $this->assertFieldByName('google_analytics_codesnippet_before');
+    $this->assertFieldByName('google_analytics_codesnippet_after');
+    $this->assertNoFieldByXPath("//textarea[@name='google_analytics_codesnippet_create' and @disabled='disabled']", NULL, '"Create only fields" is enabled.');
+    $this->assertNoFieldByXPath("//textarea[@name='google_analytics_codesnippet_before' and @disabled='disabled']", NULL, '"Code snippet (before)" is enabled.');
+    $this->assertNoFieldByXPath("//textarea[@name='google_analytics_codesnippet_after' and @disabled='disabled']", NULL, '"Code snippet (after)" is enabled.');
+
+    // Login as user without JS permissions.
+    $this->drupalLogin($this->noSnippetUser);
+    $this->drupalGet('admin/config/system/google-analytics');
+
+    // User should *not* have access to snippets, but create fields.
+    $this->assertFieldByName('google_analytics_codesnippet_create');
+    $this->assertFieldByName('google_analytics_codesnippet_before');
+    $this->assertFieldByName('google_analytics_codesnippet_after');
+    $this->assertNoFieldByXPath("//textarea[@name='google_analytics_codesnippet_create' and @disabled='disabled']", NULL, '"Create only fields" is enabled.');
+    $this->assertFieldByXPath("//textarea[@name='google_analytics_codesnippet_before' and @disabled='disabled']", NULL, '"Code snippet (before)" is disabled.');
+    $this->assertFieldByXPath("//textarea[@name='google_analytics_codesnippet_after' and @disabled='disabled']", NULL, '"Code snippet (after)" is disabled.');
   }
 
   /**

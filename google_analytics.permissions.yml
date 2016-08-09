@@ -8,3 +8,7 @@ use PHP for google analytics tracking visibility:
   title: 'Use PHP for tracking visibility'
   description: 'Enter PHP code in the field for tracking visibility settings.'
   restrict access: true
+add JS snippets for google analytics:
+  title: 'Add JavaScript snippets'
+  description: 'Enter JavaScript code snippets for advanced Google Analytics functionality.'
+  restrict access: true
