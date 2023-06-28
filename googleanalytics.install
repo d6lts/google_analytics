@@ -5,8 +5,12 @@
  * Installation file for Google Analytics module.
  */
 
+/**
+ * Implements hook_uninstall().
+ */
 function googleanalytics_uninstall() {
   variable_del('googleanalytics_account');
+  variable_del('googleanalytics_premium');
   variable_del('googleanalytics_cache');
   variable_del('googleanalytics_codesnippet_create');
   variable_del('googleanalytics_codesnippet_before');
@@ -22,6 +26,7 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_roles');
   variable_del('googleanalytics_site_search');
   variable_del('googleanalytics_trackadsense');
+  variable_del('googleanalytics_trackcolorbox');
   variable_del('googleanalytics_trackdoubleclick');
   variable_del('googleanalytics_tracker_anonymizeip');
   variable_del('googleanalytics_trackfiles');
@@ -32,8 +37,10 @@ function googleanalytics_uninstall() {
   variable_del('googleanalytics_trackmailto');
   variable_del('googleanalytics_trackmessages');
   variable_del('googleanalytics_trackoutgoing');
+  variable_del('googleanalytics_trackoutbound');
   variable_del('googleanalytics_translation_set');
   variable_del('googleanalytics_visibility');
+  variable_del('googleanalytics_visibility_pages');
   variable_del('googleanalytics_visibility_roles');
   variable_del('googleanalytics_privacy_donottrack');
 
@@ -54,13 +61,14 @@ function googleanalytics_disable() {
  */
 function googleanalytics_requirements($phase) {
   $requirements = array();
+  $t = get_t();
 
   if ($phase == 'runtime') {
     // Raise warning if Google user account has not been set yet.
-    if (!preg_match('/^UA-\d{4,}-\d+$/', variable_get('googleanalytics_account', 'UA-'))) {
-      $requirements['googleanalytics'] = array(
-        'title' => t('Google Analytics module'),
-        'description' => t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/settings/googleanalytics'))),
+    if (!_google_analytics_valid_property_id(variable_get('googleanalytics_account', 'UA-'))) {
+      $requirements['googleanalytics_account'] = array(
+        'title' => $t('Google Analytics module'),
+        'description' => $t('Google Analytics module has not been configured yet. Please configure its settings from the <a href="@url">Google Analytics settings page</a>.', array('@url' => url('admin/settings/googleanalytics'))),
         'severity' => REQUIREMENT_WARNING,
         'value' => t('Not configured'),
       );
@@ -80,42 +88,23 @@ function googleanalytics_requirements($phase) {
   return $requirements;
 }
 
-
-function googleanalytics_update_1() {
-  $ret = array();
-
-  $result = db_query("SELECT * FROM {role}");
-  while ($role = db_fetch_object($result)) {
-    // can't use empty spaces in varname
-    $role_varname = str_replace(' ', '_', $role->name);
-    variable_set('googleanalytics_track_'. $role->rid, !variable_get("googleanalytics_track_{$role_varname}", FALSE));
-    variable_del("googleanalytics_track_{$role_varname}");
-  }
-  variable_set('googleanalytics_track__user1', FALSE);
-
-  return $ret;
-}
-
 /**
- * Upgrade old extension variable to new and use old name as enabled/disabled flag.
+ * Upgrade old extension variable to new and use old name as enabled/disabled
+ * flag.
  */
 function googleanalytics_update_6000() {
-  $ret = array();
-
   variable_set('googleanalytics_trackfiles_extensions', variable_get('googleanalytics_trackfiles', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xml|zip'));
   $trackfiles = variable_get('googleanalytics_trackfiles', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xml|zip') ? TRUE : FALSE;
   variable_set('googleanalytics_trackfiles', $trackfiles);
-  $ret[] = array('success' => TRUE, 'query' => 'Updated download tracking settings.');
 
-  return $ret;
+  return t('Updated download tracking file extensions.');
 }
 
 function googleanalytics_update_6001() {
-  $ret = array();
-
   variable_set('googleanalytics_visibility', 0);
 
-  // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
+  // Remove tracking from all administrative pages, see:
+  // https://drupal.org/node/34970.
   $pages = array(
     'admin*',
     'user*',
@@ -123,28 +112,27 @@ function googleanalytics_update_6001() {
     'node/*/*',
   );
   variable_set('googleanalytics_pages', implode("\n", $pages));
-  $ret[] = array('success' => TRUE, 'query' => 'Added page tracking to every page except the listed pages: '. implode(', ', $pages));
 
-  return $ret;
+  return t('Added page tracking to every page except the listed pages: @pages.', array('@pages' => implode(', ', $pages)));
 }
 
 /**
- * Upgrade role settings and per user tracking settings
- * of "User 1" and remove outdated tracking variables.
+ * Upgrade role settings and per user tracking settings of "User 1" and remove
+ * outdated tracking variables.
  */
 function googleanalytics_update_6002() {
-  $ret = array();
-
-  // Upgrade enabled/disabled roles to new logic (correct for upgrades from 5.x-1.4 and 6.x-1.0).
+  // Upgrade enabled/disabled roles to new logic (correct for upgrades from
+  // 5.x-1.4 and 6.x-1.0).
   $roles = array();
+  $messages = array();
   foreach (user_roles() as $rid => $name) {
     if (variable_get('googleanalytics_track_'. $rid, FALSE)) {
       // Role ID is activated for user tracking.
       $roles[$rid] = $rid;
-      $ret[] = array('success' => TRUE, 'query' => 'Enabled page tracking for role: '. $name);
+      $messages[] = t('Enabled page tracking for role: @name.', array('@name' => $name));
     }
     else {
-      $ret[] = array('success' => TRUE, 'query' => 'Disabled page tracking for role: '. $name);
+      $messages[] = t('Disabled page tracking for role: @name.', array('@name' => $name));
     }
   }
   variable_set('googleanalytics_roles', $roles);
